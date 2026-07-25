@@ -1,0 +1,188 @@
+---
+// About section - Company positioning and mission
+---
+
+<section id="about" class="py-20 md:py-32 bg-white relative overflow-hidden">
+	<!-- Background Pattern -->
+	<div 
+		class="absolute inset-0 -z-10 opacity-5"
+		style={{
+			backgroundImage: 'url(/manus-storage/ftci-tech-grid_9a960dd7.png)',
+			backgroundSize: '200px 200px',
+		}}
+	></div>
+
+	<div class="container">
+		<div class="grid md:grid-cols-2 gap-12 items-center">
+			<!-- Left Content -->
+			<div class="observe">
+				<h2 class="text-4xl md:text-5xl font-bold text-navy mb-6">
+					À Propos de FTCI
+				</h2>
+				
+				<p class="text-lg text-gray-text mb-6 leading-relaxed">
+					Freelance Technologies Côte d'Ivoire est un cabinet de conseil en transformation digitale et éditeur de solutions logicielles SaaS pensées pour le marché ivoirien et africain.
+				</p>
+
+				<p class="text-lg text-gray-text mb-6 leading-relaxed">
+					Depuis notre création, nous accompagnons universités, entreprises et institutions dans leur digitalisation, du conseil stratégique jusqu'au déploiement d'outils numériques sur mesure.
+				</p>
+
+				<div class="space-y-4 mb-8">
+					<div class="flex items-start gap-4">
+						<div class="w-8 h-8 bg-gradient-to-br from-orange to-orange-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+						</div>
+						<div>
+							<h4 class="font-semibold text-navy mb-1">Expertise Locale</h4>
+							<p class="text-gray-text">Comprendre les défis spécifiques des institutions africaines</p>
+						</div>
+					</div>
+
+					<div class="flex items-start gap-4">
+						<div class="w-8 h-8 bg-gradient-to-br from-green to-green-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+						</div>
+						<div>
+							<h4 class="font-semibold text-navy mb-1">Excellence Technique</h4>
+							<p class="text-gray-text">Solutions modernes, performantes et sécurisées</p>
+						</div>
+					</div>
+
+					<div class="flex items-start gap-4">
+						<div class="w-8 h-8 bg-gradient-to-br from-periwinkle to-blue-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+							</svg>
+						</div>
+						<div>
+							<h4 class="font-semibold text-navy mb-1">Partenariat Durable</h4>
+							<p class="text-gray-text">Support continu et évolution selon vos besoins</p>
+						</div>
+					</div>
+				</div>
+
+				<a 
+					href="#contact"
+					class="inline-flex items-center gap-2 px-6 py-3 border-2 border-navy text-navy rounded-lg font-semibold hover:bg-navy/5 active:scale-95 transition-all duration-200"
+				>
+					En savoir plus
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+					</svg>
+				</a>
+			</div>
+
+			<!-- Right: Stats -->
+			<div class="observe">
+				<div class="bg-light-bg rounded-2xl p-8 md:p-12">
+					<div class="grid grid-cols-2 gap-8">
+						<!-- Stat 1 -->
+						<div class="text-center">
+							<div class="text-4xl md:text-5xl font-bold text-orange mb-2">
+								<span class="counter" data-target="4">0</span>
+							</div>
+							<p class="text-gray-text font-medium">Solutions SaaS</p>
+						</div>
+
+						<!-- Stat 2 -->
+						<div class="text-center">
+							<div class="text-4xl md:text-5xl font-bold text-green mb-2">
+								<span class="counter" data-target="50">0</span>+
+							</div>
+							<p class="text-gray-text font-medium">Institutions servies</p>
+						</div>
+
+						<!-- Stat 3 -->
+						<div class="text-center">
+							<div class="text-4xl md:text-5xl font-bold text-periwinkle mb-2">
+								<span class="counter" data-target="100">0</span>K+
+							</div>
+							<p class="text-gray-text font-medium">Utilisateurs actifs</p>
+						</div>
+
+						<!-- Stat 4 -->
+						<div class="text-center">
+							<div class="text-4xl md:text-5xl font-bold text-navy mb-2">
+								<span class="counter" data-target="99">0</span>%
+							</div>
+							<p class="text-gray-text font-medium">Satisfaction client</p>
+						</div>
+					</div>
+
+					<!-- Location -->
+					<div class="mt-12 pt-8 border-t border-gray-200">
+						<p class="text-sm text-gray-text mb-4 font-medium">BASÉE EN CÔTE D'IVOIRE</p>
+						<p class="text-navy font-semibold mb-2">Abidjan & Dabou</p>
+						<p class="text-gray-text text-sm">
+							Nous accompagnons les institutions africaines dans leur transformation digitale, avec une expertise locale et une excellence technique.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	// Animated counters
+	const counters = document.querySelectorAll('.counter');
+	
+	const runCounter = (counter) => {
+		const target = parseInt(counter.getAttribute('data-target'));
+		const duration = 2000; // 2 seconds
+		const increment = target / (duration / 16);
+		let current = 0;
+
+		const updateCounter = () => {
+			current += increment;
+			if (current < target) {
+				counter.textContent = Math.floor(current);
+				requestAnimationFrame(updateCounter);
+			} else {
+				counter.textContent = target;
+			}
+		};
+
+		// Trigger animation when element is in view
+		const observer = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				updateCounter();
+				observer.unobserve(counter);
+			}
+		}, { threshold: 0.5 });
+
+		observer.observe(counter);
+	};
+
+	counters.forEach(counter => runCounter(counter));
+</script>
+
+<style>
+	.observe {
+		opacity: 0;
+		animation: slideUp 0.6s ease-out forwards;
+	}
+
+	@keyframes slideUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.observe {
+			animation: none;
+			opacity: 1;
+		}
+	}
+</style>

@@ -1,0 +1,63 @@
+---
+// Header component for FTCI website
+// Features: Logo, navigation, sticky positioning
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
+	<div class="container py-4 flex items-center justify-between">
+		<!-- Logo -->
+		<a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+			<img 
+				src="/manus-storage/ftci-logo_cbef96c0.png" 
+				alt="FTCI Logo" 
+				class="h-10 w-10"
+			/>
+			<div class="hidden sm:block">
+				<h1 class="text-sm font-bold text-navy leading-tight">FTCI</h1>
+				<p class="text-xs text-gray-text">Technologies</p>
+			</div>
+		</a>
+
+		<!-- Navigation -->
+		<nav class="hidden md:flex items-center gap-8">
+			<a href="#solutions" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+				Nos solutions
+			</a>
+			<a href="#services" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+				Nos services
+			</a>
+			<a href="#about" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+				À propos
+			</a>
+			<a href="#contact" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+				Contact
+			</a>
+		</nav>
+
+		<!-- CTA Button -->
+		<a 
+			href="#contact" 
+			class="btn-primary text-sm px-6 py-2 rounded-lg font-medium bg-orange text-white hover:bg-orange-600 active:scale-95 transition-all duration-200"
+		>
+			Nous contacter
+		</a>
+
+		<!-- Mobile Menu Button -->
+		<button 
+			class="md:hidden p-2 text-navy hover:bg-gray-100 rounded-lg transition-colors"
+			aria-label="Toggle menu"
+		>
+			<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+			</svg>
+		</button>
+	</div>
+</header>
+
+<style>
+	@media (prefers-reduced-motion: reduce) {
+		header {
+			transition: none;
+		}
+	}
+</style>
