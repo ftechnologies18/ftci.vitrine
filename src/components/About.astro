@@ -29,470 +29,470 @@
  */
 
 const keyPoints = [
-	{
-		title: 'Expertise Locale',
-		description: 'Une connaissance fine du terrain ouest-africain et de ses contraintes.',
-		color: 'orange',
-		textClass: 'text-orange',
-		bgClass: 'bg-orange/10',
-		iconPath: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
-	},
-	{
-		title: 'Excellence Technique',
-		description: 'Des solutions modernes, robustes et conformes aux standards internationaux.',
-		color: 'periwinkle',
-		textClass: 'text-periwinkle',
-		bgClass: 'bg-periwinkle/10',
-		iconPath: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-	},
-	{
-		title: 'Partenariat Durable',
-		description: 'Un accompagnement long terme, de l\'audit à la formation de vos équipes.',
-		color: 'green',
-		textClass: 'text-green',
-		bgClass: 'bg-green/10',
-		iconPath: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z',
-	},
+        {
+                title: 'Expertise Locale',
+                description: 'Une connaissance fine du terrain ouest-africain et de ses contraintes.',
+                color: 'orange',
+                textClass: 'text-orange',
+                bgClass: 'bg-orange/10',
+                iconPath: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
+        },
+        {
+                title: 'Excellence Technique',
+                description: 'Des solutions modernes, robustes et conformes aux standards internationaux.',
+                color: 'periwinkle',
+                textClass: 'text-periwinkle',
+                bgClass: 'bg-periwinkle/10',
+                iconPath: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+        },
+        {
+                title: 'Partenariat Durable',
+                description: 'Un accompagnement long terme, de l\'audit à la formation de vos équipes.',
+                color: 'green',
+                textClass: 'text-green',
+                bgClass: 'bg-green/10',
+                iconPath: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z',
+        },
 ];
 ---
 
 <section id="about" class="relative py-20 md:py-32 bg-white overflow-hidden">
-	<!-- ── Parallax background elements ────────────────────────────────────── -->
-	<div class="parallax-bg about-parallax absolute inset-0 pointer-events-none" aria-hidden="true">
-		<!-- Circuit grid with parallax -->
-		<div class="absolute inset-0 opacity-[0.05] circuit-bg parallax-circuit"></div>
-		<!-- Subtle gradient accent -->
-		<div class="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full opacity-20 blur-[100px] parallax-glow"
-			style="background: radial-gradient(circle, var(--color-green) 0%, transparent 70%);"></div>
-	</div>
+        <!-- ── Parallax background elements ────────────────────────────────────── -->
+        <div class="parallax-bg about-parallax absolute inset-0 pointer-events-none" aria-hidden="true">
+                <!-- Circuit grid with parallax -->
+                <div class="absolute inset-0 opacity-[0.05] circuit-bg parallax-circuit"></div>
+                <!-- Subtle gradient accent -->
+                <div class="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full opacity-20 blur-[100px] parallax-glow"
+                        style="background: radial-gradient(circle, var(--color-green) 0%, transparent 70%);"></div>
+        </div>
 
-	<div class="container relative z-10">
-		<div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-			<!-- ── Colonne gauche : texte ───────────────────────────────────── -->
-			<div class="observe-reveal" data-reveal-delay="0">
-				<span class="eyebrow">
-					<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
-						<polygon points="4,0 8,4 4,8 0,4" />
-					</svg>
-					L'entreprise
-				</span>
-				<h2 class="mb-6">À Propos de FTCI</h2>
+        <div class="container relative z-10">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                        <!-- ── Colonne gauche : texte ───────────────────────────────────── -->
+                        <div class="observe-reveal" data-reveal-delay="0">
+                                <span class="eyebrow">
+                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+                                                <polygon points="4,0 8,4 4,8 0,4" />
+                                        </svg>
+                                        L'entreprise
+                                </span>
+                                <h2 class="mb-6">À Propos de FTCI</h2>
 
-				<p class="text-lg text-gray-text leading-relaxed mb-5">
-					<strong class="text-navy font-semibold">FTCI — Freelance Technologies Côte d'Ivoire</strong>
-					est un cabinet de conseil en transformation digitale et un éditeur de
-					solutions SaaS. Nous concevons des plateformes qui répondent aux défis
-					spécifiques du marché africain : éducation, BTP, gestion scolaire et
-					présence étudiante.
-				</p>
-				<p class="text-gray-text leading-relaxed mb-8">
-					Notre approche combine expertise technique de pointe et compréhension
-					profonde du terrain. Chaque solution est pensée pour fonctionner dans
-					des contextes de connectivité limitée, avec des modes de paiement locaux
-					et des réglementations régionales.
-				</p>
+                                <p class="text-lg text-gray-text leading-relaxed mb-5">
+                                        <strong class="text-navy font-semibold">FTCI — Freelance Technologies Côte d'Ivoire</strong>
+                                        est un cabinet de conseil en transformation digitale et un éditeur de
+                                        solutions SaaS. Nous concevons des plateformes qui répondent aux défis
+                                        spécifiques du marché africain : éducation, BTP, gestion scolaire et
+                                        présence étudiante.
+                                </p>
+                                <p class="text-gray-text leading-relaxed mb-8">
+                                        Notre approche combine expertise technique de pointe et compréhension
+                                        profonde du terrain. Chaque solution est pensée pour fonctionner dans
+                                        des contextes de connectivité limitée, avec des modes de paiement locaux
+                                        et des réglementations régionales.
+                                </p>
 
-				<!-- 3 points clés avec stagger -->
-				<div class="space-y-4 mb-8">
-					{keyPoints.map((point, idx) => (
-						<div class="flex items-start gap-4 key-point-item" data-key-delay={idx}>
-							<div class={`w-10 h-10 rounded-lg ${point.bgClass} flex items-center justify-center flex-shrink-0 key-point-icon`}>
-								<svg class={`w-5 h-5 ${point.textClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={point.iconPath} />
-								</svg>
-							</div>
-							<div class="key-point-content">
-								<h3 class="text-base font-display font-bold text-navy mb-0.5">{point.title}</h3>
-								<p class="text-sm text-gray-text leading-snug">{point.description}</p>
-							</div>
-						</div>
-					))}
-				</div>
+                                <!-- 3 points clés avec stagger -->
+                                <div class="space-y-4 mb-8">
+                                        {keyPoints.map((point, idx) => (
+                                                <div class="flex items-start gap-4 key-point-item" data-key-delay={idx}>
+                                                        <div class={`w-10 h-10 rounded-lg ${point.bgClass} flex items-center justify-center flex-shrink-0 key-point-icon`}>
+                                                                <svg class={`w-5 h-5 ${point.textClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={point.iconPath} />
+                                                                </svg>
+                                                        </div>
+                                                        <div class="key-point-content">
+                                                                <h3 class="text-base font-display font-bold text-navy mb-0.5">{point.title}</h3>
+                                                                <p class="text-sm text-gray-text leading-snug">{point.description}</p>
+                                                        </div>
+                                                </div>
+                                        ))}
+                                </div>
 
-				<a href="/#contact" data-magnetic="14" class="btn-outline magnetic">
-					<span>
-						En savoir plus
-						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-						</svg>
-					</span>
-				</a>
-			</div>
+                                <a href="/#contact" data-magnetic="14" class="btn-outline magnetic">
+                                        <span>
+                                                En savoir plus
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                        </span>
+                                </a>
+                        </div>
 
-			<!-- ── Colonne droite : panneau stats (NYT Data Viz) ENHANCED ─────── -->
-			<div class="observe-reveal" data-reveal-delay="1">
-				<div class="bg-light-bg rounded-card p-8 md:p-10 border border-navy/5 stats-panel">
-					<!-- HERO STAT — UN seul accent orange (NYT) -->
-					<div class="mb-10 pb-8 border-b border-navy/8 stat-hero">
-						<div class="flex items-baseline gap-1">
-							<span
-								class="stat-value font-display font-extrabold text-7xl text-orange tracking-[-0.04em]"
-								data-count="100"
-								data-suffix="K+"
-							>0</span>
-						</div>
-						<p class="text-sm font-semibold text-navy mt-2">Utilisateurs actifs</p>
-						<p class="source-line mt-1">Cumul across SECT, OPUC, CATS & ScolaGest — 2025</p>
-					</div>
+                        <!-- ── Colonne droite : panneau stats (NYT Data Viz) ENHANCED ─────── -->
+                        <div class="observe-reveal" data-reveal-delay="1">
+                                <div class="bg-light-bg rounded-card p-8 md:p-10 border border-navy/5 stats-panel">
+                                        <!-- HERO STAT — UN seul accent orange (NYT) -->
+                                        <div class="mb-10 pb-8 border-b border-navy/8 stat-hero">
+                                                <div class="flex items-baseline gap-1">
+                                                        <span
+                                                                class="stat-value font-display font-extrabold text-5xl sm:text-6xl md:text-7xl text-orange tracking-[-0.04em]"
+                                                                data-count="100"
+                                                                data-suffix="K+"
+                                                        >0</span>
+                                                </div>
+                                                <p class="text-sm font-semibold text-navy mt-2">Utilisateurs actifs</p>
+                                                <p class="source-line mt-1">Cumul across SECT, OPUC, CATS & ScolaGest — 2025</p>
+                                        </div>
 
-					<!-- 3 stats secondaires de-emphasized (NYT) -->
-					<div class="grid grid-cols-3 gap-4 mb-8 stats-grid">
-						<div class="stat-item" data-stat-delay="0">
-							<div
-								class="stat-value font-display font-extrabold text-3xl text-navy tracking-tight"
-								data-count="4"
-							>0</div>
-							<p class="text-xs font-medium text-navy/70 mt-1">Solutions</p>
-							<p class="source-line mt-0.5">SaaS en production</p>
-						</div>
-						<div class="stat-item" data-stat-delay="1">
-							<div
-								class="stat-value font-display font-extrabold text-3xl text-green tracking-tight"
-								data-count="50"
-								data-suffix="+"
-							>0</div>
-							<p class="text-xs font-medium text-navy/70 mt-1">Institutions</p>
-							<p class="source-line mt-0.5">Clientes en CI</p>
-						</div>
-						<div class="stat-item" data-stat-delay="2">
-							<div
-								class="stat-value font-display font-extrabold text-3xl text-periwinkle tracking-tight"
-								data-count="99"
-								data-suffix="%"
-							>0</div>
-							<p class="text-xs font-medium text-navy/70 mt-1">Satisfaction</p>
-							<p class="source-line mt-0.5">Sondage clients 2025</p>
-						</div>
-					</div>
+                                        <!-- 3 stats secondaires de-emphasized (NYT) -->
+                                        <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-8 stats-grid">
+                                                <div class="stat-item" data-stat-delay="0">
+                                                        <div
+                                                                class="stat-value font-display font-extrabold text-2xl sm:text-3xl text-navy tracking-tight"
+                                                                data-count="4"
+                                                        >0</div>
+                                                        <p class="text-xs font-medium text-navy/70 mt-1">Solutions</p>
+                                                        <p class="source-line mt-0.5">SaaS en production</p>
+                                                </div>
+                                                <div class="stat-item" data-stat-delay="1">
+                                                        <div
+                                                                class="stat-value font-display font-extrabold text-2xl sm:text-3xl text-green tracking-tight"
+                                                                data-count="50"
+                                                                data-suffix="+"
+                                                        >0</div>
+                                                        <p class="text-xs font-medium text-navy/70 mt-1">Institutions</p>
+                                                        <p class="source-line mt-0.5">Clientes en CI</p>
+                                                </div>
+                                                <div class="stat-item" data-stat-delay="2">
+                                                        <div
+                                                                class="stat-value font-display font-extrabold text-2xl sm:text-3xl text-periwinkle tracking-tight"
+                                                                data-count="99"
+                                                                data-suffix="%"
+                                                        >0</div>
+                                                        <p class="text-xs font-medium text-navy/70 mt-1">Satisfaction</p>
+                                                        <p class="source-line mt-0.5">Sondage clients 2025</p>
+                                                </div>
+                                        </div>
 
-					<!-- Bloc localisation -->
-					<div class="flex items-center gap-3 p-4 bg-white rounded-xl border border-navy/5 location-block">
-						<svg class="w-6 h-6 text-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-						</svg>
-						<div>
-							<p class="text-sm font-semibold text-navy">Abidjan & Dabou</p>
-							<p class="text-xs text-gray-text">Côte d'Ivoire — Afrique de l'Ouest</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                        <!-- Bloc localisation -->
+                                        <div class="flex items-center gap-3 p-4 bg-white rounded-xl border border-navy/5 location-block">
+                                                <svg class="w-6 h-6 text-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                                <div>
+                                                        <p class="text-sm font-semibold text-navy">Abidjan & Dabou</p>
+                                                        <p class="text-xs text-gray-text">Côte d'Ivoire — Afrique de l'Ouest</p>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
 </section>
 
 <script>
-	// ═══════════════════════════════════════════════════════════════════════════
-	// ABOUT SECTION — Enhanced Scroll Animations & Counters
-	// ═══════════════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════════════
+        // ABOUT SECTION — Enhanced Scroll Animations & Counters
+        // ═══════════════════════════════════════════════════════════════════════════
 
-	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	// ── 1. Scroll Reveal Enhancement ────────────────────────────────────────
-	// Same spec as Services: threshold 0.15, translateY(28px), 0.7s spring easing
+        // ── 1. Scroll Reveal Enhancement ────────────────────────────────────────
+        // Same spec as Services: threshold 0.15, translateY(28px), 0.7s spring easing
 
-	const revealElements = document.querySelectorAll('#about .observe-reveal');
-	const cascadeDelays = [0, 0.08, 0.16, 0.24, 0.32];
+        const revealElements = document.querySelectorAll('#about .observe-reveal');
+        const cascadeDelays = [0, 0.08, 0.16, 0.24, 0.32];
 
-	if (!reduced && 'IntersectionObserver' in window) {
-		const revealObserver = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						const el = entry.target as HTMLElement;
-						const delayIdx = parseInt(el.dataset.revealDelay || '0', 10);
-						const delay = cascadeDelays[Math.min(delayIdx, cascadeDelays.length - 1)] || 0;
-						
-						el.style.transitionDelay = `${delay}s`;
-						el.classList.add('is-revealed');
-						
-						// Trigger staggered children animations
-						if (el.classList.contains('observe-reveal')) {
-							const keyPoints = el.querySelectorAll('.key-point-item');
-							keyPoints.forEach((kp, idx) => {
-								setTimeout(() => {
-									kp.classList.add('is-visible');
-								}, (delay * 1000) + (idx * 100));
-							});
-						}
-						
-						revealObserver.unobserve(el);
-					}
-				});
-			},
-			{
-				threshold: 0.15,
-				rootMargin: '0px 0px -40px 0px'
-			}
-		);
+        if (!reduced && 'IntersectionObserver' in window) {
+                const revealObserver = new IntersectionObserver(
+                        (entries) => {
+                                entries.forEach((entry) => {
+                                        if (entry.isIntersecting) {
+                                                const el = entry.target as HTMLElement;
+                                                const delayIdx = parseInt(el.dataset.revealDelay || '0', 10);
+                                                const delay = cascadeDelays[Math.min(delayIdx, cascadeDelays.length - 1)] || 0;
+                                                
+                                                el.style.transitionDelay = `${delay}s`;
+                                                el.classList.add('is-revealed');
+                                                
+                                                // Trigger staggered children animations
+                                                if (el.classList.contains('observe-reveal')) {
+                                                        const keyPoints = el.querySelectorAll('.key-point-item');
+                                                        keyPoints.forEach((kp, idx) => {
+                                                                setTimeout(() => {
+                                                                        kp.classList.add('is-visible');
+                                                                }, (delay * 1000) + (idx * 100));
+                                                        });
+                                                }
+                                                
+                                                revealObserver.unobserve(el);
+                                        }
+                                });
+                        },
+                        {
+                                threshold: 0.15,
+                                rootMargin: '0px 0px -40px 0px'
+                        }
+                );
 
-		revealElements.forEach((el) => revealObserver.observe(el));
-	} else if (reduced) {
-		revealElements.forEach((el) => {
-			el.classList.add('is-revealed');
-			el.querySelectorAll('.key-point-item').forEach(kp => kp.classList.add('is-visible'));
-		});
-	}
+                revealElements.forEach((el) => revealObserver.observe(el));
+        } else if (reduced) {
+                revealElements.forEach((el) => {
+                        el.classList.add('is-revealed');
+                        el.querySelectorAll('.key-point-item').forEach(kp => kp.classList.add('is-visible'));
+                });
+        }
 
-	// ── 2. Stats Counter Enhancement ────────────────────────────────────────
-	// IntersectionObserver threshold 0.5
-	// Easing: 1 - Math.pow(1 - progress, 3) over 1.6s
-	// requestAnimationFrame for smooth animation
-	// tabular-nums via .stat-value CSS class
-	// Single trigger per element (unobserve after)
+        // ── 2. Stats Counter Enhancement ────────────────────────────────────────
+        // IntersectionObserver threshold 0.5
+        // Easing: 1 - Math.pow(1 - progress, 3) over 1.6s
+        // requestAnimationFrame for smooth animation
+        // tabular-nums via .stat-value CSS class
+        // Single trigger per element (unobserve after)
 
-	const counters = document.querySelectorAll<HTMLElement>('#about [data-count]');
+        const counters = document.querySelectorAll<HTMLElement>('#about [data-count]');
 
-	const formatNumber = (n: number): string => {
-		return n.toLocaleString('fr-FR');
-	};
+        const formatNumber = (n: number): string => {
+                return n.toLocaleString('fr-FR');
+        };
 
-	const animateCounter = (el: HTMLElement) => {
-		const target = parseInt(el.dataset.count || '0', 10);
-		const suffix = el.dataset.suffix || '';
+        const animateCounter = (el: HTMLElement) => {
+                const target = parseInt(el.dataset.count || '0', 10);
+                const suffix = el.dataset.suffix || '';
 
-		// Reduced motion: instant display
-		if (reduced) {
-			el.textContent = formatNumber(target) + suffix;
-			return;
-		}
+                // Reduced motion: instant display
+                if (reduced) {
+                        el.textContent = formatNumber(target) + suffix;
+                        return;
+                }
 
-		const duration = 1600; // 1.6s per spec
-		const start = performance.now();
+                const duration = 1600; // 1.6s per spec
+                const start = performance.now();
 
-		const frame = (now: number) => {
-			const elapsed = now - start;
-			const progress = Math.min(elapsed / duration, 1);
-			
-			// Ease-out cubic: 1 - (1-t)^3
-			const eased = 1 - Math.pow(1 - progress, 3);
-			const current = Math.round(target * eased);
-			
-			el.textContent = formatNumber(current) + suffix;
-			
-			if (progress < 1) {
-				requestAnimationFrame(frame);
-			}
-		};
+                const frame = (now: number) => {
+                        const elapsed = now - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        // Ease-out cubic: 1 - (1-t)^3
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(target * eased);
+                        
+                        el.textContent = formatNumber(current) + suffix;
+                        
+                        if (progress < 1) {
+                                requestAnimationFrame(frame);
+                        }
+                };
 
-		requestAnimationFrame(frame);
-	};
+                requestAnimationFrame(frame);
+        };
 
-	if ('IntersectionObserver' in window) {
-		const counterObserver = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						animateCounter(entry.target as HTMLElement);
-						counterObserver.unobserve(entry.target); // Single trigger only
-					}
-				});
-			},
-			{ threshold: 0.5 }
-		);
+        if ('IntersectionObserver' in window) {
+                const counterObserver = new IntersectionObserver(
+                        (entries) => {
+                                entries.forEach((entry) => {
+                                        if (entry.isIntersecting) {
+                                                animateCounter(entry.target as HTMLElement);
+                                                counterObserver.unobserve(entry.target); // Single trigger only
+                                        }
+                                });
+                        },
+                        { threshold: 0.5 }
+                );
 
-		counters.forEach((el) => counterObserver.observe(el));
-	} else {
-		counters.forEach((el) => animateCounter(el));
-	}
+                counters.forEach((el) => counterObserver.observe(el));
+        } else {
+                counters.forEach((el) => animateCounter(el));
+        }
 
-	// ── 3. Parallax Background Enhancement ─────────────────────────────────
-	// Apply to circuit grid and glow element
-	// Ratio: 0.06x scroll distance
-	// Max displacement: 32px
-	// rAF throttled
+        // ── 3. Parallax Background Enhancement ─────────────────────────────────
+        // Apply to circuit grid and glow element
+        // Ratio: 0.06x scroll distance
+        // Max displacement: 32px
+        // rAF throttled
 
-	if (!reduced) {
-		const parallaxContainer = document.querySelector('.about-parallax') as HTMLElement | null;
-		
-		if (parallaxContainer) {
-			let ticking = false;
-			const maxDisplacement = 32; // px
-			const parallaxRatio = 0.06;
+        if (!reduced) {
+                const parallaxContainer = document.querySelector('.about-parallax') as HTMLElement | null;
+                
+                if (parallaxContainer) {
+                        let ticking = false;
+                        const maxDisplacement = 32; // px
+                        const parallaxRatio = 0.06;
 
-			const updateParallax = () => {
-				const rect = parallaxContainer.getBoundingClientRect();
-				const windowHeight = window.innerHeight;
-				
-				const viewProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
-				const clampedProgress = Math.max(-1, Math.min(1, (viewProgress - 0.5) * 2));
-				const displacement = clampedProgress * maxDisplacement;
-				
-				// Apply to circuit grid
-				const circuit = parallaxContainer.querySelector('.parallax-circuit') as HTMLElement | null;
-				if (circuit) {
-					circuit.style.transform = `translateY(${displacement}px)`;
-				}
-				
-				// Apply to glow (opposite direction for depth effect)
-				const glow = parallaxContainer.querySelector('.parallax-glow') as HTMLElement | null;
-				if (glow) {
-					glow.style.transform = `translateY(${-displacement * 0.5}px)`;
-				}
-				
-				ticking = false;
-			};
+                        const updateParallax = () => {
+                                const rect = parallaxContainer.getBoundingClientRect();
+                                const windowHeight = window.innerHeight;
+                                
+                                const viewProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+                                const clampedProgress = Math.max(-1, Math.min(1, (viewProgress - 0.5) * 2));
+                                const displacement = clampedProgress * maxDisplacement;
+                                
+                                // Apply to circuit grid
+                                const circuit = parallaxContainer.querySelector('.parallax-circuit') as HTMLElement | null;
+                                if (circuit) {
+                                        circuit.style.transform = `translateY(${displacement}px)`;
+                                }
+                                
+                                // Apply to glow (opposite direction for depth effect)
+                                const glow = parallaxContainer.querySelector('.parallax-glow') as HTMLElement | null;
+                                if (glow) {
+                                        glow.style.transform = `translateY(${-displacement * 0.5}px)`;
+                                }
+                                
+                                ticking = false;
+                        };
 
-			updateParallax();
+                        updateParallax();
 
-			window.addEventListener('scroll', () => {
-				if (!ticking) {
-					requestAnimationFrame(updateParallax);
-					ticking = true;
-				}
-			}, { passive: true });
-		}
-	}
+                        window.addEventListener('scroll', () => {
+                                if (!ticking) {
+                                        requestAnimationFrame(updateParallax);
+                                        ticking = true;
+                                }
+                        }, { passive: true });
+                }
+        }
 </script>
 
 <style>
-	/* ── Scroll Reveal Enhanced (About section) ────────────────────────────── */
-	#about .observe-reveal {
-		opacity: 0;
-		transform: translateY(28px);
-		transition:
-			opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-			transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-		will-change: opacity, transform;
-	}
+        /* ── Scroll Reveal Enhanced (About section) ────────────────────────────── */
+        #about .observe-reveal {
+                opacity: 0;
+                transform: translateY(28px);
+                transition:
+                        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+                will-change: opacity, transform;
+        }
 
-	#about .observe-reveal.is-revealed {
-		opacity: 1;
-		transform: translateY(0);
-	}
+        #about .observe-reveal.is-revealed {
+                opacity: 1;
+                transform: translateY(0);
+        }
 
-	/* ── Key Points Stagger Animation ──────────────────────────────────────── */
-	.key-point-item {
-		opacity: 0;
-		transform: translateX(-16px);
-		transition:
-			opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-			transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-	}
+        /* ── Key Points Stagger Animation ──────────────────────────────────────── */
+        .key-point-item {
+                opacity: 0;
+                transform: translateX(-16px);
+                transition:
+                        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-	.key-point-item.is-visible {
-		opacity: 1;
-		transform: translateX(0);
-	}
+        .key-point-item.is-visible {
+                opacity: 1;
+                transform: translateX(0);
+        }
 
-	/* Icon subtle pop */
-	.key-point-item.is-visible .key-point-icon {
-		animation: iconPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-	}
+        /* Icon subtle pop */
+        .key-point-item.is-visible .key-point-icon {
+                animation: iconPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-	@keyframes iconPop {
-		0% { transform: scale(0.85); }
-		50% { transform: scale(1.08); }
-		100% { transform: scale(1); }
-	}
+        @keyframes iconPop {
+                0% { transform: scale(0.85); }
+                50% { transform: scale(1.08); }
+                100% { transform: scale(1); }
+        }
 
-	/* ── Stats Panel Entrance ──────────────────────────────────────────────── */
-	.stats-panel {
-		transition: box-shadow 0.4s ease;
-	}
+        /* ── Stats Panel Entrance ──────────────────────────────────────────────── */
+        .stats-panel {
+                transition: box-shadow 0.4s ease;
+        }
 
-	#about .observe-reveal.is-revealed .stats-panel {
-		box-shadow: 0 8px 40px rgba(15, 30, 61, 0.08);
-	}
+        #about .observe-reveal.is-revealed .stats-panel {
+                box-shadow: 0 8px 40px rgba(15, 30, 61, 0.08);
+        }
 
-	/* Stats items stagger within panel */
-	.stat-item {
-		opacity: 0;
-		transform: translateY(12px);
-		transition:
-			opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-			transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-	}
+        /* Stats items stagger within panel */
+        .stat-item {
+                opacity: 0;
+                transform: translateY(12px);
+                transition:
+                        opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-	#about .observe-reveal.is-revealed .stat-item[data-stat-delay="0"] {
-		transition-delay: 0.25s;
-		opacity: 1;
-		transform: translateY(0);
-	}
+        #about .observe-reveal.is-revealed .stat-item[data-stat-delay="0"] {
+                transition-delay: 0.25s;
+                opacity: 1;
+                transform: translateY(0);
+        }
 
-	#about .observe-reveal.is-revealed .stat-item[data-stat-delay="1"] {
-		transition-delay: 0.35s;
-		opacity: 1;
-		transform: translateY(0);
-	}
+        #about .observe-reveal.is-revealed .stat-item[data-stat-delay="1"] {
+                transition-delay: 0.35s;
+                opacity: 1;
+                transform: translateY(0);
+        }
 
-	#about .observe-reveal.is-revealed .stat-item[data-stat-delay="2"] {
-		transition-delay: 0.45s;
-		opacity: 1;
-		transform: translateY(0);
-	}
+        #about .observe-reveal.is-revealed .stat-item[data-stat-delay="2"] {
+                transition-delay: 0.45s;
+                opacity: 1;
+                transform: translateY(0);
+        }
 
-	/* Hero stat entrance */
-	.stat-hero {
-		opacity: 0;
-		transform: scale(0.96);
-		transition:
-			opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-			transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-	}
+        /* Hero stat entrance */
+        .stat-hero {
+                opacity: 0;
+                transform: scale(0.96);
+                transition:
+                        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-	#about .observe-reveal.is-revealed .stat-hero {
-		opacity: 1;
-		transform: scale(1);
-		transition-delay: 0.15s;
-	}
+        #about .observe-reveal.is-revealed .stat-hero {
+                opacity: 1;
+                transform: scale(1);
+                transition-delay: 0.15s;
+        }
 
-	/* Location block entrance */
-	.location-block {
-		opacity: 0;
-		transform: translateY(8px);
-		transition:
-			opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-			transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-	}
+        /* Location block entrance */
+        .location-block {
+                opacity: 0;
+                transform: translateY(8px);
+                transition:
+                        opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-	#about .observe-reveal.is-revealed .location-block {
-		opacity: 1;
-		transform: translateY(0);
-		transition-delay: 0.55s;
-	}
+        #about .observe-reveal.is-revealed .location-block {
+                opacity: 1;
+                transform: translateY(0);
+                transition-delay: 0.55s;
+        }
 
-	/* ── Stat Value Styling (NYT: tabular-nums anti-jitter) ────────────────── */
-	.stat-value {
-		font-variant-numeric: tabular-nums;
-		font-feature-settings: "tnum" 1;
-		min-width: 2ch; /* Prevent layout shift during count-up */
-		display: inline-block;
-	}
+        /* ── Stat Value Styling (NYT: tabular-nums anti-jitter) ────────────────── */
+        .stat-value {
+                font-variant-numeric: tabular-nums;
+                font-feature-settings: "tnum" 1;
+                min-width: 2ch; /* Prevent layout shift during count-up */
+                display: inline-block;
+        }
 
-	/* ── Parallax Elements ─────────────────────────────────────────────────── */
-	.parallax-circuit,
-	.parallax-glow {
-		will-change: transform;
-		transition: none;
-	}
+        /* ── Parallax Elements ─────────────────────────────────────────────────── */
+        .parallax-circuit,
+        .parallax-glow {
+                will-change: transform;
+                transition: none;
+        }
 
-	/* ── Reduced Motion Overrides ─────────────────────────────────────────── */
-	@media (prefers-reduced-motion: reduce) {
-	#about .observe-reveal {
-		opacity: 1 !important;
-		transform: none !important;
-		transition: none !important;
-	}
+        /* ── Reduced Motion Overrides ─────────────────────────────────────────── */
+        @media (prefers-reduced-motion: reduce) {
+        #about .observe-reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+        }
 
-	.key-point-item {
-		opacity: 1 !important;
-		transform: none !important;
-		transition: none !important;
-	}
+        .key-point-item {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+        }
 
-	.stat-hero,
-	.stat-item,
-	.location-block {
-		opacity: 1 !important;
-		transform: none !important;
-		transition: none !important;
-	}
+        .stat-hero,
+        .stat-item,
+        .location-block {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+        }
 
-	.parallax-circuit,
-	.parallax-glow {
-		transform: none !important;
-	}
-	}
+        .parallax-circuit,
+        .parallax-glow {
+                transform: none !important;
+        }
+        }
 </style>
