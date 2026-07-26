@@ -1,11 +1,13 @@
 ---
 // About section - Company positioning and mission
+// Cahier des charges 6.2: compteurs animés au scroll
+// Skills: NYT Data Viz (tabular-nums, ONE hero accent, source lines), Apple Design (reduced motion = instant)
 ---
 
 <section id="about" class="py-20 md:py-32 bg-white relative overflow-hidden">
-	<!-- Background Pattern -->
-	<div 
-		class="absolute inset-0 -z-10 opacity-5"
+	<!-- Background Pattern (cahier des charges 6.4: motif circuit) -->
+	<div
+		class="absolute inset-0 -z-10 opacity-[0.05]"
 		style={{
 			backgroundImage: 'url(/manus-storage/ftci-tech-grid_9a960dd7.png)',
 			backgroundSize: '200px 200px',
@@ -19,7 +21,7 @@
 				<h2 class="text-4xl md:text-5xl font-bold text-navy mb-6">
 					À Propos de FTCI
 				</h2>
-				
+
 				<p class="text-lg text-gray-text mb-6 leading-relaxed">
 					Freelance Technologies Côte d'Ivoire est un cabinet de conseil en transformation digitale et éditeur de solutions logicielles SaaS pensées pour le marché ivoirien et africain.
 				</p>
@@ -31,7 +33,7 @@
 				<div class="space-y-4 mb-8">
 					<div class="flex items-start gap-4">
 						<div class="w-8 h-8 bg-gradient-to-br from-orange to-orange-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
-							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
 							</svg>
 						</div>
@@ -43,7 +45,7 @@
 
 					<div class="flex items-start gap-4">
 						<div class="w-8 h-8 bg-gradient-to-br from-green to-green-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
-							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
 							</svg>
 						</div>
@@ -55,7 +57,7 @@
 
 					<div class="flex items-start gap-4">
 						<div class="w-8 h-8 bg-gradient-to-br from-periwinkle to-blue-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
-							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
 							</svg>
 						</div>
@@ -66,57 +68,63 @@
 					</div>
 				</div>
 
-				<a 
+				<a
 					href="#contact"
-					class="inline-flex items-center gap-2 px-6 py-3 border-2 border-navy text-navy rounded-lg font-semibold hover:bg-navy/5 active:scale-95 transition-all duration-200"
+					class="magnetic inline-flex items-center gap-2 px-6 py-3 border-2 border-navy text-navy rounded-lg font-semibold hover:bg-navy/5 active:scale-95 transition-all duration-200"
+					data-magnetic
 				>
 					En savoir plus
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
 					</svg>
 				</a>
 			</div>
 
-			<!-- Right: Stats -->
+			<!-- Right: Stats (NYT Data Viz discipline) -->
 			<div class="observe">
 				<div class="bg-light-bg rounded-2xl p-8 md:p-12">
-					<div class="grid grid-cols-2 gap-8">
-						<!-- Stat 1 -->
+					<!-- HERO STAT: 100K+ users (the most impressive — ONE accent) -->
+					<div class="text-center mb-10 pb-8 border-b border-gray-200">
+						<div class="text-5xl md:text-6xl font-bold text-orange mb-2 stat-value">
+							<span class="counter" data-target="100">0</span>K+
+						</div>
+						<p class="text-navy font-semibold text-lg">Utilisateurs actifs</p>
+						<p class="text-gray-text text-xs italic mt-1">Source: FTCI — agrégat utilisateurs SaaS, 2026</p>
+					</div>
+
+					<!-- Secondary stats (3, de-emphasized, tabular-nums) -->
+					<div class="grid grid-cols-3 gap-6">
+						<!-- Stat: Solutions -->
 						<div class="text-center">
-							<div class="text-4xl md:text-5xl font-bold text-orange mb-2">
+							<div class="text-3xl md:text-4xl font-bold text-navy mb-1 stat-value">
 								<span class="counter" data-target="4">0</span>
 							</div>
-							<p class="text-gray-text font-medium">Solutions SaaS</p>
+							<p class="text-gray-text text-sm font-medium">Solutions SaaS</p>
+							<p class="text-gray-text text-[10px] italic mt-0.5">SECT, OPUC, CATS, ScolaGest</p>
 						</div>
 
-						<!-- Stat 2 -->
+						<!-- Stat: Institutions -->
 						<div class="text-center">
-							<div class="text-4xl md:text-5xl font-bold text-green mb-2">
+							<div class="text-3xl md:text-4xl font-bold text-green mb-1 stat-value">
 								<span class="counter" data-target="50">0</span>+
 							</div>
-							<p class="text-gray-text font-medium">Institutions servies</p>
+							<p class="text-gray-text text-sm font-medium">Institutions servies</p>
+							<p class="text-gray-text text-[10px] italic mt-0.5">Universités & écoles, CI</p>
 						</div>
 
-						<!-- Stat 3 -->
+						<!-- Stat: Satisfaction -->
 						<div class="text-center">
-							<div class="text-4xl md:text-5xl font-bold text-periwinkle mb-2">
-								<span class="counter" data-target="100">0</span>K+
-							</div>
-							<p class="text-gray-text font-medium">Utilisateurs actifs</p>
-						</div>
-
-						<!-- Stat 4 -->
-						<div class="text-center">
-							<div class="text-4xl md:text-5xl font-bold text-navy mb-2">
+							<div class="text-3xl md:text-4xl font-bold text-periwinkle mb-1 stat-value">
 								<span class="counter" data-target="99">0</span>%
 							</div>
-							<p class="text-gray-text font-medium">Satisfaction client</p>
+							<p class="text-gray-text text-sm font-medium">Satisfaction client</p>
+							<p class="text-gray-text text-[10px] italic mt-0.5">Enquête interne, 2026</p>
 						</div>
 					</div>
 
 					<!-- Location -->
-					<div class="mt-12 pt-8 border-t border-gray-200">
-						<p class="text-sm text-gray-text mb-4 font-medium">BASÉE EN CÔTE D'IVOIRE</p>
+					<div class="mt-10 pt-8 border-t border-gray-200">
+						<p class="text-sm text-gray-text mb-4 font-medium tracking-wide">BASÉE EN CÔTE D'IVOIRE</p>
 						<p class="text-navy font-semibold mb-2">Abidjan & Dabou</p>
 						<p class="text-gray-text text-sm">
 							Nous accompagnons les institutions africaines dans leur transformation digitale, avec une expertise locale et une excellence technique.
@@ -129,60 +137,75 @@
 </section>
 
 <script>
-	// Animated counters
+	// === Animated counters (cahier des charges 6.2) ===
+	// NYT Data Viz: tabular-nums prevents jitter during count-up (set in CSS .stat-value)
+	// Apple Design: reduced-motion = instant final value (no vestibular trigger)
 	const counters = document.querySelectorAll('.counter');
-	
-	const runCounter = (counter) => {
-		const target = parseInt(counter.getAttribute('data-target'));
-		const duration = 2000; // 2 seconds
-		const increment = target / (duration / 16);
-		let current = 0;
+	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-		const updateCounter = () => {
-			current += increment;
-			if (current < target) {
-				counter.textContent = Math.floor(current);
+	const runCounter = (counter: Element) => {
+		const target = parseInt(counter.getAttribute('data-target') || '0');
+
+		// Reduced motion: snap to final value immediately
+		if (prefersReducedMotion) {
+			counter.textContent = String(target);
+			return;
+		}
+
+		const duration = 1800; // 1.8s — under 2s, snappy enough
+		const startTime = performance.now();
+
+		const updateCounter = (now: number) => {
+			const elapsed = now - startTime;
+			const progress = Math.min(elapsed / duration, 1);
+			// ease-out curve for natural deceleration
+			const eased = 1 - Math.pow(1 - progress, 3);
+			const current = Math.floor(eased * target);
+			counter.textContent = String(current);
+
+			if (progress < 1) {
 				requestAnimationFrame(updateCounter);
 			} else {
-				counter.textContent = target;
+				counter.textContent = String(target);
 			}
 		};
 
-		// Trigger animation when element is in view
-		const observer = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting) {
-				updateCounter();
-				observer.unobserve(counter);
-			}
-		}, { threshold: 0.5 });
-
-		observer.observe(counter);
+		requestAnimationFrame(updateCounter);
 	};
 
-	counters.forEach(counter => runCounter(counter));
+	// Trigger on scroll into view
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					runCounter(entry.target);
+					observer.unobserve(entry.target);
+				}
+			});
+		},
+		{ threshold: 0.5 }
+	);
+
+	counters.forEach((counter) => observer.observe(counter));
 </script>
 
 <style>
 	.observe {
 		opacity: 0;
-		animation: slideUp 0.6s ease-out forwards;
+		transform: translateY(30px);
+		transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 	}
 
-	@keyframes slideUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	.observe.is-visible {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		.observe {
-			animation: none;
 			opacity: 1;
+			transform: none;
+			transition: opacity 0.2s ease;
 		}
 	}
 </style>

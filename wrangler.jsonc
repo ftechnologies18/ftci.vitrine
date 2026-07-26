@@ -1,0 +1,9 @@
+{
+  "name": "ftci-vitrine",
+  "kv_namespaces": [
+    {
+      "binding": "MESSAGE_STORE",
+      "id": "a46dcd55e8ec4c04890ced3cbc1b3557"
+    }
+  ]
+}

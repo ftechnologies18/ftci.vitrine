@@ -13,6 +13,12 @@
   --color-orange: #EE6C1A;
   --color-light-bg: #F2F4F8;
   --color-gray-text: #6B7280;
+
+  /* Easing curves (Emil Kowalski standards — built-in CSS easings are too weak) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.22, 0.9, 0.3, 1);
 }
 
 :root {
@@ -25,15 +31,42 @@
   --muted: #6B7280;
   --border: #E5E7EB;
   --radius: 0.65rem;
+
+  /* Müller-Brockmann baseline grid — all spacing multiples of 8px */
+  --baseline: 8px;
+  --line-height: 24px; /* 3× baseline */
+  --gutter: 24px;      /* 3× baseline */
+  --margin: 32px;      /* 4× baseline */
+  --max-width: 1296px;
+  --cols: 12;
 }
 
 @layer base {
   body {
     @apply bg-[#F2F4F8] text-[#0F1E3D];
+    /* Apple Design: respect user text-size setting — scale with rem */
+    font-size: 100%;
+    line-height: 1.5;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Typography: tracking size-specific (Apple Design) */
+  h1, h2, h3 {
+    letter-spacing: -0.02em;  /* negative tracking on large text */
+    line-height: 1.1;
+  }
+
+  body, p, span, li {
+    letter-spacing: 0;  /* body near 0 */
+  }
+
+  /* NYT Data Viz: tabular numbers for all numeric stats */
+  .stat-value {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -55,25 +88,94 @@
 }
 
 @layer utilities {
+  /* === Entrance animations (scale from 0.95 + opacity, never scale(0)) === */
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
+    animation: fadeIn 0.6s var(--ease-out) both;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
+    animation: slideUp 0.6s var(--ease-out) both;
   }
 
   .animate-scale-in {
-    animation: scaleIn 0.6s ease-out;
+    animation: scaleIn 0.6s var(--ease-out) both;
   }
 
+  /* === Stagger assemble (Brand Book Generator) === */
+  .animate-assemble {
+    animation: assemble 0.72s var(--ease-spring) both;
+    animation-delay: calc(var(--d, 0) * 0.075s);
+  }
+
+  /* === Mesh gradient aurore (cahier des charges 6.1) === */
+  .mesh-aurore {
+    background-color: #0F1E3D; /* navy solid base */
+    background-image:
+      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(107, 127, 199, 0.35), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 80% 20%, rgba(238, 108, 26, 0.18), transparent 55%),
+      radial-gradient(ellipse 60% 70% at 70% 80%, rgba(30, 158, 79, 0.15), transparent 60%),
+      radial-gradient(ellipse 90% 60% at 30% 70%, rgba(107, 127, 199, 0.22), transparent 65%);
+    background-size: 200% 200%;
+    animation: meshShift 24s var(--ease-in-out) infinite alternate;
+  }
+
+  /* === Tilt 3D stage (Brand Book Generator: perspective 1600px) === */
+  .tilt-stage {
+    perspective: 1600px;
+  }
+
+  .tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.4s var(--ease-out);
+    will-change: transform;
+  }
+
+  /* === Magnetic button effect (cahier des charges 6.2) === */
+  .magnetic {
+    transition: transform 0.2s var(--ease-out);
+    will-change: transform;
+  }
+
+  /* === Scroll reveal initial state === */
+  .observe {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  }
+
+  .observe.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* === SVG stroke draw animation (cahier des charges 6.3) === */
+  .stroke-draw {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: drawStroke 1.2s var(--ease-out) forwards;
+    animation-delay: calc(var(--d, 0) * 0.15s);
+  }
+
+  /* === Connection line pulse (cahier des charges 6.4) === */
+  .connection-line {
+    stroke-dasharray: 4 4;
+    animation: dashFlow 20s linear infinite;
+  }
+
+  /* === Glow halo for product cards (cahier des charges 6.2) === */
+  .halo-glow {
+    transition: opacity 0.3s var(--ease-out);
+    opacity: 0;
+  }
+
+  .group:hover .halo-glow {
+    opacity: 1;
+  }
+
+  /* === Keyframes === */
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   @keyframes slideUp {
@@ -90,11 +192,106 @@
   @keyframes scaleIn {
     from {
       opacity: 0;
-      transform: scale(0.95);
+      transform: scale(0.95);  /* never scale(0) */
     }
     to {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  @keyframes assemble {
+    0% {
+      opacity: 0;
+      transform: translateY(26px) scale(0.93);
+      filter: blur(7px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes meshShift {
+    0% {
+      background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+    }
+    50% {
+      background-position: 30% 20%, 70% 30%, 60% 70%, 40% 60%;
+    }
+    100% {
+      background-position: 60% 40%, 40% 60%, 30% 30%, 70% 70%;
+    }
+  }
+
+  @keyframes drawStroke {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes dashFlow {
+    to {
+      stroke-dashoffset: -400;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .animate-float {
+    animation: float 4s var(--ease-in-out) infinite;
+  }
+
+  /* === Reduced motion: keep opacity/color, drop transform === */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-scale-in,
+    .animate-assemble,
+    .observe {
+      animation: none !important;
+      transition: opacity 0.2s ease !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+
+    .mesh-aurore {
+      animation: none !important;
+    }
+
+    .stroke-draw {
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+
+    .connection-line {
+      animation: none !important;
+    }
+
+    .animate-float {
+      animation: none !important;
+    }
+  }
+
+  /* === Hover gating (Emil Design Eng: touch devices fire false hovers on tap) === */
+  @media (hover: hover) and (pointer: fine) {
+    .magnetic:hover {
+      /* transform applied via JS for magnetic effect */
+    }
+  }
+
+  /* === Mobile: disable heavy effects (cahier des charges 6.5) === */
+  @media (max-width: 767px) {
+    .tilt-card {
+      transition: none;
+    }
+    .mesh-aurore {
+      animation-duration: 40s;  /* slower on mobile to save battery */
     }
   }
 }

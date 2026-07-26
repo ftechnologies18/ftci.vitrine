@@ -1,0 +1,9 @@
+# Redirect rules for FTCI — Cloudflare Pages
+# Documentation: https://developers.cloudflare.com/pages/configuration/redirects/
+
+# Redirect www to non-www (apex domain is canonical)
+# NOTE: This is handled at the DNS/Cloudflare level, not here.
+# Cloudflare Pages automatically redirects www to apex if both are configured.
+
+# Legacy/old paths (none for now — add as needed)
+# /old-path  /new-path  301

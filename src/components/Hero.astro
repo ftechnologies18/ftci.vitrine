@@ -1,109 +1,195 @@
 ---
-// Hero section with animated mesh gradient and CTA buttons
+// Hero section with animated mesh gradient, logo SVG assembly animation, and parallax
+// Cahier des charges 6.1: Mesh gradient animé "aurore numérique" + assemblage logo mosaïque
+// Skills: Vignelli (titre statique), Apple Design (interruptible), Emil (ease-out, <300ms UI)
 ---
 
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-	<!-- Animated Mesh Gradient Background -->
-	<div 
-		class="absolute inset-0 -z-10"
-		style={{
-			backgroundImage: 'url(/manus-storage/ftci-hero-bg_0c9022cf.png)',
-			backgroundSize: 'cover',
-			backgroundPosition: 'center',
-		}}
-	></div>
+        <!-- Animated Mesh Gradient Background (cahier des charges 6.1) -->
+        <div
+                class="absolute inset-0 -z-20 mesh-aurore"
+                aria-hidden="true"
+        ></div>
 
-	<!-- Animated Mosaic Pattern Overlay -->
-	<div class="absolute inset-0 -z-10 opacity-5">
-		<svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-			<defs>
-				<pattern id="mosaic" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-					<polygon points="10,0 20,10 10,20 0,10" fill="none" stroke="#0F1E3D" stroke-width="0.5"/>
-				</pattern>
-			</defs>
-			<rect width="100" height="100" fill="url(#mosaic)"/>
-		</svg>
-	</div>
+        <!-- Parallax layer 1: Mosaic pattern overlay (slow drift) -->
+        <div
+                class="absolute inset-0 -z-10 opacity-[0.07]"
+                data-parallax="0.3"
+                aria-hidden="true"
+        >
+                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                                <pattern id="mosaic-hero" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                                        <polygon points="10,0 20,10 10,20 0,10" fill="none" stroke="#F2F4F8" stroke-width="0.5"/>
+                                </pattern>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#mosaic-hero)"/>
+                </svg>
+        </div>
 
-	<!-- Content -->
-	<div class="container relative z-10 text-center max-w-4xl mx-auto px-4">
-		<!-- Main Title -->
-		<h1 class="text-5xl md:text-7xl font-bold text-navy mb-6 animate-fade-in" style="animation-delay: 0.1s;">
-			Freelance Technologies
-			<span class="block text-transparent bg-clip-text bg-gradient-to-r from-periwinkle via-green to-orange">
-				Côte d'Ivoire
-			</span>
-		</h1>
+        <!-- Parallax layer 2: Floating diamond accents -->
+        <div class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+                <div
+                        class="absolute top-[15%] left-[10%] w-3 h-3 rotate-45 bg-orange/30 animate-float"
+                        data-parallax="0.5"
+                        style="animation-delay: 0s;"
+                ></div>
+                <div
+                        class="absolute top-[25%] right-[15%] w-2 h-2 rotate-45 bg-green/30 animate-float"
+                        data-parallax="0.4"
+                        style="animation-delay: 1s;"
+                ></div>
+                <div
+                        class="absolute bottom-[30%] left-[20%] w-4 h-4 rotate-45 bg-periwinkle/20 animate-float"
+                        data-parallax="0.6"
+                        style="animation-delay: 2s;"
+                ></div>
+                <div
+                        class="absolute bottom-[20%] right-[25%] w-2.5 h-2.5 rotate-45 bg-orange/25 animate-float"
+                        data-parallax="0.45"
+                        style="animation-delay: 1.5s;"
+                ></div>
+        </div>
 
-		<!-- Subtitle -->
-		<p class="text-lg md:text-xl text-gray-text mb-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.2s;">
-			Transformez votre institution avec des solutions SaaS innovantes et du conseil en transformation digitale pensés pour le marché africain.
-		</p>
+        <!-- Content -->
+        <div class="container relative z-10 text-center max-w-4xl mx-auto px-4">
+                <!-- Animated Logo SVG (cahier des charges 6.1: assemblage mosaïque) -->
+                <div class="flex justify-center mb-8 animate-assemble" style="--d: 0;">
+                        <svg
+                                width="88"
+                                height="88"
+                                viewBox="0 0 100 100"
+                                class="drop-shadow-[0_0_30px_rgba(238,108,26,0.3)]"
+                                aria-hidden="true"
+                        >
+                                <defs>
+                                        <linearGradient id="logoGradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#0F1E3D"/>
+                                                <stop offset="100%" stop-color="#6B7FC7"/>
+                                        </linearGradient>
+                                        <linearGradient id="logoGradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#1E9E4F"/>
+                                                <stop offset="100%" stop-color="#22c55e"/>
+                                        </linearGradient>
+                                        <linearGradient id="logoGradOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#EE6C1A"/>
+                                                <stop offset="100%" stop-color="#f59e0b"/>
+                                        </linearGradient>
+                                </defs>
 
-		<!-- CTA Buttons -->
-		<div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style="animation-delay: 0.3s;">
-			<a 
-				href="#solutions"
-				class="btn-primary px-8 py-4 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600 active:scale-95 transition-all duration-200 inline-flex items-center justify-center gap-2"
-			>
-				Découvrir nos solutions
-				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-				</svg>
-			</a>
-			<a 
-				href="#contact"
-				class="btn-outline px-8 py-4 border-2 border-navy text-navy rounded-lg font-semibold hover:bg-navy/5 active:scale-95 transition-all duration-200"
-			>
-				Nous contacter
-			</a>
-		</div>
+                                <!-- Three trefoil arms (matches FTCI logo: blue, green, orange mosaic diamonds) -->
+                                <!-- Arm 1: Blue (top-left) -->
+                                <g class="stroke-draw" style="--d: 0;">
+                                        <g fill="url(#logoGradBlue)">
+                                                <rect x="42" y="20" width="6" height="6" transform="rotate(45 45 23)"/>
+                                                <rect x="35" y="27" width="6" height="6" transform="rotate(45 38 30)"/>
+                                                <rect x="28" y="34" width="6" height="6" transform="rotate(45 31 37)"/>
+                                                <rect x="22" y="40" width="6" height="6" transform="rotate(45 25 43)"/>
+                                                <rect x="16" y="46" width="5" height="5" transform="rotate(45 18.5 48.5)" opacity="0.7"/>
+                                                <rect x="12" y="52" width="4" height="4" transform="rotate(45 14 54)" opacity="0.5"/>
+                                        </g>
+                                </g>
 
-		<!-- Scroll Indicator -->
-		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-			<svg class="w-6 h-6 text-navy opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-			</svg>
-		</div>
-	</div>
+                                <!-- Arm 2: Green (right) -->
+                                <g class="stroke-draw" style="--d: 1;">
+                                        <g fill="url(#logoGradGreen)">
+                                                <rect x="56" y="24" width="6" height="6" transform="rotate(45 59 27)"/>
+                                                <rect x="63" y="31" width="6" height="6" transform="rotate(45 66 34)"/>
+                                                <rect x="70" y="38" width="6" height="6" transform="rotate(45 73 41)"/>
+                                                <rect x="76" y="45" width="6" height="6" transform="rotate(45 79 48)"/>
+                                                <rect x="82" y="52" width="5" height="5" transform="rotate(45 84.5 54.5)" opacity="0.7"/>
+                                                <rect x="86" y="58" width="4" height="4" transform="rotate(45 88 60)" opacity="0.5"/>
+                                        </g>
+                                </g>
+
+                                <!-- Arm 3: Orange (bottom) -->
+                                <g class="stroke-draw" style="--d: 2;">
+                                        <g fill="url(#logoGradOrange)">
+                                                <rect x="44" y="56" width="6" height="6" transform="rotate(45 47 59)"/>
+                                                <rect x="47" y="64" width="6" height="6" transform="rotate(45 50 67)"/>
+                                                <rect x="50" y="72" width="6" height="6" transform="rotate(45 53 75)"/>
+                                                <rect x="53" y="80" width="5" height="5" transform="rotate(45 55.5 82.5)" opacity="0.7"/>
+                                                <rect x="55" y="86" width="4" height="4" transform="rotate(45 57 88)" opacity="0.5"/>
+                                        </g>
+                                </g>
+                        </svg>
+                </div>
+
+                <!-- Main Title (Vignelli: stays static, crisp, never animated) -->
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in" style="animation-delay: 0.3s;">
+                        Freelance Technologies
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-periwinkle via-green to-orange">
+                                Côte d'Ivoire
+                        </span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.5s;">
+                        Cabinet de conseil en transformation digitale et éditeur de solutions SaaS pensées pour le marché africain.
+                </p>
+
+                <!-- CTA Buttons (magnetic effect via JS) -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style="animation-delay: 0.7s;">
+                        <a
+                                href="#solutions"
+                                class="magnetic btn-primary px-8 py-4 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600 active:scale-95 transition-all duration-200 inline-flex items-center justify-center gap-2"
+                                data-magnetic
+                        >
+                                Découvrir nos solutions
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                        </a>
+                        <a
+                                href="#contact"
+                                class="magnetic btn-outline px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 active:scale-95 transition-all duration-200"
+                                data-magnetic
+                        >
+                                Nous contacter
+                        </a>
+                </div>
+
+                <!-- Scroll Indicator -->
+                <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce" aria-hidden="true">
+                        <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                </div>
+        </div>
 </section>
 
 <style>
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+        @keyframes fadeIn {
+                from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                }
+                to {
+                        opacity: 1;
+                        transform: translateY(0);
+                }
+        }
 
-	@keyframes bounce {
-		0%, 100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-10px);
-		}
-	}
+        @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+        }
 
-	.animate-fade-in {
-		animation: fadeIn 0.6s ease-out forwards;
-		opacity: 0;
-	}
+        .animate-fade-in {
+                animation: fadeIn 0.6s var(--ease-out) forwards;
+                opacity: 0;
+        }
 
-	.animate-bounce {
-		animation: bounce 2s infinite;
-	}
+        .animate-bounce {
+                animation: bounce 2s infinite;
+        }
 
-	@media (prefers-reduced-motion: reduce) {
-		.animate-fade-in,
-		.animate-bounce {
-			animation: none;
-			opacity: 1;
-			transform: none;
-		}
-	}
+        @media (prefers-reduced-motion: reduce) {
+                .animate-fade-in,
+                .animate-bounce {
+                        animation: none;
+                        opacity: 1;
+                        transform: none;
+                }
+        }
 </style>

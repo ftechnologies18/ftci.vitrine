@@ -1,0 +1,9 @@
+---
+import ProductLayout from '../../components/ProductLayout.astro';
+import { getProduct } from '../../data/products';
+
+const product = getProduct('cats');
+if (!product) throw new Error('Product "cats" not found');
+---
+
+<ProductLayout product={product} />

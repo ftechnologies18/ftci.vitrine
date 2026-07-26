@@ -1,12 +1,102 @@
 ---
 import '../styles/global.css';
+import SEO from '../components/SEO.astro';
 
-interface Props {
+export interface Props {
 	title: string;
 	description?: string;
+	canonical?: string;
+	ogImage?: string;
+	noindex?: boolean;
+	keywords?: string[];
 }
 
-const { title, description = "FTCI - Freelance Technologies Côte d'Ivoire" } = Astro.props;
+const {
+	title = 'FTCI — Freelance Technologies Côte d\'Ivoire | Solutions SaaS & Conseil',
+	description = "FTCI — Cabinet de conseil en transformation digitale et éditeur de solutions SaaS pour le marché africain. SECT, OPUC, CATS, ScolaGest.",
+	canonical,
+	ogImage,
+	noindex = false,
+	keywords = ['transformation digitale', 'SaaS Afrique', 'conseil IT Côte d\'Ivoire', 'SECT', 'OPUC', 'CATS', 'ScolaGest'],
+} = Astro.props;
+
+const siteUrl = 'https://ftci.fr';
+
+// Données structurées schema.org Organization — injectées sur toutes les pages
+const organizationSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: 'FTCI — Freelance Technologies Côte d\'Ivoire',
+	alternateName: 'FTCI',
+	url: siteUrl,
+	logo: `${siteUrl}/brand/logo-ftci.png`,
+	description: "Cabinet de conseil en transformation digitale et éditeur de solutions SaaS pour le marché africain.",
+	foundingDate: '2023',
+	founders: [
+		{
+			'@type': 'Organization',
+			name: 'Freelance Technologies Côte d\'Ivoire',
+		},
+	],
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Abidjan',
+		addressRegion: 'Lagunes',
+		addressCountry: 'CI',
+	},
+	contactPoint: [
+		{
+			'@type': 'ContactPoint',
+			contactType: 'customer service',
+			email: 'contact@ftci.fr',
+			telephone: '+22501234567',
+			areaServed: ['CI', 'SN', 'ML', 'BF', 'GN'],
+			availableLanguage: ['French'],
+		},
+	],
+	sameAs: [],
+	knowsAbout: [
+		'Transformation digitale',
+		'SaaS',
+		'Évaluation académique',
+		'Gestion BTP',
+		'Gestion scolaire',
+		'Infrastructure cloud',
+		'Développement web',
+	],
+	subOrganization: [
+		{
+			'@type': 'Organization',
+			name: 'SECT',
+			url: 'https://sect.ftci.fr',
+		},
+		{
+			'@type': 'Organization',
+			name: 'OPUC',
+			url: 'https://opuc.ftci.fr',
+		},
+		{
+			'@type': 'Organization',
+			name: 'CATS',
+			url: 'https://cats.ftci.fr',
+		},
+		{
+			'@type': 'Organization',
+			name: 'ScolaGest',
+			url: 'https://scolagest.ftci.fr',
+		},
+	],
+};
+
+// Website schema (moteurs de recherche)
+const websiteSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: 'FTCI — Freelance Technologies Côte d\'Ivoire',
+	url: siteUrl,
+	inLanguage: 'fr-FR',
+	publisher: { '@type': 'Organization', name: 'FTCI' },
+};
 ---
 
 <!doctype html>
@@ -14,51 +104,188 @@ const { title, description = "FTCI - Freelance Technologies Côte d'Ivoire" } = 
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
-		
-		<!-- Open Graph -->
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
-		
+
 		<!-- Favicon -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		
-		<!-- Google Fonts -->
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/favicon.svg" />
+
+		<!-- Preconnect & fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-		
-		<title>{title}</title>
-	</head>
-	<body class="bg-light-bg text-navy">
-		<slot />
-		
-		<script>
-			// Intersection Observer pour les animations au scroll
-			const observerOptions = {
-				threshold: 0.1,
-				rootMargin: '0px 0px -50px 0px'
-			};
 
-			const observer = new IntersectionObserver((entries) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('animate-fade-in');
-						observer.unobserve(entry.target);
+		<!-- SEO meta tags + JSON-LD -->
+		<SEO
+			title={title}
+			description={description}
+			canonical={canonical}
+			ogImage={ogImage}
+			noindex={noindex}
+			keywords={keywords}
+			schema={[organizationSchema, websiteSchema]}
+		/>
+	</head>
+	<body class="bg-light-bg text-navy min-h-screen flex flex-col">
+		<slot />
+
+		<script>
+			// === Centralized global interactions ===
+			// Cahier des charges 6.2 (magnetic), 6.3 (parallax, scroll reveal), 6.4 (cursor trail)
+			// Skills: Apple Design (interruptible, continuous), Emil (transitions not keyframes for interactive)
+
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const isTouchDevice = window.matchMedia('(hover: none)').matches;
+
+			// === 1. Scroll reveal (Intersection Observer) ===
+			// Cahier des charges 6.3: apparition progressive au scroll
+			if (!prefersReducedMotion) {
+				const revealObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								revealObserver.unobserve(entry.target);
+							}
+						});
+					},
+					{
+						threshold: 0.1,
+						rootMargin: '0px 0px -50px 0px',
+					}
+				);
+
+				document.querySelectorAll('.observe').forEach((el) => {
+					revealObserver.observe(el);
+				});
+			} else {
+				// Reduced motion: show everything immediately
+				document.querySelectorAll('.observe').forEach((el) => {
+					el.classList.add('is-visible');
+				});
+			}
+
+			// === 2. Magnetic button effect (cahier des charges 6.2) ===
+			// Apple Design: continuous tracking, interruptible via CSS transitions
+			// Emil: only on hover-capable devices (touch fires false hovers)
+			if (!isTouchDevice && !prefersReducedMotion) {
+				const magneticElements = document.querySelectorAll<HTMLElement>('[data-magnetic]');
+
+				magneticElements.forEach((el) => {
+					el.addEventListener('pointermove', (e) => {
+						const rect = el.getBoundingClientRect();
+						const x = e.clientX - rect.left - rect.width / 2;
+						const y = e.clientY - rect.top - rect.height / 2;
+						// Subtle magnetic pull (max ~8px)
+						const moveX = x * 0.15;
+						const moveY = y * 0.15;
+						el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+					});
+
+					el.addEventListener('pointerleave', () => {
+						// Transition handles smooth return from current value
+						el.style.transform = '';
+					});
+				});
+			}
+
+			// === 3. Parallax (cahier des charges 6.3: parallax léger) ===
+			// Apple Design: rAF-throttled, passive listener
+			if (!prefersReducedMotion) {
+				const parallaxElements = document.querySelectorAll<HTMLElement>('[data-parallax]');
+				let ticking = false;
+
+				const updateParallax = () => {
+					const scrolled = window.scrollY;
+					parallaxElements.forEach((el) => {
+						const speed = parseFloat(el.dataset.parallax || '0.3');
+						const yPos = -(scrolled * speed);
+						el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+					});
+					ticking = false;
+				};
+
+				window.addEventListener(
+					'scroll',
+					() => {
+						if (!ticking) {
+							window.requestAnimationFrame(updateParallax);
+							ticking = true;
+						}
+					},
+					{ passive: true }
+				);
+			}
+
+			// === 4. Cursor trail effect (cahier des charges 6.4: optionnel, desktop only) ===
+			// Disabled on touch devices and reduced-motion per cahier des charges 6.5
+			if (!isTouchDevice && !prefersReducedMotion) {
+				const trail = document.createElement('div');
+				trail.id = 'cursor-trail';
+				trail.setAttribute('aria-hidden', 'true');
+				trail.style.cssText = `
+					position: fixed;
+					width: 20px;
+					height: 20px;
+					border: 2px solid rgba(238, 108, 26, 0.4);
+					border-radius: 50%;
+					pointer-events: none;
+					z-index: 9999;
+					transform: translate(-50%, -50%);
+					transition: width 0.2s, height 0.2s, opacity 0.2s;
+					opacity: 0;
+					mix-blend-mode: difference;
+				`;
+				document.body.appendChild(trail);
+
+				let trailX = 0;
+				let trailY = 0;
+				let mouseX = 0;
+				let mouseY = 0;
+				let isVisible = false;
+
+				document.addEventListener('pointermove', (e) => {
+					mouseX = e.clientX;
+					mouseY = e.clientY;
+					if (!isVisible) {
+						trail.style.opacity = '1';
+						isVisible = true;
 					}
 				});
-			}, observerOptions);
 
-			// Observer tous les éléments avec la classe 'observe'
-			document.querySelectorAll('.observe').forEach(el => {
-				observer.observe(el);
-			});
+				document.addEventListener('pointerleave', () => {
+					trail.style.opacity = '0';
+					isVisible = false;
+				});
 
-			// Smooth scroll behavior
-			document.documentElement.style.scrollBehavior = 'smooth';
+				// Spring-like follow loop (Apple Design: smooth, not 1:1)
+				const animateTrail = () => {
+					trailX += (mouseX - trailX) * 0.15;
+					trailY += (mouseY - trailY) * 0.15;
+					trail.style.left = `${trailX}px`;
+					trail.style.top = `${trailY}px`;
+					requestAnimationFrame(animateTrail);
+				};
+				requestAnimationFrame(animateTrail);
+
+				// Grow on hover over interactive elements
+				document.querySelectorAll('a, button, [data-tilt]').forEach((el) => {
+					el.addEventListener('pointerenter', () => {
+						trail.style.width = '40px';
+						trail.style.height = '40px';
+						trail.style.borderColor = 'rgba(30, 158, 79, 0.5)';
+					});
+					el.addEventListener('pointerleave', () => {
+						trail.style.width = '20px';
+						trail.style.height = '20px';
+						trail.style.borderColor = 'rgba(238, 108, 26, 0.4)';
+					});
+				});
+			}
+
+			// === 5. Smooth scroll behavior ===
+			document.documentElement.style.scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
 		</script>
 	</body>
 </html>

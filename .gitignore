@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local contact form storage (dev mode)
+storage/
+
+# wrangler local cache (dev only — remote KV bindings are in wrangler.jsonc)
+.wrangler/
+
