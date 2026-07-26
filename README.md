@@ -49,18 +49,26 @@ ftci.vitrine/
 │   ├── favicon.svg
 │   ├── _headers                  # Headers de sécurité (CSP, HSTS, cache)
 │   └── _redirects                # Règles de redirection
-├── skills/                       # 9 skills de design installés
+├── skills/                       # 16 skills installés (9 design + 7 Astro)
 │   ├── README.md                 # Synthèse des principes applicables
 │   ├── skill-vignelli-canon-design-system.json
 │   ├── skill-muller-brockmann-grid-systems.json
 │   ├── skill-brand-book-generator.json
 │   ├── skill-nyt-data-viz.json
 │   ├── skill-small-biz-website-builder.json
-│   └── emilkowalski/             # 4 skills Emil Kowalski (markdown)
-│       ├── animation-vocabulary/SKILL.md
-│       ├── apple-design/SKILL.md
-│       ├── emil-design-eng/SKILL.md
-│       └── review-animations/{SKILL.md,STANDARDS.md}
+│   ├── emilkowalski/             # 4 skills Emil Kowalski (markdown)
+│   │   ├── animation-vocabulary/SKILL.md
+│   │   ├── apple-design/SKILL.md
+│   │   ├── emil-design-eng/SKILL.md
+│   │   └── review-animations/{SKILL.md,STANDARDS.md}
+│   └── astro/                    # 7 skills officiels Astro (markdown)
+│       ├── astro-developer/      # Architecture, debugging, testing
+│       ├── astro-pr-writer/      # Écriture de PR
+│       ├── triage/               # Triage de bugs
+│       ├── changeset/            # Versioning
+│       ├── merge/                # Gestion des merges
+│       ├── analyze-github-action-logs/
+│       └── writing-comments/     # Standards de commentaires
 ├── src/
 │   ├── components/
 │   │   ├── Header.astro          # Sticky glassmorphism + drawer mobile
@@ -130,7 +138,7 @@ ftci.vitrine/
 
 ## ✨ Animations & Skills
 
-Le site applique **strictement** le cahier des charges (section 6) et les **9 skills de design** installés.
+Le site applique **strictement** le cahier des charges (section 6) et les **16 skills** installés (9 design + 7 Astro).
 
 ### Animations (cahier des charges section 6)
 
@@ -151,7 +159,7 @@ Le site applique **strictement** le cahier des charges (section 6) et les **9 sk
 | **6.5 A11y** | prefers-reduced-motion | Toutes animations désactivées/gentillement dégradées |
 | **6.5 Mobile** | Dégradation gracieuse | Tilt désactivé, mesh ralenti, curseur absent |
 
-### 9 Skills appliqués
+### 9 Skills design appliqués
 
 | Skill | Application |
 |-------|-------------|
@@ -164,6 +172,18 @@ Le site applique **strictement** le cahier des charges (section 6) et les **9 sk
 | **Review Animations** | 10 standards non-négociables respectés |
 | **Small Biz Website Builder** | Layout DNA varié par section, pas de clutter |
 | **Animation Vocabulary** | Stagger, scroll-reveal, float, 3D tilt, tabular numbers |
+
+### 7 Skills Astro (développement)
+
+| Skill | Application |
+|-------|-------------|
+| **astro-developer** | Architecture, debugging, testing Astro — référence pour la structure du projet |
+| **triage** | Workflow de triage de bugs (reproduce → diagnose → verify → fix) |
+| **writing-comments** | Standards de commentaires JSDoc et inline pour la maintenabilité |
+| **astro-pr-writer** | Structure de PR claire pour reviewers |
+| **changeset** | Versioning et changelog |
+| **merge** | Gestion des merges (résolution conflits, cleanup changesets, fix CI) |
+| **analyze-github-action-logs** | Analyse des logs GitHub Actions |
 
 ### Easings custom (Emil Design)
 

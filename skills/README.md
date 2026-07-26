@@ -1,10 +1,10 @@
-# Skills de Design — FTCI Vitrine
+# Skills de Design & Développement — FTCI Vitrine
 
-Ce dossier contient **9 skills de design** installés depuis deux repos, utilisés comme **référence de discipline design** pour les améliorations visuelles du site FTCI.
+Ce dossier contient **16 skills** installés depuis trois repos, utilisés comme **référence de discipline design et développement Astro** pour le site FTCI.
 
 ## 📚 Skills installés
 
-### Repo 1 : hyperagent-public-skills (5 skills JSON)
+### Repo 1 : hyperagent-public-skills (5 skills JSON — Design)
 
 Source : [alexmcdonnell-airtable/hyperagent-public-skills](https://github.com/alexmcdonnell-airtable/hyperagent-public-skills)
 
@@ -16,7 +16,7 @@ Source : [alexmcdonnell-airtable/hyperagent-public-skills](https://github.com/al
 | `skill-small-biz-website-builder.json` | Playbook de web design moderne | Bonnes pratiques |
 | `skill-nyt-data-viz.json` | Couleurs, typo, annotation des data viz | Visualisation données |
 
-### Repo 2 : emilkowalski_skills (4 skills markdown)
+### Repo 2 : emilkowalski_skills (4 skills markdown — Motion)
 
 Source : [attentiondotnet/emilkowalski_skills](https://github.com/attentiondotnet/emilkowalski_skills/tree/main/skills)
 
@@ -26,6 +26,27 @@ Source : [attentiondotnet/emilkowalski_skills](https://github.com/attentiondotne
 | `emilkowalski/apple-design/SKILL.md` | Motion fluide, springs, gestures, matériaux translucides | Motion iOS-style |
 | `emilkowalski/emil-design-eng/SKILL.md` | Philosophie UI polish, décisions d'animation, craft | Design engineering |
 | `emilkowalski/review-animations/SKILL.md` + `STANDARDS.md` | Standards non-négociables pour reviewer les animations | Code review |
+
+### Repo 3 : withastro/astro (7 skills markdown — Développement Astro)
+
+Source : [withastro/astro/.agents/skills](https://github.com/withastro/astro/tree/main/.agents/skills)
+
+| Skill | Description | Fichiers |
+|-------|-------------|----------|
+| `astro/astro-developer/` | Guide complet développement Astro : architecture, debugging, testing, contraintes | `SKILL.md`, `architecture.md`, `constraints.md`, `debugging.md`, `testing.md` |
+| `astro/astro-pr-writer/` | Écriture de PR Astro avec titles et bodies reviewer-friendly | `SKILL.md` |
+| `astro/triage/` | Triage de bugs : reproduire, diagnostiquer, vérifier, fixer | `SKILL.md`, `diagnose.md`, `fix.md`, `reproduce.md`, `verify.md` |
+| `astro/changeset/` | Création de changesets pour versioning et changelog | `SKILL.md` |
+| `astro/merge/` | Gestion des merges main→next : résolution conflits, cleanup changesets, fix CI | `SKILL.md`, `clean-changesets.md`, `fix-ci.md`, `resolve-conflicts.md` |
+| `astro/analyze-github-action-logs/` | Analyse des logs GitHub Actions pour identifier patterns et erreurs | `SKILL.md` |
+| `astro/writing-comments/` | Standards pour écrire des commentaires JSDoc et inline dans le code Astro | `SKILL.md` |
+
+#### Skills Astro les plus pertinents pour FTCI
+
+- **`astro-developer`** — Architecture, debugging et testing Astro. Référence pour comprendre la structure du projet, les contraintes de build, et les bonnes pratiques.
+- **`triage`** — Workflow complet de triage de bugs (reproduce → diagnose → verify → fix). Utile pour déboguer les issues de production.
+- **`writing-comments`** — Standards de commentaires pour contributeurs. Assure la maintenabilité du code.
+- **`astro-pr-writer`** — Structure de PR claire pour reviewers. Améliore la qualité des contributions.
 
 ---
 
