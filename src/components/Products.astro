@@ -97,31 +97,16 @@ const nodeColors = products.map((p) => haloHex[p.accentColor]);
                                                                         {product.description}
                                                                 </p>
 
-                                                                <!-- 2 liens : page locale + plateforme externe (magnetic) -->
-                                                                <div class="flex items-center gap-4 pt-4 border-t border-navy/5">
-                                                                        <a
-                                                                                href={productUrls[product.slug]}
-                                                                                class="magnetic-btn inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-orange transition-colors duration-200"
-                                                                        >
-                                                                                En savoir plus
-                                                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                                                                </svg>
-                                                                        </a>
-                                                                        {product.externalUrl && (
-                                                                                <a
-                                                                                        href={product.externalUrl}
-                                                                                        target="_blank"
-                                                                                        rel="noopener noreferrer"
-                                                                                        class={`magnetic-btn inline-flex items-center gap-1.5 text-sm font-medium ${accent.text} hover:opacity-75 transition-opacity duration-200`}
-                                                                                >
-                                                                                        Accéder
-                                                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5m0 0v5m0-5L9 15M5 5h4a2 2 0 012 2v0a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
-                                                                                        </svg>
-                                                                                </a>
-                                                                        )}
-                                                                </div>
+                                                                <!-- Lien vers la landing page dédiée -->
+                                                                <a
+                                                                        href={productUrls[product.slug]}
+                                                                        class={`magnetic-btn inline-flex items-center gap-2 text-sm font-semibold ${accent.bgHover} bg-navy text-white px-5 py-3 rounded-xl transition-all duration-200 hover:shadow-lg`}
+                                                                >
+                                                                        Découvrir {product.name}
+                                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                                        </svg>
+                                                                </a>
                                                         </div>
                                                 </article>
                                         </div>
