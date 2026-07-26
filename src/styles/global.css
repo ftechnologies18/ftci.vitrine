@@ -1,12 +1,27 @@
 @import "tailwindcss";
 
-@theme inline {
-  --radius: 0.65rem;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+/* ============================================================
+   FTCI Design System — Tailwind CSS 4
+   ------------------------------------------------------------
+   Compilé à partir de 6 skills de design :
+   - Vignelli Canon          : rigueur typo, H1 statique, max 2 familles
+   - Müller-Brockmann        : baseline 8px, tous espacements multiples de 8,
+                               line-height en px sur display type
+   - Brand Book Generator    : palette FTCI, mesh navy + warm radials
+                               (PAS de bleu/violet "aurora AI"),
+                               tilt 3D ±2.2°, stagger assemble
+   - Apple Design            : reduced-motion = cross-fade, hover gating,
+                               tracking size-specific, interruptible
+   - Emil Design Engineering : easings custom (jamais ease-in sur UI,
+                               jamais built-in), scale 0.95 (pas 0),
+                               :active scale(0.97) 160ms, durations < 300ms,
+                               animer uniquement transform + opacity (GPU)
+   - Review Animations       : 10 standards non-négociables
+   ============================================================ */
 
+@theme {
+  /* === Brand palette (FTCI brand book) ===
+     Couleurs d'identité — la couleur = sens, pas déco (Vignelli) */
   --color-navy: #0F1E3D;
   --color-periwinkle: #6B7FC7;
   --color-green: #1E9E4F;
@@ -14,14 +29,82 @@
   --color-light-bg: #F2F4F8;
   --color-gray-text: #6B7280;
 
-  /* Easing curves (Emil Kowalski standards — built-in CSS easings are too weak) */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-spring: cubic-bezier(0.22, 0.9, 0.3, 1);
+  /* Shades for hover/active states — déclinaisons cohérentes (pas Tailwind default) */
+  --color-orange-600: #D85E10;
+  --color-orange-700: #B84E0C;
+  --color-green-600: #1A8A44;
+  --color-green-700: #157238;
+  --color-periwinkle-600: #5A6EB8;
+  --color-periwinkle-700: #4A5DA6;
+  --color-navy-700: #0A1730;
+  --color-navy-800: #060F1F;
+
+  /* === Radius scale (multiples de 8px / 4px) === */
+  --radius: 0.5rem;        /* 8px */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+
+  /* === Fonts (Vignelli: max 2 familles) === */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Poppins', system-ui, sans-serif;
+
+  /* === Easings (Emil — jamais de built-in, jamais ease-in sur UI) ===
+     Override des valeurs Tailwind par défaut pour obtenir du "craft" */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);       /* enter / reveal */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* move / ambient */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* drawer / sheet */
+  --ease-spring: cubic-bezier(0.22, 0.9, 0.3, 1);    /* assemble / pop */
+
+  /* === Shadows (8px baseline) === */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 30, 61, 0.05);
+  --shadow-md: 0 4px 16px -2px rgba(15, 30, 61, 0.08);
+  --shadow-lg: 0 16px 48px -8px rgba(15, 30, 61, 0.12);
+  --shadow-xl: 0 32px 64px -16px rgba(15, 30, 61, 0.18);
+
+  /* === Container (Müller-Brockmann: max-width fixe) === */
+  --container-7xl: 80rem;  /* 1280px */
 }
 
 :root {
+  /* === Müller-Brockmann baseline grid (8px) ===
+     Tous les espacements du site sont des multiples de 8px */
+  --baseline: 8px;
+
+  /* Spacing scale — 1× à 16× baseline */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-7: 56px;
+  --space-8: 64px;
+  --space-9: 72px;
+  --space-10: 80px;
+  --space-11: 88px;
+  --space-12: 96px;
+  --space-13: 104px;
+  --space-14: 112px;
+  --space-15: 120px;
+  --space-16: 128px;
+
+  /* Line-height en px (Müller-Brockmann: jamais unitless sur display type) */
+  --line-height: 24px;              /* body, 3× baseline */
+  --line-height-display-xl: 80px;   /* h1 hero (10× baseline) */
+  --line-height-display-lg: 64px;   /* h2 (8× baseline) */
+  --line-height-display-md: 48px;   /* h3 (6× baseline) */
+  --line-height-display-sm: 40px;   /* h4 (5× baseline) */
+
+  /* Layout vars */
+  --gutter: 24px;       /* 3× baseline */
+  --margin: 32px;       /* 4× baseline */
+  --max-width: 1296px;  /* container max */
+  --cols: 12;
+
+  /* Legacy aliases (compatibilité composants existants) */
   --primary: #0F1E3D;
   --primary-foreground: #F2F4F8;
   --secondary: #6B7FC7;
@@ -30,45 +113,82 @@
   --foreground: #0F1E3D;
   --muted: #6B7280;
   --border: #E5E7EB;
-  --radius: 0.65rem;
-
-  /* Müller-Brockmann baseline grid — all spacing multiples of 8px */
-  --baseline: 8px;
-  --line-height: 24px; /* 3× baseline */
-  --gutter: 24px;      /* 3× baseline */
-  --margin: 32px;      /* 4× baseline */
-  --max-width: 1296px;
-  --cols: 12;
 }
 
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
 @layer base {
-  body {
-    @apply bg-[#F2F4F8] text-[#0F1E3D];
-    /* Apple Design: respect user text-size setting — scale with rem */
-    font-size: 100%;
-    line-height: 1.5;
-  }
-
   html {
     scroll-behavior: smooth;
+    /* Apple Design: respect user text-size setting */
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
   }
 
-  /* Typography: tracking size-specific (Apple Design) */
-  h1, h2, h3 {
-    letter-spacing: -0.02em;  /* negative tracking on large text */
+  body {
+    background-color: var(--color-light-bg);
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;  /* 24px @ 16px base */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings — Poppins, tracking size-specific (Apple Design) */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 800;  /* Poppins ExtraBold par défaut */
+    text-wrap: balance;
+  }
+  h1 {
+    line-height: 1.05;             /* fallback responsive (unitless) */
+    letter-spacing: -0.025em;      /* tracking négatif sur très gros */
+  }
+  h2 {
     line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  h3 {
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  h4 {
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  h5, h6 {
+    line-height: 1.25;
+    letter-spacing: -0.005em;
   }
 
-  body, p, span, li {
+  body, p, span, li, a {
     letter-spacing: 0;  /* body near 0 */
   }
 
-  /* NYT Data Viz: tabular numbers for all numeric stats */
+  /* NYT Data Viz: tabular numbers sur tous les chiffres/stats */
   .stat-value {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;
   }
 
+  /* Selection FTCI */
+  ::selection {
+    background-color: var(--color-orange);
+    color: white;
+  }
+
+  /* Focus visible — accessibilité clavier (Review Animations standard 8) */
+  :focus-visible {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Reduced motion — global kill switch (Apple Design) */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -81,14 +201,37 @@
   }
 }
 
+/* ============================================================
+   COMPONENTS LAYER
+   ============================================================ */
 @layer components {
   .container {
     @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
+
+  /* === Buttons (Emil: transition transform 160ms, :active scale 0.97) ===
+     Hooks de base — les styles visuels (couleurs, padding) restent inline
+     via Tailwind utilities pour la flexibilité composant. */
+  .btn-primary,
+  .btn-outline {
+    transition: transform 160ms var(--ease-out),
+                background-color 200ms var(--ease-out),
+                border-color 200ms var(--ease-out),
+                color 200ms var(--ease-out);
+    will-change: transform;
+  }
+
+  /* Press feedback — s'applique à tous les .magnetic (boutons et liens) */
+  .magnetic:active {
+    transform: scale(0.97) !important;  /* !important pour overrider le translate inline du JS magnetic */
+  }
 }
 
+/* ============================================================
+   UTILITIES LAYER
+   ============================================================ */
 @layer utilities {
-  /* === Entrance animations (scale from 0.95 + opacity, never scale(0)) === */
+  /* === Entrance animations (scale 0.95, jamais scale(0) — Emil) === */
   .animate-fade-in {
     animation: fadeIn 0.6s var(--ease-out) both;
   }
@@ -101,25 +244,37 @@
     animation: scaleIn 0.6s var(--ease-out) both;
   }
 
-  /* === Stagger assemble (Brand Book Generator) === */
+  /* === Stagger assemble (Brand Book Generator) ===
+     Logo / cartes / éléments structurels : scale 0.93 + blur 7px → 1
+     --d = index pour le stagger delay */
   .animate-assemble {
     animation: assemble 0.72s var(--ease-spring) both;
     animation-delay: calc(var(--d, 0) * 0.075s);
   }
 
-  /* === Mesh gradient aurore (cahier des charges 6.1) === */
+  /* === Mesh gradient "aurore numérique" (cahier des charges 6.1) ===
+     Résolution de la tension Brand Book vs cahier des charges :
+     - Navy #0F1E3D comme BASE SOLIDE (pas en dégradé)
+     - Stack de 4 radial-gradients (pervenche + orange + vert) sur fond navy
+     - PAS de linear-gradient bleu→violet (anti-pattern "aurora AI")
+     - Mouvement lent 24s (alternate, ease-in-out custom) */
   .mesh-aurore {
-    background-color: #0F1E3D; /* navy solid base */
+    background-color: var(--color-navy);
     background-image:
-      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(107, 127, 199, 0.35), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 80% 20%, rgba(238, 108, 26, 0.18), transparent 55%),
-      radial-gradient(ellipse 60% 70% at 70% 80%, rgba(30, 158, 79, 0.15), transparent 60%),
-      radial-gradient(ellipse 90% 60% at 30% 70%, rgba(107, 127, 199, 0.22), transparent 65%);
+      radial-gradient(ellipse 80% 60% at 20% 30%,
+        rgba(107, 127, 199, 0.32), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 80% 20%,
+        rgba(238, 108, 26, 0.18), transparent 55%),
+      radial-gradient(ellipse 60% 70% at 70% 80%,
+        rgba(30, 158, 79, 0.15), transparent 60%),
+      radial-gradient(ellipse 90% 60% at 30% 70%,
+        rgba(107, 127, 199, 0.22), transparent 65%);
     background-size: 200% 200%;
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
     animation: meshShift 24s var(--ease-in-out) infinite alternate;
   }
 
-  /* === Tilt 3D stage (Brand Book Generator: perspective 1600px) === */
+  /* === Tilt 3D (Brand Book: perspective 1600px, rotation max ±2.2°) === */
   .tilt-stage {
     perspective: 1600px;
   }
@@ -130,17 +285,21 @@
     will-change: transform;
   }
 
-  /* === Magnetic button effect (cahier des charges 6.2) === */
+  /* === Magnetic button effect (cahier des charges 6.2) ===
+     Le transform réel est piloté par JS (pointermove → translate).
+     La transition CSS assure le retour fluide (interruptible). */
   .magnetic {
     transition: transform 0.2s var(--ease-out);
     will-change: transform;
   }
 
-  /* === Scroll reveal initial state === */
+  /* === Scroll reveal (cahier des charges 6.3) ===
+     État initial masqué, .is-visible ajouté par IntersectionObserver */
   .observe {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    transition: opacity 0.6s var(--ease-out),
+                transform 0.6s var(--ease-out);
   }
 
   .observe.is-visible {
@@ -148,7 +307,8 @@
     transform: translateY(0);
   }
 
-  /* === SVG stroke draw animation (cahier des charges 6.3) === */
+  /* === SVG stroke draw (cahier des charges 6.3) ===
+     Pour les icônes SVG "stroke" animées au reveal */
   .stroke-draw {
     stroke-dasharray: 200;
     stroke-dashoffset: 200;
@@ -156,48 +316,42 @@
     animation-delay: calc(var(--d, 0) * 0.15s);
   }
 
-  /* === Connection line pulse (cahier des charges 6.4) === */
+  /* === Connection line pulse (cahier des charges 6.4) ===
+     Flow dash sur les lignes SVG de connexion */
   .connection-line {
     stroke-dasharray: 4 4;
     animation: dashFlow 20s linear infinite;
   }
 
-  /* === Glow halo for product cards (cahier des charges 6.2) === */
+  /* === Halo glow (cahier des charges 6.2 — product cards) ===
+     Opacité 0 par défaut, 1 au hover du .group parent.
+     Gated par @media (hover: hover) ci-dessous. */
   .halo-glow {
     transition: opacity 0.3s var(--ease-out);
     opacity: 0;
   }
 
-  .group:hover .halo-glow {
-    opacity: 1;
+  /* === Float (cahier des charges 6.1 — diamants flottants hero) === */
+  .animate-float {
+    animation: float 4s var(--ease-in-out) infinite;
   }
 
-  /* === Keyframes === */
+  /* ============================================================
+     KEYFRAMES — uniquement transform + opacity (GPU, Emil)
+     ============================================================ */
   @keyframes fadeIn {
     from { opacity: 0; }
-    to { opacity: 1; }
+    to   { opacity: 1; }
   }
 
   @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);  /* never scale(0) */
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.95); }  /* jamais scale(0) */
+    to   { opacity: 1; transform: scale(1); }
   }
 
   @keyframes assemble {
@@ -214,39 +368,39 @@
   }
 
   @keyframes meshShift {
-    0% {
-      background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
-    }
-    50% {
-      background-position: 30% 20%, 70% 30%, 60% 70%, 40% 60%;
-    }
-    100% {
-      background-position: 60% 40%, 40% 60%, 30% 30%, 70% 70%;
-    }
+    0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%; }
+    50%  { background-position: 30% 20%, 70% 30%, 60% 70%, 40% 60%; }
+    100% { background-position: 60% 40%, 40% 60%, 30% 30%, 70% 70%; }
   }
 
   @keyframes drawStroke {
-    to {
-      stroke-dashoffset: 0;
-    }
+    to { stroke-dashoffset: 0; }
   }
 
   @keyframes dashFlow {
-    to {
-      stroke-dashoffset: -400;
-    }
+    to { stroke-dashoffset: -400; }
   }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50%      { transform: translateY(-8px); }
   }
 
-  .animate-float {
-    animation: float 4s var(--ease-in-out) infinite;
+  /* ============================================================
+     HOVER GATING (Emil + Review standard 8)
+     Touch devices fire false hovers on tap → on gate les hover-only effects
+     ============================================================ */
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .halo-glow {
+      opacity: 1;
+    }
   }
 
-  /* === Reduced motion: keep opacity/color, drop transform === */
+  /* ============================================================
+     REDUCED MOTION (Apple Design + Review standard 8)
+     On garde opacity/color (feedback d'état), on drop transform/filter
+     (mouvement désactivé). L'élément reste visible et utilisable.
+     ============================================================ */
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-in,
     .animate-slide-up,
@@ -276,22 +430,37 @@
     .animate-float {
       animation: none !important;
     }
-  }
 
-  /* === Hover gating (Emil Design Eng: touch devices fire false hovers on tap) === */
-  @media (hover: hover) and (pointer: fine) {
-    .magnetic:hover {
-      /* transform applied via JS for magnetic effect */
+    .magnetic {
+      transition: none !important;
+    }
+
+    .tilt-card {
+      transition: none !important;
+      transform: none !important;
     }
   }
 
-  /* === Mobile: disable heavy effects (cahier des charges 6.5) === */
+  /* ============================================================
+     MOBILE (cahier des charges 6.5)
+     Désactiver tilt 3D, ralentir mesh (économie batterie)
+     ============================================================ */
   @media (max-width: 767px) {
     .tilt-card {
       transition: none;
+      transform: none !important;  /* sécurité : pas de transform 3D sur mobile */
     }
+
+    .tilt-stage {
+      perspective: none;
+    }
+
     .mesh-aurore {
-      animation-duration: 40s;  /* slower on mobile to save battery */
+      animation-duration: 40s;  /* 24s → 40s, plus doux sur mobile */
+    }
+
+    .animate-float {
+      animation-duration: 6s;  /* plus lent, moins distrayant */
     }
   }
 }

@@ -1,211 +1,343 @@
 ---
-// About section - Company positioning and mission
-// Cahier des charges 6.2: compteurs animés au scroll
-// Skills: NYT Data Viz (tabular-nums, ONE hero accent, source lines), Apple Design (reduced motion = instant)
+// ============================================================
+// About FTCI — Refonte R-DESIGN-2
+// ------------------------------------------------------------
+// Cahier des charges 6.2 : compteurs animés au scroll (rAF, ease-out, 1.8s)
+// Layout 2 colonnes : présentation gauche, stats droite
+//
+// Skills appliqués :
+// - Vignelli Canon       : hiérarchie stricte, 2 familles typo, titres statiques
+// - Müller-Brockmann     : tous espacements multiples de 8px
+// - Brand Book Generator : palette FTCI (navy/orange/green/periwinkle)
+// - NYT Data Viz         : tabular-nums sur tous les chiffres (.stat-value),
+//                          UN seul accent héros (100K+ utilisateurs, orange),
+//                          3 stats secondaires en navy/green/periwinkle (de-emphasized),
+//                          source line italique 11px sous chaque stat
+// - Apple Design         : reduced-motion = valeur finale instantanée (pas d'animation),
+//                          tracking size-specific (headings base layer)
+// - Emil Design Eng.     : rAF + ease-out custom (cubic), 1.8s, durations < 300ms UI,
+//                          GPU-friendly (text-only animation)
+// - Review Animations    : stagger, pas de transition:all, reduced-motion respecté
+//
+// Note : .observe (scroll reveal) est géré GLOBALEMENT par Layout.astro.
+// About.astro ne définit QUE les compteurs animés (spécifiques à cette section).
+// ============================================================
 ---
 
-<section id="about" class="py-20 md:py-32 bg-white relative overflow-hidden">
-	<!-- Background Pattern (cahier des charges 6.4: motif circuit) -->
-	<div
-		class="absolute inset-0 -z-10 opacity-[0.05]"
-		style={{
-			backgroundImage: 'url(/manus-storage/ftci-tech-grid_9a960dd7.png)',
-			backgroundSize: '200px 200px',
-		}}
-	></div>
+<section
+        id="about"
+        class="relative py-20 md:py-32 bg-white overflow-hidden"
+        aria-label="À propos de FTCI"
+>
+        {/* Background : mosaïque filigrane FTCI (diamants), opacity 6% */}
+        <div class="absolute inset-0 -z-10 opacity-[0.06]" aria-hidden="true">
+                <svg
+                        class="w-full h-full"
+                        viewBox="0 0 200 200"
+                        preserveAspectRatio="xMidYMid slice"
+                >
+                        <defs>
+                                <pattern
+                                        id="mosaic-about"
+                                        x="0"
+                                        y="0"
+                                        width="20"
+                                        height="20"
+                                        patternUnits="userSpaceOnUse"
+                                >
+                                        <polygon
+                                                points="10,0 20,10 10,20 0,10"
+                                                fill="none"
+                                                stroke="#0F1E3D"
+                                                stroke-width="0.5"
+                                        />
+                                </pattern>
+                        </defs>
+                        <rect width="200" height="200" fill="url(#mosaic-about)" />
+                </svg>
+        </div>
 
-	<div class="container">
-		<div class="grid md:grid-cols-2 gap-12 items-center">
-			<!-- Left Content -->
-			<div class="observe">
-				<h2 class="text-4xl md:text-5xl font-bold text-navy mb-6">
-					À Propos de FTCI
-				</h2>
+        <div class="container">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+                        {/* === Colonne gauche : présentation entreprise === */}
+                        <div
+                                class="observe"
+                                style="--d:0; transition-delay: calc(var(--d, 0) * 0.1s);"
+                        >
+                                <p class="text-sm font-semibold uppercase tracking-[0.2em] text-orange mb-4">
+                                        Qui sommes-nous
+                                </p>
+                                <h2 class="text-4xl md:text-5xl font-extrabold text-navy mb-6 leading-tight">
+                                        À Propos de FTCI
+                                </h2>
 
-				<p class="text-lg text-gray-text mb-6 leading-relaxed">
-					Freelance Technologies Côte d'Ivoire est un cabinet de conseil en transformation digitale et éditeur de solutions logicielles SaaS pensées pour le marché ivoirien et africain.
-				</p>
+                                <p class="text-lg text-gray-text mb-5 leading-relaxed">
+                                        Freelance Technologies Côte d'Ivoire est un cabinet de conseil en
+                                        transformation digitale et éditeur de solutions logicielles SaaS
+                                        pensées pour le marché ivoirien et africain.
+                                </p>
 
-				<p class="text-lg text-gray-text mb-6 leading-relaxed">
-					Depuis notre création, nous accompagnons universités, entreprises et institutions dans leur digitalisation, du conseil stratégique jusqu'au déploiement d'outils numériques sur mesure.
-				</p>
+                                <p class="text-lg text-gray-text mb-8 leading-relaxed">
+                                        Depuis notre création, nous accompagnons universités, entreprises
+                                        et institutions dans leur digitalisation, du conseil stratégique
+                                        jusqu'au déploiement d'outils numériques sur mesure.
+                                </p>
 
-				<div class="space-y-4 mb-8">
-					<div class="flex items-start gap-4">
-						<div class="w-8 h-8 bg-gradient-to-br from-orange to-orange-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
-							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-							</svg>
-						</div>
-						<div>
-							<h4 class="font-semibold text-navy mb-1">Expertise Locale</h4>
-							<p class="text-gray-text">Comprendre les défis spécifiques des institutions africaines</p>
-						</div>
-					</div>
+                                {/* 3 points clés : icône + titre + description */}
+                                <div class="space-y-5 mb-10">
+                                        <div class="flex items-start gap-4">
+                                                <div class="w-10 h-10 bg-orange/10 rounded-lg flex items-center justify-center text-orange flex-shrink-0">
+                                                        <svg
+                                                                class="w-5 h-5"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                aria-hidden="true"
+                                                        >
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                                                />
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                                                />
+                                                        </svg>
+                                                </div>
+                                                <div>
+                                                        <h4 class="font-bold text-navy mb-1">Expertise Locale</h4>
+                                                        <p class="text-gray-text">
+                                                                Comprendre les défis spécifiques des institutions africaines
+                                                        </p>
+                                                </div>
+                                        </div>
 
-					<div class="flex items-start gap-4">
-						<div class="w-8 h-8 bg-gradient-to-br from-green to-green-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
-							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-							</svg>
-						</div>
-						<div>
-							<h4 class="font-semibold text-navy mb-1">Excellence Technique</h4>
-							<p class="text-gray-text">Solutions modernes, performantes et sécurisées</p>
-						</div>
-					</div>
+                                        <div class="flex items-start gap-4">
+                                                <div class="w-10 h-10 bg-green/10 rounded-lg flex items-center justify-center text-green flex-shrink-0">
+                                                        <svg
+                                                                class="w-5 h-5"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                aria-hidden="true"
+                                                        >
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                                                />
+                                                        </svg>
+                                                </div>
+                                                <div>
+                                                        <h4 class="font-bold text-navy mb-1">Excellence Technique</h4>
+                                                        <p class="text-gray-text">
+                                                                Solutions modernes, performantes et sécurisées
+                                                        </p>
+                                                </div>
+                                        </div>
 
-					<div class="flex items-start gap-4">
-						<div class="w-8 h-8 bg-gradient-to-br from-periwinkle to-blue-600 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
-							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-							</svg>
-						</div>
-						<div>
-							<h4 class="font-semibold text-navy mb-1">Partenariat Durable</h4>
-							<p class="text-gray-text">Support continu et évolution selon vos besoins</p>
-						</div>
-					</div>
-				</div>
+                                        <div class="flex items-start gap-4">
+                                                <div class="w-10 h-10 bg-periwinkle/10 rounded-lg flex items-center justify-center text-periwinkle flex-shrink-0">
+                                                        <svg
+                                                                class="w-5 h-5"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                aria-hidden="true"
+                                                        >
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                                                />
+                                                        </svg>
+                                                </div>
+                                                <div>
+                                                        <h4 class="font-bold text-navy mb-1">Partenariat Durable</h4>
+                                                        <p class="text-gray-text">
+                                                                Support continu et évolution selon vos besoins
+                                                        </p>
+                                                </div>
+                                        </div>
+                                </div>
 
-				<a
-					href="#contact"
-					class="magnetic inline-flex items-center gap-2 px-6 py-3 border-2 border-navy text-navy rounded-lg font-semibold hover:bg-navy/5 active:scale-95 transition-all duration-200"
-					data-magnetic
-				>
-					En savoir plus
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-					</svg>
-				</a>
-			</div>
+                                {/* CTA "En savoir plus" — .btn-outline + .magnetic */}
+                                <a
+                                        href="#contact"
+                                        class="magnetic btn-outline inline-flex items-center gap-2 px-6 py-3 border-2 border-navy text-navy rounded-lg font-semibold hover:bg-navy hover:text-white"
+                                        data-magnetic
+                                >
+                                        En savoir plus
+                                        <svg
+                                                class="w-4 h-4"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                        >
+                                                <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                                />
+                                        </svg>
+                                </a>
+                        </div>
 
-			<!-- Right: Stats (NYT Data Viz discipline) -->
-			<div class="observe">
-				<div class="bg-light-bg rounded-2xl p-8 md:p-12">
-					<!-- HERO STAT: 100K+ users (the most impressive — ONE accent) -->
-					<div class="text-center mb-10 pb-8 border-b border-gray-200">
-						<div class="text-5xl md:text-6xl font-bold text-orange mb-2 stat-value">
-							<span class="counter" data-target="100">0</span>K+
-						</div>
-						<p class="text-navy font-semibold text-lg">Utilisateurs actifs</p>
-						<p class="text-gray-text text-xs italic mt-1">Source: FTCI — agrégat utilisateurs SaaS, 2026</p>
-					</div>
+                        {/* === Colonne droite : panneau stats === */}
+                        <div
+                                class="observe"
+                                style="--d:1; transition-delay: calc(var(--d, 0) * 0.1s);"
+                        >
+                                <div class="bg-light-bg rounded-2xl p-8 md:p-10 border border-navy/8">
+                                        {/* HERO STAT — UN seul accent (NYT Data Viz) */}
+                                        {/* 100K+ utilisateurs, orange, très gros — le "wow" de la vue */}
+                                        <div class="text-center mb-10 pb-8 border-b border-navy/10">
+                                                <div class="text-6xl md:text-7xl font-extrabold text-orange mb-3 stat-value leading-none">
+                                                        <span class="counter" data-target="100">0</span>K+
+                                                </div>
+                                                <p class="text-navy font-semibold text-lg">Utilisateurs actifs</p>
+                                                <p class="text-gray-text text-[11px] italic mt-1.5">
+                                                        Source: FTCI — agrégat utilisateurs SaaS, 2026
+                                                </p>
+                                        </div>
 
-					<!-- Secondary stats (3, de-emphasized, tabular-nums) -->
-					<div class="grid grid-cols-3 gap-6">
-						<!-- Stat: Solutions -->
-						<div class="text-center">
-							<div class="text-3xl md:text-4xl font-bold text-navy mb-1 stat-value">
-								<span class="counter" data-target="4">0</span>
-							</div>
-							<p class="text-gray-text text-sm font-medium">Solutions SaaS</p>
-							<p class="text-gray-text text-[10px] italic mt-0.5">SECT, OPUC, CATS, ScolaGest</p>
-						</div>
+                                        {/* 3 stats secondaires — de-emphasized, tabular-nums */}
+                                        {/* navy / green / periwinkle (couleurs FTCI, pas de surcharge orange) */}
+                                        <div class="grid grid-cols-3 gap-4 md:gap-6">
+                                                {/* Stat: Solutions SaaS — navy */}
+                                                <div class="text-center">
+                                                        <div class="text-3xl md:text-4xl font-extrabold text-navy mb-1 stat-value">
+                                                                <span class="counter" data-target="4">0</span>
+                                                        </div>
+                                                        <p class="text-gray-text text-sm font-medium">Solutions SaaS</p>
+                                                        <p class="text-gray-text text-[11px] italic mt-1">
+                                                                SECT, OPUC, CATS, ScolaGest
+                                                        </p>
+                                                </div>
 
-						<!-- Stat: Institutions -->
-						<div class="text-center">
-							<div class="text-3xl md:text-4xl font-bold text-green mb-1 stat-value">
-								<span class="counter" data-target="50">0</span>+
-							</div>
-							<p class="text-gray-text text-sm font-medium">Institutions servies</p>
-							<p class="text-gray-text text-[10px] italic mt-0.5">Universités & écoles, CI</p>
-						</div>
+                                                {/* Stat: Institutions servies — green */}
+                                                <div class="text-center">
+                                                        <div class="text-3xl md:text-4xl font-extrabold text-green mb-1 stat-value">
+                                                                <span class="counter" data-target="50">0</span>+
+                                                        </div>
+                                                        <p class="text-gray-text text-sm font-medium">Institutions servies</p>
+                                                        <p class="text-gray-text text-[11px] italic mt-1">
+                                                                Universités & écoles, CI
+                                                        </p>
+                                                </div>
 
-						<!-- Stat: Satisfaction -->
-						<div class="text-center">
-							<div class="text-3xl md:text-4xl font-bold text-periwinkle mb-1 stat-value">
-								<span class="counter" data-target="99">0</span>%
-							</div>
-							<p class="text-gray-text text-sm font-medium">Satisfaction client</p>
-							<p class="text-gray-text text-[10px] italic mt-0.5">Enquête interne, 2026</p>
-						</div>
-					</div>
+                                                {/* Stat: Satisfaction client — periwinkle */}
+                                                <div class="text-center">
+                                                        <div class="text-3xl md:text-4xl font-extrabold text-periwinkle mb-1 stat-value">
+                                                                <span class="counter" data-target="99">0</span>%
+                                                        </div>
+                                                        <p class="text-gray-text text-sm font-medium">Satisfaction client</p>
+                                                        <p class="text-gray-text text-[11px] italic mt-1">
+                                                                Enquête interne, 2026
+                                                        </p>
+                                                </div>
+                                        </div>
 
-					<!-- Location -->
-					<div class="mt-10 pt-8 border-t border-gray-200">
-						<p class="text-sm text-gray-text mb-4 font-medium tracking-wide">BASÉE EN CÔTE D'IVOIRE</p>
-						<p class="text-navy font-semibold mb-2">Abidjan & Dabou</p>
-						<p class="text-gray-text text-sm">
-							Nous accompagnons les institutions africaines dans leur transformation digitale, avec une expertise locale et une excellence technique.
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                        {/* Bloc localisation — ancrage local (Abidjan & Dabou) */}
+                                        <div class="mt-10 pt-8 border-t border-navy/10">
+                                                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-text mb-3">
+                                                        Basée en Côte d'Ivoire
+                                                </p>
+                                                <div class="flex items-center gap-2 mb-3">
+                                                        <svg
+                                                                class="w-5 h-5 text-orange flex-shrink-0"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                aria-hidden="true"
+                                                        >
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                                                />
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                                                />
+                                                        </svg>
+                                                        <p class="text-navy font-bold text-lg">Abidjan & Dabou</p>
+                                                </div>
+                                                <p class="text-gray-text text-sm leading-relaxed">
+                                                        Nous accompagnons les institutions africaines dans leur
+                                                        transformation digitale, avec une expertise locale et une
+                                                        excellence technique.
+                                                </p>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
 </section>
 
 <script>
-	// === Animated counters (cahier des charges 6.2) ===
-	// NYT Data Viz: tabular-nums prevents jitter during count-up (set in CSS .stat-value)
-	// Apple Design: reduced-motion = instant final value (no vestibular trigger)
-	const counters = document.querySelectorAll('.counter');
-	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // === Compteurs animés (cahier des charges 6.2 — R-DESIGN-2) ===
+        // NYT Data Viz: tabular-nums (.stat-value global) prevents count-up jitter.
+        // Apple Design: reduced-motion = valeur finale instantanée (no vestibular trigger).
+        // Emil Design: rAF + ease-out cubic, 1.8s, GPU-friendly (text-only).
+        // Review Animations: interruptible via unobserve, GPU-only, < 300ms UI N/A ici
+        //                    (animation longue justifiée = data viz counters, exception autorisée).
+        const counters = document.querySelectorAll('.counter');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	const runCounter = (counter: Element) => {
-		const target = parseInt(counter.getAttribute('data-target') || '0');
+        const runCounter = (counter: Element) => {
+                const target = parseInt(counter.getAttribute('data-target') || '0');
 
-		// Reduced motion: snap to final value immediately
-		if (prefersReducedMotion) {
-			counter.textContent = String(target);
-			return;
-		}
+                // Reduced motion: snap à la valeur finale immédiatement (Apple Design)
+                if (prefersReducedMotion) {
+                        counter.textContent = String(target);
+                        return;
+                }
 
-		const duration = 1800; // 1.8s — under 2s, snappy enough
-		const startTime = performance.now();
+                const duration = 1800; // 1.8s — snappy, sous 2s
+                const startTime = performance.now();
 
-		const updateCounter = (now: number) => {
-			const elapsed = now - startTime;
-			const progress = Math.min(elapsed / duration, 1);
-			// ease-out curve for natural deceleration
-			const eased = 1 - Math.pow(1 - progress, 3);
-			const current = Math.floor(eased * target);
-			counter.textContent = String(current);
+                const updateCounter = (now: number) => {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // ease-out cubic — décélération naturelle (Emil: ease-out sur enter/reveal)
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.floor(eased * target);
+                        counter.textContent = String(current);
 
-			if (progress < 1) {
-				requestAnimationFrame(updateCounter);
-			} else {
-				counter.textContent = String(target);
-			}
-		};
+                        if (progress < 1) {
+                                requestAnimationFrame(updateCounter);
+                        } else {
+                                counter.textContent = String(target);
+                        }
+                };
 
-		requestAnimationFrame(updateCounter);
-	};
+                requestAnimationFrame(updateCounter);
+        };
 
-	// Trigger on scroll into view
-	const observer = new IntersectionObserver(
-		(entries) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					runCounter(entry.target);
-					observer.unobserve(entry.target);
-				}
-			});
-		},
-		{ threshold: 0.5 }
-	);
+        // Déclenchement au scroll (Intersection Observer natif — pas de JS lourd)
+        const counterObserver = new IntersectionObserver(
+                (entries) => {
+                        entries.forEach((entry) => {
+                                if (entry.isIntersecting) {
+                                        runCounter(entry.target);
+                                        counterObserver.unobserve(entry.target);
+                                }
+                        });
+                },
+                { threshold: 0.5 }
+        );
 
-	counters.forEach((counter) => observer.observe(counter));
+        counters.forEach((counter) => counterObserver.observe(counter));
 </script>
-
-<style>
-	.observe {
-		opacity: 0;
-		transform: translateY(30px);
-		transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-	}
-
-	.observe.is-visible {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.observe {
-			opacity: 1;
-			transform: none;
-			transition: opacity 0.2s ease;
-		}
-	}
-</style>

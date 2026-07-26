@@ -3,211 +3,215 @@
 // Features: Logo, desktop navigation, sticky positioning, accessible mobile drawer
 ---
 
-<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
-	<div class="container py-4 flex items-center justify-between">
-		<!-- Logo -->
-		<a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-			<img
-				src="/manus-storage/ftci-logo_cbef96c0.png"
-				alt="Logo FTCI"
-				class="h-10 w-10"
-			/>
-			<div class="hidden sm:block">
-				<h1 class="text-sm font-bold text-navy leading-tight">FTCI</h1>
-				<p class="text-xs text-gray-text">Technologies</p>
-			</div>
-		</a>
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-navy/10 shadow-sm transition-all duration-300">
+        <div class="container py-3 flex items-center justify-between">
+                <!-- Logo + Wordmark -->
+                <a href="/" class="flex items-center gap-3 hover:opacity-90 transition-opacity" aria-label="FTCI — Freelance Technologies Côte d'Ivoire, accueil">
+                        <img
+                                src="/brand/logo-ftci.png"
+                                alt="Logo FTCI"
+                                width="40"
+                                height="40"
+                                class="h-10 w-10 flex-shrink-0"
+                        />
+                        <div class="hidden sm:flex flex-col leading-tight">
+                                <span class="text-base font-extrabold font-[Poppins] text-navy tracking-tight">FTCI</span>
+                                <span class="text-xs font-medium text-orange -mt-0.5">Technologies</span>
+                        </div>
+                </a>
 
-		<!-- Desktop Navigation -->
-		<nav class="hidden md:flex items-center gap-8" aria-label="Navigation principale">
-			<a href="#solutions" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-				Nos solutions
-			</a>
-			<a href="#services" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-				Nos services
-			</a>
-			<a href="#about" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-				À propos
-			</a>
-			<a href="#contact" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-				Contact
-			</a>
-		</nav>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-8" aria-label="Navigation principale">
+                        <a href="#solutions" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+                                Nos solutions
+                        </a>
+                        <a href="#services" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+                                Nos services
+                        </a>
+                        <a href="#about" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+                                À propos
+                        </a>
+                        <a href="#contact" class="text-sm font-medium text-navy hover:text-orange transition-colors">
+                                Contact
+                        </a>
+                </nav>
 
-		<!-- Desktop CTA -->
-		<a
-			href="#contact"
-			class="hidden md:inline-flex text-sm px-6 py-2 rounded-lg font-medium bg-orange text-white hover:bg-orange-600 active:scale-95 transition-all duration-200"
-		>
-			Nous contacter
-		</a>
+                <!-- Desktop CTA -->
+                <a
+                        href="#contact"
+                        class="hidden md:inline-flex text-sm px-6 py-2 rounded-lg font-medium bg-orange text-white hover:bg-orange-600 active:scale-95 transition-all duration-200"
+                >
+                        Nous contacter
+                </a>
 
-		<!-- Mobile Menu Toggle -->
-		<button
-			id="mobileMenuToggle"
-			type="button"
-			class="md:hidden p-2 text-navy hover:bg-gray-100 rounded-lg transition-colors"
-			aria-label="Ouvrir le menu de navigation"
-			aria-expanded="false"
-			aria-controls="mobileMenu"
-		>
-			<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-			</svg>
-		</button>
-	</div>
+                <!-- Mobile Menu Toggle -->
+                <button
+                        id="mobileMenuToggle"
+                        type="button"
+                        class="md:hidden p-2 text-navy hover:bg-gray-100 rounded-lg transition-colors"
+                        aria-label="Ouvrir le menu de navigation"
+                        aria-expanded="false"
+                        aria-controls="mobileMenu"
+                >
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                </button>
+        </div>
 
-	<!-- Mobile Menu Drawer -->
-	<div
-		id="mobileMenu"
-		class="md:hidden hidden fixed inset-0 z-50"
-		role="dialog"
-		aria-modal="true"
-		aria-label="Menu de navigation"
-	>
-		<!-- Overlay -->
-		<div id="mobileMenuOverlay" class="absolute inset-0 bg-navy/50 backdrop-blur-sm"></div>
+        <!-- Mobile Menu Drawer -->
+        <div
+                id="mobileMenu"
+                class="md:hidden hidden fixed inset-0 z-50"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Menu de navigation"
+        >
+                <!-- Overlay -->
+                <div id="mobileMenuOverlay" class="absolute inset-0 bg-navy/50 backdrop-blur-sm"></div>
 
-		<!-- Drawer Panel -->
-		<div
-			id="mobileMenuPanel"
-			class="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out"
-		>
-			<!-- Drawer Header -->
-			<div class="flex items-center justify-between p-4 border-b border-gray-200">
-				<div class="flex items-center gap-2">
-					<img
-						src="/manus-storage/ftci-logo_cbef96c0.png"
-						alt="Logo FTCI"
-						class="h-8 w-8"
-					/>
-					<div>
-						<h2 class="text-sm font-bold text-navy leading-tight">FTCI</h2>
-						<p class="text-xs text-gray-text">Technologies</p>
-					</div>
-				</div>
-				<button
-					id="mobileMenuClose"
-					type="button"
-					class="p-2 text-navy hover:bg-gray-100 rounded-lg transition-colors"
-					aria-label="Fermer le menu de navigation"
-				>
-					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-					</svg>
-				</button>
-			</div>
+                <!-- Drawer Panel -->
+                <div
+                        id="mobileMenuPanel"
+                        class="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out"
+                >
+                        <!-- Drawer Header -->
+                        <div class="flex items-center justify-between p-4 border-b border-navy/10">
+                                <div class="flex items-center gap-2">
+                                        <img
+                                                src="/brand/logo-ftci.png"
+                                                alt="Logo FTCI"
+                                                width="32"
+                                                height="32"
+                                                class="h-8 w-8"
+                                        />
+                                        <div class="flex flex-col leading-tight">
+                                                <span class="text-sm font-extrabold font-[Poppins] text-navy">FTCI</span>
+                                                <span class="text-xs font-medium text-orange -mt-0.5">Technologies</span>
+                                        </div>
+                                </div>
+                                <button
+                                        id="mobileMenuClose"
+                                        type="button"
+                                        class="p-2 text-navy hover:bg-gray-100 rounded-lg transition-colors"
+                                        aria-label="Fermer le menu de navigation"
+                                >
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                </button>
+                        </div>
 
-			<!-- Drawer Navigation -->
-			<nav class="flex-1 overflow-y-auto p-4" aria-label="Navigation mobile">
-				<ul class="space-y-1">
-					<li>
-						<a href="#solutions" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-							Nos solutions
-						</a>
-					</li>
-					<li>
-						<a href="#services" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-							Nos services
-						</a>
-					</li>
-					<li>
-						<a href="#about" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-							À propos
-						</a>
-					</li>
-					<li>
-						<a href="#contact" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-							Contact
-						</a>
-					</li>
-				</ul>
-			</nav>
+                        <!-- Drawer Navigation -->
+                        <nav class="flex-1 overflow-y-auto p-4" aria-label="Navigation mobile">
+                                <ul class="space-y-1">
+                                        <li>
+                                                <a href="#solutions" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
+                                                        Nos solutions
+                                                </a>
+                                        </li>
+                                        <li>
+                                                <a href="#services" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
+                                                        Nos services
+                                                </a>
+                                        </li>
+                                        <li>
+                                                <a href="#about" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
+                                                        À propos
+                                                </a>
+                                        </li>
+                                        <li>
+                                                <a href="#contact" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
+                                                        Contact
+                                                </a>
+                                        </li>
+                                </ul>
+                        </nav>
 
-			<!-- Drawer Footer CTA -->
-			<div class="p-4 border-t border-gray-200">
-				<a
-					href="#contact"
-					class="mobile-nav-link block w-full text-center px-6 py-3 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600 active:scale-95 transition-all duration-200"
-				>
-					Nous contacter
-				</a>
-			</div>
-		</div>
-	</div>
+                        <!-- Drawer Footer CTA -->
+                        <div class="p-4 border-t border-gray-200">
+                                <a
+                                        href="#contact"
+                                        class="mobile-nav-link block w-full text-center px-6 py-3 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600 active:scale-95 transition-all duration-200"
+                                >
+                                        Nous contacter
+                                </a>
+                        </div>
+                </div>
+        </div>
 </header>
 
 <script>
-	// Mobile menu drawer logic with accessibility support
-	const mobileMenu = document.getElementById('mobileMenu');
-	const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-	const mobileMenuClose = document.getElementById('mobileMenuClose');
-	const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-	const mobileMenuPanel = document.getElementById('mobileMenuPanel');
-	const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        // Mobile menu drawer logic with accessibility support
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-	let lastFocusedElement = null;
+        let lastFocusedElement = null;
 
-	const openMenu = () => {
-		if (!mobileMenu || !mobileMenuToggle || !mobileMenuPanel) return;
-		lastFocusedElement = document.activeElement;
-		mobileMenu.classList.remove('hidden');
-		mobileMenuToggle.setAttribute('aria-expanded', 'true');
-		document.body.style.overflow = 'hidden';
-		// Force reflow to enable transition
-		void mobileMenuPanel.offsetWidth;
-		mobileMenuPanel.classList.remove('translate-x-full');
-		mobileMenuClose?.focus();
-	};
+        const openMenu = () => {
+                if (!mobileMenu || !mobileMenuToggle || !mobileMenuPanel) return;
+                lastFocusedElement = document.activeElement;
+                mobileMenu.classList.remove('hidden');
+                mobileMenuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+                // Force reflow to enable transition
+                void mobileMenuPanel.offsetWidth;
+                mobileMenuPanel.classList.remove('translate-x-full');
+                mobileMenuClose?.focus();
+        };
 
-	const closeMenu = () => {
-		if (!mobileMenu || !mobileMenuToggle || !mobileMenuPanel) return;
-		mobileMenuPanel.classList.add('translate-x-full');
-		mobileMenuToggle.setAttribute('aria-expanded', 'false');
-		document.body.style.overflow = '';
-		// Hide after transition
-		const finish = () => {
-			mobileMenu.classList.add('hidden');
-			mobileMenuPanel.removeEventListener('transitionend', finish);
-		};
-		mobileMenuPanel.addEventListener('transitionend', finish);
-		// Fallback in case transitionend doesn't fire
-		setTimeout(() => {
-			mobileMenu.classList.add('hidden');
-		}, 350);
-		if (lastFocusedElement) lastFocusedElement.focus();
-	};
+        const closeMenu = () => {
+                if (!mobileMenu || !mobileMenuToggle || !mobileMenuPanel) return;
+                mobileMenuPanel.classList.add('translate-x-full');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+                // Hide after transition
+                const finish = () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuPanel.removeEventListener('transitionend', finish);
+                };
+                mobileMenuPanel.addEventListener('transitionend', finish);
+                // Fallback in case transitionend doesn't fire
+                setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                }, 350);
+                if (lastFocusedElement) lastFocusedElement.focus();
+        };
 
-	mobileMenuToggle?.addEventListener('click', openMenu);
-	mobileMenuClose?.addEventListener('click', closeMenu);
-	mobileMenuOverlay?.addEventListener('click', closeMenu);
+        mobileMenuToggle?.addEventListener('click', openMenu);
+        mobileMenuClose?.addEventListener('click', closeMenu);
+        mobileMenuOverlay?.addEventListener('click', closeMenu);
 
-	mobileNavLinks.forEach((link) => {
-		link.addEventListener('click', closeMenu);
-	});
+        mobileNavLinks.forEach((link) => {
+                link.addEventListener('click', closeMenu);
+        });
 
-	// Close on Escape
-	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-			closeMenu();
-		}
-	});
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        closeMenu();
+                }
+        });
 
-	// Reset state on resize to desktop
-	window.addEventListener('resize', () => {
-		if (window.innerWidth >= 768 && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-			closeMenu();
-		}
-	});
+        // Reset state on resize to desktop
+        window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768 && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        closeMenu();
+                }
+        });
 </script>
 
 <style>
-	@media (prefers-reduced-motion: reduce) {
-		header {
-			transition: none;
-		}
-		#mobileMenuPanel {
-			transition: none !important;
-		}
-	}
+        @media (prefers-reduced-motion: reduce) {
+                header {
+                        transition: none;
+                }
+                #mobileMenuPanel {
+                        transition: none !important;
+                }
+        }
 </style>

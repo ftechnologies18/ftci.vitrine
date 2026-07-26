@@ -1,233 +1,277 @@
 ---
-// Services section showcasing FTCI's consulting and development services
-// Cahier des charges 6.3: Timeline animée + icônes en tracé animé SVG (stroke animation)
-// Skills: Emil (stroke-draw utility), Apple Design (interruptible), Vignelli (clarity)
+// ============================================================
+// Services FTCI — Refonte R-DESIGN-2
+// ------------------------------------------------------------
+// Cahier des charges 6.3 : Timeline animée + icônes en tracé animé SVG
+//                          (stroke animation .stroke-draw)
+//                          + apparition progressive au scroll (.observe)
+//
+// Skills appliqués :
+// - Vignelli Canon       : 2 familles typo, hiérarchie stricte, titres statiques
+// - Müller-Brockmann     : baseline 8px (gap-8, mb-12 md:mb-16, py-20 md:py-32)
+// - Brand Book Generator : stagger assemble avec --ease-spring (delay via --d)
+// - Apple Design         : interruptible (transitions CSS), reduced-motion = no anim
+// - Emil Design Eng.     : ease-out custom, durations < 300ms UI, transitions
+//                          (pas keyframes) pour interactif, GPU-only
+// - Review Animations    : stagger, pas de transition:all, reduced-motion respecté,
+//                          hover gating @media (hover: hover)
+//
+// Note stroke-draw : la classe .stroke-draw (global.css) lance l'animation
+// dès le rendu. Pour la déclencher au scroll (apparition progressive),
+// on PAUSE l'animation tant que l'étape (.observe) n'est pas visible,
+// puis on la RUN quand .is-visible est ajouté par Layout.astro.
+// ============================================================
+
+interface ServiceStep {
+        num: number;
+        title: string;
+        description: string;
+        bullets: string[];
+        circleFrom: string;
+        circleTo: string;
+        badgeText: string;
+        badgeBorder: string;
+        lineFrom: string;
+        lineTo: string;
+        iconPath: string;
+}
+
+const services: ServiceStep[] = [
+        {
+                num: 1,
+                title: 'Transformation Digitale',
+                description:
+                        "Accompagnement stratégique pour digitaliser votre institution. Audit des processus, recommandations technologiques, planification de déploiement.",
+                bullets: [
+                        'Audit des besoins métier',
+                        'Roadmap technologique',
+                        'Gestion du changement',
+                ],
+                circleFrom: 'from-orange',
+                circleTo: 'to-orange-600',
+                badgeText: 'text-orange',
+                badgeBorder: 'border-orange',
+                lineFrom: 'from-orange',
+                lineTo: 'to-periwinkle',
+                iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
+        },
+        {
+                num: 2,
+                title: 'Développement Web sur Mesure',
+                description:
+                        "Création d'applications web et mobiles adaptées à vos besoins spécifiques. Stack moderne, performante, sécurisée.",
+                bullets: [
+                        'Applications web progressives (PWA)',
+                        'Intégrations API tierces',
+                        'Support et maintenance',
+                ],
+                circleFrom: 'from-periwinkle',
+                circleTo: 'to-periwinkle-600',
+                badgeText: 'text-periwinkle',
+                badgeBorder: 'border-periwinkle',
+                lineFrom: 'from-periwinkle',
+                lineTo: 'to-green',
+                iconPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+        },
+        {
+                num: 3,
+                title: 'Infrastructure IT',
+                description:
+                        "Mise en place d'infrastructures cloud robustes et sécurisées. Hébergement, sauvegarde, monitoring 24/7.",
+                bullets: [
+                        'Cloud (AWS, Google Cloud)',
+                        'Sécurité et conformité',
+                        'Disaster recovery',
+                ],
+                circleFrom: 'from-green',
+                circleTo: 'to-green-600',
+                badgeText: 'text-green',
+                badgeBorder: 'border-green',
+                lineFrom: 'from-green',
+                lineTo: 'to-orange',
+                iconPath:
+                        'M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6',
+        },
+        {
+                num: 4,
+                title: 'Documentation & Formation',
+                description:
+                        "Documentation technique complète et formation des équipes pour garantir l'adoption et la maîtrise des outils.",
+                bullets: [
+                        'Guides utilisateur et administrateur',
+                        'Formations en ligne et présentiel',
+                        'Support utilisateur continu',
+                ],
+                circleFrom: 'from-orange',
+                circleTo: 'to-orange-600',
+                badgeText: 'text-orange',
+                badgeBorder: 'border-orange',
+                lineFrom: 'from-orange',
+                lineTo: 'to-orange',
+                iconPath:
+                        'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+        },
+];
 ---
 
-<section id="services" class="py-20 md:py-32 bg-light-bg relative overflow-hidden">
-	<div class="container">
-		<!-- Section Header -->
-		<div class="text-center mb-16 observe">
-			<h2 class="text-4xl md:text-5xl font-bold text-navy mb-4">
-				Nos Services
-			</h2>
-			<p class="text-lg text-gray-text max-w-2xl mx-auto">
-				Du conseil stratégique au déploiement d'outils numériques sur mesure
-			</p>
-		</div>
+<section
+        id="services"
+        class="relative py-20 md:py-32 bg-light-bg overflow-hidden"
+        aria-label="Nos services"
+>
+        <div class="container">
+                {/* 1. Section header (h2 + sur-titre + sous-titre) */}
+                <div class="observe text-center mb-20 max-w-2xl mx-auto">
+                        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-orange mb-4">
+                                Notre approche
+                        </p>
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-navy mb-4">
+                                Nos Services
+                        </h2>
+                        <p class="text-lg text-gray-text">
+                                Du conseil stratégique au déploiement d'outils numériques sur mesure —
+                                une trajectoire d'accompagnement complète.
+                        </p>
+                </div>
 
-		<!-- Services Timeline with SVG stroke animation -->
-		<div class="max-w-4xl mx-auto">
-			<!-- Service 1: Digital Transformation Consulting -->
-			<div class="observe relative mb-12 md:mb-16 flex gap-8" data-stagger="0">
-				<!-- Timeline dot with SVG icon -->
-				<div class="flex flex-col items-center">
-					<div class="w-14 h-14 bg-gradient-to-br from-orange to-orange-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-lg relative">
-						<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M13 10V3L4 14h7v7l9-11h-7z"
-								class="stroke-draw"
-								style="--d: 0;"
-							/>
-						</svg>
-						<span class="absolute -top-2 -right-2 w-6 h-6 bg-white text-orange text-xs font-bold rounded-full flex items-center justify-center border-2 border-orange">1</span>
-					</div>
-					<div class="w-0.5 h-24 bg-gradient-to-b from-orange to-periwinkle mt-4"></div>
-				</div>
+                {/* 2. Timeline verticale 4 services */}
+                <div class="max-w-4xl mx-auto">
+                        {services.map((service, idx) => {
+                                const isLast = idx === services.length - 1;
+                                return (
+                                        <div
+                                                class="observe relative flex gap-6 md:gap-8"
+                                                style={`--d:${idx}; transition-delay: calc(var(--d, 0) * 0.1s);`}
+                                        >
+                                                {/* Colonne gauche : cercle numéroté + ligne verticale */}
+                                                <div class="flex flex-col items-center">
+                                                        {/* Cercle numéroté avec icône SVG stroke-draw */}
+                                                        <div
+                                                                class={`relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br ${service.circleFrom} ${service.circleTo} flex items-center justify-center text-white flex-shrink-0 shadow-lg`}
+                                                        >
+                                                                <svg
+                                                                        class="w-6 h-6 md:w-7 md:h-7"
+                                                                        fill="none"
+                                                                        stroke="currentColor"
+                                                                        viewBox="0 0 24 24"
+                                                                        stroke-width="2"
+                                                                        aria-hidden="true"
+                                                                >
+                                                                        <path
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                d={service.iconPath}
+                                                                                class="stroke-draw"
+                                                                                style={`--d:${idx + 1};`}
+                                                                        />
+                                                                </svg>
+                                                                {/* Pastille numéro (en haut à droite du cercle) */}
+                                                                <span
+                                                                        class={`absolute -top-1.5 -right-1.5 w-6 h-6 md:w-7 md:h-7 bg-white ${service.badgeText} text-xs font-bold rounded-full flex items-center justify-center border-2 ${service.badgeBorder}`}
+                                                                >
+                                                                        {service.num}
+                                                                </span>
+                                                        </div>
 
-				<!-- Content -->
-				<div class="pb-8 flex-1">
-					<h3 class="text-2xl font-bold text-navy mb-2">
-						Transformation Digitale
-					</h3>
-					<p class="text-gray-text mb-4">
-						Accompagnement stratégique pour digitaliser votre institution. Audit des processus, recommandations technologiques, planification de déploiement.
-					</p>
-					<ul class="space-y-2 text-sm text-gray-text">
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Audit des besoins métier
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Roadmap technologique
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Gestion du changement
-						</li>
-					</ul>
-				</div>
-			</div>
+                                                        {/* Ligne de connexion verticale gradient — cachée après la dernière étape */}
+                                                        {!isLast && (
+                                                                <div
+                                                                        class={`w-0.5 grow my-3 bg-gradient-to-b ${service.lineFrom} ${service.lineTo}`}
+                                                                        style="min-height: 96px;"
+                                                                        aria-hidden="true"
+                                                                />
+                                                        )}
+                                                </div>
 
-			<!-- Service 2: Custom Web Development -->
-			<div class="observe relative mb-12 md:mb-16 flex gap-8" data-stagger="1">
-				<div class="flex flex-col items-center">
-					<div class="w-14 h-14 bg-gradient-to-br from-periwinkle to-blue-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-lg relative">
-						<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-								class="stroke-draw"
-								style="--d: 1;"
-							/>
-						</svg>
-						<span class="absolute -top-2 -right-2 w-6 h-6 bg-white text-periwinkle text-xs font-bold rounded-full flex items-center justify-center border-2 border-periwinkle">2</span>
-					</div>
-					<div class="w-0.5 h-24 bg-gradient-to-b from-periwinkle to-green mt-4"></div>
-				</div>
+                                                {/* Contenu : titre + description + liste à puces vertes */}
+                                                <div class="pb-12 md:pb-16 flex-1 pt-1">
+                                                        <h3 class="text-2xl md:text-3xl font-extrabold text-navy mb-3 leading-tight">
+                                                                {service.title}
+                                                        </h3>
+                                                        <p class="text-gray-text mb-5 leading-relaxed max-w-2xl">
+                                                                {service.description}
+                                                        </p>
+                                                        <ul class="space-y-2.5">
+                                                                {service.bullets.map((bullet) => (
+                                                                        <li class="flex items-center gap-3 text-navy/80">
+                                                                                <span class="flex-shrink-0 w-5 h-5 rounded-full bg-green/10 flex items-center justify-center">
+                                                                                        <svg
+                                                                                                class="w-3 h-3 text-green"
+                                                                                                fill="none"
+                                                                                                stroke="currentColor"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                aria-hidden="true"
+                                                                                        >
+                                                                                                <path
+                                                                                                        stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        stroke-width="3"
+                                                                                                        d="M5 13l4 4L19 7"
+                                                                                                />
+                                                                                        </svg>
+                                                                                </span>
+                                                                                <span class="text-sm md:text-base">{bullet}</span>
+                                                                        </li>
+                                                                ))}
+                                                        </ul>
+                                                </div>
+                                        </div>
+                                );
+                        })}
+                </div>
 
-				<div class="pb-8 flex-1">
-					<h3 class="text-2xl font-bold text-navy mb-2">
-						Développement Web sur Mesure
-					</h3>
-					<p class="text-gray-text mb-4">
-						Création d'applications web et mobiles adaptées à vos besoins spécifiques. Stack moderne, performant, sécurisé.
-					</p>
-					<ul class="space-y-2 text-sm text-gray-text">
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Applications web progressives (PWA)
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Intégrations API tierces
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Support et maintenance
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<!-- Service 3: IT Infrastructure -->
-			<div class="observe relative mb-12 md:mb-16 flex gap-8" data-stagger="2">
-				<div class="flex flex-col items-center">
-					<div class="w-14 h-14 bg-gradient-to-br from-green to-green-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-lg relative">
-						<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"
-								class="stroke-draw"
-								style="--d: 2;"
-							/>
-						</svg>
-						<span class="absolute -top-2 -right-2 w-6 h-6 bg-white text-green text-xs font-bold rounded-full flex items-center justify-center border-2 border-green">3</span>
-					</div>
-					<div class="w-0.5 h-24 bg-gradient-to-b from-green to-orange mt-4"></div>
-				</div>
-
-				<div class="pb-8 flex-1">
-					<h3 class="text-2xl font-bold text-navy mb-2">
-						Infrastructure IT
-					</h3>
-					<p class="text-gray-text mb-4">
-						Mise en place d'infrastructures cloud robustes et sécurisées. Hébergement, sauvegarde, monitoring 24/7.
-					</p>
-					<ul class="space-y-2 text-sm text-gray-text">
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Infrastructure cloud (AWS, Google Cloud)
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Sécurité et conformité
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Disaster recovery
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<!-- Service 4: Documentation & Training -->
-			<div class="observe relative flex gap-8" data-stagger="3">
-				<div class="flex flex-col items-center">
-					<div class="w-14 h-14 bg-gradient-to-br from-orange to-orange-600 rounded-full flex items-center justify-center text-white flex-shrink-0 shadow-lg relative">
-						<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-								class="stroke-draw"
-								style="--d: 3;"
-							/>
-						</svg>
-						<span class="absolute -top-2 -right-2 w-6 h-6 bg-white text-orange text-xs font-bold rounded-full flex items-center justify-center border-2 border-orange">4</span>
-					</div>
-				</div>
-
-				<div class="pb-8 flex-1">
-					<h3 class="text-2xl font-bold text-navy mb-2">
-						Documentation & Formation
-					</h3>
-					<p class="text-gray-text mb-4">
-						Documentation technique complète et formation des équipes. Garantir l'adoption et la maîtrise des outils.
-					</p>
-					<ul class="space-y-2 text-sm text-gray-text">
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Guides utilisateur et administrateur
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Formations en ligne et présentiel
-						</li>
-						<li class="flex items-center gap-2">
-							<span class="w-2 h-2 bg-green rounded-full"></span>
-							Support utilisateur continu
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-
-		<!-- CTA -->
-		<div class="observe mt-16 text-center">
-			<p class="text-gray-text mb-6">
-				Besoin d'une solution personnalisée ?
-			</p>
-			<a
-				href="#contact"
-				class="magnetic inline-flex items-center gap-2 px-8 py-4 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600 active:scale-95 transition-all duration-200"
-				data-magnetic
-			>
-				Discutons de votre projet
-				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-				</svg>
-			</a>
-		</div>
-	</div>
+                {/* 3. CTA final — .btn-primary + .magnetic (press scale 0.97 via global) */}
+                <div
+                        class="observe mt-8 text-center"
+                        style="--d:4; transition-delay: calc(var(--d, 0) * 0.1s);"
+                >
+                        <p class="text-gray-text mb-6">
+                                Besoin d'une solution personnalisée ?
+                        </p>
+                        <a
+                                href="#contact"
+                                class="magnetic btn-primary inline-flex items-center gap-2 px-8 py-4 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600"
+                                data-magnetic
+                        >
+                                Discutons de votre projet
+                                <svg
+                                        class="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                >
+                                        <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                        />
+                                </svg>
+                        </a>
+                </div>
+        </div>
 </section>
 
 <style>
-	.observe {
-		opacity: 0;
-		transform: translateY(30px);
-		transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-	}
+        /* Stroke-draw : l'animation (définie dans global.css) se joue uniquement
+           quand l'étape parente (.observe) devient visible. Sinon, en pause —
+           le path reste invisible (dashoffset:200) jusqu'au reveal. */
+        .observe .stroke-draw {
+                animation-play-state: paused;
+        }
+        .observe.is-visible .stroke-draw {
+                animation-play-state: running;
+        }
 
-	.observe.is-visible {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.observe {
-			opacity: 1;
-			transform: none;
-			transition: opacity 0.2s ease;
-		}
-		.stroke-draw {
-			stroke-dashoffset: 0 !important;
-			animation: none !important;
-		}
-	}
+        /* Reduced motion : global.css force déjà stroke-dashoffset:0 !important
+           sur .stroke-draw — le path est donc dessiné immédiatement, sans animation.
+           On remet aussi play-state à running par sécurité (ne change rien puisque
+           animation: none !important). */
+        @media (prefers-reduced-motion: reduce) {
+                .observe .stroke-draw,
+                .observe.is-visible .stroke-draw {
+                        animation-play-state: running;
+                }
+        }
 </style>
