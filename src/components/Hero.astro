@@ -127,9 +127,9 @@ const logoParticles = generateParticles(35);
           <!-- Scan Line Effect -->
           <div class="scan-line"></div>
           
-          <!-- Le VRAI logo FTCI -->
+          <!-- Le VRAI logo FTCI (sans fond) -->
           <img 
-            src="/brand/logo-ftci.png" 
+            src="/brand/logo-ftci-nobg.png" 
             alt="Logo FTCI - Freelance Technologies Côte d'Ivoire"
             class="logo-image"
             width="320"
@@ -359,12 +359,9 @@ const logoParticles = generateParticles(35);
   /* Container du logo avec effets */
   .logo-container {
     position: relative;
-    width: 85%;
+    width: 90%;
     z-index: 2;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-    backdrop-filter: blur(10px);
-    padding: 15px;
+    padding: 0;
   }
 
   /* ═══════════════════════════════════════════════════════════════════════════
@@ -385,9 +382,6 @@ const logoParticles = generateParticles(35);
     opacity: 0;
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
     filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.35));
-    
- /* Blend mode pour fond transparent */
-    mix-blend-mode: normal;
   }
 
   /* Révélation clip-path - effet rideau */
