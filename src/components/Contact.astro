@@ -13,373 +13,373 @@
  */
 
 const contactInfo = [
-	{
-		label: 'Localisation',
-		value: 'Dabou · Abidjan, Côte d\'Ivoire',
-		href: null,
-		color: 'orange',
-		textClass: 'text-orange',
-		bgClass: 'bg-orange/15',
-		iconPath: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z',
-	},
-	{
-		label: 'Email',
-		value: 'contact@ftci.fr',
-		href: 'mailto:contact@ftci.fr',
-		color: 'green',
-		textClass: 'text-green',
-		bgClass: 'bg-green/15',
-		iconPath: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-	},
+        {
+                label: 'Localisation',
+                value: 'Dabou · Abidjan, Côte d\'Ivoire',
+                href: null,
+                color: 'orange',
+                textClass: 'text-orange',
+                bgClass: 'bg-orange/15',
+                iconPath: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z',
+        },
+        {
+                label: 'Email',
+                value: 'contact@ftci.fr',
+                href: 'mailto:contact@ftci.fr',
+                color: 'green',
+                textClass: 'text-green',
+                bgClass: 'bg-green/15',
+                iconPath: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+        },
 ];
 
 const subjectOptions = [
-	{ value: '', label: 'Choisissez un sujet…' },
-	{ value: 'consultation', label: 'Consultation' },
-	{ value: 'demo', label: 'Demande de démo' },
-	{ value: 'partnership', label: 'Partenariat' },
-	{ value: 'support', label: 'Support technique' },
-	{ value: 'other', label: 'Autre' },
+        { value: '', label: 'Choisissez un sujet…' },
+        { value: 'consultation', label: 'Consultation' },
+        { value: 'demo', label: 'Demande de démo' },
+        { value: 'partnership', label: 'Partenariat' },
+        { value: 'support', label: 'Support technique' },
+        { value: 'other', label: 'Autre' },
 ];
 ---
 
 <section id="contact" class="relative py-20 md:py-32 bg-navy overflow-hidden contact-dark circuit-grid">
-	<!-- ── Background mesh gradient (subtle) ──────────────────────────────── -->
-	<div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-		<div class="absolute inset-0 opacity-40"
-			style="background:
-				radial-gradient(ellipse 60% 50% at 20% 30%, rgba(107, 127, 199, 0.25), transparent 60%),
-				radial-gradient(ellipse 50% 45% at 80% 70%, rgba(238, 108, 26, 0.12), transparent 55%),
-				radial-gradient(ellipse 55% 50% at 60% 90%, rgba(30, 158, 79, 0.10), transparent 50%)">
-		</div>
-	</div>
+        <!-- ── Background mesh gradient (subtle) ──────────────────────────────── -->
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+                <div class="absolute inset-0 opacity-40"
+                        style="background:
+                                radial-gradient(ellipse 60% 50% at 20% 30%, rgba(107, 127, 199, 0.25), transparent 60%),
+                                radial-gradient(ellipse 50% 45% at 80% 70%, rgba(238, 108, 26, 0.12), transparent 55%),
+                                radial-gradient(ellipse 55% 50% at 60% 90%, rgba(30, 158, 79, 0.10), transparent 50%)">
+                </div>
+        </div>
 
-	<div class="container relative z-10">
-		<!-- ── Section header ─────────────────────────────────────────────── -->
-		<div class="section-header observe mb-16 md:mb-20">
-			<span class="eyebrow">
-				<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
-					<polygon points="4,0 8,4 4,8 0,4" />
-				</svg>
-				CONTACT
-			</span>
-			<h2 class="text-white">Une question, un projet ?<br class="hidden sm:block">Parlons-en.</h2>
-			<p class="max-w-xl mx-auto">
-				Nous sommes à votre écoute pour transformer vos idées en solutions concrètes.
-				Décrivez votre projet et notre équipe vous répond sous 48 heures ouvrées.
-			</p>
-		</div>
+        <div class="container relative z-10">
+                <!-- ── Section header ─────────────────────────────────────────────── -->
+                <div class="section-header observe mb-16 md:mb-20">
+                        <span class="eyebrow">
+                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+                                        <polygon points="4,0 8,4 4,8 0,4" />
+                                </svg>
+                                CONTACT
+                        </span>
+                        <h2 class="text-white">Une question, un projet ?<br class="hidden sm:block">Parlons-en.</h2>
+                        <p class="max-w-xl mx-auto">
+                                Nous sommes à votre écoute pour transformer vos idées en solutions concrètes.
+                                Décrivez votre projet et notre équipe vous répond sous 48 heures ouvrées.
+                        </p>
+                </div>
 
-		<!-- ── Main content grid (info left / form right) ─────────────────── -->
-		<div class="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
-			
-			<!-- LEFT SIDE: Info cards ─────────────────────────────────────── -->
-			<div class="lg:col-span-2 space-y-6 observe" style="--d: 0.08s">
-				<p class="text-white/75 text-sm leading-relaxed mb-8">
-					Prêt à lancer votre projet digital ? Contactez-nous pour une première échange gratuite.
-				</p>
+                <!-- ── Main content grid (info left / form right) ─────────────────── -->
+                <div class="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
+                        
+                        <!-- LEFT SIDE: Info cards ─────────────────────────────────────── -->
+                        <div class="lg:col-span-2 space-y-6 observe" style="--d: 0.08s">
+                                <p class="text-white/75 text-sm leading-relaxed mb-8">
+                                        Prêt à lancer votre projet digital ? Contactez-nous pour une première échange gratuite.
+                                </p>
 
-				<!-- Contact info cards (glassmorphism) -->
-				<div class="space-y-4">
-					{contactInfo.map((item) => (
-						<div class={`contact-info-card flex items-center gap-4 rounded-2xl p-5`}>
-							<div class={`w-12 h-12 rounded-xl ${item.bgClass} flex items-center justify-center flex-shrink-0`}>
-								<svg class={`w-5 h-5 ${item.textClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={item.iconPath} />
-								</svg>
-							</div>
-							<div class="min-w-0">
-								<p class="text-xs text-white/50 font-medium uppercase tracking-wider">{item.label}</p>
-								{item.href ? (
-									<a href={item.href} class={`text-base font-semibold ${item.textClass} hover:underline truncate block transition-colors duration-200`}>
-										{item.value}
-									</a>
-								) : (
-									<p class="text-base font-semibold text-white/90 truncate">{item.value}</p>
-								)}
-							</div>
-						</div>
-					))}
-				</div>
+                                <!-- Contact info cards (glassmorphism) -->
+                                <div class="space-y-4">
+                                        {contactInfo.map((item) => (
+                                                <div class={`contact-info-card flex items-center gap-4 rounded-2xl p-5`}>
+                                                        <div class={`w-12 h-12 rounded-xl ${item.bgClass} flex items-center justify-center flex-shrink-0`}>
+                                                                <svg class={`w-5 h-5 ${item.textClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={item.iconPath} />
+                                                                </svg>
+                                                        </div>
+                                                        <div class="min-w-0">
+                                                                <p class="text-xs text-white/50 font-medium uppercase tracking-wider">{item.label}</p>
+                                                                {item.href ? (
+                                                                        <a href={item.href} class={`text-base font-semibold ${item.textClass} hover:underline truncate block transition-colors duration-200`}>
+                                                                                {item.value}
+                                                                        </a>
+                                                                ) : (
+                                                                        <p class="text-base font-semibold text-white/90 truncate">{item.value}</p>
+                                                                )}
+                                                        </div>
+                                                </div>
+                                        ))}
+                                </div>
 
-				<!-- Additional info -->
-				<div class="pt-6 border-t border-white/10 space-y-3 text-sm text-white/60">
-					<a href="tel:+2252722000000" class="inline-flex items-center gap-2 hover:text-orange transition-colors duration-200">
-						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-						</svg>
-						+225 27 22 00 00 00
-					</a>
-				</div>
-			</div>
+                                <!-- Additional info -->
+                                <div class="pt-6 border-t border-white/10 space-y-3 text-sm text-white/60">
+                                        <a href="tel:+2250566184040" class="inline-flex items-center gap-2 hover:text-orange transition-colors duration-200">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                </svg>
+                                                +225 05 6618 4040
+                                        </a>
+                                </div>
+                        </div>
 
-			<!-- RIGHT SIDE: Form card (glassmorphism) ──────────────────────── -->
-			<div class="lg:col-span-3 observe" style="--d: 0.15s">
-				<form
-					id="contact-form"
-					class="glass-card rounded-2xl p-8 md:p-10"
-					novalidate
-				>
-					<!-- Nom + Email (grid 2 colonnes) -->
-					<div class="grid sm:grid-cols-2 gap-5 mb-5">
-						<div>
-							<label for="name" class="block text-sm font-semibold text-white/90 mb-1.5">
-								Nom complet <span class="text-orange" aria-hidden="true">*</span>
-							</label>
-							<input
-								type="text"
-								id="name"
-								name="name"
-								autocomplete="name"
-								required
-								aria-required="true"
-								aria-describedby="error-name"
-								class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
-								placeholder="Jean Kouassi"
-							/>
-							<p id="error-name" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-						</div>
-						<div>
-							<label for="email" class="block text-sm font-semibold text-white/90 mb-1.5">
-								Email <span class="text-orange" aria-hidden="true">*</span>
-							</label>
-							<input
-								type="email"
-								id="email"
-								name="email"
-								autocomplete="email"
-								required
-								aria-required="true"
-								aria-describedby="error-email"
-								class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
-								placeholder="jean@exemple.ci"
-							/>
-							<p id="error-email" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-						</div>
-					</div>
+                        <!-- RIGHT SIDE: Form card (glassmorphism) ──────────────────────── -->
+                        <div class="lg:col-span-3 observe" style="--d: 0.15s">
+                                <form
+                                        id="contact-form"
+                                        class="glass-card rounded-2xl p-8 md:p-10"
+                                        novalidate
+                                >
+                                        <!-- Nom + Email (grid 2 colonnes) -->
+                                        <div class="grid sm:grid-cols-2 gap-5 mb-5">
+                                                <div>
+                                                        <label for="name" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                                Nom complet <span class="text-orange" aria-hidden="true">*</span>
+                                                        </label>
+                                                        <input
+                                                                type="text"
+                                                                id="name"
+                                                                name="name"
+                                                                autocomplete="name"
+                                                                required
+                                                                aria-required="true"
+                                                                aria-describedby="error-name"
+                                                                class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
+                                                                placeholder="Jean Kouassi"
+                                                        />
+                                                        <p id="error-name" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                                </div>
+                                                <div>
+                                                        <label for="email" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                                Email <span class="text-orange" aria-hidden="true">*</span>
+                                                        </label>
+                                                        <input
+                                                                type="email"
+                                                                id="email"
+                                                                name="email"
+                                                                autocomplete="email"
+                                                                required
+                                                                aria-required="true"
+                                                                aria-describedby="error-email"
+                                                                class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
+                                                                placeholder="jean@exemple.ci"
+                                                        />
+                                                        <p id="error-email" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                                </div>
+                                        </div>
 
-					<!-- Sujet (select) -->
-					<div class="mb-5">
-						<label for="subject" class="block text-sm font-semibold text-white/90 mb-1.5">
-							Sujet <span class="text-orange" aria-hidden="true">*</span>
-						</label>
-						<select
-							id="subject"
-							name="subject"
-							required
-							aria-required="true"
-							aria-describedby="error-subject"
-							class="dark-select w-full px-4 py-3 rounded-xl"
-						>
-							{subjectOptions.map((opt) => (
-								<option value={opt.value} disabled={opt.value === ''}>{opt.label}</option>
-							))}
-						</select>
-						<p id="error-subject" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-					</div>
+                                        <!-- Sujet (select) -->
+                                        <div class="mb-5">
+                                                <label for="subject" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                        Sujet <span class="text-orange" aria-hidden="true">*</span>
+                                                </label>
+                                                <select
+                                                        id="subject"
+                                                        name="subject"
+                                                        required
+                                                        aria-required="true"
+                                                        aria-describedby="error-subject"
+                                                        class="dark-select w-full px-4 py-3 rounded-xl"
+                                                >
+                                                        {subjectOptions.map((opt) => (
+                                                                <option value={opt.value} disabled={opt.value === ''}>{opt.label}</option>
+                                                        ))}
+                                                </select>
+                                                <p id="error-subject" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                        </div>
 
-					<!-- Message (textarea) -->
-					<div class="mb-5">
-						<label for="message" class="block text-sm font-semibold text-white/90 mb-1.5">
-							Message <span class="text-orange" aria-hidden="true">*</span>
-						</label>
-						<textarea
-							id="message"
-							name="message"
-							rows="5"
-							required
-							aria-required="true"
-							aria-describedby="error-message"
-							class="dark-input w-full px-4 py-3 rounded-xl resize-y placeholder:text-white/40"
-							placeholder="Décrivez votre projet ou votre demande…"
-						></textarea>
-						<p id="error-message" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-					</div>
+                                        <!-- Message (textarea) -->
+                                        <div class="mb-5">
+                                                <label for="message" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                        Message <span class="text-orange" aria-hidden="true">*</span>
+                                                </label>
+                                                <textarea
+                                                        id="message"
+                                                        name="message"
+                                                        rows="5"
+                                                        required
+                                                        aria-required="true"
+                                                        aria-describedby="error-message"
+                                                        class="dark-input w-full px-4 py-3 rounded-xl resize-y placeholder:text-white/40"
+                                                        placeholder="Décrivez votre projet ou votre demande…"
+                                                ></textarea>
+                                                <p id="error-message" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                        </div>
 
-					<!-- Consentement (checkbox) -->
-					<div class="mb-6">
-						<label for="consent" class="flex items-start gap-3 cursor-pointer group">
-							<input
-								type="checkbox"
-								id="consent"
-								name="consent"
-								required
-								aria-required="true"
-								aria-describedby="error-consent"
-								class="mt-1 w-5 h-5 rounded border-white/20 text-orange focus:ring-orange/30 cursor-pointer accent-orange bg-transparent"
-							/>
-							<span class="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-200">
-								J'accepte que FTCI utilise mes informations pour me recontacter.
-								Vos données ne sont jamais partagées avec des tiers.
-							</span>
-						</label>
-						<p id="error-consent" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-					</div>
+                                        <!-- Consentement (checkbox) -->
+                                        <div class="mb-6">
+                                                <label for="consent" class="flex items-start gap-3 cursor-pointer group">
+                                                        <input
+                                                                type="checkbox"
+                                                                id="consent"
+                                                                name="consent"
+                                                                required
+                                                                aria-required="true"
+                                                                aria-describedby="error-consent"
+                                                                class="mt-1 w-5 h-5 rounded border-white/20 text-orange focus:ring-orange/30 cursor-pointer accent-orange bg-transparent"
+                                                        />
+                                                        <span class="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-200">
+                                                                J'accepte que FTCI utilise mes informations pour me recontacter.
+                                                                Vos données ne sont jamais partagées avec des tiers.
+                                                        </span>
+                                                </label>
+                                                <p id="error-consent" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                        </div>
 
-					<!-- Honeypot (caché — les bots le remplissent, pas les humains) -->
-					<div class="hidden" aria-hidden="true">
-						<label for="website">Ne pas remplir</label>
-						<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
-					</div>
+                                        <!-- Honeypot (caché — les bots le remplissent, pas les humains) -->
+                                        <div class="hidden" aria-hidden="true">
+                                                <label for="website">Ne pas remplir</label>
+                                                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+                                        </div>
 
-					<!-- Bouton submit + zone statut -->
-					<div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-						<button
-							type="submit"
-							id="contact-submit"
-							data-magnetic="14"
-							class="btn-primary magnetic btn-glow"
-						>
-							<span class="btn-label">
-								Envoyer le message
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-								</svg>
-							</span>
-							<span class="btn-loading hidden">
-								<span class="spinner"></span>
-								<span>Envoi…</span>
-							</span>
-						</button>
+                                        <!-- Bouton submit + zone statut -->
+                                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                                                <button
+                                                        type="submit"
+                                                        id="contact-submit"
+                                                        data-magnetic="14"
+                                                        class="btn-primary magnetic btn-glow"
+                                                >
+                                                        <span class="btn-label">
+                                                                Envoyer le message
+                                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                                                </svg>
+                                                        </span>
+                                                        <span class="btn-loading hidden">
+                                                                <span class="spinner"></span>
+                                                                <span>Envoi…</span>
+                                                        </span>
+                                                </button>
 
-						<div
-							id="contact-status"
-							class="hidden text-sm font-medium px-4 py-2.5 rounded-lg"
-							role="status"
-							aria-live="polite"
-						></div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                                                <div
+                                                        id="contact-status"
+                                                        class="hidden text-sm font-medium px-4 py-2.5 rounded-lg"
+                                                        role="status"
+                                                        aria-live="polite"
+                                                ></div>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+        </div>
 </section>
 
 <script>
-	// ── Formulaire contact : fetch POST /api/contact ────────────────────────
-	// Gestion : erreurs par champ (422), rate limit (429), succès/erreur,
-	// loading state avec spinner. Honeypot inclus.
-	const form = document.getElementById('contact-form') as HTMLFormElement | null;
-	const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
-	const statusEl = document.getElementById('contact-status') as HTMLElement | null;
+        // ── Formulaire contact : fetch POST /api/contact ────────────────────────
+        // Gestion : erreurs par champ (422), rate limit (429), succès/erreur,
+        // loading state avec spinner. Honeypot inclus.
+        const form = document.getElementById('contact-form') as HTMLFormElement | null;
+        const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+        const statusEl = document.getElementById('contact-status') as HTMLElement | null;
 
-	if (form && submitBtn && statusEl) {
-		const labelEl = submitBtn.querySelector('.btn-label');
-		const loadingEl = submitBtn.querySelector('.btn-loading');
+        if (form && submitBtn && statusEl) {
+                const labelEl = submitBtn.querySelector('.btn-label');
+                const loadingEl = submitBtn.querySelector('.btn-loading');
 
-		const setFieldError = (field: string, message: string) => {
-			const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
-			const errorEl = document.getElementById(`error-${field}`);
-			if (input) {
-				if (message) {
-					input.setAttribute('aria-invalid', 'true');
-					input.classList.add('border-orange', 'ring-2', 'ring-orange/40');
-				} else {
-					input.removeAttribute('aria-invalid');
-					input.classList.remove('border-orange', 'ring-2', 'ring-orange/40');
-				}
-			}
-			if (errorEl) {
-				if (message) {
-					errorEl.textContent = message;
-					errorEl.classList.remove('hidden');
-				} else {
-					errorEl.classList.add('hidden');
-					errorEl.textContent = '';
-				}
-			}
-		};
+                const setFieldError = (field: string, message: string) => {
+                        const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
+                        const errorEl = document.getElementById(`error-${field}`);
+                        if (input) {
+                                if (message) {
+                                        input.setAttribute('aria-invalid', 'true');
+                                        input.classList.add('border-orange', 'ring-2', 'ring-orange/40');
+                                } else {
+                                        input.removeAttribute('aria-invalid');
+                                        input.classList.remove('border-orange', 'ring-2', 'ring-orange/40');
+                                }
+                        }
+                        if (errorEl) {
+                                if (message) {
+                                        errorEl.textContent = message;
+                                        errorEl.classList.remove('hidden');
+                                } else {
+                                        errorEl.classList.add('hidden');
+                                        errorEl.textContent = '';
+                                }
+                        }
+                };
 
-		const clearAllErrors = () => {
-			['name', 'email', 'subject', 'message', 'consent'].forEach((f) =>
-				setFieldError(f, ''),
-			);
-			statusEl.classList.add('hidden');
-			statusEl.textContent = '';
-		};
+                const clearAllErrors = () => {
+                        ['name', 'email', 'subject', 'message', 'consent'].forEach((f) =>
+                                setFieldError(f, ''),
+                        );
+                        statusEl.classList.add('hidden');
+                        statusEl.textContent = '';
+                };
 
-		const showStatus = (message: string, type: 'success' | 'error') => {
-			statusEl.textContent = message;
-			statusEl.classList.remove('hidden', 'bg-green/15', 'text-green-400', 'bg-orange/15', 'text-orange-300');
-			if (type === 'success') {
-				statusEl.classList.add('bg-green/15', 'text-green-400');
-			} else {
-				statusEl.classList.add('bg-orange/15', 'text-orange-300');
-			}
-		};
+                const showStatus = (message: string, type: 'success' | 'error') => {
+                        statusEl.textContent = message;
+                        statusEl.classList.remove('hidden', 'bg-green/15', 'text-green-400', 'bg-orange/15', 'text-orange-300');
+                        if (type === 'success') {
+                                statusEl.classList.add('bg-green/15', 'text-green-400');
+                        } else {
+                                statusEl.classList.add('bg-orange/15', 'text-orange-300');
+                        }
+                };
 
-		const setLoading = (loading: boolean) => {
-			if (loading) {
-				labelEl?.classList.add('hidden');
-				loadingEl?.classList.remove('hidden');
-				submitBtn.disabled = true;
-			} else {
-				labelEl?.classList.remove('hidden');
-				loadingEl?.classList.add('hidden');
-				submitBtn.disabled = false;
-			}
-		};
+                const setLoading = (loading: boolean) => {
+                        if (loading) {
+                                labelEl?.classList.add('hidden');
+                                loadingEl?.classList.remove('hidden');
+                                submitBtn.disabled = true;
+                        } else {
+                                labelEl?.classList.remove('hidden');
+                                loadingEl?.classList.add('hidden');
+                                submitBtn.disabled = false;
+                        }
+                };
 
-		form.addEventListener('submit', async (e) => {
-			e.preventDefault();
-			clearAllErrors();
+                form.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        clearAllErrors();
 
-			const formData = new FormData(form);
-			const payload = {
-				name: formData.get('name'),
-				email: formData.get('email'),
-				subject: formData.get('subject'),
-				message: formData.get('message'),
-				consent: formData.get('consent') === 'on',
-				website: formData.get('website'), // honeypot
-			};
+                        const formData = new FormData(form);
+                        const payload = {
+                                name: formData.get('name'),
+                                email: formData.get('email'),
+                                subject: formData.get('subject'),
+                                message: formData.get('message'),
+                                consent: formData.get('consent') === 'on',
+                                website: formData.get('website'), // honeypot
+                        };
 
-			setLoading(true);
+                        setLoading(true);
 
-			try {
-				const res = await fetch('/api/contact', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(payload),
-				});
+                        try {
+                                const res = await fetch('/api/contact', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(payload),
+                                });
 
-				const data = await res.json().catch(() => ({}));
+                                const data = await res.json().catch(() => ({}));
 
-				if (res.ok) {
-					showStatus(
-						data.message || 'Message envoyé avec succès. Nous vous recontacterons bientôt.',
-						'success',
-					);
-					form.reset();
-				} else if (res.status === 422 && data.errors) {
-					// Erreurs de validation par champ
-					Object.entries(data.errors).forEach(([field, msg]) => {
-						if (field !== '_honeypot') {
-							setFieldError(field, msg as string);
-						}
-					});
-					// Focus le premier champ en erreur
-					const firstError = form.querySelector<HTMLElement>('[aria-invalid="true"]');
-					firstError?.focus();
-				} else if (res.status === 429) {
-					showStatus(
-						data.error || 'Trop de tentatives. Veuillez réessayer dans une minute.',
-						'error',
-					);
-				} else {
-					showStatus(
-						data.error || 'Une erreur est survenue. Veuillez réessayer.',
-						'error',
-					);
-				}
-			} catch (err) {
-				showStatus(
-					'Erreur réseau. Vérifiez votre connexion et réessayez.',
-					'error',
-				);
-			} finally {
-				setLoading(false);
-			}
-		});
-	}
+                                if (res.ok) {
+                                        showStatus(
+                                                data.message || 'Message envoyé avec succès. Nous vous recontacterons bientôt.',
+                                                'success',
+                                        );
+                                        form.reset();
+                                } else if (res.status === 422 && data.errors) {
+                                        // Erreurs de validation par champ
+                                        Object.entries(data.errors).forEach(([field, msg]) => {
+                                                if (field !== '_honeypot') {
+                                                        setFieldError(field, msg as string);
+                                                }
+                                        });
+                                        // Focus le premier champ en erreur
+                                        const firstError = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+                                        firstError?.focus();
+                                } else if (res.status === 429) {
+                                        showStatus(
+                                                data.error || 'Trop de tentatives. Veuillez réessayer dans une minute.',
+                                                'error',
+                                        );
+                                } else {
+                                        showStatus(
+                                                data.error || 'Une erreur est survenue. Veuillez réessayer.',
+                                                'error',
+                                        );
+                                }
+                        } catch (err) {
+                                showStatus(
+                                        'Erreur réseau. Vérifiez votre connexion et réessayez.',
+                                        'error',
+                                );
+                        } finally {
+                                setLoading(false);
+                        }
+                });
+        }
 </script>
