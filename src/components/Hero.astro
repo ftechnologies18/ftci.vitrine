@@ -1,57 +1,18 @@
 ---
 /**
- * Hero.astro — Logo Reveal Cinématique v4
+ * Hero.astro — Logo Reveal Cinématique v5 (Clean & Elegant)
  * ────────────────────────────────────────────────────────────────────────────
  * 
- * NOUVELLE APPROCHE: Utilisation directe du VRAI logo PNG
- * avec effets cinématiques professionnels
+ * APPROCHE: Logo FTCI sans fond avec effets cinématiques raffinés
  * 
  * EFFETS:
- * 1. Logo Reveal: clip-path animated reveal (rideau qui s'ouvre)
- * 2. Color Pulse: chaque zone de couleur pulse successivement  
- * 3. Floating Particles: particules de carrés autour du logo
- * 4. Glow Aura: halo lumineux dynamique
- * 5. Subtle Float: flottement continu du logo
+ * 1. Logo Reveal: clip-path animated reveal (expansion depuis centre)
+ * 2. Glow Aura: halos lumineux dynamiques par couleur
+ * 3. Subtle Float: flottement continu du logo
+ * 4. Shimmer: effet de brillance subtil
+ * 5. Ring Decoration: anneau rotatif élégant
  */
 
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  color: string;
-  delay: number;
-  duration: number;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// GÉNÉRATION DE PARTICULES FLOTTANTES AUTOUR DU LOGO
-// ═══════════════════════════════════════════════════════════════════════════
-
-function generateParticles(count: number): Particle[] {
-  const particles: Particle[] = [];
-  const colors = ['#1e3a5f', '#2d5a9e', '#1a8c42', '#28b855', '#d45a0f', '#EE6C1A', '#6B7FC7'];
-  
-  for (let i = 0; i < count; i++) {
-    // Distribution en cercle/ellipse autour du centre
-    const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
-    const radius = 120 + Math.random() * 80; // Distance du centre
-    
-    particles.push({
-      id: i,
-      x: 150 + Math.cos(angle) * radius,
-      y: 140 + Math.sin(angle) * radius * 0.8, // Légèrement aplati
-      size: 4 + Math.random() * 8,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      delay: Math.random() * 3,
-      duration: 4 + Math.random() * 4,
-    });
-  }
-  
-  return particles;
-}
-
-const logoParticles = generateParticles(35);
 ---
 
 <section class="hero-section relative min-h-[100svh] flex items-center overflow-hidden" id="contenu">
@@ -113,59 +74,17 @@ const logoParticles = generateParticles(35);
         </div>
       </div>
 
-      <!-- LOGO FTCI avec Effet Reveal Cinématique -->
+      <!-- LOGO FTCI avec Effets Cinématiques Épurés -->
       <div class="logo-showcase hidden lg:flex items-center justify-center relative" aria-label="Logo FTCI">
         
-        <!-- Auras/Glows colorées -->
+        <!-- Auras/Glows colorées améliorées -->
         <div class="logo-aura aura-navy"></div>
         <div class="logo-aura aura-green"></div>
         <div class="logo-aura aura-orange"></div>
         
-        <!-- Container principal du logo -->
-        <div class="logo-container">
-          
-          <!-- Scan Line Effect -->
-          <div class="scan-line"></div>
-          
-          <!-- Le VRAI logo FTCI (sans fond) -->
-          <img 
-            src="/brand/logo-ftci-nobg.png" 
-            alt="Logo FTCI - Freelance Technologies Côte d'Ivoire"
-            class="logo-image"
-            width="320"
-            height="300"
-          />
-          
-          <!-- Overlay gradient pour l'effet -->
-          <div class="logo-overlay"></div>
-          
-          <!-- Particules flottantes SVG -->
-          <svg class="particles-svg" viewBox="0 0 300 280" aria-hidden="true">
-            {logoParticles.map((p) => (
-              <rect
-                class="particle"
-                x={p.x}
-                y={p.y}
-                width={p.size}
-                height={p.size}
-                rx={p.size > 6 ? 2 : 1}
-                fill={p.color}
-                style={`--delay:${p.delay}s;--duration:${p.duration}s`}
-              />
-            ))}
-          </svg>
-        </div>
-        
-        <!-- Label sous le logo -->
-        <div class="logo-label hero-reveal" style="--delay:1.2s">
-          <span class="label-main">FTCI</span>
-          <span class="label-sub">Technologies</span>
-        </div>
-        
-        <!-- Anneau décoratif rotatif -->
+        <!-- Anneau décoratif rotatif (arrière-plan) -->
         <div class="ring-decoration">
           <svg viewBox="0 0 200 200" class="ring-svg">
-            <circle cx="100" cy="100" r="90" fill="none" stroke="url(#ringGradient)" stroke-width="1" stroke-dasharray="8 12" opacity="0.4"/>
             <defs>
               <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#1e3a5f"/>
@@ -173,7 +92,34 @@ const logoParticles = generateParticles(35);
                 <stop offset="100%" stop-color="#d45a0f"/>
               </linearGradient>
             </defs>
+            <circle cx="100" cy="100" r="85" fill="none" stroke="url(#ringGradient)" stroke-width="0.75" stroke-dasharray="6 10" opacity="0.35"/>
+            <circle cx="100" cy="100" r="95" fill="none" stroke="url(#ringGradient)" stroke-width="0.5" stroke-dasharray="2 8" opacity="0.2"/>
           </svg>
+        </div>
+        
+        <!-- Container principal du logo -->
+        <div class="logo-container">
+          
+          <!-- Effet shimmer/brillance -->
+          <div class="logo-shimmer"></div>
+          
+          <!-- Le VRAI logo FTCI (sans fond) -->
+          <img 
+            src="/brand/logo-ftci-nobg.png" 
+            alt="Logo FTCI - Freelance Technologies Côte d'Ivoire"
+            class="logo-image"
+            width="340"
+            height="320"
+          />
+          
+          <!-- Glow overlay pour profondeur -->
+          <div class="logo-glow-overlay"></div>
+        </div>
+        
+        <!-- Label sous le logo -->
+        <div class="logo-label hero-reveal" style="--delay:1s">
+          <span class="label-main">FTCI</span>
+          <span class="label-sub">Technologies</span>
         </div>
       </div>
     </div>
@@ -306,7 +252,7 @@ const logoParticles = generateParticles(35);
   .logo-showcase {
     position: relative;
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
     aspect-ratio: 1;
     margin: 0 auto;
     display: flex;
@@ -314,187 +260,48 @@ const logoParticles = generateParticles(35);
     justify-content: center;
   }
 
-  /* Auras colorées derrière le logo */
+  /* ═══════════════════════════════════════════════════════════════════════════
+     AURAS COLORÉES — Halos lumineux améliorés
+     ═══════════════════════════════════════════════════════════════════════════ */
   .logo-aura {
     position: absolute;
     border-radius: 50%;
-    filter: blur(50px);
+    filter: blur(55px);
     pointer-events: none;
     opacity: 0;
-    animation: auraPulse 5s ease-in-out infinite;
+    animation: auraPulse 6s ease-in-out infinite;
   }
   
   .aura-navy {
-    width: 55%;
-    height: 45%;
-    top: 5%;
-    left: 0%;
-    background: radial-gradient(circle, rgba(30, 58, 95, 0.5), transparent 70%);
-    animation-delay: 0.5s;
+    width: 60%;
+    height: 50%;
+    top: 0%;
+    left: -5%;
+    background: radial-gradient(circle, rgba(30, 58, 95, 0.6), transparent 65%);
+    animation-delay: 0.3s;
   }
   
   .aura-green {
-    width: 50%;
-    height: 42%;
-    top: 5%;
-    right: 0%;
-    background: radial-gradient(circle, rgba(26, 140, 66, 0.4), transparent 70%);
-    animation-delay: 1.5s;
+    width: 55%;
+    height: 48%;
+    top: 0%;
+    right: -5%;
+    background: radial-gradient(circle, rgba(26, 140, 66, 0.5), transparent 65%);
+    animation-delay: 1.2s;
   }
   
   .aura-orange {
-    width: 60%;
-    height: 48%;
-    bottom: 5%;
-    left: 15%;
-    background: radial-gradient(circle, rgba(212, 90, 15, 0.4), transparent 70%);
-    animation-delay: 2.5s;
+    width: 65%;
+    height: 52%;
+    bottom: 0%;
+    left: 10%;
+    background: radial-gradient(circle, rgba(212, 90, 15, 0.5), transparent 65%);
+    animation-delay: 2.1s;
   }
   
   @keyframes auraPulse {
-    0%, 100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.1); }
-  }
-
-  /* Container du logo avec effets */
-  .logo-container {
-    position: relative;
-    width: 90%;
-    z-index: 2;
-    padding: 0;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     IMAGE DU LOGO — Effets Cinématiques
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .logo-image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    
-    /* Animation d'apparition principale */
-    animation: 
-      logoReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-      logoFloat 7s ease-in-out infinite;
-    animation-delay: 0.3s, 1.5s;
-    
-    /* État initial caché */
-    opacity: 0;
-    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.35));
-  }
-
-  /* Révélation clip-path - effet rideau */
-  @keyframes logoReveal {
-    0% {
-      opacity: 0;
-      clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-      transform: scale(0.8);
-    }
-    40% {
-      opacity: 1;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
-    60% {
-      transform: scale(1.02);
-    }
-    100% {
-      opacity: 1;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      transform: scale(1);
-    }
-  }
-  
-  /* Flottement subtil continu */
-  @keyframes logoFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  /* Overlay gradient pour profondeur */
-  .logo-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(107, 127, 199, 0.08) 0%,
-      transparent 40%,
-      transparent 60%,
-      rgba(212, 90, 15, 0.08) 100%
-    );
-    pointer-events: none;
-    opacity: 0;
-    animation: overlayFade 1s ease-out 1.5s forwards;
-  }
-  
-  @keyframes overlayFade {
-    to { opacity: 1; }
-  }
-
-  /* Scan Line Effect */
-  .scan-line {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(255, 255, 255, 0.03) 50%,
-      transparent 100%
-    );
-    height: 30%;
-    animation: scanMove 2.5s ease-in-out infinite;
-    animation-delay: 1.8s;
-    pointer-events: none;
-    opacity: 0;
-  }
-  
-  @keyframes scanMove {
-    0% { top: -30%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     PARTICULES FLOTTANTES
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .particles-svg {
-    position: absolute;
-    inset: -20%;
-    width: 140%;
-    height: 140%;
-    pointer-events: none;
-    overflow: visible;
-  }
-
-  .particle {
-    opacity: 0;
-    animation: particleFloat var(--duration, 5s) ease-in-out infinite;
-    animation-delay: var(--delay, 0s);
-    will-change: transform, opacity;
-  }
-  
-  @keyframes particleFloat {
-    0% {
-      opacity: 0;
-      transform: translate(0, 0) rotate(0deg) scale(0);
-    }
-    15% {
-      opacity: 0.7;
-      transform: translate(0, 0) rotate(45deg) scale(1);
-    }
-    50% {
-      opacity: 0.5;
-      transform: translate(calc(var(--tx, 15px)), calc(var(--ty, -20px))) rotate(45deg) scale(0.9);
-    }
-    85% {
-      opacity: 0.3;
-      transform: translate(calc(var(--tx, 15px) * 0.5), calc(var(--ty, -20px) * 0.5)) rotate(45deg) scale(0.7);
-    }
-    100% {
-      opacity: 0;
-      transform: translate(0, 0) rotate(45deg) scale(0);
-    }
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.08); }
   }
 
   /* ═══════════════════════════════════════════════════════════════════════════
@@ -502,14 +309,14 @@ const logoParticles = generateParticles(35);
      ═══════════════════════════════════════════════════════════════════════════ */
   .ring-decoration {
     position: absolute;
-    width: 130%;
-    height: 130%;
+    width: 135%;
+    height: 135%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
     opacity: 0;
-    animation: ringFadeIn 1s ease-out 2s forwards, ringRotate 40s linear infinite;
+    animation: ringFadeIn 1.2s ease-out 1.5s forwards, ringRotate 50s linear infinite;
   }
   
   .ring-svg {
@@ -526,36 +333,152 @@ const logoParticles = generateParticles(35);
     to { transform: rotate(360deg); }
   }
 
+  /* Container du logo */
+  .logo-container {
+    position: relative;
+    width: 88%;
+    z-index: 3;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     IMAGE DU LOGO — Effets Cinématiques Raffinés
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .logo-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    
+    /* Animation principale: reveal + float */
+    animation: 
+      logoReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+      logoFloat 8s ease-in-out infinite,
+      logoGlow 4s ease-in-out infinite;
+    animation-delay: 0.4s, 1.8s, 2s;
+    
+    /* État initial caché */
+    opacity: 0;
+    clip-path: circle(0% at 50% 50%);
+    filter: drop-shadow(0 0 30px rgba(107, 127, 199, 0.25));
+  }
+
+  /* Révélation circulaire élégante */
+  @keyframes logoReveal {
+    0% {
+      opacity: 0;
+      clip-path: circle(0% at 50% 50%);
+      transform: scale(0.85);
+      filter: drop-shadow(0 0 0px transparent);
+    }
+    50% {
+      opacity: 1;
+      clip-path: circle(70% at 50% 50%);
+    }
+    80% {
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 35px rgba(107, 127, 199, 0.35));
+    }
+    100% {
+      opacity: 1;
+      clip-path: circle(110% at 50% 50%);
+      transform: scale(1);
+      filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.25));
+    }
+  }
+  
+  /* Flottement subtil continu */
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  /* Pulse lumineux subtil */
+  @keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.2)); }
+    50% { filter: drop-shadow(0 0 40px rgba(107, 127, 199, 0.4)); }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     SHIMMER EFFECT — Brillance subtil
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .logo-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.04) 45%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.04) 55%,
+      transparent 80%
+    );
+    background-size: 250% 250%;
+    pointer-events: none;
+    z-index: 4;
+    opacity: 0;
+    animation: shimmerIn 0.5s ease-out 2s forwards, shimmerMove 6s ease-in-out infinite;
+    animation-delay: 0s, 2.5s;
+  }
+  
+  @keyframes shimmerIn {
+    to { opacity: 1; }
+  }
+  
+  @keyframes shimmerMove {
+    0%, 100% { background-position: 200% 200%; }
+    50% { background-position: 0% 0%; }
+  }
+
+  /* Glow overlay pour profondeur */
+  .logo-glow-overlay {
+    position: absolute;
+    inset: -10%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(107, 127, 199, 0.06) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: glowOverlayFade 1.5s ease-out 1.8s forwards;
+  }
+  
+  @keyframes glowOverlayFade {
+    to { opacity: 1; }
+  }
+
   /* ═══════════════════════════════════════════════════════════════════════════
      LABEL SOUS LE LOGO
      ═══════════════════════════════════════════════════════════════════════════ */
   .logo-label {
     position: absolute;
-    bottom: -45px;
+    bottom: -48px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     z-index: 5;
   }
   
   .label-main {
     font-family: var(--font-display), sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 800;
-    letter-spacing: 0.2em;
-    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.22em;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   }
   
   .label-sub {
     font-family: var(--font-display), sans-serif;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     font-weight: 600;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: #EE6C1A;
+    text-shadow: 0 2px 15px rgba(238, 108, 26, 0.4);
   }
 
   /* ═══════════════════════════════════════════════════════════════════════════
@@ -567,17 +490,18 @@ const logoParticles = generateParticles(35);
       opacity: 1 !important;
       clip-path: none !important;
       transform: none !important;
+      filter: drop-shadow(0 0 20px rgba(107, 127, 199, 0.2)) !important;
     }
-    .particle {
+    .logo-shimmer {
+      display: none !important;
+    }
+    .logo-glow-overlay {
       animation: none !important;
-      opacity: 0.4 !important;
+      opacity: 1 !important;
     }
     .logo-aura {
       animation: none !important;
       opacity: 0.4 !important;
-    }
-    .scan-line {
-      display: none !important;
     }
     .ring-decoration {
       animation: ringFadeIn 0.5s ease-out forwards !important;
@@ -638,7 +562,7 @@ function initHero() {
           requestAnimationFrame(() => {
             const scrollY = window.scrollY;
             auras.forEach((aura, index) => {
-              (aura as HTMLElement).style.transform = `translateY(${scrollY * (0.02 + index * 0.01)}px)`;
+              (aura as HTMLElement).style.transform = `translateY(${scrollY * (0.018 + index * 0.008)}px)`;
             });
             ticking = false;
           });
@@ -646,17 +570,6 @@ function initHero() {
       },
       { passive: true }
     );
-  }
-  
-  // Ajouter des directions aléatoires aux particules
-  if (!prefersReducedMotion) {
-    const particles = document.querySelectorAll('.particle');
-    particles.forEach((p) => {
-      const tx = (Math.random() - 0.5) * 35;
-      const ty = (Math.random() - 0.5) * 35;
-      p.style.setProperty('--tx', `${tx}px`);
-      p.style.setProperty('--ty', `${ty}px`);
-    });
   }
 }
 
