@@ -1,9 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
-    <path d="M50.4 78.5a75.1 75.1 0 0 0-28.5 6.9l24.2-65.7c.7-2 1.9-3.2 3.4-3.2h29c1.5 0 2.7 1.2 3.4 3.2l24.2 65.7s-11.6-7-28.5-7L67 45.5c-.4-1.7-1.6-2.8-2.9-2.8-1.3 0-2.5 1.1-2.9 2.7L50.4 78.5Zm-1.1 28.2Zm-4.2-20.2c-2 6.6-.6 15.8 4.2 20.2a17.5 17.5 0 0 1 .2-.7 5.5 5.5 0 0 1 5.7-4.5c2.8.1 4.3 1.5 4.7 4.7.2 1.1.2 2.3.2 3.5v.4c0 2.7.7 5.2 2.2 7.4a13 13 0 0 0 5.7 4.9v-.3l-.2-.3c-1.8-5.6-.5-9.5 4.4-12.8l1.5-1a73 73 0 0 0 3.2-2.2 16 16 0 0 0 6.8-11.4c.3-2 .1-4-.6-6l-.8.6-1.6 1a37 37 0 0 1-22.4 2.7c-5-.7-9.7-2-13.2-6.2Z" />
-    <style>
-        path { fill: #000; }
-        @media (prefers-color-scheme: dark) {
-            path { fill: #FFF; }
-        }
-    </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="navy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d5a9e"/>
+      <stop offset="100%" stop-color="#1e3a5f"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#28b855"/>
+      <stop offset="100%" stop-color="#1a8c42"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EE6C1A"/>
+      <stop offset="100%" stop-color="#d45a0f"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#0a1428"/>
+  
+  <!-- Navy branch (left-top) - simplified trefoil shape -->
+  <rect x="22" y="32" width="10" height="10" rx="2" fill="url(#navy)" transform="rotate(15,27,37)"/>
+  <rect x="18" y="44" width="10" height="10" rx="2" fill="url(#navy)" transform="rotate(20,23,49)"/>
+  <rect x="16" y="56" width="10" height="10" rx="2" fill="url(#navy)" transform="rotate(25,21,61)"/>
+  <rect x="17" y="68" width="10" height="10" rx="2" fill="url(#navy)" transform="rotate(30,22,73)"/>
+  <rect x="22" y="78" width="10" height="10" rx="2" fill="url(#navy)" transform="rotate(35,27,83)"/>
+  <rect x="30" y="86" width="10" height="10" rx="2" fill="url(#navy)" transform="rotate(40,35,91)"/>
+  <rect x="40" y="92" width="10" height="10" rx="2" fill="url(#navy)" transform="rotate(45,45,97)"/>
+  <rect x="30" y="38" width="9" height="9" rx="2" fill="url(#navy)" transform="rotate(12,34.5,42.5)"/>
+  <rect x="26" y="50" width="9" height="9" rx="2" fill="url(#navy)" transform="rotate(22,30.5,54.5)"/>
+  <rect x="24" y="62" width="9" height="9" rx="2" fill="url(#navy)" transform="rotate(30,28.5,66.5)"/>
+  
+  <!-- Green branch (right-top) -->
+  <rect x="96" y="32" width="10" height="10" rx="2" fill="url(#green)" transform="rotate(-15,101,37)"/>
+  <rect x="100" y="44" width="10" height="10" rx="2" fill="url(#green)" transform="rotate(-20,105,49)"/>
+  <rect x="102" y="56" width="10" height="10" rx="2" fill="url(#green)" transform="rotate(-25,107,61)"/>
+  <rect x="101" y="68" width="10" height="10" rx="2" fill="url(#green)" transform="rotate(-30,106,73)"/>
+  <rect x="96" y="78" width="10" height="10" rx="2" fill="url(#green)" transform="rotate(-35,101,83)"/>
+  <rect x="88" y="86" width="10" height="10" rx="2" fill="url(#green)" transform="rotate(-40,93,91)"/>
+  <rect x="78" y="92" width="10" height="10" rx="2" fill="url(#green)" transform="rotate(-45,83,97)"/>
+  <rect x="89" y="38" width="9" height="9" rx="2" fill="url(#green)" transform="rotate(-12,93.5,42.5)"/>
+  <rect x="93" y="50" width="9" height="9" rx="2" fill="url(#green)" transform="rotate(-22,97.5,54.5)"/>
+  <rect x="95" y="62" width="9" height="9" rx="2" fill="url(#green)" transform="rotate(-30,99.5,66.5)"/>
+  
+  <!-- Orange branch (bottom) -->
+  <rect x="40" y="95" width="10" height="10" rx="2" fill="url(#orange)" transform="rotate(50,45,100)"/>
+  <rect x="52" y="102" width="10" height="10" rx="2" fill="url(#orange)" transform="rotate(55,57,107)"/>
+  <rect x="64" y="106" width="10" height="10" rx="2" fill="url(#orange)"/>
+  <rect x="76" y="102" width="10" height="10" rx="2" fill="url(#orange)" transform="rotate(-55,81,107)"/>
+  <rect x="88" y="95" width="10" height="10" rx="2" fill="url(#orange)" transform="rotate(-50,93,100)"/>
+  <rect x="46" y="84" width="9" height="9" rx="2" fill="url(#orange)" transform="rotate(45,50.5,88.5)"/>
+  <rect x="58" y="90" width="9" height="9" rx="2" fill="url(#orange)" transform="rotate(48,62.5,94.5)"/>
+  <rect x="72" y="90" width="9" height="9" rx="2" fill="url(#orange)" transform="rotate(-48,76.5,94.5)"/>
+  <rect x="82" y="84" width="9" height="9" rx="2" fill="url(#orange)" transform="rotate(-45,86.5,88.5)"/>
+  <rect x="60" y="98" width="8" height="8" rx="2" fill="url(#orange)"/>
+  <rect x="70" y="98" width="8" height="8" rx="2" fill="url(#orange)"/>
 </svg>
