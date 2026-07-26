@@ -1,277 +1,161 @@
 ---
-// ============================================================
-// Services FTCI — Refonte R-DESIGN-2
-// ------------------------------------------------------------
-// Cahier des charges 6.3 : Timeline animée + icônes en tracé animé SVG
-//                          (stroke animation .stroke-draw)
-//                          + apparition progressive au scroll (.observe)
-//
-// Skills appliqués :
-// - Vignelli Canon       : 2 familles typo, hiérarchie stricte, titres statiques
-// - Müller-Brockmann     : baseline 8px (gap-8, mb-12 md:mb-16, py-20 md:py-32)
-// - Brand Book Generator : stagger assemble avec --ease-spring (delay via --d)
-// - Apple Design         : interruptible (transitions CSS), reduced-motion = no anim
-// - Emil Design Eng.     : ease-out custom, durations < 300ms UI, transitions
-//                          (pas keyframes) pour interactif, GPU-only
-// - Review Animations    : stagger, pas de transition:all, reduced-motion respecté,
-//                          hover gating @media (hover: hover)
-//
-// Note stroke-draw : la classe .stroke-draw (global.css) lance l'animation
-// dès le rendu. Pour la déclencher au scroll (apparition progressive),
-// on PAUSE l'animation tant que l'étape (.observe) n'est pas visible,
-// puis on la RUN quand .is-visible est ajouté par Layout.astro.
-// ============================================================
+/**
+ * Services.astro — Section "Nos Services" (timeline verticale + stroke-draw).
+ * ────────────────────────────────────────────────────────────────────────────
+ * - Section id="services" py-20 md:py-32 bg-light-bg
+ * - Timeline verticale : 4 services avec cercle numéroté gradient + icône SVG
+ *   .stroke-draw (tracé animé au scroll), ligne verticale gradient entre étapes
+ * - Chaque étape : titre, description, liste à puces vertes
+ * - CTA final "Discutons de votre projet" (btn-primary magnetic)
+ * - Stagger d'entrée (.observe + --d)
+ * - L'icône .stroke-draw se déclenche via .observe.is-visible .stroke-draw
+ *   (rule CSS dans global.css — pas d'observer séparé nécessaire)
+ */
 
-interface ServiceStep {
-        num: number;
-        title: string;
-        description: string;
-        bullets: string[];
-        circleFrom: string;
-        circleTo: string;
-        badgeText: string;
-        badgeBorder: string;
-        lineFrom: string;
-        lineTo: string;
-        iconPath: string;
-}
-
-const services: ServiceStep[] = [
+const services = [
         {
-                num: 1,
+                num: '01',
                 title: 'Transformation Digitale',
+                color: 'orange',
+                gradient: 'from-orange to-orange-600',
+                text: 'text-orange',
                 description:
-                        "Accompagnement stratégique pour digitaliser votre institution. Audit des processus, recommandations technologiques, planification de déploiement.",
-                bullets: [
-                        'Audit des besoins métier',
-                        'Roadmap technologique',
-                        'Gestion du changement',
-                ],
-                circleFrom: 'from-orange',
-                circleTo: 'to-orange-600',
-                badgeText: 'text-orange',
-                badgeBorder: 'border-orange',
-                lineFrom: 'from-orange',
-                lineTo: 'to-periwinkle',
-                iconPath: 'M13 10V3L4 14h7v7l9-11h-7z',
-        },
-        {
-                num: 2,
-                title: 'Développement Web sur Mesure',
-                description:
-                        "Création d'applications web et mobiles adaptées à vos besoins spécifiques. Stack moderne, performante, sécurisée.",
-                bullets: [
-                        'Applications web progressives (PWA)',
-                        'Intégrations API tierces',
-                        'Support et maintenance',
-                ],
-                circleFrom: 'from-periwinkle',
-                circleTo: 'to-periwinkle-600',
-                badgeText: 'text-periwinkle',
-                badgeBorder: 'border-periwinkle',
-                lineFrom: 'from-periwinkle',
-                lineTo: 'to-green',
-                iconPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
-        },
-        {
-                num: 3,
-                title: 'Infrastructure IT',
-                description:
-                        "Mise en place d'infrastructures cloud robustes et sécurisées. Hébergement, sauvegarde, monitoring 24/7.",
-                bullets: [
-                        'Cloud (AWS, Google Cloud)',
-                        'Sécurité et conformité',
-                        'Disaster recovery',
-                ],
-                circleFrom: 'from-green',
-                circleTo: 'to-green-600',
-                badgeText: 'text-green',
-                badgeBorder: 'border-green',
-                lineFrom: 'from-green',
-                lineTo: 'to-orange',
+                        "Nous accompagnons les organisations dans leur migration vers le numérique — de l'audit initial à la conduite du changement.",
+                items: ['Audit & diagnostic', 'Roadmap stratégique', 'Gestion du changement'],
                 iconPath:
-                        'M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6',
+                        'M13 10V3L4 14h7v7l9-11h-7z',
         },
         {
-                num: 4,
-                title: 'Documentation & Formation',
+                num: '02',
+                title: 'Développement Web sur Mesure',
+                color: 'periwinkle',
+                gradient: 'from-periwinkle to-periwinkle-600',
+                text: 'text-periwinkle',
                 description:
-                        "Documentation technique complète et formation des équipes pour garantir l'adoption et la maîtrise des outils.",
-                bullets: [
-                        'Guides utilisateur et administrateur',
-                        'Formations en ligne et présentiel',
-                        'Support utilisateur continu',
-                ],
-                circleFrom: 'from-orange',
-                circleTo: 'to-orange-600',
-                badgeText: 'text-orange',
-                badgeBorder: 'border-orange',
-                lineFrom: 'from-orange',
-                lineTo: 'to-orange',
+                        'Applications web et mobiles, API et PWA conçues sur mesure pour vos processus métiers et vos contraintes locales.',
+                items: ['PWA & applications', 'API & intégrations', 'Support & maintenance'],
+                iconPath:
+                        'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+        },
+        {
+                num: '03',
+                title: 'Infrastructure IT',
+                color: 'green',
+                gradient: 'from-green to-green-600',
+                text: 'text-green',
+                description:
+                        "Conception, déploiement et sécurisation de votre infrastructure cloud et on-premise, avec continuité d'activité garantie.",
+                items: ['Cloud & hybridation', 'Sécurité & conformité', 'Disaster recovery'],
+                iconPath:
+                        'M5 12H3l8-8 8 8h-2M5 12v7a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-7',
+        },
+        {
+                num: '04',
+                title: 'Documentation & Formation',
+                color: 'orange',
+                gradient: 'from-orange to-orange-600',
+                text: 'text-orange',
+                description:
+                        "Nous transférons les compétences : guides techniques, formations utilisateurs et support continu pour autonomiser vos équipes.",
+                items: ['Guides & documentation', 'Formations sur mesure', 'Support continu'],
                 iconPath:
                         'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
         },
 ];
 ---
 
-<section
-        id="services"
-        class="relative py-20 md:py-32 bg-light-bg overflow-hidden"
-        aria-label="Nos services"
->
-        <div class="container">
-                {/* 1. Section header (h2 + sur-titre + sous-titre) */}
-                <div class="observe text-center mb-20 max-w-2xl mx-auto">
-                        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-orange mb-4">
-                                Notre approche
-                        </p>
-                        <h2 class="text-4xl md:text-5xl font-extrabold text-navy mb-4">
-                                Nos Services
-                        </h2>
-                        <p class="text-lg text-gray-text">
-                                Du conseil stratégique au déploiement d'outils numériques sur mesure —
-                                une trajectoire d'accompagnement complète.
+<section id="services" class="relative py-20 md:py-32 bg-light-bg overflow-hidden">
+        <div class="container relative z-10">
+                <!-- ── Section header ─────────────────────────────────────────────── -->
+                <div class="section-header observe">
+                        <span class="eyebrow">
+                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+                                        <polygon points="4,0 8,4 4,8 0,4" />
+                                </svg>
+                                Accompagnement
+                        </span>
+                        <h2>Nos Services</h2>
+                        <p>
+                                Une expertise complète, de la stratégie à l'exploitation — pour transformer
+                                vos idées en solutions durables.
                         </p>
                 </div>
 
-                {/* 2. Timeline verticale 4 services */}
-                <div class="max-w-4xl mx-auto">
-                        {services.map((service, idx) => {
-                                const isLast = idx === services.length - 1;
-                                return (
+                <!-- ── Timeline verticale ─────────────────────────────────────────── -->
+                <div class="relative max-w-3xl mx-auto">
+                        <!-- Ligne verticale gradient (orange → periwinkle → green → orange) -->
+                        <div
+                                class="absolute left-6 top-2 bottom-2 w-0.5 bg-gradient-to-b from-orange via-periwinkle to-green md:left-8"
+                                aria-hidden="true"
+                        ></div>
+
+                        {services.map((service, idx) => (
+                                <div
+                                        class="relative pl-16 md:pl-24 pb-12 last:pb-0 observe"
+                                        style={`--d: ${idx * 0.12}s`}
+                                >
+                                        <!-- Cercle numéroté gradient -->
                                         <div
-                                                class="observe relative flex gap-6 md:gap-8"
-                                                style={`--d:${idx}; transition-delay: calc(var(--d, 0) * 0.1s);`}
+                                                class={`absolute left-0 top-0 w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center text-white font-display font-extrabold text-sm md:text-lg shadow-lg shrink-0`}
+                                                aria-hidden="true"
                                         >
-                                                {/* Colonne gauche : cercle numéroté + ligne verticale */}
-                                                <div class="flex flex-col items-center">
-                                                        {/* Cercle numéroté avec icône SVG stroke-draw */}
-                                                        <div
-                                                                class={`relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br ${service.circleFrom} ${service.circleTo} flex items-center justify-center text-white flex-shrink-0 shadow-lg`}
-                                                        >
-                                                                <svg
-                                                                        class="w-6 h-6 md:w-7 md:h-7"
-                                                                        fill="none"
-                                                                        stroke="currentColor"
-                                                                        viewBox="0 0 24 24"
-                                                                        stroke-width="2"
-                                                                        aria-hidden="true"
-                                                                >
-                                                                        <path
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                d={service.iconPath}
-                                                                                class="stroke-draw"
-                                                                                style={`--d:${idx + 1};`}
-                                                                        />
-                                                                </svg>
-                                                                {/* Pastille numéro (en haut à droite du cercle) */}
-                                                                <span
-                                                                        class={`absolute -top-1.5 -right-1.5 w-6 h-6 md:w-7 md:h-7 bg-white ${service.badgeText} text-xs font-bold rounded-full flex items-center justify-center border-2 ${service.badgeBorder}`}
-                                                                >
-                                                                        {service.num}
-                                                                </span>
-                                                        </div>
+                                                {service.num}
+                                        </div>
 
-                                                        {/* Ligne de connexion verticale gradient — cachée après la dernière étape */}
-                                                        {!isLast && (
-                                                                <div
-                                                                        class={`w-0.5 grow my-3 bg-gradient-to-b ${service.lineFrom} ${service.lineTo}`}
-                                                                        style="min-height: 96px;"
-                                                                        aria-hidden="true"
-                                                                />
-                                                        )}
-                                                </div>
-
-                                                {/* Contenu : titre + description + liste à puces vertes */}
-                                                <div class="pb-12 md:pb-16 flex-1 pt-1">
-                                                        <h3 class="text-2xl md:text-3xl font-extrabold text-navy mb-3 leading-tight">
+                                        <!-- Contenu -->
+                                        <div class="bg-white rounded-card p-6 md:p-7 shadow-sm border border-navy/5">
+                                                <!-- Titre + icône stroke-draw -->
+                                                <div class="flex items-start justify-between gap-4 mb-3">
+                                                        <h3 class="text-xl md:text-2xl font-display font-extrabold text-navy">
                                                                 {service.title}
                                                         </h3>
-                                                        <p class="text-gray-text mb-5 leading-relaxed max-w-2xl">
-                                                                {service.description}
-                                                        </p>
-                                                        <ul class="space-y-2.5">
-                                                                {service.bullets.map((bullet) => (
-                                                                        <li class="flex items-center gap-3 text-navy/80">
-                                                                                <span class="flex-shrink-0 w-5 h-5 rounded-full bg-green/10 flex items-center justify-center">
-                                                                                        <svg
-                                                                                                class="w-3 h-3 text-green"
-                                                                                                fill="none"
-                                                                                                stroke="currentColor"
-                                                                                                viewBox="0 0 24 24"
-                                                                                                aria-hidden="true"
-                                                                                        >
-                                                                                                <path
-                                                                                                        stroke-linecap="round"
-                                                                                                        stroke-linejoin="round"
-                                                                                                        stroke-width="3"
-                                                                                                        d="M5 13l4 4L19 7"
-                                                                                                />
-                                                                                        </svg>
-                                                                                </span>
-                                                                                <span class="text-sm md:text-base">{bullet}</span>
-                                                                        </li>
-                                                                ))}
-                                                        </ul>
+                                                        <svg
+                                                                class={`w-8 h-8 ${service.text} stroke-draw shrink-0`}
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                stroke-width="1.8"
+                                                                aria-hidden="true"
+                                                        >
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d={service.iconPath}
+                                                                />
+                                                        </svg>
                                                 </div>
+
+                                                <!-- Description -->
+                                                <p class="text-gray-text leading-relaxed mb-4">
+                                                        {service.description}
+                                                </p>
+
+                                                <!-- Liste à puces vertes -->
+                                                <ul class="space-y-2">
+                                                        {service.items.map((item) => (
+                                                                <li class="flex items-center gap-2.5 text-sm text-navy/80">
+                                                                        <svg class="w-4 h-4 text-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                                                                        </svg>
+                                                                        {item}
+                                                                </li>
+                                                        ))}
+                                                </ul>
                                         </div>
-                                );
-                        })}
+                                </div>
+                        ))}
                 </div>
 
-                {/* 3. CTA final — .btn-primary + .magnetic (press scale 0.97 via global) */}
-                <div
-                        class="observe mt-8 text-center"
-                        style="--d:4; transition-delay: calc(var(--d, 0) * 0.1s);"
-                >
-                        <p class="text-gray-text mb-6">
-                                Besoin d'une solution personnalisée ?
-                        </p>
-                        <a
-                                href="#contact"
-                                class="magnetic btn-primary inline-flex items-center gap-2 px-8 py-4 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600"
-                                data-magnetic
-                        >
-                                Discutons de votre projet
-                                <svg
-                                        class="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        aria-hidden="true"
-                                >
-                                        <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                        />
-                                </svg>
+                <!-- ── CTA final ──────────────────────────────────────────────────── -->
+                <div class="text-center mt-14 observe" style="--d: 0.1s">
+                        <a href="/#contact" data-magnetic="16" class="btn-primary magnetic">
+                                <span>
+                                        Discutons de votre projet
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                        </svg>
+                                </span>
                         </a>
                 </div>
         </div>
 </section>
-
-<style>
-        /* Stroke-draw : l'animation (définie dans global.css) se joue uniquement
-           quand l'étape parente (.observe) devient visible. Sinon, en pause —
-           le path reste invisible (dashoffset:200) jusqu'au reveal. */
-        .observe .stroke-draw {
-                animation-play-state: paused;
-        }
-        .observe.is-visible .stroke-draw {
-                animation-play-state: running;
-        }
-
-        /* Reduced motion : global.css force déjà stroke-dashoffset:0 !important
-           sur .stroke-draw — le path est donc dessiné immédiatement, sans animation.
-           On remet aussi play-state à running par sécurité (ne change rien puisque
-           animation: none !important). */
-        @media (prefers-reduced-motion: reduce) {
-                .observe .stroke-draw,
-                .observe.is-visible .stroke-draw {
-                        animation-play-state: running;
-                }
-        }
-</style>

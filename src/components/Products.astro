@@ -1,314 +1,205 @@
 ---
-// ============================================================
-// Products FTCI — Refonte R-DESIGN-2
-// ------------------------------------------------------------
-// Cahier des charges 6.2 : tilt 3D ±2.2° + halo lumineux couleur produit
-// Cahier des charges 6.4 : lignes de connexion animées (écosystème)
-//                         + motif circuit imprimé discret en fond
-//
-// Skills appliqués :
-// - Vignelli Canon       : hiérarchie stricte, max 2 familles typo,
-//                          titres STATIQUES (jamais animés au-delà du fade-in)
-// - Müller-Brockmann     : tous espacements multiples de 8px (gap-8, p-8, mb-16)
-// - Brand Book Generator : tilt 3D ±2.2° max (subtil, pro, pas gimmicky),
-//                          perspective 1600px, preserve-3d, translateZ(40px),
-//                          stagger assemble avec --ease-spring,
-//                          halo glow couleur produit
-// - Apple Design         : continuous tracking pointermove, interruptible
-//                          via CSS transition (.tilt-card), mobile désactivé
-// - Emil Design Eng.     : transitions (pas keyframes) pour interactif,
-//                          uniquement transform + opacity (GPU),
-//                          :active scale(0.97) sur .magnetic via global,
-//                          durations < 300ms UI
-// - NYT Data Viz         : (pas applicable ici — stats sont dans About)
-// - Review Animations    : pas de transition:all, hover gating
-//                          @media (hover: hover), prefers-reduced-motion
-//
-// Note script : magnetic + parallax + scroll-reveal (.observe) sont gérés
-// GLOBALEMENT par Layout.astro. Products.astro ne définit QUE le tilt 3D
-// (spécifique aux cartes produits) — DRY, pas de double-bind.
-//
-// Note styles : .observe / .tilt-stage / .tilt-card / .halo-glow /
-// .connection-line / .stroke-draw / .mesh-* sont définis dans global.css.
-// Products.astro ne les redéfinit PAS localement.
-// ============================================================
+/**
+ * Products.astro — Section "Nos Solutions" (4 cartes produits + écosystème).
+ * ────────────────────────────────────────────────────────────────────────────
+ * - Import products, productUrls, accentColorClasses de ../data/products
+ * - Section id="solutions" py-20 md:py-32 bg-white
+ * - Background : motif circuit imprimé SVG (traces H/V + nœuds, opacity 8%)
+ * - Grid 2 colonnes (md) des 4 produits
+ * - Chaque carte : .tilt-stage.observe (stagger --d) > .tilt-card (data-tilt)
+ *   + .halo-glow avec --halo-color inline (couleur produit)
+ * - Carte (Small Biz : 4 éléments max) : icône gradient, nom, description,
+ *   2 liens (page locale "En savoir plus" + externe "Accéder")
+ * - Lignes de connexion SVG animées en bas : 4 nœuds pulsants + 3 lignes
+ *   .connection-line (dashFlow) — signature visuelle "écosystème FTCI"
+ * - Script tilt local : pointermove, rotateX/rotateY ±2.2° max, translateZ(40px),
+ *   interruptible (transition CSS), mobile + reduced-motion désactivés
+ */
+
 import { products, productUrls, accentColorClasses } from '../data/products';
-import type { Product } from '../data/products';
 
-// Halo colors (rgba) par accent produit — pour box-shadow du .halo-glow
-const haloColors: Record<Product['accentColor'], string> = {
-        orange: 'rgba(238, 108, 26, 0.40)',
-        green: 'rgba(30, 158, 79, 0.40)',
-        periwinkle: 'rgba(107, 127, 199, 0.40)',
+// Mapping accentColor → hex pour --halo-color
+const haloHex: Record<string, string> = {
+	orange: '#ee6c1a',
+	green: '#1e9e4f',
+	periwinkle: '#6b7fc7',
 };
 
-// Couleur du nœud pulse dans la viz écosystème (bas de section)
-const nodeColors: Record<Product['accentColor'], string> = {
-        orange: '#EE6C1A',
-        green: '#1E9E4F',
-        periwinkle: '#6B7FC7',
-};
+// Couleurs des nœuds pour le diagramme écosystème
+const nodeColors = products.map((p) => haloHex[p.accentColor]);
 ---
 
-<section
-        id="solutions"
-        class="relative py-20 md:py-32 bg-white overflow-hidden"
-        aria-label="Nos solutions SaaS"
->
-        {/* 1. Background — motif circuit imprimé discret (SVG pattern, opacity 8%) */}
-        <div
-                class="absolute inset-0 -z-10 opacity-[0.08]"
-                aria-hidden="true"
-        >
-                <svg
-                        class="w-full h-full"
-                        viewBox="0 0 200 200"
-                        preserveAspectRatio="xMidYMid slice"
-                >
-                        <defs>
-                                <pattern
-                                        id="circuit-products"
-                                        x="0"
-                                        y="0"
-                                        width="40"
-                                        height="40"
-                                        patternUnits="userSpaceOnUse"
-                                >
-                                        {/* Traces horizontales et verticales avec interruption au nœud */}
-                                        <line x1="0" y1="20" x2="16" y2="20" stroke="#0F1E3D" stroke-width="0.6" />
-                                        <line x1="24" y1="20" x2="40" y2="20" stroke="#0F1E3D" stroke-width="0.6" />
-                                        <line x1="20" y1="0" x2="20" y2="16" stroke="#0F1E3D" stroke-width="0.6" />
-                                        <line x1="20" y1="24" x2="20" y2="40" stroke="#0F1E3D" stroke-width="0.6" />
-                                        {/* Nœud central (junction) */}
-                                        <circle cx="20" cy="20" r="1.6" fill="#0F1E3D" />
-                                        {/* Connecteurs en angle droit + nœuds secondaires */}
-                                        <line x1="32" y1="8" x2="40" y2="8" stroke="#0F1E3D" stroke-width="0.6" />
-                                        <line x1="32" y1="8" x2="32" y2="20" stroke="#0F1E3D" stroke-width="0.6" />
-                                        <line x1="8" y1="32" x2="8" y2="40" stroke="#0F1E3D" stroke-width="0.6" />
-                                        <line x1="8" y1="32" x2="20" y2="32" stroke="#0F1E3D" stroke-width="0.6" />
-                                        <circle cx="32" cy="8" r="1.2" fill="#0F1E3D" />
-                                        <circle cx="8" cy="32" r="1.2" fill="#0F1E3D" />
-                                </pattern>
-                        </defs>
-                        <rect width="200" height="200" fill="url(#circuit-products)" />
-                </svg>
-        </div>
+<section id="solutions" class="relative py-20 md:py-32 bg-white overflow-hidden">
+	<!-- ── Motif circuit imprimé (filigrane tech) ───────────────────────── -->
+	<div class="absolute inset-0 opacity-[0.08] circuit-bg" aria-hidden="true"></div>
 
-        <div class="container">
-                {/* 2. Section header (h2 + sur-titre + sous-titre) */}
-                <div class="observe text-center mb-16 max-w-2xl mx-auto">
-                        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-orange mb-4">
-                                Écosystème SaaS
-                        </p>
-                        <h2 class="text-4xl md:text-5xl font-extrabold text-navy mb-4">
-                                Nos Solutions
-                        </h2>
-                        <p class="text-lg text-gray-text">
-                                Quatre produits SaaS conçus pour transformer les institutions
-                                africaines — interconnectés pour un pilotage unifié.
-                        </p>
-                </div>
+	<div class="container relative z-10">
+		<!-- ── Section header ─────────────────────────────────────────────── -->
+		<div class="section-header observe">
+			<span class="eyebrow">
+				<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+					<polygon points="4,0 8,4 4,8 0,4" />
+				</svg>
+				Écosystème SaaS
+			</span>
+			<h2>Nos Solutions</h2>
+			<p>
+				Quatre plateformes SaaS conçues pour les réalités du marché africain —
+				évaluation, chantier, présence scolaire et gestion financière.
+			</p>
+		</div>
 
-                {/* 3. Grid 2 colonnes — 4 cartes avec tilt 3D + halo glow */}
-                <div class="grid md:grid-cols-2 gap-8 mb-16">
-                        {products.map((product, idx) => {
-                                const accent = accentColorClasses[product.accentColor];
-                                const haloColor = haloColors[product.accentColor];
-                                return (
-                                        <div
-                                                class="tilt-stage observe"
-                                                style={`--d:${idx}; transition-delay: calc(var(--d, 0) * 0.075s);`}
-                                        >
-                                                <article
-                                                        class="tilt-card group relative bg-light-bg border border-navy/8 rounded-2xl p-8 h-full"
-                                                        data-tilt
-                                                        style={`--halo-color: ${haloColor};`}
-                                                >
-                                                        {/* Halo glow — couleur produit, activé au hover via .group:hover .halo-glow */}
-                                                        <div
-                                                                class="halo-glow absolute inset-0 rounded-2xl pointer-events-none"
-                                                                style="box-shadow: 0 0 50px var(--halo-color), 0 0 90px var(--halo-color);"
-                                                                aria-hidden="true"
-                                                        />
+		<!-- ── Grille des 4 produits ──────────────────────────────────────── -->
+		<div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+			{products.map((product, idx) => {
+				const accent = accentColorClasses[product.accentColor];
+				const halo = haloHex[product.accentColor];
+				return (
+					<div
+						class="tilt-stage halo-glow observe"
+						style={`--halo-color: ${halo}; --halo-radius: 18px; --d: ${idx * 0.1}s`}
+					>
+						<article
+							class="tilt-card group h-full bg-white rounded-card border border-navy/8 p-7 md:p-8 shadow-sm"
+							data-tilt
+						>
+							<div class="tilt-content flex flex-col h-full">
+								<!-- Icône gradient couleur produit -->
+								<div
+									class={`w-14 h-14 rounded-xl bg-gradient-to-br ${accent.from} ${accent.to} flex items-center justify-center text-white mb-6 shadow-lg`}
+									aria-hidden="true"
+								>
+									<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d={product.iconPath}
+										/>
+									</svg>
+								</div>
 
-                                                        {/* Contenu carte — translateZ(40px) pour préserver la profondeur 3D */}
-                                                        <div
-                                                                class="relative z-10 flex flex-col h-full"
-                                                                style="transform: translateZ(40px);"
-                                                        >
-                                                                {/* En-tête carte : icône gradient + nom + catégorie */}
-                                                                <div class="flex items-center gap-5 mb-5">
-                                                                        <div
-                                                                                class={`w-14 h-14 ${accent.bg} rounded-xl flex items-center justify-center flex-shrink-0 shadow-md`}
-                                                                                aria-hidden="true"
-                                                                        >
-                                                                                <svg
-                                                                                        class="w-7 h-7 text-white"
-                                                                                        fill="none"
-                                                                                        stroke="currentColor"
-                                                                                        viewBox="0 0 24 24"
-                                                                                        stroke-width="2"
-                                                                                >
-                                                                                        <path
-                                                                                                stroke-linecap="round"
-                                                                                                stroke-linejoin="round"
-                                                                                                d={product.iconPath}
-                                                                                        />
-                                                                                </svg>
-                                                                        </div>
-                                                                        <div>
-                                                                                <h3 class="text-2xl font-extrabold text-navy leading-tight">
-                                                                                        {product.name}
-                                                                                </h3>
-                                                                                <p class="text-xs text-gray-text mt-0.5">
-                                                                                        {product.category}
-                                                                                </p>
-                                                                        </div>
-                                                                </div>
+								<!-- Nom + fullName -->
+								<h3
+									class={`text-2xl font-display font-extrabold text-navy mb-1 transition-colors duration-200 group-hover:text-orange ${accent.text.replace('text-', 'group-hover:')}`}
+								>
+									{product.name}
+								</h3>
+								<p class="text-sm text-gray-text font-medium mb-3">{product.fullName}</p>
 
-                                                                {/* Description courte */}
-                                                                <p class="text-gray-text mb-6 flex-1 leading-relaxed">
-                                                                        {product.description}
-                                                                </p>
+								<!-- Description courte -->
+								<p class="text-gray-text leading-relaxed mb-6 flex-1">
+									{product.description}
+								</p>
 
-                                                                {/* 2 liens : page locale + plateforme externe */}
-                                                                <div class="flex flex-wrap items-center gap-x-6 gap-y-3 pt-5 border-t border-navy/8">
-                                                                        <a
-                                                                                href={productUrls[product.slug]}
-                                                                                class={`magnetic inline-flex items-center gap-1.5 ${accent.text} font-semibold text-sm`}
-                                                                                data-magnetic
-                                                                        >
-                                                                                En savoir plus
-                                                                                <svg
-                                                                                        class="w-4 h-4"
-                                                                                        fill="none"
-                                                                                        stroke="currentColor"
-                                                                                        viewBox="0 0 24 24"
-                                                                                        aria-hidden="true"
-                                                                                >
-                                                                                        <path
-                                                                                                stroke-linecap="round"
-                                                                                                stroke-linejoin="round"
-                                                                                                stroke-width="2"
-                                                                                                d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                                                                        />
-                                                                                </svg>
-                                                                        </a>
-                                                                        {product.externalUrl && (
-                                                                                <a
-                                                                                        href={product.externalUrl}
-                                                                                        target="_blank"
-                                                                                        rel="noopener noreferrer"
-                                                                                        class="inline-flex items-center gap-1.5 text-sm text-gray-text hover:text-navy transition-colors duration-200"
-                                                                                        aria-label={`Accéder à la plateforme ${product.name} (nouvel onglet)`}
-                                                                                >
-                                                                                        Accéder à la plateforme
-                                                                                        <svg
-                                                                                                class="w-3.5 h-3.5"
-                                                                                                fill="none"
-                                                                                                stroke="currentColor"
-                                                                                                viewBox="0 0 24 24"
-                                                                                                aria-hidden="true"
-                                                                                        >
-                                                                                                <path
-                                                                                                        stroke-linecap="round"
-                                                                                                        stroke-linejoin="round"
-                                                                                                        stroke-width="2"
-                                                                                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                                                                                />
-                                                                                        </svg>
-                                                                                </a>
-                                                                        )}
-                                                                </div>
-                                                        </div>
-                                                </article>
-                                        </div>
-                                );
-                        })}
-                </div>
+								<!-- 2 liens : page locale + plateforme externe -->
+								<div class="flex items-center gap-4 pt-4 border-t border-navy/5">
+									<a
+										href={productUrls[product.slug]}
+										class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-orange transition-colors duration-200"
+									>
+										En savoir plus
+										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+										</svg>
+									</a>
+									{product.externalUrl && (
+										<a
+											href={product.externalUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+											class={`inline-flex items-center gap-1.5 text-sm font-medium ${accent.text} hover:opacity-75 transition-opacity duration-200`}
+										>
+											Accéder
+											<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5m0 0v5m0-5L9 15M5 5h4a2 2 0 012 2v0a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
+											</svg>
+										</a>
+									)}
+								</div>
+							</div>
+						</article>
+					</div>
+				);
+			})}
+		</div>
 
-                {/* 4. Écosystème — lignes de connexion animées entre les 4 produits */}
-                <div class="observe mt-8 pt-12 border-t border-navy/10">
-                        <p class="text-center text-sm font-semibold uppercase tracking-[0.2em] text-gray-text mb-8">
-                                Un écosystème intégré
-                        </p>
-                        <svg
-                                class="w-full max-w-3xl mx-auto h-32"
-                                viewBox="0 0 480 120"
-                                preserveAspectRatio="xMidYMid meet"
-                                role="img"
-                                aria-label="Écosystème FTCI : SECT, OPUC, CATS et ScolaGest interconnectés"
-                        >
-                                {/* Lignes de connexion animées (cahier des charges 6.4 — .connection-line = dashFlow) */}
-                                <line x1="60" y1="60" x2="180" y2="60" stroke="#6B7FC7" stroke-width="1.5" opacity="0.55" class="connection-line" />
-                                <line x1="180" y1="60" x2="300" y2="60" stroke="#1E9E4F" stroke-width="1.5" opacity="0.55" class="connection-line" />
-                                <line x1="300" y1="60" x2="420" y2="60" stroke="#EE6C1A" stroke-width="1.5" opacity="0.55" class="connection-line" />
+		<!-- ── Diagramme écosystème : 4 nœuds + 3 lignes de connexion ─────── -->
+		<div class="mt-16 md:mt-20 observe" style="--d: 0.1s">
+			<p class="text-center text-sm text-gray-text mb-6 font-medium">
+				Un écosystème interconnecté — chaque solution communique avec les autres
+			</p>
+			<svg
+				class="w-full max-w-2xl mx-auto h-20"
+				viewBox="0 0 800 80"
+				preserveAspectRatio="xMidYMid meet"
+				aria-hidden="true"
+			>
+				<!-- 3 lignes de connexion (dashFlow) -->
+				<line x1="100" y1="34" x2="333" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
+				<line x1="333" y1="34" x2="567" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
+				<line x1="567" y1="34" x2="700" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
 
-                                {/* Anneaux pulsants autour de chaque nœud (stagger 0.5s) */}
-                                <circle cx="60" cy="60" r="10" fill="none" stroke={nodeColors[products[0].accentColor]} stroke-width="1" opacity="0.4">
-                                        <animate attributeName="r" values="8;18;8" dur="3s" repeatCount="indefinite" />
-                                        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite" />
-                                </circle>
-                                <circle cx="180" cy="60" r="10" fill="none" stroke={nodeColors[products[1].accentColor]} stroke-width="1" opacity="0.4">
-                                        <animate attributeName="r" values="8;18;8" dur="3s" begin="0.5s" repeatCount="indefinite" />
-                                        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" begin="0.5s" repeatCount="indefinite" />
-                                </circle>
-                                <circle cx="300" cy="60" r="10" fill="none" stroke={nodeColors[products[2].accentColor]} stroke-width="1" opacity="0.4">
-                                        <animate attributeName="r" values="8;18;8" dur="3s" begin="1s" repeatCount="indefinite" />
-                                        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" begin="1s" repeatCount="indefinite" />
-                                </circle>
-                                <circle cx="420" cy="60" r="10" fill="none" stroke={nodeColors[products[3].accentColor]} stroke-width="1" opacity="0.4">
-                                        <animate attributeName="r" values="8;18;8" dur="3s" begin="1.5s" repeatCount="indefinite" />
-                                        <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" begin="1.5s" repeatCount="indefinite" />
-                                </circle>
+				<!-- 4 nœuds colorés pulsants -->
+				<circle cx="100" cy="34" r="9" fill={nodeColors[0]} class="node-pulse" style="animation-delay: 0s" />
+				<circle cx="333" cy="34" r="9" fill={nodeColors[1]} class="node-pulse" style="animation-delay: 0.3s" />
+				<circle cx="567" cy="34" r="9" fill={nodeColors[2]} class="node-pulse" style="animation-delay: 0.6s" />
+				<circle cx="700" cy="34" r="9" fill={nodeColors[3]} class="node-pulse" style="animation-delay: 0.9s" />
 
-                                {/* Nœuds produits (couleur accent de chaque produit) */}
-                                <circle cx="60" cy="60" r="7" fill={nodeColors[products[0].accentColor]} />
-                                <circle cx="180" cy="60" r="7" fill={nodeColors[products[1].accentColor]} />
-                                <circle cx="300" cy="60" r="7" fill={nodeColors[products[2].accentColor]} />
-                                <circle cx="420" cy="60" r="7" fill={nodeColors[products[3].accentColor]} />
-
-                                {/* Labels */}
-                                <text x="60" y="92" text-anchor="middle" class="text-xs" font-family="Poppins, sans-serif" font-weight="700" fill="#0F1E3D">SECT</text>
-                                <text x="180" y="92" text-anchor="middle" class="text-xs" font-family="Poppins, sans-serif" font-weight="700" fill="#0F1E3D">OPUC</text>
-                                <text x="300" y="92" text-anchor="middle" class="text-xs" font-family="Poppins, sans-serif" font-weight="700" fill="#0F1E3D">CATS</text>
-                                <text x="420" y="92" text-anchor="middle" class="text-xs" font-family="Poppins, sans-serif" font-weight="700" fill="#0F1E3D">ScolaGest</text>
-                        </svg>
-                </div>
-        </div>
+				<!-- Labels -->
+				<text x="100" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">SECT</text>
+				<text x="333" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">OPUC</text>
+				<text x="567" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">CATS</text>
+				<text x="700" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">ScolaGest</text>
+			</svg>
+		</div>
+	</div>
 </section>
 
 <script>
-        // === Tilt 3D (cahier des charges 6.2 — Brand Book Generator: ±2.2° max) ===
-        // Apple Design: continuous tracking (pointermove), interruptible via CSS
-        // transition définie sur .tilt-card dans global.css (0.4s ease-out).
-        // Emil Design: transitions (pas keyframes) pour interactif, GPU-only (transform).
-        // Mobile: désactivé via @media (hover: none) ET @media (max-width: 767px)
-        // dans global.css (transform: none !important sur .tilt-card).
-        const isTouchDevice = window.matchMedia('(hover: none)').matches;
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	// ── Tilt 3D (Brand Book : ±2.2° max, preserve-3d, translateZ(40px)) ─────
+	// Interruptible via transition CSS sur .tilt-card (160ms ease-out).
+	// Désactivé sur mobile + reduced-motion (cahier des charges 6.5).
+	const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        if (!isTouchDevice && !prefersReducedMotion) {
-                const tiltCards = document.querySelectorAll<HTMLElement>('[data-tilt]');
+	if (!isTouch && !reduced) {
+		document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+			const stage = card.closest('.tilt-stage') as HTMLElement | null;
+			if (!stage) return;
 
-                tiltCards.forEach((card) => {
-                        card.addEventListener('pointermove', (e) => {
-                                const rect = card.getBoundingClientRect();
-                                const x = e.clientX - rect.left;
-                                const y = e.clientY - rect.top;
-                                const centerX = rect.width / 2;
-                                const centerY = rect.height / 2;
-                                // Normalisation -1..1 puis × max 2.2° (Brand Book hard rule)
-                                const rotateY = ((x - centerX) / centerX) * 2.2;
-                                const rotateX = -((y - centerY) / centerY) * 2.2;
-                                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                        });
+			let rafId: number | null = null;
+			let pendingRX = 0;
+			let pendingRY = 0;
 
-                        card.addEventListener('pointerleave', () => {
-                                // La transition CSS sur .tilt-card gère le retour fluide depuis
-                                // la valeur courante — interruptible (Apple Design).
-                                card.style.transform = '';
-                        });
-                });
-        }
+			const apply = () => {
+				card.style.transform = `rotateX(${pendingRX.toFixed(2)}deg) rotateY(${pendingRY.toFixed(2)}deg)`;
+				rafId = null;
+			};
+
+			const schedule = () => {
+				if (rafId === null) rafId = requestAnimationFrame(apply);
+			};
+
+			stage.addEventListener(
+				'pointermove',
+				(e: PointerEvent) => {
+					const r = stage.getBoundingClientRect();
+					const px = (e.clientX - r.left) / r.width - 0.5; // -0.5 → 0.5
+					const py = (e.clientY - r.top) / r.height - 0.5;
+					// ±2.2° max → multiplier 4.4 (0.5 × 4.4 = 2.2)
+					pendingRY = px * 4.4;
+					pendingRX = -py * 4.4;
+					schedule();
+				},
+				{ passive: true },
+			);
+
+			stage.addEventListener('pointerleave', () => {
+				pendingRX = 0;
+				pendingRY = 0;
+				schedule();
+			});
+		});
+	}
 </script>

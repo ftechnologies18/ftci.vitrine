@@ -1,6 +1,18 @@
 ---
-import '../styles/global.css';
+/**
+ * Layout.astro — Layout racine du site FTCI.
+ * ────────────────────────────────────────────────────────────────────────────
+ * - Import global.css + SEO.astro
+ * - Props : title, description, canonical, ogImage, noindex, keywords
+ * - Schema.org Organization + WebSite JSON-LD (toujours présents)
+ * - Head : meta, fonts Google (Poppins 700/800 + Inter 400/500/600), favicon
+ * - Body : min-h-screen flex flex-col (sticky footer via mt-auto sur Footer)
+ * - Script global : scroll reveal, magnetic, parallax, curseur trail
+ *   (tous reduced-motion aware, passive listeners, rAF throttled)
+ */
+
 import SEO from '../components/SEO.astro';
+import '../styles/global.css';
 
 export interface Props {
 	title: string;
@@ -12,111 +24,63 @@ export interface Props {
 }
 
 const {
-	title = 'FTCI — Freelance Technologies Côte d\'Ivoire | Solutions SaaS & Conseil',
-	description = "FTCI — Cabinet de conseil en transformation digitale et éditeur de solutions SaaS pour le marché africain. SECT, OPUC, CATS, ScolaGest.",
+	title,
+	description,
 	canonical,
 	ogImage,
 	noindex = false,
-	keywords = ['transformation digitale', 'SaaS Afrique', 'conseil IT Côte d\'Ivoire', 'SECT', 'OPUC', 'CATS', 'ScolaGest'],
+	keywords = [],
 } = Astro.props;
 
 const siteUrl = 'https://ftci.fr';
 
-// Données structurées schema.org Organization — injectées sur toutes les pages
-const organizationSchema = {
+// Schema.org Organization — toujours présent
+const orgSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'Organization',
-	name: 'FTCI — Freelance Technologies Côte d\'Ivoire',
+	name: "FTCI — Freelance Technologies Côte d'Ivoire",
 	alternateName: 'FTCI',
 	url: siteUrl,
 	logo: `${siteUrl}/brand/logo-ftci.png`,
-	description: "Cabinet de conseil en transformation digitale et éditeur de solutions SaaS pour le marché africain.",
+	description:
+		"Cabinet de conseil en transformation digitale et éditeur de solutions SaaS pensées pour le marché africain. SECT, OPUC, CATS, ScolaGest.",
 	foundingDate: '2023',
-	founders: [
-		{
-			'@type': 'Organization',
-			name: 'Freelance Technologies Côte d\'Ivoire',
-		},
-	],
 	address: {
 		'@type': 'PostalAddress',
 		addressLocality: 'Abidjan',
 		addressRegion: 'Lagunes',
 		addressCountry: 'CI',
 	},
-	contactPoint: [
-		{
-			'@type': 'ContactPoint',
-			contactType: 'customer service',
-			email: 'contact@ftci.fr',
-			telephone: '+22501234567',
-			areaServed: ['CI', 'SN', 'ML', 'BF', 'GN'],
-			availableLanguage: ['French'],
-		},
-	],
-	sameAs: [],
+	areaServed: ['Côte d\'Ivoire', 'Afrique de l\'Ouest', 'Afrique'],
 	knowsAbout: [
 		'Transformation digitale',
-		'SaaS',
+		'Développement web',
+		'Infrastructure IT',
+		'Solutions SaaS',
 		'Évaluation académique',
 		'Gestion BTP',
 		'Gestion scolaire',
-		'Infrastructure cloud',
-		'Développement web',
-	],
-	subOrganization: [
-		{
-			'@type': 'Organization',
-			name: 'SECT',
-			url: 'https://sect.ftci.fr',
-		},
-		{
-			'@type': 'Organization',
-			name: 'OPUC',
-			url: 'https://opuc.ftci.fr',
-		},
-		{
-			'@type': 'Organization',
-			name: 'CATS',
-			url: 'https://cats.ftci.fr',
-		},
-		{
-			'@type': 'Organization',
-			name: 'ScolaGest',
-			url: 'https://scolagest.ftci.fr',
-		},
 	],
 };
 
-// Website schema (moteurs de recherche)
+// Schema.org WebSite — toujours présent
 const websiteSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'WebSite',
-	name: 'FTCI — Freelance Technologies Côte d\'Ivoire',
+	name: 'FTCI',
 	url: siteUrl,
 	inLanguage: 'fr-FR',
 	publisher: { '@type': 'Organization', name: 'FTCI' },
 };
 ---
 
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="generator" content={Astro.generator} />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-		<!-- Favicon -->
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" href="/favicon.svg" />
-
-		<!-- Preconnect & fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
-		<!-- SEO meta tags + JSON-LD -->
+		<!-- SEO (meta, OG, Twitter, JSON-LD Organization + WebSite) -->
 		<SEO
 			title={title}
 			description={description}
@@ -124,168 +88,204 @@ const websiteSchema = {
 			ogImage={ogImage}
 			noindex={noindex}
 			keywords={keywords}
-			schema={[organizationSchema, websiteSchema]}
+			schema={[orgSchema, websiteSchema]}
+		/>
+
+		<!-- Favicon -->
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/brand/logo-ftci.png" />
+		<link rel="mask-icon" href="/favicon.svg" color="#0F1E3D" />
+
+		<!-- Fonts Google : Poppins (display) + Inter (corps) — preconnect + display=swap -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800&display=swap"
+			rel="stylesheet"
 		/>
 	</head>
-	<body class="bg-light-bg text-navy min-h-screen flex flex-col">
+
+	<body class="min-h-screen flex flex-col bg-light-bg text-navy antialiased">
+		<a
+			href="#contenu"
+			class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-navy focus:text-white focus:rounded-lg"
+		>
+			Aller au contenu
+		</a>
 		<slot />
 
+		<!-- ──────────────────────────────────────────────────────────────────
+		     SCRIPT GLOBAL
+		     - Scroll reveal (IntersectionObserver .observe → .is-visible)
+		     - Magnetic buttons (pointermove + rAF lerp, desktop only)
+		     - Parallax (data-parallax, rAF throttled)
+		     - Curseur trail (desktop only, spring follow, grow on interactive)
+		     Tous reduced-motion aware, passive listeners, rAF throttled.
+		     ────────────────────────────────────────────────────────────────── -->
 		<script>
-			// === Centralized global interactions ===
-			// Cahier des charges 6.2 (magnetic), 6.3 (parallax, scroll reveal), 6.4 (cursor trail)
-			// Skills: Apple Design (interruptible, continuous), Emil (transitions not keyframes for interactive)
+			const prefersReducedMotion = window.matchMedia(
+				'(prefers-reduced-motion: reduce)',
+			).matches;
+			const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			const isTouchDevice = window.matchMedia('(hover: none)').matches;
-
-			// === 1. Scroll reveal (Intersection Observer) ===
-			// Cahier des charges 6.3: apparition progressive au scroll
-			if (!prefersReducedMotion) {
-				const revealObserver = new IntersectionObserver(
+			// ── 1. Scroll reveal ──────────────────────────────────────────────
+			const revealElements = document.querySelectorAll('.observe');
+			if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+				revealElements.forEach((el) => el.classList.add('is-visible'));
+			} else {
+				const observer = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((entry) => {
 							if (entry.isIntersecting) {
 								entry.target.classList.add('is-visible');
-								revealObserver.unobserve(entry.target);
+								observer.unobserve(entry.target);
 							}
 						});
 					},
-					{
-						threshold: 0.1,
-						rootMargin: '0px 0px -50px 0px',
-					}
+					{ threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
 				);
-
-				document.querySelectorAll('.observe').forEach((el) => {
-					revealObserver.observe(el);
-				});
-			} else {
-				// Reduced motion: show everything immediately
-				document.querySelectorAll('.observe').forEach((el) => {
-					el.classList.add('is-visible');
-				});
+				revealElements.forEach((el) => observer.observe(el));
 			}
 
-			// === 2. Magnetic button effect (cahier des charges 6.2) ===
-			// Apple Design: continuous tracking, interruptible via CSS transitions
-			// Emil: only on hover-capable devices (touch fires false hovers)
-			if (!isTouchDevice && !prefersReducedMotion) {
-				const magneticElements = document.querySelectorAll<HTMLElement>('[data-magnetic]');
+			// ── 2. Magnetic buttons (desktop, reduced-motion OK) ──────────────
+			if (!isTouch) {
+				const magnets = document.querySelectorAll<HTMLElement>('[data-magnetic]');
+				magnets.forEach((el) => {
+					const strength = parseFloat(el.dataset.magnetic || '') || 20;
+					let targetX = 0;
+					let targetY = 0;
+					let currentX = 0;
+					let currentY = 0;
+					let rafId: number | null = null;
 
-				magneticElements.forEach((el) => {
-					el.addEventListener('pointermove', (e) => {
-						const rect = el.getBoundingClientRect();
-						const x = e.clientX - rect.left - rect.width / 2;
-						const y = e.clientY - rect.top - rect.height / 2;
-						// Subtle magnetic pull (max ~8px)
-						const moveX = x * 0.15;
-						const moveY = y * 0.15;
-						el.style.transform = `translate(${moveX}px, ${moveY}px)`;
-					});
+					const loop = () => {
+						currentX += (targetX - currentX) * 0.18;
+						currentY += (targetY - currentY) * 0.18;
+						el.style.transform = `translate(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px)`;
+
+						if (
+							Math.abs(targetX - currentX) > 0.15 ||
+							Math.abs(targetY - currentY) > 0.15
+						) {
+							rafId = requestAnimationFrame(loop);
+						} else {
+							if (targetX === 0 && targetY === 0) {
+								el.style.transform = '';
+							}
+							rafId = null;
+						}
+					};
+
+					const schedule = () => {
+						if (rafId === null) rafId = requestAnimationFrame(loop);
+					};
+
+					el.addEventListener(
+						'pointermove',
+						(e: PointerEvent) => {
+							const r = el.getBoundingClientRect();
+							const cx = r.left + r.width / 2;
+							const cy = r.top + r.height / 2;
+							targetX = ((e.clientX - cx) / r.width) * strength;
+							targetY = ((e.clientY - cy) / r.height) * strength;
+							schedule();
+						},
+						{ passive: true },
+					);
 
 					el.addEventListener('pointerleave', () => {
-						// Transition handles smooth return from current value
-						el.style.transform = '';
+						targetX = 0;
+						targetY = 0;
+						schedule();
 					});
 				});
 			}
 
-			// === 3. Parallax (cahier des charges 6.3: parallax léger) ===
-			// Apple Design: rAF-throttled, passive listener
+			// ── 3. Parallax (rAF throttled) ───────────────────────────────────
 			if (!prefersReducedMotion) {
-				const parallaxElements = document.querySelectorAll<HTMLElement>('[data-parallax]');
-				let ticking = false;
-
-				const updateParallax = () => {
-					const scrolled = window.scrollY;
-					parallaxElements.forEach((el) => {
-						const speed = parseFloat(el.dataset.parallax || '0.3');
-						const yPos = -(scrolled * speed);
-						el.style.transform = `translate3d(0, ${yPos}px, 0)`;
-					});
-					ticking = false;
-				};
-
-				window.addEventListener(
-					'scroll',
-					() => {
-						if (!ticking) {
-							window.requestAnimationFrame(updateParallax);
-							ticking = true;
-						}
-					},
-					{ passive: true }
+				const parallaxEls = Array.from(
+					document.querySelectorAll<HTMLElement>('[data-parallax]'),
 				);
+				if (parallaxEls.length > 0) {
+					let ticking = false;
+					let lastScroll = window.scrollY;
+
+					const update = () => {
+						const scrollY = window.scrollY;
+						parallaxEls.forEach((el) => {
+							const speed = parseFloat(el.dataset.parallax || '') || 0.2;
+							// Limite : ne pas parallaxer hors de ~2 viewports
+							const offset = scrollY * speed;
+							el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+						});
+						ticking = false;
+					};
+
+					const onScroll = () => {
+						lastScroll = window.scrollY;
+						if (!ticking) {
+							ticking = true;
+							requestAnimationFrame(update);
+						}
+					};
+
+					window.addEventListener('scroll', onScroll, { passive: true });
+					update();
+				}
 			}
 
-			// === 4. Cursor trail effect (cahier des charges 6.4: optionnel, desktop only) ===
-			// Disabled on touch devices and reduced-motion per cahier des charges 6.5
-			if (!isTouchDevice && !prefersReducedMotion) {
+			// ── 4. Curseur trail (desktop only, spring follow) ────────────────
+			if (!isTouch && !prefersReducedMotion) {
 				const trail = document.createElement('div');
-				trail.id = 'cursor-trail';
+				trail.className = 'cursor-trail';
 				trail.setAttribute('aria-hidden', 'true');
-				trail.style.cssText = `
-					position: fixed;
-					width: 20px;
-					height: 20px;
-					border: 2px solid rgba(238, 108, 26, 0.4);
-					border-radius: 50%;
-					pointer-events: none;
-					z-index: 9999;
-					transform: translate(-50%, -50%);
-					transition: width 0.2s, height 0.2s, opacity 0.2s;
-					opacity: 0;
-					mix-blend-mode: difference;
-				`;
 				document.body.appendChild(trail);
 
-				let trailX = 0;
-				let trailY = 0;
-				let mouseX = 0;
-				let mouseY = 0;
-				let isVisible = false;
+				let mouseX = window.innerWidth / 2;
+				let mouseY = window.innerHeight / 2;
+				let trailX = mouseX;
+				let trailY = mouseY;
+				let rafId: number | null = null;
 
-				document.addEventListener('pointermove', (e) => {
-					mouseX = e.clientX;
-					mouseY = e.clientY;
-					if (!isVisible) {
-						trail.style.opacity = '1';
-						isVisible = true;
+				const animate = () => {
+					trailX += (mouseX - trailX) * 0.2;
+					trailY += (mouseY - trailY) * 0.2;
+					trail.style.transform = `translate3d(${trailX.toFixed(1)}px, ${trailY.toFixed(1)}px, 0)`;
+
+					if (Math.abs(mouseX - trailX) > 0.5 || Math.abs(mouseY - trailY) > 0.5) {
+						rafId = requestAnimationFrame(animate);
+					} else {
+						rafId = null;
 					}
-				});
-
-				document.addEventListener('pointerleave', () => {
-					trail.style.opacity = '0';
-					isVisible = false;
-				});
-
-				// Spring-like follow loop (Apple Design: smooth, not 1:1)
-				const animateTrail = () => {
-					trailX += (mouseX - trailX) * 0.15;
-					trailY += (mouseY - trailY) * 0.15;
-					trail.style.left = `${trailX}px`;
-					trail.style.top = `${trailY}px`;
-					requestAnimationFrame(animateTrail);
 				};
-				requestAnimationFrame(animateTrail);
 
-				// Grow on hover over interactive elements
-				document.querySelectorAll('a, button, [data-tilt]').forEach((el) => {
-					el.addEventListener('pointerenter', () => {
-						trail.style.width = '40px';
-						trail.style.height = '40px';
-						trail.style.borderColor = 'rgba(30, 158, 79, 0.5)';
+				const schedule = () => {
+					if (rafId === null) rafId = requestAnimationFrame(animate);
+				};
+
+				document.addEventListener(
+					'pointermove',
+					(e: PointerEvent) => {
+						mouseX = e.clientX;
+						mouseY = e.clientY;
+						schedule();
+					},
+					{ passive: true },
+				);
+
+				// Grow on interactive elements
+				const interactiveSelector =
+					'a, button, [data-magnetic], input, textarea, select, [role="button"]';
+				document.querySelectorAll(interactiveSelector).forEach((el) => {
+					el.addEventListener('pointerenter', () => trail.classList.add('is-active'), {
+						passive: true,
 					});
-					el.addEventListener('pointerleave', () => {
-						trail.style.width = '20px';
-						trail.style.height = '20px';
-						trail.style.borderColor = 'rgba(238, 108, 26, 0.4)';
+					el.addEventListener('pointerleave', () => trail.classList.remove('is-active'), {
+						passive: true,
 					});
 				});
 			}
-
-			// === 5. Smooth scroll behavior ===
-			document.documentElement.style.scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
 		</script>
 	</body>
 </html>

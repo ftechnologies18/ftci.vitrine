@@ -1,217 +1,251 @@
 ---
-// Header component for FTCI website
-// Features: Logo, desktop navigation, sticky positioning, accessible mobile drawer
+/**
+ * Header.astro — En-tête sticky avec glassmorphism.
+ * ────────────────────────────────────────────────────────────────────────────
+ * - Sticky top-0 z-50, bg-white/80 backdrop-blur-xl (Apple Design : materials)
+ * - Logo réel /brand/logo-ftci.png + wordmark "FTCI" (Poppins ExtraBold navy)
+ *   + "Technologies" (orange)
+ * - Nav desktop : Nos solutions, Nos services, À propos, Contact
+ * - CTA "Nous contacter" (btn-primary magnetic)
+ * - Drawer mobile accessible (aria-expanded, aria-controls, role=dialog,
+ *   Escape, scroll lock, focus management)
+ */
+
+const navLinks = [
+	{ href: '/#solutions', label: 'Nos solutions' },
+	{ href: '/#services', label: 'Nos services' },
+	{ href: '/#about', label: 'À propos' },
+	{ href: '/#contact', label: 'Contact' },
+];
 ---
 
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-navy/10 shadow-sm transition-all duration-300">
-        <div class="container py-3 flex items-center justify-between">
-                <!-- Logo + Wordmark -->
-                <a href="/" class="flex items-center gap-3 hover:opacity-90 transition-opacity" aria-label="FTCI — Freelance Technologies Côte d'Ivoire, accueil">
-                        <img
-                                src="/brand/logo-ftci.png"
-                                alt="Logo FTCI"
-                                width="40"
-                                height="40"
-                                class="h-10 w-10 flex-shrink-0"
-                        />
-                        <div class="hidden sm:flex flex-col leading-tight">
-                                <span class="text-base font-extrabold font-[Poppins] text-navy tracking-tight">FTCI</span>
-                                <span class="text-xs font-medium text-orange -mt-0.5">Technologies</span>
-                        </div>
-                </a>
+<header
+	class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-navy/5"
+	style="min-height: var(--header-h);"
+>
+	<div class="container flex items-center justify-between h-[72px]">
+		<!-- ── Brand : logo réel + wordmark ──────────────────────────────── -->
+		<a href="/" class="flex items-center gap-2.5 group" aria-label="FTCI — Accueil">
+			<img
+				src="/brand/logo-ftci.png"
+				alt="Logo FTCI"
+				width="40"
+				height="41"
+				class="h-9 w-auto transition-transform duration-200 group-hover:scale-[1.04]"
+				loading="eager"
+				decoding="async"
+			/>
+			<span class="flex items-baseline gap-0.5 select-none">
+				<span class="font-display font-extrabold text-navy text-xl tracking-[-0.03em]">
+					FTCI
+				</span>
+				<span class="font-display font-extrabold text-orange text-sm tracking-tight">
+					Technologies
+				</span>
+			</span>
+		</a>
 
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex items-center gap-8" aria-label="Navigation principale">
-                        <a href="#solutions" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-                                Nos solutions
-                        </a>
-                        <a href="#services" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-                                Nos services
-                        </a>
-                        <a href="#about" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-                                À propos
-                        </a>
-                        <a href="#contact" class="text-sm font-medium text-navy hover:text-orange transition-colors">
-                                Contact
-                        </a>
-                </nav>
+		<!-- ── Navigation desktop ─────────────────────────────────────────── -->
+		<nav class="hidden md:flex items-center gap-8" aria-label="Navigation principale">
+			{navLinks.map((link) => (
+				<a
+					href={link.href}
+					class="text-sm font-medium text-navy/75 hover:text-orange transition-colors duration-200"
+				>
+					{link.label}
+				</a>
+			))}
+		</nav>
 
-                <!-- Desktop CTA -->
-                <a
-                        href="#contact"
-                        class="hidden md:inline-flex text-sm px-6 py-2 rounded-lg font-medium bg-orange text-white hover:bg-orange-600 active:scale-95 transition-all duration-200"
-                >
-                        Nous contacter
-                </a>
+		<!-- ── CTA desktop ────────────────────────────────────────────────── -->
+		<a
+			href="/#contact"
+			data-magnetic="14"
+			class="btn-primary magnetic hidden md:inline-flex"
+		>
+			<span>
+				Nous contacter
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+				</svg>
+			</span>
+		</a>
 
-                <!-- Mobile Menu Toggle -->
-                <button
-                        id="mobileMenuToggle"
-                        type="button"
-                        class="md:hidden p-2 text-navy hover:bg-gray-100 rounded-lg transition-colors"
-                        aria-label="Ouvrir le menu de navigation"
-                        aria-expanded="false"
-                        aria-controls="mobileMenu"
-                >
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                </button>
-        </div>
+		<!-- ── Bouton menu mobile ─────────────────────────────────────────── -->
+		<button
+			type="button"
+			id="menu-toggle"
+			class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-lg text-navy hover:bg-navy/5 transition-colors"
+			aria-label="Ouvrir le menu"
+			aria-expanded="false"
+			aria-controls="mobile-drawer"
+		>
+			<svg class="w-6 h-6 menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+			</svg>
+			<svg class="w-6 h-6 menu-icon-close hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+			</svg>
+		</button>
+	</div>
 
-        <!-- Mobile Menu Drawer -->
-        <div
-                id="mobileMenu"
-                class="md:hidden hidden fixed inset-0 z-50"
-                role="dialog"
-                aria-modal="true"
-                aria-label="Menu de navigation"
-        >
-                <!-- Overlay -->
-                <div id="mobileMenuOverlay" class="absolute inset-0 bg-navy/50 backdrop-blur-sm"></div>
+	<!-- ── Drawer mobile ─────────────────────────────────────────────────── -->
+	<div
+		id="mobile-drawer"
+		class="md:hidden fixed inset-0 z-40 invisible opacity-0 transition-opacity duration-200 ease-out"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Menu de navigation mobile"
+	>
+		<!-- Backdrop -->
+		<div class="absolute inset-0 bg-navy/40 backdrop-blur-sm" data-drawer-close></div>
 
-                <!-- Drawer Panel -->
-                <div
-                        id="mobileMenuPanel"
-                        class="absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300 ease-out"
-                >
-                        <!-- Drawer Header -->
-                        <div class="flex items-center justify-between p-4 border-b border-navy/10">
-                                <div class="flex items-center gap-2">
-                                        <img
-                                                src="/brand/logo-ftci.png"
-                                                alt="Logo FTCI"
-                                                width="32"
-                                                height="32"
-                                                class="h-8 w-8"
-                                        />
-                                        <div class="flex flex-col leading-tight">
-                                                <span class="text-sm font-extrabold font-[Poppins] text-navy">FTCI</span>
-                                                <span class="text-xs font-medium text-orange -mt-0.5">Technologies</span>
-                                        </div>
-                                </div>
-                                <button
-                                        id="mobileMenuClose"
-                                        type="button"
-                                        class="p-2 text-navy hover:bg-gray-100 rounded-lg transition-colors"
-                                        aria-label="Fermer le menu de navigation"
-                                >
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                </button>
-                        </div>
+		<!-- Panel -->
+		<div
+			class="mobile-drawer-panel absolute right-0 top-0 h-full w-[min(82vw,360px)] bg-white shadow-2xl flex flex-col"
+		>
+			<div class="flex items-center justify-between h-[72px] px-5 border-b border-navy/5 shrink-0">
+				<span class="font-display font-extrabold text-navy">Menu</span>
+				<button
+					type="button"
+					id="menu-close"
+					class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-navy hover:bg-navy/5 transition-colors"
+					aria-label="Fermer le menu"
+				>
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+					</svg>
+				</button>
+			</div>
 
-                        <!-- Drawer Navigation -->
-                        <nav class="flex-1 overflow-y-auto p-4" aria-label="Navigation mobile">
-                                <ul class="space-y-1">
-                                        <li>
-                                                <a href="#solutions" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-                                                        Nos solutions
-                                                </a>
-                                        </li>
-                                        <li>
-                                                <a href="#services" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-                                                        Nos services
-                                                </a>
-                                        </li>
-                                        <li>
-                                                <a href="#about" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-                                                        À propos
-                                                </a>
-                                        </li>
-                                        <li>
-                                                <a href="#contact" class="mobile-nav-link block px-4 py-3 rounded-lg text-navy font-medium hover:bg-light-bg hover:text-orange transition-colors">
-                                                        Contact
-                                                </a>
-                                        </li>
-                                </ul>
-                        </nav>
+			<nav class="flex-1 overflow-y-auto px-5 py-6" aria-label="Navigation mobile">
+				<ul class="space-y-1">
+					{navLinks.map((link) => (
+						<li>
+							<a
+								href={link.href}
+								class="block px-4 py-3.5 text-lg font-medium text-navy hover:bg-light-bg hover:text-orange rounded-xl transition-colors duration-200"
+								data-drawer-link
+							>
+								{link.label}
+							</a>
+						</li>
+					))}
+				</ul>
+			</nav>
 
-                        <!-- Drawer Footer CTA -->
-                        <div class="p-4 border-t border-gray-200">
-                                <a
-                                        href="#contact"
-                                        class="mobile-nav-link block w-full text-center px-6 py-3 bg-orange text-white rounded-lg font-semibold hover:bg-orange-600 active:scale-95 transition-all duration-200"
-                                >
-                                        Nous contacter
-                                </a>
-                        </div>
-                </div>
-        </div>
+			<div class="p-5 border-t border-navy/5 shrink-0">
+				<a href="/#contact" class="btn-primary w-full" data-drawer-link>
+					<span>
+						Nous contacter
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+						</svg>
+					</span>
+				</a>
+			</div>
+		</div>
+	</div>
 </header>
 
-<script>
-        // Mobile menu drawer logic with accessibility support
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-        let lastFocusedElement = null;
-
-        const openMenu = () => {
-                if (!mobileMenu || !mobileMenuToggle || !mobileMenuPanel) return;
-                lastFocusedElement = document.activeElement;
-                mobileMenu.classList.remove('hidden');
-                mobileMenuToggle.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-                // Force reflow to enable transition
-                void mobileMenuPanel.offsetWidth;
-                mobileMenuPanel.classList.remove('translate-x-full');
-                mobileMenuClose?.focus();
-        };
-
-        const closeMenu = () => {
-                if (!mobileMenu || !mobileMenuToggle || !mobileMenuPanel) return;
-                mobileMenuPanel.classList.add('translate-x-full');
-                mobileMenuToggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-                // Hide after transition
-                const finish = () => {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenuPanel.removeEventListener('transitionend', finish);
-                };
-                mobileMenuPanel.addEventListener('transitionend', finish);
-                // Fallback in case transitionend doesn't fire
-                setTimeout(() => {
-                        mobileMenu.classList.add('hidden');
-                }, 350);
-                if (lastFocusedElement) lastFocusedElement.focus();
-        };
-
-        mobileMenuToggle?.addEventListener('click', openMenu);
-        mobileMenuClose?.addEventListener('click', closeMenu);
-        mobileMenuOverlay?.addEventListener('click', closeMenu);
-
-        mobileNavLinks.forEach((link) => {
-                link.addEventListener('click', closeMenu);
-        });
-
-        // Close on Escape
-        document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                        closeMenu();
-                }
-        });
-
-        // Reset state on resize to desktop
-        window.addEventListener('resize', () => {
-                if (window.innerWidth >= 768 && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                        closeMenu();
-                }
-        });
-</script>
-
 <style>
-        @media (prefers-reduced-motion: reduce) {
-                header {
-                        transition: none;
-                }
-                #mobileMenuPanel {
-                        transition: none !important;
-                }
-        }
+	/* Drawer : état ouvert */
+	#mobile-drawer.is-open {
+		visibility: visible;
+		opacity: 1;
+	}
+	#mobile-drawer.is-open .mobile-drawer-panel {
+		transform: translateX(0);
+	}
+	.mobile-drawer-panel {
+		transform: translateX(100%);
+		transition: transform 280ms var(--ease-drawer);
+		will-change: transform;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.mobile-drawer-panel {
+			transition: none;
+		}
+	}
 </style>
+
+<script>
+	// ── Drawer mobile accessible ────────────────────────────────────────────
+	// aria-expanded, aria-controls, role=dialog, Escape, scroll lock, focus
+	const toggle = document.getElementById('menu-toggle');
+	const closeBtn = document.getElementById('menu-close');
+	const drawer = document.getElementById('mobile-drawer');
+	const openIcon = toggle?.querySelector('.menu-icon-open');
+	const closeIcon = toggle?.querySelector('.menu-icon-close');
+
+	if (toggle && drawer && closeBtn) {
+		let lastFocused: HTMLElement | null = null;
+		const focusableSelector =
+			'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+		const open = () => {
+			lastFocused = document.activeElement as HTMLElement;
+			drawer.classList.add('is-open');
+			toggle.setAttribute('aria-expanded', 'true');
+			toggle.setAttribute('aria-label', 'Fermer le menu');
+			openIcon?.classList.add('hidden');
+			closeIcon?.classList.remove('hidden');
+			document.body.style.overflow = 'hidden';
+			// Focus le premier lien du drawer
+			const firstFocusable = drawer.querySelector<HTMLElement>(focusableSelector);
+			requestAnimationFrame(() => firstFocusable?.focus());
+		};
+
+		const close = () => {
+			drawer.classList.remove('is-open');
+			toggle.setAttribute('aria-expanded', 'false');
+			toggle.setAttribute('aria-label', 'Ouvrir le menu');
+			openIcon?.classList.remove('hidden');
+			closeIcon?.classList.add('hidden');
+			document.body.style.overflow = '';
+			lastFocused?.focus();
+		};
+
+		toggle.addEventListener('click', () => {
+			if (drawer.classList.contains('is-open')) close();
+			else open();
+		});
+
+		closeBtn.addEventListener('click', close);
+
+		// Backdrop click
+		drawer.querySelectorAll('[data-drawer-close]').forEach((el) => {
+			el.addEventListener('click', close);
+		});
+
+		// Liens du drawer → fermer après navigation
+		drawer.querySelectorAll('[data-drawer-link]').forEach((el) => {
+			el.addEventListener('click', close);
+		});
+
+		// Escape pour fermer
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+				close();
+			}
+		});
+
+		// Focus trap dans le drawer
+		drawer.addEventListener('keydown', (e) => {
+			if (e.key !== 'Tab' || !drawer.classList.contains('is-open')) return;
+			const focusables = Array.from(
+				drawer.querySelectorAll<HTMLElement>(focusableSelector),
+			).filter((el) => el.offsetParent !== null);
+			if (focusables.length === 0) return;
+			const first = focusables[0];
+			const last = focusables[focusables.length - 1];
+			if (e.shiftKey && document.activeElement === first) {
+				e.preventDefault();
+				last.focus();
+			} else if (!e.shiftKey && document.activeElement === last) {
+				e.preventDefault();
+				first.focus();
+			}
+		});
+	}
+</script>
