@@ -1,9 +1,0 @@
----
-import ProductLayout from '../../components/ProductLayout.astro';
-import { getProduct } from '../../data/products';
-
-const product = getProduct('sect');
-if (!product) throw new Error('Product "sect" not found');
----
-
-<ProductLayout product={product} />
