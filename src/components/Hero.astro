@@ -1,17 +1,13 @@
 ---
 /**
- * Hero.astro — Section Hero "Effet Waouh" avec Mosaïque Logo Animée
+ * Hero.astro — Mosaïque Logo FTCI "Prenant Vie" — Forme Exacte
  * ────────────────────────────────────────────────────────────────────────────
  * 
- * 🎨 CONCEPT:
- * Le logo FTCI prend vie ! La mosaïque de diamants s'assemble progressivement
- * pour former le logo complet (forme trèfle/cœur 3 branches).
- * 
- * 🎭 STRUCTURE DU LOGO RECONSTRUITE:
- * - Branche Navy (HG): arc gauche supérieur → descend vers centre-gauche
- * - Branche Verte (HD): arc droit supérieur → descend vers centre-droit  
- * - Branche Orange (Bas): arc inférieur → remonte vers le centre
- * - Centre: quelques pièces periwinkle de connexion
+ * 🎯 OBJECTIF: Recréer la FORME EXACTE du logo FTCI
+ * - Forme: Cœur/Trèfle avec 3 branches courbes
+ * - Navy (gauche): arc descendant courbe
+ * - Verte (droite): arc descendant courbe  
+ * - Orange (bas): grande courbe inférieure en U inversé
  */
 
 interface LogoPiece {
@@ -28,123 +24,138 @@ interface LogoPiece {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// GÉNÉRATION DE LA MOSAÏQUE LOGO FTCI — Forme Trèfle Précise
+// RECONSTRUCTION PRÉCISE DU LOGO FTCI
+// Analyse de l'image: forme cœur/trèfle 3 branches
 // ═══════════════════════════════════════════════════════════════════════════
 
 function generateLogoMosaic(): LogoPiece[] {
   const pieces: LogoPiece[] = [];
   let id = 0;
 
-  // ═══ BRANCHE NAVY (Gauche supérieure) ═══
-  // Courbe depuis haut-gauche, descendant vers centre
-  const navyPositions = [
-    // Extérieur haut (courbe vers l'intérieur)
-    { x: 42, y: 50, s: 11 }, { x: 58, y: 42, s: 12 }, { x: 76, y: 36, s: 13 }, { x: 96, y: 34, s: 12 },
-    { x: 115, y: 36, s: 11 }, { x: 132, y: 44, s: 10 },
-    // Deuxième rangée
-    { x: 34, y: 68, s: 12 }, { x: 50, y: 56, s: 13 }, { x: 68, y: 48, s: 14 }, { x: 88, y: 46, s: 13 },
-    { x: 108, y: 50, s: 12 }, { x: 126, y: 60, s: 11 }, { x: 140, y: 72, s: 10 },
-    // Troisième rangée (milieu)
-    { x: 30, y: 88, s: 13 }, { x: 46, y: 74, s: 14 }, { x: 64, y: 64, s: 15 }, { x: 84, y: 60, s: 14 },
-    { x: 104, y: 64, s: 13 }, { x: 122, y: 76, s: 12 }, { x: 136, y: 90, s: 11 },
-    // Quatrième rangée (interne)
-    { x: 38, y: 108, s: 12 }, { x: 56, y: 94, s: 13 }, { x: 76, y: 84, s: 14 }, { x: 96, y: 80, s: 13 },
-    { x: 116, y: 88, s: 12 }, { x: 132, y: 104, s: 11 },
-    // Pointe basse navy (vers le centre)
-    { x: 68, y: 118, s: 11 }, { x: 88, y: 110, s: 12 }, { x: 108, y: 108, s: 11 },
+  // ══════════════════════════════════════════════════════════════════════════
+  // BRANCHE NAVY — Arc gauche supérieur (forme du logo FTCI)
+  // Courbe depuis haut-gauche, descend vers le centre en arc
+  // ══════════════════════════════════════════════════════════════════════════
+  const navy = [
+    // Pointe haute gauche
+    {x:18,y:85,s:9},{x:24,y:68,s:10},{x:32,y:52,s:11},{x:44,y:38,s:12},
+    {x:58,y:26,s:12},{x:76,y:18,s:11},{x:95,y:14,s:10},{x:115,y:15,s:9},
+    // Couche 2
+    {x:26,y:102,s:10},{x:34,y:82,s:11},{x:44,y:64,s:12},{x:56,y:48,s:13},
+    {x:72,y:35,s:13},{x:90,y:27,s:12},{x:110,y:25,s:11},{x:128,y:30,s:10},
+    // Couche 3 - milieu
+    {x:36,y:122,s:11},{x:46,y:100,s:12},{x:58,y:78,s:13},{x:72,y:58,s:14},
+    {x:88,y:44,s:14},{x:108,y:38,s:13},{x:126,y:42,s:12},
+    // Couche 4 - interne
+    {x:48,y:142,s:10},{x:60,y:118,s:11},{x:76,y:94,s:12},{x:92,y:72,s:13},
+    {x:110,y:56,s:12},{x:130,y:58,s:11},
+    // Vers centre (pointe basse)
+    {x:64,y:158,s:9},{x:84,y:136,s:10},{x:104,y:116,s:11},{x:124,y:100,s:10},
+    {x:142,y:88,s:9},
   ];
+  
+  navy.forEach((p,i) => pieces.push(makePiece(id++,p,'navy',i,navy.length)));
 
-  navyPositions.forEach((p, i) => {
-    pieces.push(createPiece(id++, p.x, p.y, p.s, '#1a2744', 'navy', i, navyPositions.length));
-  });
-
-  // ═══ BRANCHE VERTE (Droite supérieure) ═══
-  // Courbe depuis haut-droite, descendant vers centre
-  const greenPositions = [
-    // Extérieur haut
-    { x: 168, y: 44, s: 10 }, { x: 186, y: 36, s: 11 }, { x: 206, y: 32, s: 12 }, { x: 228, y: 34, s: 11 },
-    { x: 248, y: 44, s: 10 },
-    // Deuxième rangée
-    { x: 158, y: 62, s: 11 }, { x: 176, y: 50, s: 12 }, { x: 196, y: 44, s: 13 }, { x: 218, y: 46, s: 12 },
-    { x: 238, y: 56, s: 11 }, { x: 254, y: 72, s: 10 },
-    // Troisième rangée (milieu)
-    { x: 152, y: 80, s: 12 }, { x: 170, y: 66, s: 13 }, { x: 192, y: 58, s: 14 }, { x: 214, y: 60, s: 13 },
-    { x: 234, y: 72, s: 12 }, { x: 252, y: 90, s: 11 },
-    // Quatrième rangée (interne)
-    { x: 158, y: 100, s: 11 }, { x: 178, y: 86, s: 12 }, { x: 200, y: 78, s: 13 }, { x: 222, y: 82, s: 12 },
-    { x: 242, y: 98, s: 11 },
-    // Pointe basse green (vers le centre)
-    { x: 188, y: 112, s: 11 }, { x: 210, y: 106, s: 12 }, { x: 232, y: 112, s: 11 },
+  // ══════════════════════════════════════════════════════════════════════════
+  // BRANCHE VERTE — Arc droit supérieur (forme du logo FTCI)
+  // Courbe depuis haut-droite, descend vers le centre en arc
+  // ══════════════════════════════════════════════════════════════════════════
+  const green = [
+    // Pointe haute droite
+    {x:245,y:16,s:9},{x:258,y:24,s:10},{x:268,y:38,s:11},{x:276,y:55,s:11},
+    {x:280,y:76,s:10},
+    // Couche 2
+    {x:232,y:20,s:10},{x:246,y:28,s:11},{x:258,y:42,s:12},{x:268,y:58,s:12},
+    {x:276,y:80,s:11},
+    // Couche 3 - milieu
+    {x:218,y:28,s:11},{x:232,y:38,s:12},{x:246,y:52,s:13},{x:258,y:68,s:13},
+    {x:270,y:90,s:12},
+    // Couche 4 - interne
+    {x:204,y:40,s:11},{x:220,y:52,s:12},{x:236,y:66,s:13},{x:250,y:84,s:12},
+    {x:264,y:106,s:11},
+    // Vers centre (pointe basse)
+    {x:190,y:56,s:10},{x:208,y:70,s:11},{x:228,y:86,s:12},{x:248,y:104,s:11},
+    {x:264,y:122,s:9},
   ];
+  
+  green.forEach((p,i) => pieces.push(makePiece(id++,p,'green',i,green.length)));
 
-  greenPositions.forEach((p, i) => {
-    pieces.push(createPiece(id++, p.x, p.y, p.s, '#1a8c42', 'green', i, greenPositions.length));
-  });
-
-  // ═══ BRANCHE ORANGE (Inférieure) ═══
-  // Arc partant de bas-gauche, courbe sous le centre, remonte à droite
-  const orangePositions = [
-    // Gauche (monte depuis bas-gauche)
-    { x: 55, y: 165, s: 11 }, { x: 72, y: 152, s: 12 }, { x: 92, y: 142, s: 13 },
-    { x: 112, y: 135, s: 14 }, { x: 130, y: 132, s: 13 },
-    // Centre-bas (partie la plus basse)
-    { x: 68, y: 185, s: 12 }, { x: 88, y: 172, s: 13 }, { x: 108, y: 160, s: 14 }, { x: 130, y: 152, s: 14 },
-    { x: 150, y: 150, s: 13 }, { x: 168, y: 155, s: 12 },
-    // Bas central (pointe basse)
-    { x: 95, y: 195, s: 13 }, { x: 118, y: 182, s: 14 }, { x: 142, y: 172, s: 15 }, { x: 164, y: 170, s: 14 },
-    { x: 186, y: 175, s: 13 },
-    // Droite (remonte vers le centre-droit)
-    { x: 128, y: 200, s: 12 }, { x: 152, y: 192, s: 13 }, { x: 176, y: 192, s: 13 }, { x: 198, y: 200, s: 12 },
-    // Extrémités droites
-    { x: 158, y: 215, s: 11 }, { x: 182, y: 220, s: 11 }, { x: 208, y: 222, s: 10 },
-    // Connexions vers autres branches
-    { x: 215, y: 190, s: 11 }, { x: 225, y: 170, s: 11 },
-    { x: 45, y: 145, s: 10 }, { x: 35, y: 125, s: 10 },
+  // ══════════════════════════════════════════════════════════════════════════
+  // BRANCHE ORANGE — Grande courbe inférieure (U inversé / sourire)
+  // Part bas-gauche → courbe sous le centre → remonte à droite
+  // C'est la PLUS GRANDE branche - forme caractéristique du logo
+  // ══════════════════════════════════════════════════════════════════════════
+  const orange = [
+    // Connexion navy (gauche) - remonte
+    {x:40,y:165,s:10},{x:52,y:148,s:11},{x:68,y:130,s:12},
+    // Montée gauche vers centre
+    {x:50,y:185,s:11},{x:66,y:164,s:12},{x:86,y:144,s:13},{x:108,y:126,s:13},
+    {x:130,y:114,s:12},
+    // Centre-haut gauche
+    {x:68,y:208,s:12},{x:90,y:184,s:13},{x:114,y:162,s:14},{x:138,y:144,s:14},
+    {x:160,y:132,s:13},
+    // Bas central - pointe la plus basse
+    {x:95,y:230,s:14},{x:122,y:208,s:14},{x:148,y:186,s:15},{x:174,y:170,s:14},
+    {x:200,y:160,s:13},
+    // Centre-droit
+    {x:142,y:240,s:14},{x:170,y:220,s:14},{x:196,y:200,s:13},{x:222,y:186,s:13},
+    // Descente droite
+    {x:188,y:250,s:13},{x:216,y:236,s:12},{x:242,y:226,s:11},{x:264,y:222,s:10},
+    // Remontée extrême droite (connexion green)
+    {x:228,y:262,s:11},{x:252,y:254,s:10},{x:274,y:256,s:9},
+    // Remontée vers centre-droit
+    {x:205,y:272,s:11},{x:232,y:264,s:10},{x:258,y:260,s:9},
+    // Densification courbe basse
+    {x:168,y:265,s:12},{x:194,y:252,s:12},{x:220,y:240,s:11},
+    // Intermédiaires
+    {x:135,y:255,s:11},{x:162,y:242,s:12},{x:188,y:228,s:11},
   ];
+  
+  orange.forEach((p,i) => pieces.push(makePiece(id++,p,'orange',i,orange.length)));
 
-  orangePositions.forEach((p, i) => {
-    pieces.push(createPiece(id++, p.x, p.y, p.s, '#d45a0f', 'orange', i, orangePositions.length));
-  });
-
-  // ═══ PIÈCES CENTRALES (Periwinkle - zone de connexion) ═══
-  const centerPositions = [
-    { x: 118, y: 100, s: 9 }, { x: 135, y: 105, s: 10 }, { x: 152, y: 100, s: 9 },
-    { x: 126, y: 118, s: 8 }, { x: 144, y: 120, s: 9 }, { x: 135, y: 135, s: 8 },
-    { x: 112, y: 130, s: 7 }, { x: 158, y: 128, s: 7 },
+  // ══════════════════════════════════════════════════════════════════════════
+  // PIÈCES CENTRALES — Zone de convergence (creux central du cœur)
+  // Periwinkle clair pour connecter les 3 branches
+  // ══════════════════════════════════════════════════════════════════════════
+  const center = [
+    {x:145,y:85,s:8},{x:164,y:92,s:9},{x:182,y:88,s:8},
+    {x:152,y:105,s:8},{x:172,y:110,s:9},{x:160,y:125,s:7},
+    {x:135,y:115,s:7},{x:185,y:120,s:7},
+    {x:148,y:70,s:6},{x:175,y:74,s:6},
+    {x:163,y:135,s:6},{x:140,y:95,s:7},{x:188,y:100,s:7},
   ];
-
-  centerPositions.forEach((p, i) => {
-    pieces.push(createPiece(id++, p.x, p.y, p.s, '#6B7FC7', 'center', i, centerPositions.length, 0.6));
-  });
+  
+  center.forEach((p,i) => pieces.push({
+    id: id++,
+    x: p.x,
+    y: p.y,
+    size: p.s,
+    color: '#6B7FC7',
+    branch: 'center',
+    delay: Math.round((0.55 + Math.random() * 0.3) * 100) / 100,
+    offsetX: Math.round((Math.random() - 0.5) * 180),
+    offsetY: Math.round((Math.random() - 0.5) * 180),
+    rotation: Math.round((Math.random() - 0.5) * 180)
+  }));
 
   return pieces;
 }
 
-// Helper pour créer une pièce
-function createPiece(
-  id: number, 
-  x: number, 
-  y: number, 
-  size: number, 
-  color: string, 
-  branch: string,
-  index: number,
-  total: number,
-  baseDelayOffset: number = 0
-): LogoPiece {
+// Helper: créer une pièce avec animation cascade
+function makePiece(id: number, p: {x:number;y:number;s:number}, branch: string, index: number, total: number): LogoPiece {
   const t = total > 1 ? index / (total - 1) : 0;
-  
-  // Position de départ aléatoire (éparpillée)
-  const spreadX = 380;
-  const spreadY = 320;
-  const offsetX = Math.round((Math.random() - 0.5) * spreadX);
-  const offsetY = Math.round((Math.random() - 0.5) * spreadY);
-  const rotation = Math.round((Math.random() - 0.5) * 200);
-  
-  // Délai cascade basé sur position + aléatoire
-  const delay = Math.round((baseDelayOffset + t * 0.75 + Math.random() * 0.2) * 100) / 100;
-  
-  return { id, x, y, size, color, branch, delay, offsetX, offsetY, rotation };
+  return {
+    id,
+    x: p.x,
+    y: p.y,
+    size: p.s,
+    color: branch === 'navy' ? '#1e3059' : branch === 'green' ? '#1a9045' : '#e85a0f',
+    branch,
+    delay: Math.round((t * 0.8 + Math.random() * 0.18) * 100) / 100,
+    offsetX: Math.round((Math.random() - 0.5) * 400),
+    offsetY: Math.round((Math.random() - 0.5) * 350),
+    rotation: Math.round((Math.random() - 0.5) * 200)
+  };
 }
 
 const logoPieces = generateLogoMosaic();
@@ -152,9 +163,7 @@ const logoPieces = generateLogoMosaic();
 
 <section class="hero-section relative min-h-[100svh] flex items-center overflow-hidden" id="contenu">
   
-  <!-- ══════════════════════════════════════════════════════════════════════════
-       MESH GRADIENT BACKGROUND
-       ══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Mesh Background -->
   <div class="hero-mesh absolute inset-[-20%]" aria-hidden="true">
     <div class="mesh-blob mesh-blob--periwinkle"></div>
     <div class="mesh-blob mesh-blob--green"></div>
@@ -162,52 +171,40 @@ const logoPieces = generateLogoMosaic();
     <div class="mesh-blob mesh-blob--navy"></div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════════════════════
-       CONTENU PRINCIPAL
-       ══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Contenu -->
   <div class="container relative z-10">
     <div class="hero-grid">
       
-      <!-- CÔTÉ GAUCHE : Texte -->
+      <!-- Texte -->
       <div class="hero-content">
-        <!-- Eyebrow -->
-        <div class="hero-eyebrow hero-reveal" style="--delay: 0s;">
+        <div class="hero-eyebrow hero-reveal" style="--delay:0s">
           <span class="inline-flex items-center gap-2 font-sans font-semibold text-xs uppercase tracking-[0.12em] text-orange">
             <span class="w-8 h-px bg-orange/60"></span>
             Freelance Technologies Côte d'Ivoire
           </span>
         </div>
 
-        <!-- H1 -->
-        <h1 class="hero-title font-display font-extrabold text-white tracking-[-0.03em] hero-reveal" style="--delay: 0.1s;">
+        <h1 class="hero-title font-display font-extrabold text-white tracking-[-0.03em] hero-reveal" style="--delay:0.1s">
           <span class="title-line">La technologie,</span>
           <span class="title-line text-orange">pensée pour le</span>
           <span class="title-line">terrain africain.</span>
         </h1>
 
-        <!-- Sous-titre -->
-        <p class="hero-subtitle max-w-lg text-base sm:text-lg md:text-xl text-white/75 leading-relaxed hero-reveal" style="--delay: 0.22s;">
+        <p class="hero-subtitle max-w-lg text-base sm:text-lg md:text-xl text-white/75 leading-relaxed hero-reveal" style="--delay:0.22s">
           Cabinet de conseil en transformation digitale et éditeur de solutions SaaS 
           conçues pour répondre aux réalités du marché ivoirien et africain.
         </p>
 
-        <!-- CTAs -->
-        <div class="hero-ctas flex flex-col sm:flex-row gap-4 mt-10 hero-reveal" style="--delay: 0.35s;">
+        <div class="hero-ctas flex flex-col sm:flex-row gap-4 mt-10 hero-reveal" style="--delay:0.35s">
           <a href="/#solutions" data-magnetic="18" class="btn-primary magnetic group">
-            <span>
-              Découvrir nos solutions
-              <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-              </svg>
+            <span>Découvrir nos solutions
+              <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </span>
           </a>
-          <a href="/#contact" data-magnetic="14" class="btn-outline-light magnetic">
-            <span>Nous contacter</span>
-          </a>
+          <a href="/#contact" data-magnetic="14" class="btn-outline-light magnetic"><span>Nous contacter</span></a>
         </div>
 
-        <!-- Stats -->
-        <div class="hero-stats grid grid-cols-3 gap-6 mt-14 pt-10 border-t border-white/10 hero-reveal" style="--delay: 0.48s;">
+        <div class="hero-stats grid grid-cols-3 gap-6 mt-14 pt-10 border-t border-white/10 hero-reveal" style="--delay:0.48s">
           <div class="stat-item">
             <div class="stat-value font-display font-bold text-3xl md:text-4xl text-white">4+</div>
             <div class="stat-label text-xs sm:text-sm text-white/50 uppercase tracking-wider mt-1">Solutions SaaS</div>
@@ -223,348 +220,151 @@ const logoPieces = generateLogoMosaic();
         </div>
       </div>
 
-      <!-- CÔTÉ DROIT : Mosaïque Logo FTCI Animée -->
-      <div class="hero-logo-wrapper hidden lg:flex items-center justify-center relative" aria-label="Logo FTCI animé">
+      <!-- Mosaïque Logo Animé -->
+      <div class="logo-wrapper hidden lg:flex items-center justify-center relative" aria-label="Logo FTCI animé">
         
-        <!-- Glow effects -->
-        <div class="logo-glow logo-glow--periwinkle"></div>
-        <div class="logo-glow logo-glow--green"></div>
-        <div class="logo-glow logo-glow--orange"></div>
+        <!-- Glows -->
+        <div class="logo-glow glow--navy"></div>
+        <div class="logo-glow glow--green"></div>
+        <div class="logo-glow glow--orange"></div>
         
-        <!-- SVG Mosaic -->
-        <svg class="logo-mosaic" viewBox="0 0 290 260" preserveAspectRatio="xMidYMid meet">
+        <!-- SVG -->
+        <svg class="logo-svg" viewBox="0 0 300 270" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <linearGradient id="grad-navy" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#1e3059"/>
-              <stop offset="100%" stop-color="#0F1E3D"/>
+            <linearGradient id="g-navy" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2a4070"/><stop offset="100%" stop-color="#0F1E3D"/>
             </linearGradient>
-            <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#20a04a"/>
-              <stop offset="100%" stop-color="#1E9E4F"/>
+            <linearGradient id="g-green" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#28b855"/><stop offset="100%" stop-color="#1E9E4F"/>
             </linearGradient>
-            <linearGradient id="grad-orange" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff7a28"/>
-              <stop offset="100%" stop-color="#EE6C1A"/>
+            <linearGradient id="g-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff8533"/><stop offset="100%" stop-color="#EE6C1A"/>
             </linearGradient>
-            <filter id="glow-filter" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2.5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
           </defs>
           
           {logoPieces.map((piece) => (
-            <g
-              class="logo-piece"
-              data-branch={piece.branch}
-              style={`--tx:${piece.offsetX}px;--ty:${piece.offsetY}px;--rot:${piece.rotation}deg;--delay:${piece.delay}s;`}
-            >
+            <g class="piece" data-branch={piece.branch}
+               style={`--tx:${piece.offsetX}px;--ty:${piece.offsetY}px;--rot:${piece.rotation}deg;--delay:${piece.delay}s`}>
               <rect
-                class="piece-shape"
-                x={piece.x - piece.size / 2}
-                y={piece.y - piece.size / 2}
+                class="diamond"
+                x={piece.x - piece.size/2}
+                y={piece.y - piece.size/2}
                 width={piece.size}
                 height={piece.size}
                 rx={piece.size > 11 ? 2 : 1}
-                ry={piece.size > 11 ? 2 : 1}
-                fill={
-                  piece.branch === 'navy' ? 'url(#grad-navy)' :
-                  piece.branch === 'green' ? 'url(#grad-green)' :
-                  piece.branch === 'orange' ? 'url(#grad-orange)' :
-                  '#6B7FC7'
-                }
-                transform={`rotate(45, ${piece.x}, ${piece.y})`}
+                fill={piece.branch === 'navy' ? 'url(#g-navy)' : piece.branch === 'green' ? 'url(#g-green)' : piece.branch === 'orange' ? 'url(#g-orange)' : '#6B7FC7'}
+                transform={`rotate(45,${piece.x},${piece.y})`}
               />
             </g>
           ))}
           
           <!-- Centre lumineux -->
-          <circle class="logo-core" cx="142" cy="125" r="20"/>
+          <circle class="core-glow" cx="150" cy="135" r="22"/>
         </svg>
         
         <!-- Label -->
-        <div class="logo-badge hero-reveal" style="--delay: 1s;">
-          <span class="badge-name">FTCI</span>
-          <span class="badge-tech">Technologies</span>
+        <div class="logo-label hero-reveal" style="--delay:1s">
+          <span class="label-main">FTCI</span>
+          <span class="label-sub">Technologies</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Scroll Indicator -->
-  <a href="/#solutions" class="scroll-indicator absolute bottom-6 left-1/2 -translate-x-1/2 z-20" aria-label="Défiler vers solutions">
-    <svg class="w-6 h-6 text-white/40 hover:text-white/70 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-    </svg>
+  <!-- Scroll indicator -->
+  <a href="/#solutions" class="scroll-indicator absolute bottom-6 left-1/2 -translate-x-1/2 z-20" aria-label="Défiler">
+    <svg class="w-6 h-6 text-white/40 hover:text-white/70 transition-colors animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
   </a>
 </section>
 
 <style>
-  /* ═══════════════════════════════════════════════════════════════════════════
-     HERO LAYOUT
-     ═══════════════════════════════════════════════════════════════════════════ */
+  /* Layout */
   .hero-section { background: #0a1428; }
-
   .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    align-items: center;
-    min-height: 100svh;
-    padding: 100px 0 80px;
+    display: grid; grid-template-columns: 1fr; gap: 2.5rem;
+    align-items: center; min-height: 100svh; padding: 100px 0 80px;
   }
-  @media (min-width: 1024px) {
-    .hero-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      padding: 90px 0 70px;
-    }
+  @media(min-width:1024px) {
+    .hero-grid { grid-template-columns: 1fr 1fr; gap: 2rem; padding: 90px 0 70px; }
   }
 
   /* Typography */
-  .hero-title {
-    font-size: clamp(2.25rem, 1.5rem + 3.5vw, 3.75rem);
-    line-height: 1.08;
-    margin-bottom: 1.5rem;
-  }
-  @media (min-width: 1024px) {
-    .hero-title { font-size: clamp(2.5rem, 1.2rem + 4vw, 4.25rem); line-height: 1.05; }
-  }
-  .title-line { display: block; }
+  .hero-title { font-size: clamp(2.25rem,1.5rem+3.5vw,3.75rem); line-height:1.08; margin-bottom:1.5rem; }
+  @media(min-width:1024px) { .hero-title { font-size: clamp(2.5rem,1.2rem+4vw,4.25rem); line-height:1.05; } }
+  .title-line { display:block; }
+  .stat-value { font-variant-numeric:tabular-nums; }
 
-  /* Reveal animations */
-  .hero-reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    animation: revealIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: var(--delay, 0s);
-  }
-  @keyframes revealIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* Reveal */
+  .hero-reveal { opacity:0; transform:translateY(24px); animation:revealIn .8s cubic-bezier(.16,1,.3,1) forwards; animation-delay:var(--delay,0s); }
+  @keyframes revealIn { to{opacity:1;transform:translateY(0)} }
 
-  /* ═══════════════════════════════════════════════════════════════════════════
-     MESH BACKGROUND
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .mesh-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(55px);
-    will-change: transform;
-    opacity: 0.55;
-  }
-  .mesh-blob--periwinkle {
-    width: 55%; height: 50%; top: 5%; left: 18%;
-    background: radial-gradient(ellipse, rgba(107,127,199,0.5), transparent 70%);
-    animation: drift 22s ease-in-out infinite alternate;
-  }
-  .mesh-blob--green {
-    width: 45%; height: 42%; top: 8%; right: 12%;
-    background: radial-gradient(ellipse, rgba(30,158,79,0.35), transparent 70%);
-    animation: drift 26s ease-in-out infinite alternate-reverse;
-  }
-  .mesh-blob--orange {
-    width: 52%; height: 46%; bottom: 8%; right: 22%;
-    background: radial-gradient(ellipse, rgba(238,108,26,0.32), transparent 70%);
-    animation: drift 24s ease-in-out infinite alternate;
-  }
-  .mesh-blob--navy {
-    width: 42%; height: 40%; bottom: 15%; left: 8%;
-    background: radial-gradient(ellipse, rgba(15,30,61,0.6), transparent 70%);
-    animation: drift 28s ease-in-out infinite alternate-reverse;
-  }
-  @keyframes drift {
-    to { transform: translate(3%, 2%) scale(1.07); }
-  }
+  /* Mesh Background */
+  .mesh-blob { position:absolute; border-radius:50%; filter:blur(55px); will-change:transform; opacity:.55; }
+  .mesh-blob--periwinkle { width:55%;height:50%;top:5%;left:18%; background:radial-gradient(ellipse,rgba(107,127,199,.5),transparent70%); animation:drift 22s ease-in-out infinite alternate; }
+  .mesh-blob--green { width:45%;height:42%;top:8%;right:12%; background:radial-gradient(ellipse,rgba(30,158,79,.35),transparent70%); animation:drift 26s ease-in-out infinite alternate-reverse; }
+  .mesh-blob--orange { width:52%;height:46%;bottom:8%;right:22%; background:radial-gradient(ellipse,rgba(238,108,26,.32),transparent70%); animation:drift 24s ease-in-out infinite alternate; }
+  .mesh-blob--navy { width:42%;height:40%;bottom:15%;left:8%; background:radial-gradient(ellipse,rgba(15,30,61,.6),transparent70%); animation:drift 28s ease-in-out infinite alternate-reverse; }
+  @keyframes drift { to{transform:translate(3%,2%)scale(1.07)} }
+
+  /* Logo Container */
+  .logo-wrapper { position:relative; width:100%; max-width:400px; aspect-ratio:1.05; margin:0 auto; }
+  .logo-svg { width:100%; height:100%; overflow:visible; }
+
+  /* Glows */
+  .logo-glow { position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; opacity:0; animation:glowPulse 4s ease-in-out infinite; }
+  .glow--navy { width:50%;height:50%;top:0;left:5%; background:radial-gradient(circle,rgba(30,48,90,.4),transparent70%); animation-delay:.5s; }
+  .glow--green { width:45%;height:45%;top:0;right:5%; background:radial-gradient(circle,rgba(30,158,79,.32),transparent70%); animation-delay:1.5s; }
+  .glow--orange { width:55%;height:50%;bottom:0;left:20%; background:radial-gradient(circle,rgba(238,108,26,.32),transparent70%); animation-delay:2.5s; }
+  @keyframes glowPulse { 0%,100%{opacity:.35;transform:scale(1)} 50%{opacity:.65;transform:scale(1.08)} }
 
   /* ═══════════════════════════════════════════════════════════════════════════
-     LOGO MOSAIC CONTAINER
+     PIECES ANIMATION — Le cœur de l'effet Waouh !
      ═══════════════════════════════════════════════════════════════════════════ */
-  .hero-logo-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 380px;
-    aspect-ratio: 1.1;
-    margin: 0 auto;
+  .piece { opacity:0; animation:assemble 1.05s cubic-bezier(.16,1,.3,1) forwards, float 5.5s ease-in-out infinite; animation-delay:var(--delay,0s),calc(var(--delay,0s)+1.05s); will-change:transform,opacity; }
+  .diamond { opacity:inherit; }
+
+  @keyframes assemble {
+    0% { opacity:0; transform:translate(var(--tx,0),var(--ty,0)) rotate(calc(var(--rot,0deg)+45deg)) scale(.12); }
+    60% { opacity:.85; }
+    100% { opacity:1; transform:translate(0,0) rotate(45deg) scale(1); }
   }
-  .logo-mosaic {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
+  @keyframes float {
+    0%,100% { transform:rotate(45deg) translateY(0) }
+    50% { transform:rotate(45deg) translateY(-5px) }
   }
 
-  /* Glows behind logo */
-  .logo-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(55px);
-    pointer-events: none;
-    opacity: 0;
-    animation: glowPulse 4s ease-in-out infinite;
-  }
-  .logo-glow--periwinkle {
-    width: 55%; height: 55%; top: 5%; left: 12%;
-    background: radial-gradient(circle, rgba(107,127,199,0.35), transparent 70%);
-    animation-delay: 0.8s;
-  }
-  .logo-glow--green {
-    width: 48%; height: 48%; top: 5%; right: 8%;
-    background: radial-gradient(circle, rgba(30,158,79,0.28), transparent 70%);
-    animation-delay: 1.8s;
-  }
-  .logo-glow--orange {
-    width: 52%; height: 52%; bottom: 5%; left: 22%;
-    background: radial-gradient(circle, rgba(238,108,26,0.28), transparent 70%);
-    animation-delay: 2.8s;
-  }
-  @keyframes glowPulse {
-    0%, 100% { opacity: 0.35; transform: scale(1); }
-    50% { opacity: 0.65; transform: scale(1.08); }
+  /* Core glow */
+  .core-glow { fill:rgba(255,255,255,.06); filter:blur(6px); opacity:0; animation:coreIn .8s ease-out 1.2s forwards,corePulse 3s ease-in-out 2s infinite; }
+  @keyframes coreIn { to{opacity:1} }
+  @keyframes corePulse { 0%,100%{r:22px;opacity:.5} 50%{r:32px;opacity:.9} }
+
+  /* Label */
+  .logo-label { position:absolute; bottom:-38px; left:50%; transform:translateX(-50%); display:flex;flex-direction:column;align-items:center;gap:2px; }
+  .label-main { font-family:var(--font-display),sans-serif; font-size:1.05rem;font-weight:800;letter-spacing:.18em;color:rgba(255,255,255,.85); }
+  .label-sub { font-family:var(--font-display),sans-serif; font-size:.58rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#EE6C1A; }
+
+  /* Reduced Motion */
+  @media(prefers-reduced-motion:reduce) {
+    .piece { animation:none!important; opacity:1!important; transform:rotate(45deg) scale(1)!important; }
+    .core-glow { animation:none!important; opacity:.5!important; }
+    .logo-glow { animation:none!important; opacity:.4!important; }
+    .mesh-blob { animation:none!important; }
+    .hero-reveal { animation:none!important; opacity:1!important; transform:none!important; }
+    * { animation-duration:.01ms!important; transition-duration:.01ms!important; }
   }
 
-  /* ═══════════════════════════════════════════════════════════════════════════
-     LOGO PIECES ANIMATION — EFFET WAOUH !
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .logo-piece {
-    opacity: 0;
-    animation:
-      pieceAssemble 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-      pieceFloat 5.5s ease-in-out infinite;
-    animation-delay: var(--delay, 0s), calc(var(--delay, 0s) + 1.05s);
-    will-change: transform, opacity;
-  }
-
-  .piece-shape {
-    opacity: inherit;
-  }
-
-  @keyframes pieceAssemble {
-    0% {
-      opacity: 0;
-      transform:
-        translate(var(--tx, 0px), var(--ty, 0px))
-        rotate(calc(var(--rot, 0deg) + 45deg))
-        scale(0.15);
-    }
-    50% { opacity: 0.85; }
-    100% {
-      opacity: 1;
-      transform: translate(0, 0) rotate(45deg) scale(1);
-    }
-  }
-
-  @keyframes pieceFloat {
-    0%, 100% { transform: rotate(45deg) translateY(0); }
-    50% { transform: rotate(45deg) translateY(-5px); }
-  }
-
-  /* Core center glow */
-  .logo-core {
-    fill: rgba(255,255,255,0.06);
-    filter: blur(6px);
-    opacity: 0;
-    animation: coreIn 0.8s ease-out 1.2s forwards, corePulse 3s ease-in-out 2s infinite;
-  }
-  @keyframes coreIn { to { opacity: 1; } }
-  @keyframes corePulse {
-    0%, 100% { r: 20px; opacity: 0.5; }
-    50% { r: 30px; opacity: 0.9; }
-  }
-
-  /* Badge sous le logo */
-  .logo-badge {
-    position: absolute;
-    bottom: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-  }
-  .badge-name {
-    font-family: var(--font-display), sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    color: rgba(255,255,255,0.85);
-  }
-  .badge-tech {
-    font-family: var(--font-display), sans-serif;
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #EE6C1A;
-  }
-
-  /* Stats */
-  .stat-value {
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum" 1;
-  }
-
-  /* Scroll indicator */
-  .scroll-indicator svg { animation: scrollBounce 2s ease-in-out infinite; }
-  @keyframes scrollBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(7px); }
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     REDUCED MOTION
-     ═══════════════════════════════════════════════════════════════════════════ */
-  @media (prefers-reduced-motion: reduce) {
-    .logo-piece {
-      animation: none !important;
-      opacity: 1 !important;
-      transform: rotate(45deg) scale(1) !important;
-    }
-    .logo-core { animation: none !important; opacity: 0.5 !important; }
-    .logo-glow { animation: none !important; opacity: 0.4 !important; }
-    .mesh-blob { animation: none !important; }
-    .hero-reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
-    .scroll-indicator svg { animation: none !important; }
-    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  }
-
-  /* Mobile simplification */
-  @media (max-width: 1023px) {
-    .mesh-blob { filter: blur(65px); animation-duration: 44s !important; }
-  }
+  /* Mobile */
+  @media(max-width:1023px) { .mesh-blob { filter:blur(65px); animation-duration:44s!important; } }
 </style>
 
 <script>
-  function initHero() {
-    const section = document.querySelector('.hero-section');
-    if (!section) return;
-
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion) section.classList.add('reduced-motion');
-
-    new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
-    }, { threshold: 0.1 }).observe(section);
-
-    // Subtle parallax on glows
-    if (!reducedMotion) {
-      let ticking = false;
-      const glows = document.querySelectorAll('.logo-glow');
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(() => {
-            const y = window.scrollY;
-            glows.forEach((g, i) => {
-              (g as HTMLElement).style.transform = `translateY(${y * (0.015 + i * 0.008)}px)`;
-            });
-            ticking = false;
-          });
-        }
-      }, { passive: true });
-    }
-  }
-
-  document.readyState === 'loading'
-    ? document.addEventListener('DOMContentLoaded', initHero)
-    : initHero();
+function initHero() {
+  const s=document.querySelector('.hero-section');if(!s)return;
+  const rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(rm)s.classList.add('reduced-motion');
+  new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('is-visible')})},{threshold:.1}).observe(s);
+  if(!rm){let t=false;const g=document.querySelectorAll('.logo-glow');
+  window.addEventListener('scroll',()=>{if(!t){t=true;requestAnimationFrame(()=>{const y=window.scrollY;g.forEach((g,i)=>{(g as HTMLElement).style.transform=`translateY(${y*(.015+i*.008)}px)`});t=false})}},{passive:true})}
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',initHero):initHero();
 </script>
