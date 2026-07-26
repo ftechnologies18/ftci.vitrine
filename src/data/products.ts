@@ -35,7 +35,7 @@ export interface Product {
         /** Domaine externe du produit déployé (laisser vide si non déployé) */
         externalUrl: string;
         /** Couleur d'accent (classe Tailwind ou hex) */
-        accentColor: 'orange' | 'green' | 'periwinkle';
+        accentColor: 'orange' | 'green' | 'periwinkle' | 'navy';
         /** Icône SVG path (Heroicons outline) */
         iconPath: string;
         /** Catégorie pour le SEO */
@@ -303,7 +303,7 @@ export const products: Product[] = [
                 longDescription:
                         "ScolaGest est l'ERP de gestion scolaire pensé pour les réseaux d'établissements africains. Il combine la gestion académique (inscriptions, emplois du temps, bulletins) et la gestion financière (encaissements, échéanciers, Mobile Money, comptabilité) dans une seule plateforme. ScolaGest supporte nativement les modes de paiement locaux (Orange Money, MTN Money, Moov Money) et les particularités réglementaires ivoiriennes et ouest-africaines.",
                 externalUrl: 'https://scolagest.ftci.fr',
-                accentColor: 'orange',
+                accentColor: 'navy',
                 iconPath:
                         'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
                 category: 'Gestion scolaire',
@@ -450,5 +450,14 @@ export const accentColorClasses: Record<
                 shadow: 'group-hover:shadow-periwinkle/30',
                 from: 'from-periwinkle',
                 to: 'to-blue-600',
+        },
+        navy: {
+                text: 'text-navy',
+                bg: 'bg-navy',
+                bgHover: 'hover:bg-navy-700',
+                border: 'hover:border-navy',
+                shadow: 'group-hover:shadow-navy/30',
+                from: 'from-navy',
+                to: 'to-navy-700',
         },
 };

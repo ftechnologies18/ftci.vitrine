@@ -10,19 +10,24 @@
  *   + .halo-glow avec --halo-color inline (couleur produit)
  * - Carte (Small Biz : 4 éléments max) : icône gradient, nom, description,
  *   2 liens (page locale "En savoir plus" + externe "Accéder")
- * - Lignes de connexion SVG animées en bas : 4 nœuds pulsants + 3 lignes
+ * - Lignes de connexion SVG animées en bas : 4 nœuds losange + 3 lignes
  *   .connection-line (dashFlow) — signature visuelle "écosystème FTCI"
- * - Script tilt local : pointermove, rotateX/rotateY ±2.2° max, translateZ(40px),
- *   interruptible (transition CSS), mobile + reduced-motion désactivés
+ * 
+ * ENHANCED MICRO-INTERACTIONS (Task #3):
+ * - Tilt 3D: perspective(800px) rotateY(x*8deg) rotateX(-y*8deg) translateY(-4px)
+ * - Glow: box-shadow with product-specific RGBA at 35%, blur 60px, offset-y 24px
+ * - Magnetic buttons: translate(deltaX*0.18, deltaY*0.3), max 15-20px displacement
+ * - Connection lines: diamond nodes, stroke-dasharray 6 8, animation towards -140
  */
 
 import { products, productUrls, accentColorClasses } from '../data/products';
 
-// Mapping accentColor → hex pour --halo-color
+// Mapping accentColor → hex pour --halo-color (avec RGBA pour glow)
 const haloHex: Record<string, string> = {
-	orange: '#ee6c1a',
-	green: '#1e9e4f',
-	periwinkle: '#6b7fc7',
+        orange: '#ee6c1a',
+        green: '#1e9e4f',
+        periwinkle: '#6b7fc7',
+        navy: '#0f1e3d',
 };
 
 // Couleurs des nœuds pour le diagramme écosystème
@@ -30,176 +35,238 @@ const nodeColors = products.map((p) => haloHex[p.accentColor]);
 ---
 
 <section id="solutions" class="relative py-20 md:py-32 bg-white overflow-hidden">
-	<!-- ── Motif circuit imprimé (filigrane tech) ───────────────────────── -->
-	<div class="absolute inset-0 opacity-[0.08] circuit-bg" aria-hidden="true"></div>
+        <!-- ── Motif circuit imprimé (filigrane tech) ───────────────────────── -->
+        <div class="absolute inset-0 opacity-[0.08] circuit-bg" aria-hidden="true"></div>
 
-	<div class="container relative z-10">
-		<!-- ── Section header ─────────────────────────────────────────────── -->
-		<div class="section-header observe">
-			<span class="eyebrow">
-				<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
-					<polygon points="4,0 8,4 4,8 0,4" />
-				</svg>
-				Écosystème SaaS
-			</span>
-			<h2>Nos Solutions</h2>
-			<p>
-				Quatre plateformes SaaS conçues pour les réalités du marché africain —
-				évaluation, chantier, présence scolaire et gestion financière.
-			</p>
-		</div>
+        <div class="container relative z-10">
+                <!-- ── Section header ─────────────────────────────────────────────── -->
+                <div class="section-header observe">
+                        <span class="eyebrow">
+                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+                                        <polygon points="4,0 8,4 4,8 0,4" />
+                                </svg>
+                                Écosystème SaaS
+                        </span>
+                        <h2>Nos Solutions</h2>
+                        <p>
+                                Quatre plateformes SaaS conçues pour les réalités du marché africain —
+                                évaluation, chantier, présence scolaire et gestion financière.
+                        </p>
+                </div>
 
-		<!-- ── Grille des 4 produits ──────────────────────────────────────── -->
-		<div class="grid md:grid-cols-2 gap-6 lg:gap-8">
-			{products.map((product, idx) => {
-				const accent = accentColorClasses[product.accentColor];
-				const halo = haloHex[product.accentColor];
-				return (
-					<div
-						class="tilt-stage halo-glow observe"
-						style={`--halo-color: ${halo}; --halo-radius: 18px; --d: ${idx * 0.1}s`}
-					>
-						<article
-							class="tilt-card group h-full bg-white rounded-card border border-navy/8 p-7 md:p-8 shadow-sm"
-							data-tilt
-						>
-							<div class="tilt-content flex flex-col h-full">
-								<!-- Icône gradient couleur produit -->
-								<div
-									class={`w-14 h-14 rounded-xl bg-gradient-to-br ${accent.from} ${accent.to} flex items-center justify-center text-white mb-6 shadow-lg`}
-									aria-hidden="true"
-								>
-									<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d={product.iconPath}
-										/>
-									</svg>
-								</div>
+                <!-- ── Grille des 4 produits ──────────────────────────────────────── -->
+                <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+                        {products.map((product, idx) => {
+                                const accent = accentColorClasses[product.accentColor];
+                                const halo = haloHex[product.accentColor];
+                                return (
+                                        <div
+                                                class="tilt-stage halo-glow observe"
+                                                style={`--halo-color: ${halo}; --halo-radius: 18px; --d: ${idx * 0.1}s`}
+                                        >
+                                                <article
+                                                        class="tilt-card group h-full bg-white rounded-card border border-navy/8 p-7 md:p-8 shadow-sm"
+                                                        data-tilt
+                                                >
+                                                        <div class="tilt-content flex flex-col h-full">
+                                                                <!-- Icône gradient couleur produit -->
+                                                                <div
+                                                                        class={`w-14 h-14 rounded-xl bg-gradient-to-br ${accent.from} ${accent.to} flex items-center justify-center text-white mb-6 shadow-lg`}
+                                                                        aria-hidden="true"
+                                                                >
+                                                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"
+                                                                                        d={product.iconPath}
+                                                                                />
+                                                                        </svg>
+                                                                </div>
 
-								<!-- Nom + fullName -->
-								<h3
-									class={`text-2xl font-display font-extrabold text-navy mb-1 transition-colors duration-200 group-hover:text-orange ${accent.text.replace('text-', 'group-hover:')}`}
-								>
-									{product.name}
-								</h3>
-								<p class="text-sm text-gray-text font-medium mb-3">{product.fullName}</p>
+                                                                <!-- Nom + fullName -->
+                                                                <h3
+                                                                        class={`text-2xl font-display font-extrabold text-navy mb-1 transition-colors duration-200 group-hover:text-orange ${accent.text.replace('text-', 'group-hover:')}`}
+                                                                >
+                                                                        {product.name}
+                                                                </h3>
+                                                                <p class="text-sm text-gray-text font-medium mb-3">{product.fullName}</p>
 
-								<!-- Description courte -->
-								<p class="text-gray-text leading-relaxed mb-6 flex-1">
-									{product.description}
-								</p>
+                                                                <!-- Description courte -->
+                                                                <p class="text-gray-text leading-relaxed mb-6 flex-1">
+                                                                        {product.description}
+                                                                </p>
 
-								<!-- 2 liens : page locale + plateforme externe -->
-								<div class="flex items-center gap-4 pt-4 border-t border-navy/5">
-									<a
-										href={productUrls[product.slug]}
-										class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-orange transition-colors duration-200"
-									>
-										En savoir plus
-										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-										</svg>
-									</a>
-									{product.externalUrl && (
-										<a
-											href={product.externalUrl}
-											target="_blank"
-											rel="noopener noreferrer"
-											class={`inline-flex items-center gap-1.5 text-sm font-medium ${accent.text} hover:opacity-75 transition-opacity duration-200`}
-										>
-											Accéder
-											<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5m0 0v5m0-5L9 15M5 5h4a2 2 0 012 2v0a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
-											</svg>
-										</a>
-									)}
-								</div>
-							</div>
-						</article>
-					</div>
-				);
-			})}
-		</div>
+                                                                <!-- 2 liens : page locale + plateforme externe (magnetic) -->
+                                                                <div class="flex items-center gap-4 pt-4 border-t border-navy/5">
+                                                                        <a
+                                                                                href={productUrls[product.slug]}
+                                                                                class="magnetic-btn inline-flex items-center gap-1.5 text-sm font-semibold text-navy hover:text-orange transition-colors duration-200"
+                                                                        >
+                                                                                En savoir plus
+                                                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                                                </svg>
+                                                                        </a>
+                                                                        {product.externalUrl && (
+                                                                                <a
+                                                                                        href={product.externalUrl}
+                                                                                        target="_blank"
+                                                                                        rel="noopener noreferrer"
+                                                                                        class={`magnetic-btn inline-flex items-center gap-1.5 text-sm font-medium ${accent.text} hover:opacity-75 transition-opacity duration-200`}
+                                                                                >
+                                                                                        Accéder
+                                                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5m0 0v5m0-5L9 15M5 5h4a2 2 0 012 2v0a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
+                                                                                        </svg>
+                                                                                </a>
+                                                                        )}
+                                                                </div>
+                                                        </div>
+                                                </article>
+                                        </div>
+                                );
+                        })}
+                </div>
 
-		<!-- ── Diagramme écosystème : 4 nœuds + 3 lignes de connexion ─────── -->
-		<div class="mt-16 md:mt-20 observe" style="--d: 0.1s">
-			<p class="text-center text-sm text-gray-text mb-6 font-medium">
-				Un écosystème interconnecté — chaque solution communique avec les autres
-			</p>
-			<svg
-				class="w-full max-w-2xl mx-auto h-20"
-				viewBox="0 0 800 80"
-				preserveAspectRatio="xMidYMid meet"
-				aria-hidden="true"
-			>
-				<!-- 3 lignes de connexion (dashFlow) -->
-				<line x1="100" y1="34" x2="333" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
-				<line x1="333" y1="34" x2="567" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
-				<line x1="567" y1="34" x2="700" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
+                <!-- ── Diagramme écosystème : 4 nœuds losange + 3 lignes de connexion ── -->
+                <div class="mt-16 md:mt-20 observe" style="--d: 0.1s">
+                        <p class="text-center text-sm text-gray-text mb-6 font-medium">
+                                Un écosystème interconnecté — chaque solution communique avec les autres
+                        </p>
+                        <svg
+                                class="w-full max-w-2xl mx-auto h-20"
+                                viewBox="0 0 800 80"
+                                preserveAspectRatio="xMidYMid meet"
+                                aria-hidden="true"
+                        >
+                                <!-- 3 lignes de connexion (dashFlow amélioré) -->
+                                <line x1="100" y1="34" x2="333" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
+                                <line x1="333" y1="34" x2="567" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
+                                <line x1="567" y1="34" x2="700" y2="34" class="connection-line" stroke="#6b7fc7" stroke-width="1.5" opacity="0.5" />
 
-				<!-- 4 nœuds colorés pulsants -->
-				<circle cx="100" cy="34" r="9" fill={nodeColors[0]} class="node-pulse" style="animation-delay: 0s" />
-				<circle cx="333" cy="34" r="9" fill={nodeColors[1]} class="node-pulse" style="animation-delay: 0.3s" />
-				<circle cx="567" cy="34" r="9" fill={nodeColors[2]} class="node-pulse" style="animation-delay: 0.6s" />
-				<circle cx="700" cy="34" r="9" fill={nodeColors[3]} class="node-pulse" style="animation-delay: 0.9s" />
+                                <!-- 4 nœuds LOSANGE colorés pulsants (diamond shape) -->
+                                <polygon points="100,24 110,34 100,44 90,34" fill={nodeColors[0]} class="node-diamond" style="animation-delay: 0s" />
+                                <polygon points="333,24 343,34 333,44 323,34" fill={nodeColors[1]} class="node-diamond" style="animation-delay: 0.3s" />
+                                <polygon points="567,24 577,34 567,44 557,34" fill={nodeColors[2]} class="node-diamond" style="animation-delay: 0.6s" />
+                                <polygon points="700,24 710,34 700,44 690,34" fill={nodeColors[3]} class="node-diamond" style="animation-delay: 0.9s" />
 
-				<!-- Labels -->
-				<text x="100" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">SECT</text>
-				<text x="333" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">OPUC</text>
-				<text x="567" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">CATS</text>
-				<text x="700" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">ScolaGest</text>
-			</svg>
-		</div>
-	</div>
+                                <!-- Labels -->
+                                <text x="100" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">SECT</text>
+                                <text x="333" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">OPUC</text>
+                                <text x="567" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">CATS</text>
+                                <text x="700" y="64" text-anchor="middle" fill="#0f1e3d" font-size="13" font-weight="600" font-family="Poppins, sans-serif">ScolaGest</text>
+                        </svg>
+                </div>
+        </div>
 </section>
 
 <script>
-	// ── Tilt 3D (Brand Book : ±2.2° max, preserve-3d, translateZ(40px)) ─────
-	// Interruptible via transition CSS sur .tilt-card (160ms ease-out).
-	// Désactivé sur mobile + reduced-motion (cahier des charges 6.5).
-	const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // ── Detection : mobile/touch + reduced-motion ───────────────────────────
+        const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	if (!isTouch && !reduced) {
-		document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
-			const stage = card.closest('.tilt-stage') as HTMLElement | null;
-			if (!stage) return;
+        if (!isTouch && !reduced) {
+                // ════════════════════════════════════════════════════════════════════
+                // ENHANCED TILT 3D (Specs: perspective 800px, ±8deg, translateY -4px)
+                // Transform: perspective(800px) rotateY(x*8deg) rotateX(-y*8deg) translateY(-4px)
+                // Return: cubic-bezier(0.16, 1, 0.3, 1), 350ms
+                // ════════════════════════════════════════════════════════════════════
+                document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+                        const stage = card.closest('.tilt-stage') as HTMLElement | null;
+                        if (!stage) return;
 
-			let rafId: number | null = null;
-			let pendingRX = 0;
-			let pendingRY = 0;
+                        let rafId: number | null = null;
+                        let pendingRX = 0;
+                        let pendingRY = 0;
 
-			const apply = () => {
-				card.style.transform = `rotateX(${pendingRX.toFixed(2)}deg) rotateY(${pendingRY.toFixed(2)}deg)`;
-				rafId = null;
-			};
+                        const apply = () => {
+                                // Enhanced tilt: perspective(800px) rotateY(x*8deg) rotateX(-y*8deg) translateY(-4px)
+                                card.style.transform = `
+                                        perspective(800px)
+                                        rotateY(${pendingRY.toFixed(2)}deg)
+                                        rotateX(${pendingRX.toFixed(2)}deg)
+                                        translateY(-4px)
+                                `;
+                                rafId = null;
+                        };
 
-			const schedule = () => {
-				if (rafId === null) rafId = requestAnimationFrame(apply);
-			};
+                        const schedule = () => {
+                                if (rafId === null) rafId = requestAnimationFrame(apply);
+                        };
 
-			stage.addEventListener(
-				'pointermove',
-				(e: PointerEvent) => {
-					const r = stage.getBoundingClientRect();
-					const px = (e.clientX - r.left) / r.width - 0.5; // -0.5 → 0.5
-					const py = (e.clientY - r.top) / r.height - 0.5;
-					// ±2.2° max → multiplier 4.4 (0.5 × 4.4 = 2.2)
-					pendingRY = px * 4.4;
-					pendingRX = -py * 4.4;
-					schedule();
-				},
-				{ passive: true },
-			);
+                        stage.addEventListener(
+                                'pointermove',
+                                (e: PointerEvent) => {
+                                        const r = stage.getBoundingClientRect();
+                                        const px = (e.clientX - r.left) / r.width - 0.5; // -0.5 → 0.5
+                                        const py = (e.clientY - r.top) / r.height - 0.5;
+                                        // ±8° max → multiplier 16 (0.5 × 16 = 8)
+                                        pendingRY = px * 16;
+                                        pendingRX = -py * 16;
+                                        schedule();
+                                },
+                                { passive: true },
+                        );
 
-			stage.addEventListener('pointerleave', () => {
-				pendingRX = 0;
-				pendingRY = 0;
-				schedule();
-			});
-		});
-	}
+                        stage.addEventListener('pointerleave', () => {
+                                pendingRX = 0;
+                                pendingRY = 0;
+                                schedule();
+                        });
+                });
+
+                // ════════════════════════════════════════════════════════════════════
+                // ENHANCED MAGNETIC BUTTONS
+                // translate(deltaX * 0.18, deltaY * 0.3), max 15-20px displacement
+                // Return: cubic-bezier(0.16, 1, 0.3, 1), 250ms
+                // ════════════════════════════════════════════════════════════════════
+                const MAX_DISPLACEMENT = 18; // Max 18px (within 15-20px range)
+
+                document.querySelectorAll<HTMLElement>('.magnetic-btn').forEach((btn) => {
+                        let rafId: number | null = null;
+                        let pendingX = 0;
+                        let pendingY = 0;
+
+                        const apply = () => {
+                                btn.style.transform = `translate(${pendingX.toFixed(1)}px, ${pendingY.toFixed(1)}px)`;
+                                rafId = null;
+                        };
+
+                        const schedule = () => {
+                                if (rafId === null) rafId = requestAnimationFrame(apply);
+                        };
+
+                        btn.addEventListener(
+                                'pointermove',
+                                (e: PointerEvent) => {
+                                        const rect = btn.getBoundingClientRect();
+                                        const centerX = rect.left + rect.width / 2;
+                                        const centerY = rect.top + rect.height / 2;
+                                        
+                                        let deltaX = e.clientX - centerX;
+                                        let deltaY = e.clientY - centerY;
+                                        
+                                        // Apply multipliers: X * 0.18, Y * 0.3
+                                        let translateX = deltaX * 0.18;
+                                        let translateY = deltaY * 0.3;
+                                        
+                                        // Clamp to max displacement
+                                        translateX = Math.max(-MAX_DISPLACEMENT, Math.min(MAX_DISPLACEMENT, translateX));
+                                        translateY = Math.max(-MAX_DISPLACEMENT, Math.min(MAX_DISPLACEMENT, translateY));
+                                        
+                                        pendingX = translateX;
+                                        pendingY = translateY;
+                                        schedule();
+                                },
+                                { passive: true },
+                        );
+
+                        btn.addEventListener('pointerleave', () => {
+                                pendingX = 0;
+                                pendingY = 0;
+                                schedule();
+                        });
+                });
+        }
 </script>

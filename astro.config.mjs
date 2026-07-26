@@ -1,7 +1,20 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import cloudflare from '@astrojs/cloudflare';
+
+// Only use Cloudflare adapter in production (not dev)
+// This avoids workerd crashes during local development
+const isProduction = process.env.NODE_ENV === 'production';
+
+let adapter;
+if (isProduction) {
+  const cloudflare = await import('@astrojs/cloudflare');
+  adapter = cloudflare.default({
+    platformProxy: {
+      enabled: true,
+    },
+  });
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,13 +26,7 @@ export default defineConfig({
   // out with `export const prerender = false` (see src/pages/api/contact.ts).
   // The Cloudflare adapter then serves those on-demand routes on the Workers
   // runtime while streaming the prerendered pages from static assets.
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-      // Exposes KV and other bindings declared in wrangler.jsonc to `astro dev`
-      // via local emulation, so the contact endpoint can be exercised locally.
-    },
-  }),
+  ...(adapter ? { adapter } : {}),
 
   vite: {
     plugins: [tailwindcss()],

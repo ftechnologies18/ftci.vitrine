@@ -1,161 +1,432 @@
 ---
 /**
- * Services.astro — Section "Nos Services" (timeline verticale + stroke-draw).
+ * Services.astro — Section "Nos Services" (timeline verticale + stroke-draw ENHANCED)
  * ────────────────────────────────────────────────────────────────────────────
- * - Section id="services" py-20 md:py-32 bg-light-bg
+ * - Section id="services" py-20 md:py-32 bg-light-bg overflow-hidden
  * - Timeline verticale : 4 services avec cercle numéroté gradient + icône SVG
- *   .stroke-draw (tracé animé au scroll), ligne verticale gradient entre étapes
+ *   .stroke-draw-enhanced (tracé animé au scroll — dasharray 300, 1.4s)
  * - Chaque étape : titre, description, liste à puces vertes
  * - CTA final "Discutons de votre projet" (btn-primary magnetic)
- * - Stagger d'entrée (.observe + --d)
- * - L'icône .stroke-draw se déclenche via .observe.is-visible .stroke-draw
- *   (rule CSS dans global.css — pas d'observer séparé nécessaire)
+ * 
+ * SCROLL ANIMATIONS ENHANCED:
+ * ─────────────────────────────────
+ * 1. Scroll Reveal (.observe-reveal):
+ *    - IntersectionObserver threshold 0.15
+ *    - Initial: opacity: 0, translateY(28px)
+ *    - Visible: opacity: 1, translateY(0), 0.7s cubic-bezier(0.16, 1, 0.3, 1)
+ *    - Cascade delay: 0s / 0.08s / 0.16s / 0.24s / 0.32s by index
+ *    - Single appearance only (unobserve after first trigger)
+ *
+ * 2. SVG Stroke Animation (.stroke-draw-enhanced):
+ *    - Icons stroke-only (fill="none")
+ *    - stroke-dasharray: 300, stroke-dashoffset: 300 → 0
+ *    - Duration: 1.4s cubic-bezier(0.16, 1, 0.3, 1)
+ *    - Triggered when parent card enters viewport
+ *
+ * 3. Parallax Background (.parallax-bg):
+ *    - Mesh gradient & circuit grid move on scroll
+ *    - Ratio: 0.08x scroll distance
+ *    - Max displacement: 36px
+ *    - rAF throttled single scroll listener
  */
 
 const services = [
-        {
-                num: '01',
-                title: 'Transformation Digitale',
-                color: 'orange',
-                gradient: 'from-orange to-orange-600',
-                text: 'text-orange',
-                description:
-                        "Nous accompagnons les organisations dans leur migration vers le numérique — de l'audit initial à la conduite du changement.",
-                items: ['Audit & diagnostic', 'Roadmap stratégique', 'Gestion du changement'],
-                iconPath:
-                        'M13 10V3L4 14h7v7l9-11h-7z',
-        },
-        {
-                num: '02',
-                title: 'Développement Web sur Mesure',
-                color: 'periwinkle',
-                gradient: 'from-periwinkle to-periwinkle-600',
-                text: 'text-periwinkle',
-                description:
-                        'Applications web et mobiles, API et PWA conçues sur mesure pour vos processus métiers et vos contraintes locales.',
-                items: ['PWA & applications', 'API & intégrations', 'Support & maintenance'],
-                iconPath:
-                        'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
-        },
-        {
-                num: '03',
-                title: 'Infrastructure IT',
-                color: 'green',
-                gradient: 'from-green to-green-600',
-                text: 'text-green',
-                description:
-                        "Conception, déploiement et sécurisation de votre infrastructure cloud et on-premise, avec continuité d'activité garantie.",
-                items: ['Cloud & hybridation', 'Sécurité & conformité', 'Disaster recovery'],
-                iconPath:
-                        'M5 12H3l8-8 8 8h-2M5 12v7a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-7',
-        },
-        {
-                num: '04',
-                title: 'Documentation & Formation',
-                color: 'orange',
-                gradient: 'from-orange to-orange-600',
-                text: 'text-orange',
-                description:
-                        "Nous transférons les compétences : guides techniques, formations utilisateurs et support continu pour autonomiser vos équipes.",
-                items: ['Guides & documentation', 'Formations sur mesure', 'Support continu'],
-                iconPath:
-                        'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
-        },
+	{
+		num: '01',
+		title: 'Transformation Digitale',
+		color: 'orange',
+		gradient: 'from-orange to-orange-600',
+		text: 'text-orange',
+		description:
+			"Nous accompagnons les organisations dans leur migration vers le numérique — de l'audit initial à la conduite du changement.",
+		items: ['Audit & diagnostic', 'Roadmap stratégique', 'Gestion du changement'],
+		iconPath:
+			'M13 10V3L4 14h7v7l9-11h-7z',
+	},
+	{
+		num: '02',
+		title: 'Développement Web sur Mesure',
+		color: 'periwinkle',
+		gradient: 'from-periwinkle to-periwinkle-600',
+		text: 'text-periwinkle',
+		description:
+			'Applications web et mobiles, API et PWA conçues sur mesure pour vos processus métiers et vos contraintes locales.',
+		items: ['PWA & applications', 'API & intégrations', 'Support & maintenance'],
+		iconPath:
+			'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+	},
+	{
+		num: '03',
+		title: 'Infrastructure IT',
+		color: 'green',
+		gradient: 'from-green to-green-600',
+		text: 'text-green',
+		description:
+			"Conception, déploiement et sécurisation de votre infrastructure cloud et on-premise, avec continuité d'activité garantie.",
+		items: ['Cloud & hybridation', 'Sécurité & conformité', 'Disaster recovery'],
+		iconPath:
+			'M5 12H3l8-8 8 8h-2M5 12v7a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-7',
+	},
+	{
+		num: '04',
+		title: 'Documentation & Formation',
+		color: 'orange',
+		gradient: 'from-orange to-orange-600',
+		text: 'text-orange',
+		description:
+			"Nous transférons les compétences : guides techniques, formations utilisateurs et support continu pour autonomiser vos équipes.",
+		items: ['Guides & documentation', 'Formations sur mesure', 'Support continu'],
+		iconPath:
+			'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+	},
 ];
 ---
 
 <section id="services" class="relative py-20 md:py-32 bg-light-bg overflow-hidden">
-        <div class="container relative z-10">
-                <!-- ── Section header ─────────────────────────────────────────────── -->
-                <div class="section-header observe">
-                        <span class="eyebrow">
-                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
-                                        <polygon points="4,0 8,4 4,8 0,4" />
-                                </svg>
-                                Accompagnement
-                        </span>
-                        <h2>Nos Services</h2>
-                        <p>
-                                Une expertise complète, de la stratégie à l'exploitation — pour transformer
-                                vos idées en solutions durables.
-                        </p>
-                </div>
+	<!-- ── Parallax background elements ────────────────────────────────────── -->
+	<div class="parallax-bg services-parallax absolute inset-0 pointer-events-none" aria-hidden="true">
+		<!-- Mesh gradient blob -->
+		<div class="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full opacity-30 blur-[80px]"
+			style="background: radial-gradient(circle, var(--color-periwinkle) 0%, transparent 70%);"></div>
+		<!-- Circuit grid overlay -->
+		<div class="absolute inset-0 opacity-[0.03] circuit-bg"></div>
+	</div>
 
-                <!-- ── Timeline verticale ─────────────────────────────────────────── -->
-                <div class="relative max-w-3xl mx-auto">
-                        <!-- Ligne verticale gradient (orange → periwinkle → green → orange) -->
-                        <div
-                                class="absolute left-6 top-2 bottom-2 w-0.5 bg-gradient-to-b from-orange via-periwinkle to-green md:left-8"
-                                aria-hidden="true"
-                        ></div>
+	<div class="container relative z-10">
+		<!-- ── Section header ─────────────────────────────────────────────── -->
+		<div class="section-header observe-reveal" data-reveal-delay="0">
+			<span class="eyebrow">
+				<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+					<polygon points="4,0 8,4 4,8 0,4" />
+				</svg>
+				Accompagnement
+			</span>
+			<h2>Nos Services</h2>
+			<p>
+				Une expertise complète, de la stratégie à l'exploitation — pour transformer
+				vos idées en solutions durables.
+			</p>
+		</div>
 
-                        {services.map((service, idx) => (
-                                <div
-                                        class="relative pl-16 md:pl-24 pb-12 last:pb-0 observe"
-                                        style={`--d: ${idx * 0.12}s`}
-                                >
-                                        <!-- Cercle numéroté gradient -->
-                                        <div
-                                                class={`absolute left-0 top-0 w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center text-white font-display font-extrabold text-sm md:text-lg shadow-lg shrink-0`}
-                                                aria-hidden="true"
-                                        >
-                                                {service.num}
-                                        </div>
+		<!-- ── Timeline verticale ─────────────────────────────────────────── -->
+		<div class="relative max-w-3xl mx-auto">
+			<!-- Ligne verticale gradient (orange → periwinkle → green → orange) -->
+			<div
+				class="absolute left-6 top-2 bottom-2 w-0.5 bg-gradient-to-b from-orange via-periwinkle to-green md:left-8 timeline-line"
+				aria-hidden="true"
+			></div>
 
-                                        <!-- Contenu -->
-                                        <div class="bg-white rounded-card p-6 md:p-7 shadow-sm border border-navy/5">
-                                                <!-- Titre + icône stroke-draw -->
-                                                <div class="flex items-start justify-between gap-4 mb-3">
-                                                        <h3 class="text-xl md:text-2xl font-display font-extrabold text-navy">
-                                                                {service.title}
-                                                        </h3>
-                                                        <svg
-                                                                class={`w-8 h-8 ${service.text} stroke-draw shrink-0`}
-                                                                fill="none"
-                                                                stroke="currentColor"
-                                                                viewBox="0 0 24 24"
-                                                                stroke-width="1.8"
-                                                                aria-hidden="true"
-                                                        >
-                                                                <path
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        d={service.iconPath}
-                                                                />
-                                                        </svg>
-                                                </div>
+			{services.map((service, idx) => (
+				<div
+					class="relative pl-16 md:pl-24 pb-12 last:pb-0 observe-reveal service-card"
+					data-reveal-delay={idx}
+				>
+					<!-- Cercle numéroté gradient -->
+					<div
+						class={`absolute left-0 top-0 w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br ${service.gradient} flex items-center justify-center text-white font-display font-extrabold text-sm md:text-lg shadow-lg shrink-0 service-circle`}
+						aria-hidden="true"
+					>
+						{service.num}
+					</div>
 
-                                                <!-- Description -->
-                                                <p class="text-gray-text leading-relaxed mb-4">
-                                                        {service.description}
-                                                </p>
+					<!-- Contenu -->
+					<div class="bg-white rounded-card p-6 md:p-7 shadow-sm border border-navy/5 service-content">
+						<!-- Titre + icône stroke-draw-enhanced -->
+						<div class="flex items-start justify-between gap-4 mb-3">
+							<h3 class="text-xl md:text-2xl font-display font-extrabold text-navy">
+								{service.title}
+							</h3>
+							<svg
+								class={`w-8 h-8 ${service.text} stroke-draw-enhanced shrink-0`}
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								stroke-width="1.8"
+								aria-hidden="true"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d={service.iconPath}
+								/>
+							</svg>
+						</div>
 
-                                                <!-- Liste à puces vertes -->
-                                                <ul class="space-y-2">
-                                                        {service.items.map((item) => (
-                                                                <li class="flex items-center gap-2.5 text-sm text-navy/80">
-                                                                        <svg class="w-4 h-4 text-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                                                                        </svg>
-                                                                        {item}
-                                                                </li>
-                                                        ))}
-                                                </ul>
-                                        </div>
-                                </div>
-                        ))}
-                </div>
+						<!-- Description -->
+						<p class="text-gray-text leading-relaxed mb-4">
+							{service.description}
+						</p>
 
-                <!-- ── CTA final ──────────────────────────────────────────────────── -->
-                <div class="text-center mt-14 observe" style="--d: 0.1s">
-                        <a href="/#contact" data-magnetic="16" class="btn-primary magnetic">
-                                <span>
-                                        Discutons de votre projet
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                        </svg>
-                                </span>
-                        </a>
-                </div>
-        </div>
+						<!-- Liste à puces vertes -->
+						<ul class="space-y-2">
+							{service.items.map((item) => (
+								<li class="flex items-center gap-2.5 text-sm text-navy/80">
+									<svg class="w-4 h-4 text-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+									</svg>
+									{item}
+								</li>
+							))}
+						</ul>
+					</div>
+				</div>
+			))}
+		</div>
+
+		<!-- ── CTA final ──────────────────────────────────────────────────── -->
+		<div class="text-center mt-14 observe-reveal" data-reveal-delay="4">
+			<a href="/#contact" data-magnetic="16" class="btn-primary magnetic">
+				<span>
+					Discutons de votre projet
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+					</svg>
+				</span>
+			</a>
+		</div>
+	</div>
 </section>
+
+<script>
+	// ═══════════════════════════════════════════════════════════════════════════
+	// SERVICES SECTION — Enhanced Scroll Animations
+	// ═══════════════════════════════════════════════════════════════════════════
+
+	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	// ── 1. Scroll Reveal Enhancement ────────────────────────────────────────
+	// IntersectionObserver threshold 0.15
+	// Initial: opacity: 0, translateY(28px)
+	// Visible: opacity: 1, translateY(0), 0.7s cubic-bezier(0.16, 1, 0.3, 1)
+	// Cascade delay by index: 0s, 0.08s, 0.16s, 0.24s, 0.32s
+	// Single appearance only (unobserve after first reveal)
+
+	const revealElements = document.querySelectorAll('.observe-reveal');
+	
+	// Cascade delays in seconds based on element index
+	const cascadeDelays = [0, 0.08, 0.16, 0.24, 0.32];
+
+	if (!reduced && 'IntersectionObserver' in window) {
+		const revealObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						const el = entry.target as HTMLElement;
+						const delayIdx = parseInt(el.dataset.revealDelay || '0', 10);
+						const delay = cascadeDelays[Math.min(delayIdx, cascadeDelays.length - 1)] || 0;
+						
+						// Apply staggered delay via CSS custom property
+						el.style.transitionDelay = `${delay}s`;
+						el.classList.add('is-revealed');
+						
+						// Unobserve after first reveal (single appearance only)
+						revealObserver.unobserve(el);
+					}
+				});
+			},
+			{
+				threshold: 0.15,
+				rootMargin: '0px 0px -40px 0px'
+			}
+		);
+
+		revealElements.forEach((el) => revealObserver.observe(el));
+	} else if (reduced) {
+		// Reduced motion: show all immediately
+		revealElements.forEach((el) => el.classList.add('is-revealed'));
+	}
+
+	// ── 2. Parallax Background Enhancement ──────────────────────────────────
+	// Apply to mesh gradient and circuit grid
+	// Ratio: 0.08x scroll distance
+	// Max displacement: 36px
+	// rAF throttled single scroll listener
+
+	if (!reduced) {
+		const parallaxContainer = document.querySelector('.services-parallax') as HTMLElement | null;
+		
+		if (parallaxContainer) {
+			let ticking = false;
+			const maxDisplacement = 36; // px
+			const parallaxRatio = 0.08;
+
+			const updateParallax = () => {
+				const rect = parallaxContainer.getBoundingClientRect();
+				const windowHeight = window.innerHeight;
+				
+				// Calculate how far through the viewport the section is
+				// 0 = section just entering from bottom, 1 = section fully exited top
+				const viewProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+				
+				// Clamp between -1 and 1 for smooth bidirectional movement
+				const clampedProgress = Math.max(-1, Math.min(1, (viewProgress - 0.5) * 2));
+				
+				// Calculate displacement (max 36px)
+				const displacement = clampedProgress * maxDisplacement;
+				
+				// Apply transform to the mesh blob inside
+				const meshBlob = parallaxContainer.querySelector(':scope > div:first-child') as HTMLElement | null;
+				if (meshBlob) {
+					meshBlob.style.transform = `translateY(${displacement}px)`;
+				}
+				
+				ticking = false;
+			};
+
+			// Initial call
+			updateParallax();
+
+			// Throttled scroll listener with rAF
+			window.addEventListener('scroll', () => {
+				if (!ticking) {
+					requestAnimationFrame(updateParallax);
+					ticking = true;
+				}
+			}, { passive: true });
+		}
+	}
+
+	// ── 3. SVG Stroke Animation Trigger ─────────────────────────────────────
+	// The CSS handles the actual animation (.stroke-draw-enhanced)
+	// This JS ensures icons animate when their parent card is revealed
+	
+	const strokeIcons = document.querySelectorAll('.stroke-draw-enhanced');
+	
+	// Add is-visible class to trigger CSS animation when parent is revealed
+	// Using MutationObserver to watch for parent's is-revealed class
+	if (!reduced && 'MutationObserver' in window) {
+		const mutationObserver = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+					const target = mutation.target as HTMLElement;
+					if (target.classList.contains('is-revealed')) {
+						// Find stroke-draw icon within this card and trigger animation
+						const icon = target.querySelector('.stroke-draw-enhanced') as HTMLElement | null;
+						if (icon && !icon.classList.contains('stroke-animated')) {
+							// Small delay after parent reveals for visual flow
+							setTimeout(() => {
+								icon.classList.add('stroke-animated');
+							}, 350);
+						}
+					}
+				}
+			});
+		});
+
+		// Observe each service card for class changes
+		document.querySelectorAll('.service-card').forEach((card) => {
+			mutationObserver.observe(card, { attributes: true, attributeFilter: ['class'] });
+		});
+	} else if (reduced) {
+		// Reduced motion: show strokes immediately
+		strokeIcons.forEach((icon) => icon.classList.add('stroke-animated'));
+	}
+</script>
+
+<style>
+	/* ── Scroll Reveal Enhanced ─────────────────────────────────────────────── */
+	.observe-reveal {
+		opacity: 0;
+		transform: translateY(28px);
+		transition:
+			opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+		will-change: opacity, transform;
+	}
+
+	.observe-reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* ── SVG Stroke Draw Enhanced ──────────────────────────────────────────── */
+	.stroke-draw-enhanced {
+		stroke-dasharray: 300;
+		stroke-dashoffset: 300;
+		opacity: 0.6;
+		will-change: stroke-dashoffset, opacity;
+	}
+
+	.stroke-draw-enhanced.stroke-animated {
+		stroke-dashoffset: 0;
+		opacity: 1;
+		transition:
+			stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+			opacity 0.5s ease-out;
+	}
+
+	/* ── Service Card Children Stagger ─────────────────────────────────────── */
+	.service-card.is-revealed .service-circle {
+		animation: circlePop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		animation-delay: 0.1s;
+	}
+
+	.service-card.is-revealed .service-content {
+		animation: contentSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		animation-delay: 0.15s;
+	}
+
+	@keyframes circlePop {
+		0% {
+			transform: scale(0.7);
+			opacity: 0;
+		}
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes contentSlide {
+		0% {
+			transform: translateX(16px);
+			opacity: 0;
+		}
+		100% {
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+
+	/* ── Timeline Line Animation ──────────────────────────────────────────── */
+	.timeline-line {
+		transform-origin: top center;
+		transform: scaleY(0);
+		transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	#services:has(.service-card[data-reveal-delay="0"].is-revealed) .timeline-line {
+		transform: scaleY(1);
+	}
+
+	/* ── Parallax Container ───────────────────────────────────────────────── */
+	.services-parallax > div {
+		will-change: transform;
+		transition: none; /* No transition — direct rAF updates */
+	}
+
+	/* ── Reduced Motion Overrides ─────────────────────────────────────────── */
+	@media (prefers-reduced-motion: reduce) {
+		.observe-reveal {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+
+		.stroke-draw-enhanced {
+			stroke-dashoffset: 0 !important;
+			opacity: 1 !important;
+		}
+
+		.service-card.is-revealed .service-circle,
+		.service-card.is-revealed .service-content {
+			animation: none !important;
+			transform: none !important;
+			opacity: 1 !important;
+		}
+
+		.timeline-line {
+			transform: scaleY(1) !important;
+		}
+	}
+</style>

@@ -18,229 +18,270 @@
 import { products, productUrls } from '../data/products';
 
 const services = [
-	{ label: 'Transformation digitale', href: '/#services' },
-	{ label: 'Développement web', href: '/#services' },
-	{ label: 'Infrastructure IT', href: '/#services' },
-	{ label: 'Documentation & formation', href: '/#services' },
+        { label: 'Transformation digitale', href: '/#services' },
+        { label: 'Développement web', href: '/#services' },
+        { label: 'Infrastructure IT', href: '/#services' },
+        { label: 'Documentation & formation', href: '/#services' },
 ];
 
 const legalLinks = [
-	{ label: 'Mentions légales', href: '/legal/mentions-legales' },
-	{ label: 'Confidentialité', href: '/legal/confidentialite' },
-	{ label: 'CGU', href: '/legal/cgu' },
-	{ label: 'Sitemap', href: '/sitemap.xml' },
+        { label: 'Mentions légales', href: '/legal/mentions-legales' },
+        { label: 'Confidentialité', href: '/legal/confidentialite' },
+        { label: 'CGU', href: '/legal/cgu' },
+        { label: 'Sitemap', href: '/sitemap.xml' },
 ];
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="bg-navy text-white mt-auto relative overflow-hidden">
-	<!-- ── Motif mosaïque diamants filigrane ────────────────────────────── -->
-	<div class="absolute inset-0 opacity-[0.06]" aria-hidden="true">
-		<svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-			<defs>
-				<pattern id="footer-mosaic" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-					<polygon points="10,0 20,10 10,20 0,10" fill="none" stroke="white" stroke-width="0.5" />
-				</pattern>
-			</defs>
-			<rect width="100" height="100" fill="url(#footer-mosaic)" />
-		</svg>
-	</div>
+        <!-- ── Motif mosaïque diamants filigrane ────────────────────────────── -->
+        <div class="absolute inset-0 opacity-[0.06]" aria-hidden="true">
+                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                                <pattern id="footer-mosaic" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                                        <polygon points="10,0 20,10 10,20 0,10" fill="none" stroke="white" stroke-width="0.5" />
+                                </pattern>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#footer-mosaic)" />
+                </svg>
+        </div>
 
-	<div class="container relative z-10 py-16 md:py-20">
-		<!-- ── Grid 4 colonnes ────────────────────────────────────────────── -->
-		<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-			<!-- 1. Brand -->
-			<div class="sm:col-span-2 lg:col-span-1">
-				<a href="/" class="flex items-center gap-2.5 mb-5" aria-label="FTCI — Accueil">
-					<img
-						src="/brand/logo-ftci.png"
-						alt="Logo FTCI"
-						width="40"
-						height="41"
-						class="h-10 w-auto"
-						loading="lazy"
-						decoding="async"
-					/>
-					<span class="flex items-baseline gap-0.5 select-none">
-						<span class="font-display font-extrabold text-white text-xl tracking-[-0.03em]">
-							FTCI
-						</span>
-						<span class="font-display font-extrabold text-orange text-sm tracking-tight">
-							Technologies
-						</span>
-					</span>
-				</a>
-				<p class="text-sm text-white/60 leading-relaxed max-w-xs">
-					Cabinet de conseil en transformation digitale et éditeur de solutions SaaS
-					pensées pour le marché africain.
-				</p>
-			</div>
+        <div class="container relative z-10 py-16 md:py-20">
+                <!-- ── Grid 4 colonnes ────────────────────────────────────────────── -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+                        <!-- 1. Brand -->
+                        <div class="sm:col-span-2 lg:col-span-1">
+                                <a href="/" class="flex items-center gap-2.5 mb-5" aria-label="FTCI — Accueil">
+                                        <img
+                                                src="/brand/logo-ftci.png"
+                                                alt="Logo FTCI"
+                                                width="40"
+                                                height="41"
+                                                class="h-10 w-auto"
+                                                loading="lazy"
+                                                decoding="async"
+                                        />
+                                        <span class="flex items-baseline gap-0.5 select-none">
+                                                <span class="font-display font-extrabold text-white text-xl tracking-[-0.03em]">
+                                                        FTCI
+                                                </span>
+                                                <span class="font-display font-extrabold text-orange text-sm tracking-tight">
+                                                        Technologies
+                                                </span>
+                                        </span>
+                                </a>
+                                <p class="text-sm text-white/60 leading-relaxed max-w-xs">
+                                        Cabinet de conseil en transformation digitale et éditeur de solutions SaaS
+                                        pensées pour le marché africain.
+                                </p>
+                        </div>
 
-			<!-- 2. Solutions -->
-			<nav aria-label="Solutions FTCI">
-				<h2 class="text-sm font-display font-bold text-white uppercase tracking-wider mb-4">
-					Solutions
-				</h2>
-				<ul class="space-y-2.5">
-					{products.map((product) => (
-						<li>
-							<a
-								href={productUrls[product.slug]}
-								class="text-sm text-white/70 hover:text-orange transition-colors duration-200"
-							>
-								{product.name}
-							</a>
-						</li>
-					))}
-				</ul>
-			</nav>
+                        <!-- 2. Solutions -->
+                        <nav aria-label="Solutions FTCI">
+                                <h2 class="text-sm font-display font-bold text-white uppercase tracking-wider mb-4">
+                                        Solutions
+                                </h2>
+                                <ul class="space-y-2.5">
+                                        {products.map((product) => (
+                                                <li>
+                                                        <a
+                                                                href={productUrls[product.slug]}
+                                                                class="text-sm text-white/70 hover:text-orange transition-colors duration-200"
+                                                        >
+                                                                {product.name}
+                                                        </a>
+                                                </li>
+                                        ))}
+                                </ul>
+                        </nav>
 
-			<!-- 3. Services -->
-			<nav aria-label="Services FTCI">
-				<h2 class="text-sm font-display font-bold text-white uppercase tracking-wider mb-4">
-					Services
-				</h2>
-				<ul class="space-y-2.5">
-					{services.map((service) => (
-						<li>
-							<a
-								href={service.href}
-								class="text-sm text-white/70 hover:text-orange transition-colors duration-200"
-							>
-								{service.label}
-							</a>
-						</li>
-					))}
-				</ul>
-			</nav>
+                        <!-- 3. Services -->
+                        <nav aria-label="Services FTCI">
+                                <h2 class="text-sm font-display font-bold text-white uppercase tracking-wider mb-4">
+                                        Services
+                                </h2>
+                                <ul class="space-y-2.5">
+                                        {services.map((service) => (
+                                                <li>
+                                                        <a
+                                                                href={service.href}
+                                                                class="text-sm text-white/70 hover:text-orange transition-colors duration-200"
+                                                        >
+                                                                {service.label}
+                                                        </a>
+                                                </li>
+                                        ))}
+                                </ul>
+                        </nav>
 
-			<!-- 4. Contact -->
-			<div>
-				<h2 class="text-sm font-display font-bold text-white uppercase tracking-wider mb-4">
-					Contact
-				</h2>
-				<ul class="space-y-3">
-					<li>
-						<a
-							href="mailto:contact@ftci.fr"
-							class="flex items-center gap-2.5 text-sm text-white/70 hover:text-orange transition-colors duration-200"
-						>
-							<svg class="w-4 h-4 text-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-							</svg>
-							contact@ftci.fr
-						</a>
-					</li>
-					<li>
-						<a
-							href="tel:+2252722000000"
-							class="flex items-center gap-2.5 text-sm text-white/70 hover:text-orange transition-colors duration-200"
-						>
-							<svg class="w-4 h-4 text-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-							</svg>
-							+225 27 22 00 00 00
-						</a>
-					</li>
-					<li class="flex items-center gap-2.5 text-sm text-white/70">
-						<svg class="w-4 h-4 text-periwinkle flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-						</svg>
-						Abidjan & Dabou, CI
-					</li>
-				</ul>
-			</div>
-		</div>
+                        <!-- 4. Contact -->
+                        <div>
+                                <h2 class="text-sm font-display font-bold text-white uppercase tracking-wider mb-4">
+                                        Contact
+                                </h2>
+                                <ul class="space-y-3">
+                                        <li>
+                                                <a
+                                                        href="mailto:contact@ftci.fr"
+                                                        class="flex items-center gap-2.5 text-sm text-white/70 hover:text-orange transition-colors duration-200"
+                                                >
+                                                        <svg class="w-4 h-4 text-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                        </svg>
+                                                        contact@ftci.fr
+                                                </a>
+                                        </li>
+                                        <li>
+                                                <a
+                                                        href="tel:+2252722000000"
+                                                        class="flex items-center gap-2.5 text-sm text-white/70 hover:text-orange transition-colors duration-200"
+                                                >
+                                                        <svg class="w-4 h-4 text-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                        </svg>
+                                                        +225 27 22 00 00 00
+                                                </a>
+                                        </li>
+                                        <li class="flex items-center gap-2.5 text-sm text-white/70">
+                                                <svg class="w-4 h-4 text-periwinkle flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                                Abidjan & Dabou, CI
+                                        </li>
+                                </ul>
+                        </div>
+                </div>
 
-		<!-- ── Divider ────────────────────────────────────────────────────── -->
-		<div class="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-			<p class="text-xs text-white/50 text-center sm:text-left">
-				© {year} FTCI — Freelance Technologies Côte d'Ivoire. Tous droits réservés.
-			</p>
-			<ul class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-				{legalLinks.map((link) => (
-					<li>
-						<a
-							href={link.href}
-							class="text-xs text-white/50 hover:text-orange transition-colors duration-200"
-						>
-							{link.label}
-						</a>
-					</li>
-				))}
-			</ul>
-		</div>
-	</div>
+                <!-- ── Divider ────────────────────────────────────────────────────── -->
+                <div class="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p class="text-xs text-white/50 text-center sm:text-left">
+                                © {year} FTCI — Freelance Technologies Côte d'Ivoire. Tous droits réservés.
+                        </p>
+                        <ul class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+                                {legalLinks.map((link) => (
+                                        <li>
+                                                <a
+                                                        href={link.href}
+                                                        class="text-xs text-white/50 hover:text-orange transition-colors duration-200"
+                                                >
+                                                        {link.label}
+                                                </a>
+                                        </li>
+                                ))}
+                        </ul>
+                </div>
+        </div>
 
-	<!-- ── Bouton back-to-top ───────────────────────────────────────────── -->
-	<button
-		type="button"
-		id="back-to-top"
-		class="absolute bottom-6 right-6 w-11 h-11 rounded-full bg-orange text-white flex items-center justify-center shadow-lg hover:bg-orange-600 transition-colors duration-200 opacity-0 invisible translate-y-2"
-		aria-label="Revenir en haut de page"
-	>
-		<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-		</svg>
-	</button>
+        <!-- ── Bouton back-to-top ───────────────────────────────────────────── -->
+        <button
+                type="button"
+                id="back-to-top"
+                class="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-orange text-white flex items-center justify-center shadow-lg shadow-orange/25 hover:bg-orange-600 hover:shadow-orange/40 focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 focus-visible:ring-offset-navy opacity-0 invisible translate-y-3 scale-90"
+                aria-label="Revenir en haut de page"
+        >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+        </button>
 </footer>
 
 <style>
-	/* Back-to-top : visible après scroll */
-	#back-to-top.is-visible {
-		opacity: 1;
-		visibility: visible;
-		transform: translateY(0);
-	}
-	#back-to-top {
-		transition:
-			opacity 280ms var(--ease-out),
-			transform 280ms var(--ease-out),
-			background-color 200ms var(--ease-out);
-	}
-	@media (prefers-reduced-motion: reduce) {
-		#back-to-top {
-			transition: background-color 200ms var(--ease-out);
-		}
-	}
+        /* Back-to-top : visible après scroll avec animation fluide */
+        #back-to-top.is-visible {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0) scale(1);
+        }
+        #back-to-top {
+                transition:
+                        opacity 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                        background-color 200ms var(--ease-out),
+                        box-shadow 250ms var(--ease-out);
+        }
+        /* Hover lift effect */
+        @media (hover: hover) and (pointer: fine) {
+                #back-to-top:hover {
+                        transform: translateY(-2px) scale(1.05);
+                }
+                #back-to-top.is-visible:hover {
+                        transform: translateY(-2px) scale(1.05);
+                }
+        }
+        /* Active press effect */
+        #back-to-top:active {
+                transform: scale(0.96) !important;
+                transition-duration: 100ms;
+        }
+        @media (prefers-reduced-motion: reduce) {
+                #back-to-top {
+                        transition: background-color 200ms var(--ease-out), box-shadow 150ms var(--ease-out);
+                }
+                #back-to-top.is-visible {
+                        transform: none;
+                }
+                #back-to-top:hover {
+                        transform: none !important;
+                }
+        }
+
+        /* Footer link hover enhancements */
+        footer a {
+                position: relative;
+        }
+        footer nav a::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 1px;
+                background-color: currentColor;
+                transition: width 220ms var(--ease-out);
+        }
+        @media (hover: hover) and (pointer: fine) {
+                footer nav a:hover::after {
+                        width: 100%;
+                }
+        }
 </style>
 
 <script>
-	// ── Back-to-top : apparaît après scroll, smooth scroll vers le haut ──────
-	const btn = document.getElementById('back-to-top');
-	if (btn) {
-		let ticking = false;
+        // ── Back-to-top : apparaît après scroll, smooth scroll vers le haut ──────
+        const btn = document.getElementById('back-to-top');
+        if (btn) {
+                let ticking = false;
 
-		const update = () => {
-			if (window.scrollY > 600) {
-				btn.classList.add('is-visible');
-			} else {
-				btn.classList.remove('is-visible');
-			}
-			ticking = false;
-		};
+                const update = () => {
+                        if (window.scrollY > 600) {
+                                btn.classList.add('is-visible');
+                        } else {
+                                btn.classList.remove('is-visible');
+                        }
+                        ticking = false;
+                };
 
-		window.addEventListener(
-			'scroll',
-			() => {
-				if (!ticking) {
-					ticking = true;
-					requestAnimationFrame(update);
-				}
-			},
-			{ passive: true },
-		);
+                window.addEventListener(
+                        'scroll',
+                        () => {
+                                if (!ticking) {
+                                        ticking = true;
+                                        requestAnimationFrame(update);
+                                }
+                        },
+                        { passive: true },
+                );
 
-		btn.addEventListener('click', () => {
-			window.scrollTo({
-				top: 0,
-				behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-					? 'auto'
-					: 'smooth',
-			});
-		});
+                btn.addEventListener('click', () => {
+                        window.scrollTo({
+                                top: 0,
+                                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                                        ? 'auto'
+                                        : 'smooth',
+                        });
+                });
 
-		update();
-	}
+                update();
+        }
 </script>
