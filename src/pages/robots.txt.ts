@@ -1,10 +1,11 @@
 /**
- * Endpoint dynamique : /robots.txt
+ * `/robots.txt` endpoint for the FTCI vitrine.
  *
- * Astro génère ce fichier à l'build. En dev, accessible via GET /robots.txt.
- * Permet de guider les crawlers des moteurs de recherche.
- *
- * Production : généré statiquement (prerender = true par défaut sur les endpoints GET).
+ * Serves a static robots.txt that lets search engines and AI crawlers index
+ * the public pages while keeping `/api/` and `/storage/` private. Per-bot
+ * rules at the end of the file allow known AI assistants (GPTBot, ClaudeBot,
+ * etc.) and block aggressive SEO scrapers (AhrefsBot, SemrushBot) that FTCI
+ * does not benefit from. Astro prerenders the route at build time.
  */
 
 import type { APIRoute } from 'astro';
@@ -63,6 +64,7 @@ User-agent: MJ12bot
 Disallow: /
 `;
 
+/** GET /robots.txt — serves the prerendered text with a 1-hour cache. */
 export const GET: APIRoute = () => {
 	return new Response(robotsTxt, {
 		status: 200,

@@ -5,18 +5,20 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  // URL canonique du site — utilisée par Astro.site, le sitemap, et les meta tags SEO.
+  // Used by Astro.site, the sitemap, robots.txt, and SEO canonical/OG tags.
+  // Keep it in sync with the production domain configured on the Worker.
   site: 'https://ftci.fr',
 
-  // Astro 7 : le mode "static" (défaut) se comporte comme l'ancien "hybrid".
-  // Toutes les pages sont pré-rendues en statique par défaut,
-  // sauf les routes qui ont explicitement `export const prerender = false`
-  // (comme /api/contact) qui sont rendues on-demand par le worker Cloudflare.
-
+  // Astro 7 static mode: every route prerenders at build time unless it opts
+  // out with `export const prerender = false` (see src/pages/api/contact.ts).
+  // The Cloudflare adapter then serves those on-demand routes on the Workers
+  // runtime while streaming the prerendered pages from static assets.
   adapter: cloudflare({
     platformProxy: {
-      enabled: true, // Permet d'utiliser wrangler dev / bindings locaux
-                },
+      enabled: true,
+      // Exposes KV and other bindings declared in wrangler.jsonc to `astro dev`
+      // via local emulation, so the contact endpoint can be exercised locally.
+    },
   }),
 
   vite: {

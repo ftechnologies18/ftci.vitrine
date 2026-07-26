@@ -1,12 +1,13 @@
 /**
- * Endpoint dynamique : /sitemap.xml
+ * `/sitemap.xml` endpoint for the FTCI vitrine.
  *
- * Génère le sitemap XML standard pour les moteurs de recherche.
- * Liste toutes les pages publiques indexables du site.
+ * Emits the sitemaps.org XML protocol listing every public indexable page:
+ * home, the four product solution pages, and the three legal pages. Astro
+ * prerenders the route at build time, so the URL set is fixed per deploy.
  *
- * Référence : https://www.sitemaps.org/protocol.html
+ * Reference: https://www.sitemaps.org/protocol.html
  *
- * Pour ajouter une page, ajouter une entrée dans la constante ROUTES ci-dessous.
+ * Add a new entry to {@linkcode ROUTES} when a new public page is published.
  */
 
 import type { APIRoute } from 'astro';
@@ -18,10 +19,9 @@ interface SitemapEntry {
 	loc: string;
 	lastmod?: string;
 	changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-	priority?: number; // 0.0 - 1.0
+	priority?: number;
 }
 
-// Date actuelle pour lastmod
 const today = new Date().toISOString().split('T')[0];
 
 const ROUTES: SitemapEntry[] = [
@@ -31,14 +31,12 @@ const ROUTES: SitemapEntry[] = [
 		changefreq: 'weekly',
 		priority: 1.0,
 	},
-	// Pages produits
 	...products.map((p) => ({
 		loc: productUrls[p.slug],
 		lastmod: today,
 		changefreq: 'monthly' as const,
 		priority: 0.9,
 	})),
-	// Pages légales (priorité basse mais indexées)
 	{
 		loc: '/legal/mentions-legales',
 		lastmod: today,
@@ -59,6 +57,13 @@ const ROUTES: SitemapEntry[] = [
 	},
 ];
 
+/**
+ * Serializes `routes` into a sitemaps.org-compliant `<urlset>` document.
+ *
+ * Each `<url>` includes `<loc>` plus any of `<lastmod>`, `<changefreq>`,
+ * `<priority>` that the entry defines. `priority` is formatted with one
+ * decimal to match the spec example output.
+ */
 function buildSitemapXml(routes: SitemapEntry[]): string {
 	const urlElements = routes
 		.map((route) => {
@@ -76,6 +81,11 @@ ${urlElements}
 </urlset>`;
 }
 
+/**
+ * GET /sitemap.xml — serves the prerendered XML with a 1-hour cache and
+ * `X-Robots-Tag: noindex` so search engines index the linked pages, not the
+ * sitemap itself.
+ */
 export const GET: APIRoute = () => {
 	const xml = buildSitemapXml(ROUTES);
 	return new Response(xml, {
@@ -83,7 +93,7 @@ export const GET: APIRoute = () => {
 		headers: {
 			'Content-Type': 'application/xml; charset=utf-8',
 			'Cache-Control': 'public, max-age=3600',
-			'X-Robots-Tag': 'noindex', // Le sitemap lui-même ne doit pas être indexé
+			'X-Robots-Tag': 'noindex',
 		},
 	});
 };
