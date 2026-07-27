@@ -79,11 +79,36 @@ const keyPoints = [
 
         <!-- ── Couche 2 : Icônes flottantes en rotation ──────────────────────── -->
         <div class="floating-icons-container" aria-hidden="true">
-                <!-- Icon 1 : SMART HOME (haut-gauche - visible) -->
+                <!-- Icon 1 : IOT / Internet of Things (haut-gauche) -->
                 <div class="floating-icon floating-icon--lg floating-icon--cw" style="--icon-x: 5%; --icon-y: 12%; --icon-speed: 45s; --icon-color: #ee6c1a;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                                <polyline points="9 22 9 12 15 12 15 22"/>
+                        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <!-- Cercle extérieur connectivité -->
+                                <circle cx="50" cy="50" r="42" opacity="0.15" fill="currentColor"/>
+                                <circle cx="50" cy="50" r="42"/>
+                                
+                                <!-- Cercle intérieur -->
+                                <circle cx="50" cy="50" r="28"/>
+                                
+                                <!-- Nœuds de connexion (haut/bas/gauche/droite) -->
+                                <circle cx="50" cy="8" r="5" fill="currentColor"/>
+                                <circle cx="50" cy="92" r="5" fill="currentColor"/>
+                                <circle cx="8" cy="50" r="5" fill="currentColor"/>
+                                <circle cx="92" cy="50" r="5" fill="currentColor"/>
+                                
+                                <!-- Nœuds diagonaux -->
+                                <circle cx="22" cy="22" r="4" fill="currentColor"/>
+                                <circle cx="78" cy="22" r="4" fill="currentColor"/>
+                                <circle cx="22" cy="78" r="4" fill="currentColor"/>
+                                <circle cx="78" cy="78" r="4" fill="currentColor"/>
+                                
+                                <!-- Lignes de connexion internes -->
+                                <line x1="50" y1="22" x2="50" y2="8"/>
+                                <line x1="50" y1="78" x2="50" y2="92"/>
+                                <line x1="22" y1="50" x2="8" y2="50"/>
+                                <line x1="78" y1="50" x2="92" y2="50"/>
+                                
+                                <!-- Texte IoT au centre -->
+                                <text x="50" y="58" text-anchor="middle" font-family="'Courier New', monospace" font-size="20" font-weight="bold" fill="currentColor" stroke="none">IoT</text>
                         </svg>
                 </div>
                 
