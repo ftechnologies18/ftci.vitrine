@@ -874,6 +874,176 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   HYBRIDE GEAR MATRIX — Section "À Propos" (About)
+   Combinaison : Engrenages SVG rotatifs + Pluie binaire ultra-légère
+   Inspiration : Digital Transformation / Industry 4.0
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Container des engrenages ────────────────────────────────────────────── */
+.gears-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 1;
+}
+
+/* ── Engrenages individuels ──────────────────────────────────────────────── */
+.gear {
+        position: absolute;
+        width: var(--gear-size, 150px);
+        height: var(--gear-size, 150px);
+        left: var(--gear-x, 50%);
+        top: var(--gear-y, 50%);
+        opacity: 0.06; /* Très estompé */
+        
+        /* Animation de rotation continue */
+        animation: gearRotate var(--gear-speed, 30s) linear infinite;
+}
+
+/* Sens de rotation */
+.gear--cw {
+        /* clockwise - sens horaire (défaut) */
+}
+
+.gear--ccw {
+        animation-direction: reverse; /* counter-clockwise */
+}
+
+/* Tailles spécifiques pour ajustement fin */
+.gear--lg { opacity: 0.05; } /* Grand = plus transparent */
+.gear--md { opacity: 0.06; }
+.gear--sm { opacity: 0.07; }
+.gear--xs { opacity: 0.08; } /* Petit = légèrement plus visible */
+
+/* Chemin des engrenages */
+.gear-path {
+        stroke: #0f1e3d; /* Navy FTCI */
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+}
+
+/* Couleurs variées par engrenage pour richesse visuelle */
+.gear:nth-child(2n) .gear-path { stroke: #6b7fc7; } /* Periwinkle */
+.gear:nth-child(3n) .gear-path { stroke: #1e9e4f; } /* Vert */
+.gear:nth-child(4n) .gear-path { stroke: #ee6c1a; } /* Orange */
+
+/* Icône dans l'engrenage AI */
+.gear-icon {
+        color: #0f1e3d;
+        opacity: 0.5;
+}
+.gear--with-icon .gear-icon text {
+        font-family: 'Courier New', monospace;
+}
+
+/* Animation de rotation */
+@keyframes gearRotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PLUIE BINAIRE ULTRA-LÉGÈRE — Section À Propos
+   Version allégée et plus subtile que la section Solutions
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gear-matrix-binary {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0; /* Derrière les engrenages */
+        display: flex;
+        justify-content: stretch;
+        gap: 3px;
+        padding: 0 2%;
+        opacity: 0.5; /* Réduction globale d'opacité */
+}
+
+/* Colonnes binaires */
+.gmb-col {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        
+        animation: gmbScroll var(--gmb-speed, 25s) linear infinite;
+        animation-delay: var(--gmb-delay, 0s);
+        opacity: 0.5;
+}
+
+.gmb-col--reverse {
+        animation-direction: reverse;
+}
+
+/* Caractères binaires */
+.gmb-char {
+        display: block;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: clamp(7px, 0.9vw, 10px);
+        font-weight: 400;
+        line-height: 1.6;
+        color: #0f1e3d;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+        word-break: keep-all;
+}
+
+/* Variation subtile de couleur */
+.gmb-col:nth-child(3n+1) .gmb-char { color: #0f1e3d; opacity: 0.4; }
+.gmb-col:nth-child(3n+2) .gmb-char { color: #1e9e4f; opacity: 0.35; }
+.gmb-col:nth-child(3n) .gmb-char { color: #6b7fc7; opacity: 0.3; }
+
+/* Animation de défilement */
+@keyframes gmbScroll {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-50%); }
+}
+
+/* ── Responsive Gear Matrix ──────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+        .gear {
+                opacity: 0.04 !important; /* Encore plus subtil sur tablette */
+        }
+        .gear--lg { --gear-size: 200px !important; }
+        .gear--md { --gear-size: 140px !important; }
+        .gear--sm { --gear-size: 100px !important; }
+        .gear--xs { --gear-size: 70px !important; }
+}
+
+@media (max-width: 767px) {
+        .gears-container {
+                display: none; /* Cacher les engrenages sur mobile (trop lourd) */
+        }
+        
+        .gear-matrix-binary {
+                gap: 2px;
+                padding: 0 1%;
+                opacity: 0.35;
+        }
+        
+        .gmb-col {
+                gap: 0.3em;
+        }
+        
+        .gmb-char {
+                font-size: 6px !important;
+                letter-spacing: 0.05em;
+        }
+}
+
+/* ── Reduced Motion : désactiver les animations Gear Matrix ──────────────── */
+@media (prefers-reduced-motion: reduce) {
+        .gears-container,
+        .gear-matrix-binary {
+                display: none !important;
+        }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    RESPONSIVE & ACCESSIBILITY OVERRIDES
    ═══════════════════════════════════════════════════════════════════════════ */
 
