@@ -1,23 +1,89 @@
 ---
 /**
- * Hero.astro — Logo Reveal Cinématique v5 (Clean & Elegant)
+ * Hero.astro — Hero Slider Cinématique v6
  * ────────────────────────────────────────────────────────────────────────────
  * 
- * APPROCHE: Logo FTCI sans fond avec effets cinématiques raffinés
+ * SYSTÈME DE SLIDES AUTOMATIQUES AVEC TRANSITIONS CINÉMATIQUES
+ * 
+ * SLIDES:
+ * 1. Entreprise: Présentation FTCI + Logo réduit + Stats
+ * 2. Solutions SaaS: Mise en avant des 4 produits avec mini-preview
+ * 3. Services Expertise: Les services clés de FTCI
  * 
  * EFFETS:
- * 1. Logo Reveal: clip-path animated reveal (expansion depuis centre)
- * 2. Glow Aura: halos lumineux dynamiques par couleur
- * 3. Subtle Float: flottement continu du logo
- * 4. Shimmer: effet de brillance subtil
- * 5. Ring Decoration: anneau rotatif élégant
+ * - Transitions Fade + Slide horizontal (600ms)
+ * - Mesh background animé commun
+ * - Stagger reveal par slide au chargement
+ * - Auto-play (8s) avec pause au hover
+ * - Swipe/touch sur mobile
+ * - Indicateurs dots animés
+ * - Navigation flèches élégantes
+ * - Reduced motion respecté (accessibilité)
  */
 
+import { products, accentColorClasses } from '../data/products';
+
+// Données des slides
+const slides = [
+  {
+    id: 'enterprise',
+    eyebrow: 'Freelance Technologies Côte d\'Ivoire',
+    title: ['La technologie,', 'pensée pour le', 'terrain africain.'],
+    titleHighlight: [false, true, false],
+    subtitle: 'Cabinet de conseil en transformation digitale et éditeur de solutions SaaS conçues pour répondre aux réalités du marché ivoirien et africain.',
+    primaryCta: { href: '/#solutions', label: 'Découvrir nos solutions' },
+    secondaryCta: { href: '/#contact', label: 'Nous contacter' },
+    stats: [
+      { value: '4+', label: 'Solutions SaaS' },
+      { value: '100%', label: 'Ancré en CI' },
+      { value: '24/7', label: 'Support' }
+    ],
+    showLogo: true,
+    theme: 'dark'
+  },
+  {
+    id: 'solutions',
+    eyebrow: 'Écosystème SaaS',
+    title: ['Des solutions qui', 'transforment votre', 'activité.'],
+    titleHighlight: [false, false, true],
+    subtitle: 'Quatre plateformes complètes pensées pour le marché africain : évaluation, chantier, présence scolaire et gestion financière.',
+    primaryCta: { href: '/#solutions', label: 'Explorer les solutions' },
+    secondaryCta: null,
+    products: products.slice(0, 4).map(p => ({
+      name: p.name,
+      slug: p.slug,
+      accentColor: p.accentColor,
+      iconPath: p.iconPath,
+      shortDesc: p.description.substring(0, 60) + '...'
+    })),
+    showLogo: false,
+    theme: 'gradient'
+  },
+  {
+    id: 'services',
+    eyebrow: 'Expertise & Accompagnement',
+    title: ['Un partenaire', 'technique de', 'confiance.'],
+    titleHighlight: [false, false, true],
+    subtitle: 'De la stratégie digitale à la réalisation technique, nous accompagnons votre transformation à chaque étape.',
+    primaryCta: { href: '/#contact', label: 'Démarrer un projet' },
+    secondaryCta: { href: '#services', label: 'Nos services' },
+    services: [
+      { icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5h.01', name: 'Transformation Digitale', desc: 'Stratégie & implémentation' },
+      { icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4', name: 'Développement Sur Mesure', desc: 'Web, mobile & API' },
+      { icon: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2', name: 'Infrastructure IT', desc: 'Cloud & DevOps' },
+      { icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', name: 'Formation & Docs', desc: 'Transfert de compétences' }
+    ],
+    showLogo: false,
+    theme: 'navy'
+  }
+];
 ---
 
-<section class="hero-section relative min-h-[100svh] flex items-center overflow-hidden" id="contenu">
+<section class="hero-slider relative min-h-[100svh] overflow-hidden" id="contenu" data-hero-slider>
   
-  <!-- Mesh Background -->
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MESH BACKGROUND (commun à tous les slides)
+       ═══════════════════════════════════════════════════════════════════════ -->
   <div class="hero-mesh absolute inset-[-20%]" aria-hidden="true">
     <div class="mesh-blob mesh-blob--periwinkle"></div>
     <div class="mesh-blob mesh-blob--green"></div>
@@ -25,121 +91,293 @@
     <div class="mesh-blob mesh-blob--navy"></div>
   </div>
 
-  <!-- Contenu -->
-  <div class="container relative z-10">
-    <div class="hero-grid">
-      
-      <!-- Texte -->
-      <div class="hero-content">
-        <div class="hero-eyebrow hero-reveal" style="--delay:0s">
-          <span class="inline-flex items-center gap-2 font-sans font-semibold text-xs uppercase tracking-[0.12em] text-orange">
-            <span class="w-8 h-px bg-orange/60"></span>
-            Freelance Technologies Côte d'Ivoire
-          </span>
-        </div>
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       CONTENEUR DES SLIDES
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="slides-container relative z-10">
+    
+    {slides.map((slide, index) => (
+      <div 
+        class={`hero-slide ${index === 0 ? 'is-active' : ''}`}
+        data-slide={index}
+        data-slide-id={slide.id}
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`Slide ${index + 1} sur ${slides.length}: ${slide.title.join(' ')}`}
+      >
+        <!-- Background spécifique au slide -->
+        <div class={`slide-bg slide-bg--${slide.theme}`}></div>
+        
+        <!-- Contenu du slide -->
+        <div class="container relative z-10">
+          <div class="slide-grid">
+            
+            <!-- Zone Texte -->
+            <div class="slide-content">
+              <!-- Eyebrow -->
+              <div class="slide-eyebrow reveal-item" style={`--delay: 0s`}>
+                <span class="inline-flex items-center gap-2 font-sans font-semibold text-xs uppercase tracking-[0.12em] text-orange">
+                  <span class="w-8 h-px bg-orange/60"></span>
+                  {slide.eyebrow}
+                </span>
+              </div>
 
-        <h1 class="hero-title font-display font-extrabold text-white tracking-[-0.03em] hero-reveal" style="--delay:0.1s">
-          <span class="title-line">La technologie,</span>
-          <span class="title-line text-orange">pensée pour le</span>
-          <span class="title-line">terrain africain.</span>
-        </h1>
+              <!-- Titre -->
+              <h1 class="slide-title font-display font-extrabold text-white tracking-[-0.03em]">
+                {slide.title.map((line, i) => (
+                  <span 
+                    class={`title-line reveal-item ${slide.titleHighlight[i] ? 'text-orange' : ''}`}
+                    style={`--delay: ${0.1 + i * 0.08}s`}
+                  >
+                    {line}
+                  </span>
+                ))}
+              </h1>
 
-        <p class="hero-subtitle max-w-lg text-base sm:text-lg md:text-xl text-white/75 leading-relaxed hero-reveal" style="--delay:0.22s">
-          Cabinet de conseil en transformation digitale et éditeur de solutions SaaS 
-          conçues pour répondre aux réalités du marché ivoirien et africain.
-        </p>
+              <!-- Sous-titre -->
+              <p class="slide-subtitle max-w-lg text-base sm:text-lg md:text-xl text-white/75 leading-relaxed reveal-item" style="--delay: 0.35s">
+                {slide.subtitle}
+              </p>
 
-        <div class="hero-ctas flex flex-col sm:flex-row gap-4 mt-10 hero-reveal" style="--delay:0.35s">
-          <a href="/#solutions" data-magnetic="18" class="btn-primary magnetic group">
-            <span>Découvrir nos solutions
-              <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </span>
-          </a>
-          <a href="/#contact" data-magnetic="14" class="btn-outline-light magnetic"><span>Nous contacter</span></a>
-        </div>
+              <!-- CTAs -->
+              {slide.primaryCta && (
+                <div class="slide-ctas flex flex-col sm:flex-row gap-4 mt-10 reveal-item" style="--delay: 0.48s">
+                  <a href={slide.primaryCta.href} data-magnetic="18" class="btn-primary magnetic group">
+                    <span>{slide.primaryCta.label}
+                      <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </span>
+                  </a>
+                  {slide.secondaryCta && (
+                    <a href={slide.secondaryCta.href} data-magnetic="14" class="btn-outline-light magnetic">
+                      <span>{slide.secondaryCta.label}</span>
+                    </a>
+                  )}
+                </div>
+              )}
 
-        <div class="hero-stats grid grid-cols-3 gap-3 sm:gap-6 mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-white/10 hero-reveal" style="--delay:0.48s">
-          <div class="stat-item">
-            <div class="stat-value font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white">4+</div>
-            <div class="stat-label text-xs sm:text-sm text-white/50 uppercase tracking-wider mt-1">Solutions SaaS</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white">100%</div>
-            <div class="stat-label text-xs sm:text-sm text-white/50 uppercase tracking-wider mt-1">Ancré en CI</div>
-          </div>
-          <div class="stat-item col-span-1">
-            <div class="stat-value font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white">24/7</div>
-            <div class="stat-label text-xs sm:text-sm text-white/50 uppercase tracking-wider mt-1">Support</div>
+              <!-- Stats (Slide Entreprise uniquement) -->
+              {slide.stats && (
+                <div class="slide-stats grid grid-cols-3 gap-3 sm:gap-6 mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-white/10 reveal-item" style="--delay: 0.58s">
+                  {slide.stats.map((stat) => (
+                    <div class="stat-item">
+                      <div class="stat-value font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white">{stat.value}</div>
+                      <div class="stat-label text-xs sm:text-sm text-white/50 uppercase tracking-wider mt-1">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <!-- Services (Slide Services uniquement) -->
+              {slide.services && (
+                <div class="services-grid grid grid-cols-2 gap-3 sm:gap-4 mt-10 sm:mt-12 reveal-item" style="--delay: 0.55s">
+                  {slide.services.map((service) => (
+                    <div class="service-card group p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                      <svg class="w-8 h-8 text-orange mb-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={service.icon}/>
+                      </svg>
+                      <div class="service-name font-display font-bold text-white text-sm sm:text-base">{service.name}</div>
+                      <div class="service-desc text-xs sm:text-sm text-white/50 mt-0.5">{service.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <!-- Zone Visuelle -->
+            <div class="slide-visual">
+              
+              <!-- Logo (Slide Entreprise) -->
+              {slide.showLogo && (
+                <div class="logo-showcase flex items-center justify-center relative">
+                  <!-- Auras colorées -->
+                  <div class="logo-aura aura-navy"></div>
+                  <div class="logo-aura aura-green"></div>
+                  <div class="logo-aura aura-orange"></div>
+                  
+                  <!-- Anneau décoratif -->
+                  <div class="ring-decoration">
+                    <svg viewBox="0 0 200 200" class="ring-svg">
+                      <defs>
+                        <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#1e3a5f"/>
+                          <stop offset="50%" stop-color="#1a8c42"/>
+                          <stop offset="100%" stop-color="#d45a0f"/>
+                        </linearGradient>
+                      </defs>
+                      <circle cx="100" cy="100" r="85" fill="none" stroke="url(#ringGradient)" stroke-width="0.75" stroke-dasharray="6 10" opacity="0.35"/>
+                      <circle cx="100" cy="100" r="95" fill="none" stroke="url(#ringGradient)" stroke-width="0.5" stroke-dasharray="2 8" opacity="0.2"/>
+                    </svg>
+                  </div>
+                  
+                  <!-- Container logo -->
+                  <div class="logo-container">
+                    <div class="logo-shimmer"></div>
+                    <img 
+                      src="/brand/logo-ftci-nobg.png" 
+                      alt="Logo FTCI"
+                      class="logo-image"
+                      width="280"
+                      height="264"
+                    />
+                  </div>
+                  
+                  <!-- Label -->
+                  <div class="logo-label">
+                    <span class="label-main">FTCI</span>
+                    <span class="label-sub">Technologies</span>
+                  </div>
+                </div>
+              )}
+
+              <!-- Products Preview (Slide Solutions) -->
+              {slide.products && (
+                <div class="products-preview grid grid-cols-2 gap-3 sm:gap-4">
+                  {slide.products.map((product, idx) => {
+                    const accent = accentColorClasses[product.accentColor];
+                    return (
+                      <a 
+                        href={`/solutions/${product.slug}`}
+                        class={`product-mini-card group p-4 rounded-2xl bg-gradient-to-br ${accent.from} ${accent.to} backdrop-blur-sm transform transition-all duration-500 hover:scale-[1.02] hover:shadow-xl`}
+                        style={`animation-delay: ${idx * 0.1}s`}
+                      >
+                        <div class="flex items-start justify-between mb-3">
+                          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={product.iconPath}/>
+                            </svg>
+                          </div>
+                          <svg class="w-5 h-5 text-white/40 group-hover:text-white/70 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                          </svg>
+                        </div>
+                        <div class="product-name font-display font-bold text-white text-base sm:text-lg">{product.name}</div>
+                        <div class="product-desc text-xs text-white/60 mt-1 line-clamp-2">{product.shortDesc}</div>
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- LOGO FTCI avec Effets Cinématiques Épurés -->
-      <div class="logo-showcase hidden lg:flex items-center justify-center relative" aria-label="Logo FTCI">
-        
-        <!-- Auras/Glows colorées améliorées -->
-        <div class="logo-aura aura-navy"></div>
-        <div class="logo-aura aura-green"></div>
-        <div class="logo-aura aura-orange"></div>
-        
-        <!-- Anneau décoratif rotatif (arrière-plan) -->
-        <div class="ring-decoration">
-          <svg viewBox="0 0 200 200" class="ring-svg">
-            <defs>
-              <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#1e3a5f"/>
-                <stop offset="50%" stop-color="#1a8c42"/>
-                <stop offset="100%" stop-color="#d45a0f"/>
-              </linearGradient>
-            </defs>
-            <circle cx="100" cy="100" r="85" fill="none" stroke="url(#ringGradient)" stroke-width="0.75" stroke-dasharray="6 10" opacity="0.35"/>
-            <circle cx="100" cy="100" r="95" fill="none" stroke="url(#ringGradient)" stroke-width="0.5" stroke-dasharray="2 8" opacity="0.2"/>
-          </svg>
-        </div>
-        
-        <!-- Container principal du logo -->
-        <div class="logo-container">
-          
-          <!-- Effet shimmer/brillance -->
-          <div class="logo-shimmer"></div>
-          
-          <!-- Le VRAI logo FTCI (sans fond) -->
-          <img 
-            src="/brand/logo-ftci-nobg.png" 
-            alt="Logo FTCI - Freelance Technologies Côte d'Ivoire"
-            class="logo-image"
-            width="340"
-            height="320"
-          />
-          
-          <!-- Glow overlay pour profondeur -->
-          <div class="logo-glow-overlay"></div>
-        </div>
-        
-        <!-- Label sous le logo -->
-        <div class="logo-label hero-reveal" style="--delay:1s">
-          <span class="label-main">FTCI</span>
-          <span class="label-sub">Technologies</span>
-        </div>
-      </div>
-    </div>
+    ))}
   </div>
 
-  <!-- Scroll indicator -->
-  <a href="/#solutions" class="scroll-indicator absolute bottom-6 left-1/2 -translate-x-1/2 z-20" aria-label="Défiler">
-    <svg class="w-6 h-6 text-white/40 hover:text-white/70 transition-colors animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════════════════════════════════════════ -->
+  
+  <!-- Indicateurs (dots) -->
+  <div class="slider-dots" role="tablist" aria-label="Slides du hero">
+    {slides.map((_, index) => (
+      <button
+        class={`slider-dot ${index === 0 ? 'is-active' : ''}`}
+        role="tab"
+        aria-selected={index === 0 ? 'true' : 'false'}
+        aria-label={`Aller au slide ${index + 1}`}
+        data-dot={index}
+      >
+        <span class="dot-progress"></span>
+      </button>
+    ))}
+  </div>
+
+  <!-- Flèches de navigation -->
+  <button class="slider-arrow slider-arrow--prev" aria-label="Slide précédent" data-direction="prev">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+  </button>
+  <button class="slider-arrow slider-arrow--next" aria-label="Slide suivant" data-direction="next">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </button>
+
+  <!-- Scroll indicator (uniquement visible sur dernier slide ou après interaction) -->
+  <a href="/#solutions" class="scroll-indicator" aria-label="Défiler vers le contenu">
+    <svg class="w-6 h-6 text-white/40 hover:text-white/70 transition-colors animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+    </svg>
   </a>
 </section>
 
 <style>
   /* ═══════════════════════════════════════════════════════════════════════════
-     LAYOUT & STRUCTURE
+     STRUCTURE PRINCIPALE
      ═══════════════════════════════════════════════════════════════════════════ */
-  .hero-section {
+  .hero-slider {
     background: #0a1428;
   }
-  
-  .hero-grid {
+
+  .slides-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     SLIDE INDIVIDUEL
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(60px);
+    transition: 
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0.65s;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-slide.is-active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .hero-slide.slide-prev {
+    transform: translateX(-60px);
+  }
+
+  /* Background par thème */
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .hero-slide.is-active .slide-bg {
+    opacity: 1;
+  }
+
+  .slide-bg--dark {
+    background: radial-gradient(ellipse at 30% 50%, rgba(15, 30, 61, 0.4) 0%, transparent 70%);
+  }
+
+  .slide-bg--gradient {
+    background: radial-gradient(ellipse at 70% 40%, rgba(238, 108, 26, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(30, 158, 79, 0.1) 0%, transparent 60%);
+  }
+
+  .slide-bg--navy {
+    background: radial-gradient(ellipse at 50% 50%, rgba(107, 127, 199, 0.15) 0%, transparent 70%);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     GRID LAYOUT
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .slide-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -147,56 +385,430 @@
     min-height: 100svh;
     padding: 80px 0 60px;
   }
-  
-  @media (min-width: 640px) {
-    .hero-grid {
-      gap: 2.5rem;
-      padding: 90px 0 70px;
-    }
-  }
-  
+
   @media (min-width: 1024px) {
-    .hero-grid {
+    .slide-grid {
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      padding: 90px 0 70px;
+      gap: 3rem;
+      padding: 90px 0 80px;
     }
   }
 
   /* Typography */
-  .hero-title {
-    font-size: clamp(2.25rem, 1.5rem + 3.5vw, 3.75rem);
+  .slide-title {
+    font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem);
     line-height: 1.08;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
-  
+
   @media (min-width: 1024px) {
-    .hero-title {
-      font-size: clamp(2.5rem, 1.2rem + 4vw, 4.25rem);
-      line-height: 1.05;
+    .slide-title {
+      font-size: clamp(2.25rem, 1rem + 3.5vw, 3.75rem);
     }
   }
-  
+
   .title-line {
     display: block;
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
+
+  .hero-slide.is-active .title-line {
+    animation: lineReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes lineReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .stat-value {
     font-variant-numeric: tabular-nums;
   }
 
-  /* Reveal Animation */
-  .hero-reveal {
+  /* Reveal items */
+  .reveal-item {
     opacity: 0;
     transform: translateY(24px);
+  }
+
+  .hero-slide.is-active .reveal-item {
     animation: revealIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: var(--delay, 0s);
   }
-  
+
   @keyframes revealIn {
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     LOGO SHOWCASE (Slide Entreprise)
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .logo-showcase {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    aspect-ratio: 1;
+    margin: 0 auto;
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .logo-showcase {
+      display: flex;
+    }
+  }
+
+  .logo-aura {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(55px);
+    pointer-events: none;
+    opacity: 0;
+    animation: auraPulse 6s ease-in-out infinite;
+  }
+
+  .hero-slide.is-active .logo-aura {
+    opacity: 0.5;
+  }
+
+  .aura-navy {
+    width: 60%; height: 50%; top: 0; left: -5%;
+    background: radial-gradient(circle, rgba(30, 58, 95, 0.6), transparent 65%);
+    animation-delay: 0.3s;
+  }
+
+  .aura-green {
+    width: 55%; height: 48%; top: 0; right: -5%;
+    background: radial-gradient(circle, rgba(26, 140, 66, 0.5), transparent 65%);
+    animation-delay: 1.2s;
+  }
+
+  .aura-orange {
+    width: 65%; height: 52%; bottom: 0; left: 10%;
+    background: radial-gradient(circle, rgba(212, 90, 15, 0.5), transparent 65%);
+    animation-delay: 2.1s;
+  }
+
+  @keyframes auraPulse {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.08); }
+  }
+
+  .ring-decoration {
+    position: absolute;
+    width: 135%; height: 135%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .hero-slide.is-active .ring-decoration {
+    animation: ringFadeIn 1.2s ease-out 0.8s forwards, ringRotate 50s linear infinite;
+  }
+
+  .ring-svg { width: 100%; height: 100%; }
+
+  @keyframes ringFadeIn { to { opacity: 1; } }
+  @keyframes ringRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .logo-container {
+    position: relative;
+    width: 88%;
+    z-index: 3;
+  }
+
+  .logo-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    opacity: 0;
+    clip-path: circle(0% at 50% 50%);
+    filter: drop-shadow(0 0 30px rgba(107, 127, 199, 0.25));
+  }
+
+  .hero-slide.is-active .logo-image {
+    animation: logoReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+               logoFloat 8s ease-in-out infinite 1.8s,
+               logoGlow 4s ease-in-out infinite 2s;
+  }
+
+  @keyframes logoReveal {
+    0% { opacity: 0; clip-path: circle(0% at 50% 50%); transform: scale(0.85); filter: drop-shadow(0 0 0px transparent); }
+    50% { opacity: 1; clip-path: circle(70% at 50% 50%); }
+    80% { transform: scale(1.02); filter: drop-shadow(0 0 35px rgba(107, 127, 199, 0.35)); }
+    100% { opacity: 1; clip-path: circle(110% at 50% 50%); transform: scale(1); filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.25)); }
+  }
+
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.2)); }
+    50% { filter: drop-shadow(0 0 40px rgba(107, 127, 199, 0.4)); }
+  }
+
+  .logo-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 55%, transparent 80%);
+    background-size: 250% 250%;
+    pointer-events: none;
+    z-index: 4;
+    opacity: 0;
+  }
+
+  .hero-slide.is-active .logo-shimmer {
+    animation: shimmerIn 0.5s ease-out 2s forwards, shimmerMove 6s ease-in-out infinite 2.5s;
+  }
+
+  @keyframes shimmerIn { to { opacity: 1; } }
+  @keyframes shimmerMove {
+    0%, 100% { background-position: 200% 200%; }
+    50% { background-position: 0% 0%; }
+  }
+
+  .logo-label {
+    position: absolute;
+    bottom: -48px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 5;
+    opacity: 0;
+  }
+
+  .hero-slide.is-active .logo-label {
+    animation: labelReveal 0.6s ease-out 1.5s forwards;
+  }
+
+  @keyframes labelReveal { to { opacity: 1; } }
+
+  .label-main {
+    font-family: var(--font-display), sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .label-sub {
+    font-family: var(--font-display), sans-serif;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #EE6C1A;
+    text-shadow: 0 2px 15px rgba(238, 108, 26, 0.4);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     PRODUCTS PREVIEW (Slide Solutions)
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .products-preview {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+
+  .hero-slide.is-active .products-preview {
+    animation: productsReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.45s;
+  }
+
+  @keyframes productsReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .product-mini-card {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero-slide.is-active .product-mini-card {
+    animation: cardReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes cardReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     SERVICES GRID (Slide Services)
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .services-grid {
+    opacity: 0;
+  }
+
+  .hero-slide.is-active .services-grid {
+    animation: servicesReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.5s;
+  }
+
+  @keyframes servicesReveal {
+    to { opacity: 1; }
+  }
+
+  .service-card {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  .hero-slide.is-active .service-card:nth-child(1) { animation: serviceIn 0.5s ease 0.55s forwards; }
+  .hero-slide.is-active .service-card:nth-child(2) { animation: serviceIn 0.5s ease 0.62s forwards; }
+  .hero-slide.is-active .service-card:nth-child(3) { animation: serviceIn 0.5s ease 0.69s forwards; }
+  .hero-slide.is-active .service-card:nth-child(4) { animation: serviceIn 0.5s ease 0.76s forwards; }
+
+  @keyframes serviceIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     NAVIGATION - DOTS
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .slider-dots {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 30;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .slider-dot {
+    position: relative;
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    overflow: hidden;
+    transition: background 0.3s ease;
+    border: none;
+    padding: 0;
+  }
+
+  .slider-dot:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .slider-dot.is-active {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .dot-progress {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #EE6C1A, #f97316);
+    border-radius: 999px;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .slider-dot.is-active .dot-progress {
+    animation: dotProgress 8s linear forwards;
+  }
+
+  @keyframes dotProgress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* Pause state */
+  .slider-dots.is-paused .dot-progress {
+    animation-play-state: paused;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     NAVIGATION - ARROWS
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-slider:hover .slider-arrow {
+    opacity: 1;
+  }
+
+  .slider-arrow:hover {
+    background: rgba(238, 108, 26, 0.8);
+    border-color: rgba(238, 108, 26, 0.5);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .slider-arrow--prev { left: 20px; }
+  .slider-arrow--next { right: 20px; }
+
+  @media (max-width: 767px) {
+    .slider-arrow {
+      display: none;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     SCROLL INDICATOR
+     ═══════════════════════════════════════════════════════════════════════════ */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    z-index: 20;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  .scroll-indicator:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 767px) {
+    .scroll-indicator {
+      bottom: 84px; /* Above dots */
+      right: 50%;
+      transform: translateX(50%);
     }
   }
 
@@ -210,314 +822,73 @@
     will-change: transform;
     opacity: 0.55;
   }
-  
+
   .mesh-blob--periwinkle {
-    width: 55%;
-    height: 50%;
-    top: 5%;
-    left: 18%;
+    width: 55%; height: 50%; top: 5%; left: 18%;
     background: radial-gradient(ellipse, rgba(107, 127, 199, 0.5), transparent 70%);
     animation: drift 22s ease-in-out infinite alternate;
   }
-  
+
   .mesh-blob--green {
-    width: 45%;
-    height: 42%;
-    top: 8%;
-    right: 12%;
+    width: 45%; height: 42%; top: 8%; right: 12%;
     background: radial-gradient(ellipse, rgba(30, 158, 79, 0.35), transparent 70%);
     animation: drift 26s ease-in-out infinite alternate-reverse;
   }
-  
+
   .mesh-blob--orange {
-    width: 52%;
-    height: 46%;
-    bottom: 8%;
-    right: 22%;
+    width: 52%; height: 46%; bottom: 8%; right: 22%;
     background: radial-gradient(ellipse, rgba(238, 108, 26, 0.32), transparent 70%);
     animation: drift 24s ease-in-out infinite alternate;
   }
-  
+
   .mesh-blob--navy {
-    width: 42%;
-    height: 40%;
-    bottom: 15%;
-    left: 8%;
+    width: 42%; height: 40%; bottom: 15%; left: 8%;
     background: radial-gradient(ellipse, rgba(15, 30, 61, 0.6), transparent 70%);
     animation: drift 28s ease-in-out infinite alternate-reverse;
   }
-  
+
   @keyframes drift {
-    to {
-      transform: translate(3%, 2%) scale(1.07);
-    }
+    to { transform: translate(3%, 2%) scale(1.07); }
   }
 
   /* ═══════════════════════════════════════════════════════════════════════════
-     LOGO SHOWCASE — Container Principal
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .logo-showcase {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 1;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     AURAS COLORÉES — Halos lumineux améliorés
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .logo-aura {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(55px);
-    pointer-events: none;
-    opacity: 0;
-    animation: auraPulse 6s ease-in-out infinite;
-  }
-  
-  .aura-navy {
-    width: 60%;
-    height: 50%;
-    top: 0%;
-    left: -5%;
-    background: radial-gradient(circle, rgba(30, 58, 95, 0.6), transparent 65%);
-    animation-delay: 0.3s;
-  }
-  
-  .aura-green {
-    width: 55%;
-    height: 48%;
-    top: 0%;
-    right: -5%;
-    background: radial-gradient(circle, rgba(26, 140, 66, 0.5), transparent 65%);
-    animation-delay: 1.2s;
-  }
-  
-  .aura-orange {
-    width: 65%;
-    height: 52%;
-    bottom: 0%;
-    left: 10%;
-    background: radial-gradient(circle, rgba(212, 90, 15, 0.5), transparent 65%);
-    animation-delay: 2.1s;
-  }
-  
-  @keyframes auraPulse {
-    0%, 100% { opacity: 0.35; transform: scale(1); }
-    50% { opacity: 0.75; transform: scale(1.08); }
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     ANNEAU DÉCORATIF ROTATIF
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .ring-decoration {
-    position: absolute;
-    width: 135%;
-    height: 135%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    opacity: 0;
-    animation: ringFadeIn 1.2s ease-out 1.5s forwards, ringRotate 50s linear infinite;
-  }
-  
-  .ring-svg {
-    width: 100%;
-    height: 100%;
-  }
-  
-  @keyframes ringFadeIn {
-    to { opacity: 1; }
-  }
-  
-  @keyframes ringRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  /* Container du logo */
-  .logo-container {
-    position: relative;
-    width: 88%;
-    z-index: 3;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     IMAGE DU LOGO — Effets Cinématiques Raffinés
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .logo-image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    
-    /* Animation principale: reveal + float */
-    animation: 
-      logoReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-      logoFloat 8s ease-in-out infinite,
-      logoGlow 4s ease-in-out infinite;
-    animation-delay: 0.4s, 1.8s, 2s;
-    
-    /* État initial caché */
-    opacity: 0;
-    clip-path: circle(0% at 50% 50%);
-    filter: drop-shadow(0 0 30px rgba(107, 127, 199, 0.25));
-  }
-
-  /* Révélation circulaire élégante */
-  @keyframes logoReveal {
-    0% {
-      opacity: 0;
-      clip-path: circle(0% at 50% 50%);
-      transform: scale(0.85);
-      filter: drop-shadow(0 0 0px transparent);
-    }
-    50% {
-      opacity: 1;
-      clip-path: circle(70% at 50% 50%);
-    }
-    80% {
-      transform: scale(1.02);
-      filter: drop-shadow(0 0 35px rgba(107, 127, 199, 0.35));
-    }
-    100% {
-      opacity: 1;
-      clip-path: circle(110% at 50% 50%);
-      transform: scale(1);
-      filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.25));
-    }
-  }
-  
-  /* Flottement subtil continu */
-  @keyframes logoFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  
-  /* Pulse lumineux subtil */
-  @keyframes logoGlow {
-    0%, 100% { filter: drop-shadow(0 0 25px rgba(107, 127, 199, 0.2)); }
-    50% { filter: drop-shadow(0 0 40px rgba(107, 127, 199, 0.4)); }
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     SHIMMER EFFECT — Brillance subtil
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .logo-shimmer {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.04) 45%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.04) 55%,
-      transparent 80%
-    );
-    background-size: 250% 250%;
-    pointer-events: none;
-    z-index: 4;
-    opacity: 0;
-    animation: shimmerIn 0.5s ease-out 2s forwards, shimmerMove 6s ease-in-out infinite;
-    animation-delay: 0s, 2.5s;
-  }
-  
-  @keyframes shimmerIn {
-    to { opacity: 1; }
-  }
-  
-  @keyframes shimmerMove {
-    0%, 100% { background-position: 200% 200%; }
-    50% { background-position: 0% 0%; }
-  }
-
-  /* Glow overlay pour profondeur */
-  .logo-glow-overlay {
-    position: absolute;
-    inset: -10%;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(107, 127, 199, 0.06) 0%,
-      transparent 60%
-    );
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0;
-    animation: glowOverlayFade 1.5s ease-out 1.8s forwards;
-  }
-  
-  @keyframes glowOverlayFade {
-    to { opacity: 1; }
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     LABEL SOUS LE LOGO
-     ═══════════════════════════════════════════════════════════════════════════ */
-  .logo-label {
-    position: absolute;
-    bottom: -48px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    z-index: 5;
-  }
-  
-  .label-main {
-    font-family: var(--font-display), sans-serif;
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: 0.22em;
-    color: rgba(255, 255, 255, 0.92);
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  .label-sub {
-    font-family: var(--font-display), sans-serif;
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: #EE6C1A;
-    text-shadow: 0 2px 15px rgba(238, 108, 26, 0.4);
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════════════
-     REDUCED MOTION — Accessibilité
+     REDUCED MOTION
      ═══════════════════════════════════════════════════════════════════════════ */
   @media (prefers-reduced-motion: reduce) {
-    .logo-image {
+    .hero-slide {
+      transition: opacity 0.3s ease;
+      transform: none !important;
+    }
+    
+    .hero-slide.is-active {
+      transform: none !important;
+    }
+    
+    .logo-image,
+    .logo-shimmer,
+    .logo-glow-overlay,
+    .logo-aura,
+    .ring-decoration {
       animation: none !important;
       opacity: 1 !important;
       clip-path: none !important;
-      transform: none !important;
-      filter: drop-shadow(0 0 20px rgba(107, 127, 199, 0.2)) !important;
     }
-    .logo-shimmer {
-      display: none !important;
-    }
-    .logo-glow-overlay {
-      animation: none !important;
-      opacity: 1 !important;
-    }
-    .logo-aura {
-      animation: none !important;
-      opacity: 0.4 !important;
-    }
-    .ring-decoration {
-      animation: ringFadeIn 0.5s ease-out forwards !important;
-    }
-    .hero-reveal {
+    
+    .reveal-item,
+    .title-line,
+    .products-preview,
+    .services-grid,
+    .service-card,
+    .product-mini-card {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
     }
+    
+    .dot-progress {
+      animation: none !important;
+    }
+    
     * {
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
@@ -530,57 +901,195 @@
       filter: blur(65px);
       animation-duration: 44s !important;
     }
+    
+    .slide-visual {
+      display: none;
+    }
   }
 </style>
 
 <script>
-function initHero() {
-  const section = document.querySelector('.hero-section');
-  if (!section) return;
-  
+function initHeroSlider() {
+  const slider = document.querySelector('[data-hero-slider]');
+  if (!slider) return;
+
+  const slides = Array.from(slider.querySelectorAll<HTMLElement>('.hero-slide'));
+  const dots = Array.from(slider.querySelectorAll<HTMLElement>('.slider-dot'));
+  const prevBtn = slider.querySelector<HTMLElement>('.slider-arrow--prev');
+  const nextBtn = slider.querySelector<HTMLElement>('.slider-arrow--next');
+  const dotsContainer = slider.querySelector<HTMLElement>('.slider-dots');
+
+  if (slides.length === 0) return;
+
+  // State
+  let currentIndex = 0;
+  let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
+  let isPaused = false;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const AUTOPLAY_DELAY = 8000;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    section.classList.add('reduced-motion');
+
+  // Functions
+  function goToSlide(index: number, direction: 'next' | 'prev' | 'direct' = 'next') {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+
+    const currentSlide = slides[currentIndex];
+    const nextSlide = slides[index];
+
+    // Set direction classes for animation
+    if (direction !== 'direct') {
+      currentSlide.classList.remove('slide-prev');
+      if (direction === 'next') {
+        // Current goes left, new comes from right (default CSS)
+      } else {
+        nextSlide.classList.add('slide-prev');
+      }
+    }
+
+    // Update states
+    currentSlide.classList.remove('is-active');
+    nextSlide.classList.add('is-active');
+
+    // Update dots
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
+      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      
+      // Reset progress animation
+      const progress = dot.querySelector<HTMLElement>('.dot-progress');
+      if (progress) {
+        progress.style.animation = 'none';
+        void progress.offsetWidth; // Trigger reflow
+        progress.style.animation = '';
+      }
+    });
+
+    currentIndex = index;
+
+    // Reset autoplay
+    resetAutoplay();
   }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1, 'next');
+  }
+
+  function prevSlide() {
+    goToSlide(currentIndex - 1, 'prev');
+  }
+
+  function startAutoplay() {
+    if (prefersReducedMotion || isPaused) return;
+    stopAutoplay();
+    autoplayTimer = setTimeout(nextSlide, AUTOPLAY_DELAY);
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimer) {
+      clearTimeout(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  function resetAutoplay() {
+    stopAutoplay();
+    if (!isPaused) {
+      startAutoplay();
+    }
+  }
+
+  function pauseAutoplay() {
+    isPaused = true;
+    stopAutoplay();
+    dotsContainer?.classList.add('is-paused');
+  }
+
+  function resumeAutoplay() {
+    isPaused = false;
+    dotsContainer?.classList.remove('is-paused');
+    startAutoplay();
+  }
+
+  // Event Listeners
   
-  // Intersection Observer pour déclencher animations au scroll
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-  observer.observe(section);
-  
-  // Parallax subtil sur les auras au scroll
-  if (!prefersReducedMotion) {
-    let ticking = false;
-    const auras = document.querySelectorAll('.logo-aura');
+  // Dot clicks
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      const direction = index > currentIndex ? 'next' : index < currentIndex ? 'prev' : 'direct';
+      goToSlide(index, direction);
+    });
+  });
+
+  // Arrow buttons
+  prevBtn?.addEventListener('click', () => {
+    prevSlide();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    nextSlide();
+  });
+
+  // Pause on hover
+  slider.addEventListener('mouseenter', pauseAutoplay);
+  slider.addEventListener('mouseleave', resumeAutoplay);
+
+  // Touch/Swipe support
+  slider.addEventListener('touchstart', (e: TouchEvent) => {
+    touchStartX = e.changedTouches[0].screenX;
+    pauseAutoplay();
+  }, { passive: true });
+
+  slider.addEventListener('touchend', (e: TouchEvent) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+    resumeAutoplay();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const threshold = 50;
+    const diff = touchStartX - touchEndX;
     
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(() => {
-            const scrollY = window.scrollY;
-            auras.forEach((aura, index) => {
-              (aura as HTMLElement).style.transform = `translateY(${scrollY * (0.018 + index * 0.008)}px)`;
-            });
-            ticking = false;
-          });
-        }
-      },
-      { passive: true }
-    );
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) {
+        nextSlide(); // Swipe left = next
+      } else {
+        prevSlide(); // Swipe right = prev
+      }
+    }
+  }
+
+  // Keyboard navigation
+  slider.setAttribute('tabindex', '0');
+  slider.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+      slider.focus();
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+      slider.focus();
+    }
+  });
+
+  // Visibility API - pause when tab not visible
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      pauseAutoplay();
+    } else {
+      resumeAutoplay();
+    }
+  });
+
+  // Start autoplay
+  if (!prefersReducedMotion) {
+    startAutoplay();
   }
 }
 
+// Initialize when DOM is ready
 document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', initHero)
-  : initHero();
+  ? document.addEventListener('DOMContentLoaded', initHeroSlider)
+  : initHeroSlider();
 </script>
