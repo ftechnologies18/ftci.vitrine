@@ -778,8 +778,9 @@
 
 /* ═══════════════════════════════════════════════════════════════════════════
    BINARY MATRIX BACKGROUND — Section Écosystème SaaS / Nos Solutions
-   Arrière-plan estompé avec données binaires (chiffrement) défilant verticalement.
+   Arrière-plan avec données binaires (chiffrement) défilant verticalement.
    Effet "Matrix" subtil avec colonnes décalées, vitesses variables.
+   Étendu sur toute la section sans estompage.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .binary-matrix-bg {
@@ -788,21 +789,6 @@
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
-  /* Dégradé de masque pour estomper les bords */
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
 }
 
 /* ── Colonnes binaires individuelles ──────────────────────────────────────── */
