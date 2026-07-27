@@ -2,7 +2,7 @@
 /**
  * Products.astro — Section "Nos Solutions" (4 cartes produits + écosystème).
  * ────────────────────────────────────────────────────────────────────────────
- * - Import products, productUrls, accentColorClasses de ../data/products
+ * - Import products, accentColorClasses de ../data/products
  * - Section id="solutions" py-20 md:py-32 bg-white
  * - Background : motif circuit imprimé SVG (traces H/V + nœuds, opacity 8%)
  * - Grid 2 colonnes (md) des 4 produits
@@ -20,7 +20,7 @@
  * - Connection lines: diamond nodes, stroke-dasharray 6 8, animation towards -140
  */
 
-import { products, productUrls, accentColorClasses } from '../data/products';
+import { products, accentColorClasses } from '../data/products';
 
 // Mapping accentColor → hex pour --halo-color (avec RGBA pour glow)
 const haloHex: Record<string, string> = {

@@ -17,14 +17,16 @@
  * ♿ ACCESSIBILITÉ: prefers-reduced-motion désactive tout
  */
 
-import { products, productUrls } from '../data/products';
+import { products } from '../data/products';
 
 // Liens vers chaque carte de service de la home (ancres dédiées dans
 // src/components/Services.astro). Les libellés sont alignés avec les
 // titres affichés sur la page d'accueil pour éviter toute confusion.
 //
-// NB : la section « Solutions » du footer liste déjà les 4 produits FTCI
-// (SECT, OPUC, CATS, ScolaGest) vers leurs pages vitrines /solutions/*.
+// NB : la section « Solutions » du footer liste les 4 produits FTCI
+// (SECT, OPUC, CATS, ScolaGest) et pointe directement vers leurs sous-domaines
+// déployés (product.externalUrl, ex: https://sect.ftci.fr). Les anciennes pages
+// vitrines /solutions/* ont été supprimées : on évite ainsi toute 404.
 // La section « Services » ci-dessous liste donc les VRAIS services
 // FTCI (conseil, dév, infra, formation) avec ancres vers les cartes
 // correspondantes de la home — pour ne pas répéter les produits.
@@ -161,7 +163,20 @@ const year = new Date().getFullYear();
                                 <h2 class="ft-nav-title">Solutions</h2>
                                 <ul class="ft-links">
                                         {products.map((product) => (
-                                                <li><a href={productUrls[product.slug]} class="ft-link">{product.name}</a></li>
+                                                <li>
+                                                        <a
+                                                                href={product.externalUrl}
+                                                                class="ft-link ft-link--external"
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                aria-label={`${product.name} — ouvrir la plateforme dans un nouvel onglet`}
+                                                        >
+                                                                {product.name}
+                                                                <svg class="ft-link-icon" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+                                                                        <path d="M3 1h6v6M9 1L4 6M7 9H2a1 1 0 01-1-1V3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                </svg>
+                                                        </a>
+                                                </li>
                                         ))}
                                 </ul>
                         </nav>
@@ -508,6 +523,28 @@ const year = new Date().getFullYear();
                 }
                 .ft-link:hover::after {
                         width: 100%;
+                }
+        }
+
+        /* Variante « lien externe » : petite icône ↗ discrète après le libellé
+           pour signaler que le lien s'ouvre dans un nouvel onglet (sous-domaines
+           des applications SECT, OPUC, CATS, ScolaGest). */
+        .ft-link--external {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+        }
+
+        .ft-link-icon {
+                opacity: 0.55;
+                flex-shrink: 0;
+                transition: opacity 220ms var(--ease-expo), transform 220ms var(--ease-expo);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+                .ft-link--external:hover .ft-link-icon {
+                        opacity: 1;
+                        transform: translate(1px, -1px);
                 }
         }
 

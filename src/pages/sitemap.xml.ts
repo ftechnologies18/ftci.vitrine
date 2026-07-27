@@ -2,8 +2,12 @@
  * `/sitemap.xml` endpoint for the FTCI vitrine.
  *
  * Emits the sitemaps.org XML protocol listing every public indexable page:
- * home, the four product solution pages, and the three legal pages. Astro
- * prerenders the route at build time, so the URL set is fixed per deploy.
+ * home and the three legal pages. The per-product solution pages
+ * (`/solutions/*`) have been removed — the products now live on their own
+ * subdomains (sect.ftci.fr, opuc.ftci.fr, cats.ftci.fr, scolagest.ftci.fr)
+ * and are linked directly from the footer/home, so they are not part of
+ * this site's own sitemap. Astro prerenders the route at build time, so the
+ * URL set is fixed per deploy.
  *
  * Reference: https://www.sitemaps.org/protocol.html
  *
@@ -11,7 +15,6 @@
  */
 
 import type { APIRoute } from 'astro';
-import { products, productUrls } from '../data/products';
 
 const SITE_URL = 'https://ftci.fr';
 
@@ -31,12 +34,6 @@ const ROUTES: SitemapEntry[] = [
 		changefreq: 'weekly',
 		priority: 1.0,
 	},
-	...products.map((p) => ({
-		loc: productUrls[p.slug],
-		lastmod: today,
-		changefreq: 'monthly' as const,
-		priority: 0.9,
-	})),
 	{
 		loc: '/legal/mentions-legales',
 		lastmod: today,
