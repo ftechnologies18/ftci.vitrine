@@ -445,11 +445,11 @@ export const accentColorClasses: Record<
         periwinkle: {
                 text: 'text-periwinkle',
                 bg: 'bg-periwinkle',
-                bgHover: 'hover:bg-blue-600',
+                bgHover: 'hover:bg-periwinkle-600',
                 border: 'hover:border-periwinkle',
                 shadow: 'group-hover:shadow-periwinkle/30',
                 from: 'from-periwinkle',
-                to: 'to-blue-600',
+                to: 'to-periwinkle-600',
         },
         navy: {
                 text: 'text-navy',

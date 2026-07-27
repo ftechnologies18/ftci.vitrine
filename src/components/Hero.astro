@@ -1590,7 +1590,7 @@ const slides = [
 
 <script>
 function initHeroSliderV7() {
-  const slider = document.querySelector('[data-hero-slider]');
+  const slider = document.querySelector<HTMLElement>('[data-hero-slider]');
   if (!slider) return;
 
   const slides = Array.from(slider.querySelectorAll<HTMLElement>('.hero-slide'));

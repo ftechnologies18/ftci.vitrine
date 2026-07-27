@@ -8,11 +8,12 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "wrangler types",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && wrangler deploy",
-    "cf-build": "astro build"
+    "deploy": "wrangler types && astro build && wrangler deploy",
+    "cf-build": "wrangler types && astro build"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.4",
@@ -21,6 +22,9 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^26.1.1",
+    "typescript": "^5.9.3",
     "wrangler": "^4.114.0"
   }
 }

@@ -10,6 +10,7 @@ let adapter;
 if (isProduction) {
   const cloudflare = await import('@astrojs/cloudflare');
   adapter = cloudflare.default({
+    // @ts-expect-error — platformProxy exists in the runtime but is not in the adapter's public type definitions.
     platformProxy: {
       enabled: true,
     },
