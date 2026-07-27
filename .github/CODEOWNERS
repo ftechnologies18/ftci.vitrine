@@ -1,0 +1,9 @@
+# CODEOWNERS — propriétaires de code par défaut pour les PR
+# Documentation : https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Tout le dépôt appartient à ftechnologies18
+*                           @ftechnologies18
+
+# Pipeline CI/CD et infra : ftechnologies18 doit valider toute modif
+/.github/                   @ftechnologies18
+/wrangler.jsonc             @ftechnologies18
