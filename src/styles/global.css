@@ -806,7 +806,7 @@
         /* Animation de défilement vertical */
         animation: binaryScroll var(--scroll-speed, 20s) linear infinite;
         animation-delay: var(--scroll-delay, 0s);
-        opacity: 0.22; /* Estompé mais visible */
+        opacity: 0.15; /* Estompé mais visible */
 }
 
 /* Colonnes en sens inverse pour variété */
