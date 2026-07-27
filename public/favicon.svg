@@ -1,24 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Logo FTCI — triskel numérique bleu, vert, orange">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="ftci-bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e3a5f"/>
       <stop offset="100%" stop-color="#0f1e3d"/>
     </linearGradient>
+    <filter id="ftci-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  
-  <!-- Background rounded square -->
-  <rect x="4" y="4" width="120" height="120" rx="24" fill="url(#bg)"/>
-  
-  <!-- FTCI Text in White -->
-  <text x="64" y="72" 
-        font-family="'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif" 
-        font-size="38" 
-        font-weight="800" 
-        fill="#ffffff" 
-        text-anchor="middle" 
-        dominant-baseline="middle"
-        letter-spacing="-1">FTCI</text>
-  
-  <!-- Decorative underline accent -->
-  <rect x="28" y="84" width="72" height="3" rx="1.5" fill="#1a8c42" opacity="0.9"/>
+
+  <!-- Fond navy arrondi (cohérence marque + visibilité onglet navigateur) -->
+  <rect x="3" y="3" width="122" height="122" rx="26" fill="url(#ftci-bg)"/>
+
+  <!-- Triskel pixelisé : 3 branches horaires (bleu, vert, orange) -->
+  <g filter="url(#ftci-glow)">
+        <rect x="59.75" y="12.75" width="8.5" height="8.5" rx="1.6" fill="#1a237e"/>
+        <rect x="75.25" y="20.25" width="8.5" height="8.5" rx="1.6" fill="#283189"/>
+        <rect x="85.50" y="32.00" width="8.5" height="8.5" rx="1.6" fill="#353f94"/>
+        <rect x="89.74" y="45.31" width="8.5" height="8.5" rx="1.6" fill="#434d9f"/>
+        <rect x="88.38" y="57.60" width="8.5" height="8.5" rx="1.6" fill="#505caa"/>
+        <rect x="82.82" y="66.87" width="8.5" height="8.5" rx="1.6" fill="#5e6ab5"/>
+        <rect x="75.05" y="71.95" width="8.5" height="8.5" rx="1.6" fill="#6b78c0"/>
+        <rect x="67.25" y="72.74" width="8.5" height="8.5" rx="1.6" fill="#7986cb"/>
+        <rect x="100.45" y="83.25" width="8.5" height="8.5" rx="1.6" fill="#0d4d1a"/>
+        <rect x="86.20" y="92.92" width="8.5" height="8.5" rx="1.6" fill="#0f5922"/>
+        <rect x="70.91" y="95.93" width="8.5" height="8.5" rx="1.6" fill="#126429"/>
+        <rect x="57.26" y="92.94" width="8.5" height="8.5" rx="1.6" fill="#147031"/>
+        <rect x="47.29" y="85.62" width="8.5" height="8.5" rx="1.6" fill="#177b38"/>
+        <rect x="42.05" y="76.17" width="8.5" height="8.5" rx="1.6" fill="#198740"/>
+        <rect x="41.53" y="66.90" width="8.5" height="8.5" rx="1.6" fill="#1c9247"/>
+        <rect x="44.75" y="59.75" width="8.5" height="8.5" rx="1.6" fill="#1e9e4f"/>
+        <rect x="19.05" y="83.25" width="8.5" height="8.5" rx="1.6" fill="#bf360c"/>
+        <rect x="17.80" y="66.07" width="8.5" height="8.5" rx="1.6" fill="#c63e0e"/>
+        <rect x="22.84" y="51.33" width="8.5" height="8.5" rx="1.6" fill="#cc4510"/>
+        <rect x="32.25" y="41.00" width="8.5" height="8.5" rx="1.6" fill="#d34d12"/>
+        <rect x="43.57" y="36.03" width="8.5" height="8.5" rx="1.6" fill="#da5514"/>
+        <rect x="54.38" y="36.21" width="8.5" height="8.5" rx="1.6" fill="#e15d16"/>
+        <rect x="62.67" y="40.40" width="8.5" height="8.5" rx="1.6" fill="#e76418"/>
+        <rect x="67.25" y="46.76" width="8.5" height="8.5" rx="1.6" fill="#ee6c1a"/>
+  </g>
+
+  <!-- Point central lumineux (signal visuel à petite taille) -->
+  <circle cx="64" cy="64" r="4.5" fill="#ffffff" opacity="0.92"/>
+  <circle cx="64" cy="64" r="2" fill="#0f1e3d" opacity="0.6"/>
 </svg>

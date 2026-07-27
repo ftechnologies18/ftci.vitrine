@@ -91,11 +91,14 @@ const websiteSchema = {
                         schema={[orgSchema, websiteSchema]}
                 />
 
-                <!-- Favicon -->
+                <!-- Favicon (triskel pixelisé bleu/vert/orange sur fond navy) -->
                 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-                <link rel="icon" href="/favicon.ico" sizes="any" />
-                <link rel="apple-touch-icon" href="/brand/logo-ftci.png" />
+                <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+                <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" sizes="180x180" />
                 <link rel="mask-icon" href="/favicon.svg" color="#0F1E3D" />
+                <!-- PWA / Android Chrome -->
+                <link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png" />
+                <link rel="icon" type="image/png" sizes="512x512" href="/brand/icon-512.png" />
 
                 <!-- Fonts Google : Poppins (display) + Inter (corps) — preconnect + display=swap -->
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
