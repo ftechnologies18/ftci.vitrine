@@ -64,13 +64,13 @@ const keyPoints = [
              - Contenu parfaitement lisible
              ═══════════════════════════════════════════════════════════════════════ -->
         
-        <!-- ── Couche 1 : Pluie binaire ultra-légère ──────────────────────────── -->
+        <!-- ── Couche 1 : Pluie binaire ultra-légère (couvre toute la section) ───── -->
         <div class="gear-matrix-binary" aria-hidden="true">
-                {Array.from({length: 15}).map((_, colIndex) => (
+                {Array.from({length: 25}).map((_, colIndex) => (
                         <div class={`gmb-col ${colIndex % 4 === 0 ? 'gmb-col--reverse' : ''}`}
-                                style={`--gmb-speed: ${22 + (colIndex % 6) * 4}s; --gmb-delay: ${(colIndex * -2)}s;`}>
-                                {/* Contenu dupliqué pour animation fluide */}
-                                {[...Array(2)].map(() => Array.from({length: 12}).map((_, i) => (
+                                style={`--gmb-speed: ${20 + (colIndex % 6) * 3}s; --gmb-delay: ${(colIndex * -1.5)}s;`}>
+                                {/* Contenu triplé pour animation fluide et couverture complète */}
+                                {[...Array(3)].map(() => Array.from({length: 20}).map((_, i) => (
                                         <span class="gmb-char">{Math.random() > 0.5 ? '01' : '10'} {Math.random() > 0.5 ? '00' : '11'} {Math.random() > 0.5 ? '10' : '01'} {Math.random() > 0.5 ? '11' : '00'}</span>
                                 )))}
                         </div>
