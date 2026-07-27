@@ -803,7 +803,7 @@
   gap: 0.6em;
   animation: binaryScroll var(--speed, 20s) linear infinite;
   animation-delay: var(--delay, 0s);
-  opacity: 0.06;
+  opacity: 0.35; /* Opacité élevée pour bonne visibilité */
 }
 
 /* Positions des colonnes réparties sur la largeur */
@@ -867,7 +867,7 @@
   }
 }
 
-/* ── Mobile : réduire la taille et l'opacité ─────────────────────────────── */
+/* ── Mobile : ajuster la taille mais garder bonne visibilité ───────────── */
 @media (max-width: 767px) {
   .binary-column {
     width: clamp(60px, 18vw, 140px);
@@ -878,7 +878,7 @@
     letter-spacing: 0.05em;
   }
   .binary-matrix-bg {
-    opacity: 0.7;
+    opacity: 1;
   }
 }
 
