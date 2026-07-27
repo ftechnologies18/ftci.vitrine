@@ -20,10 +20,10 @@
 import { products, productUrls } from '../data/products';
 
 const services = [
-        { label: 'Transformation digitale', href: '/#services' },
-        { label: 'Développement web & mobile', href: '/#services' },
-        { label: 'Infrastructure IT & Cloud', href: '/#services' },
-        { label: 'Tech assistance & Formation', href: '/#services' },
+        { label: 'SECT - Évaluation IA', href: 'https://sect.ftci.fr' },
+        { label: 'OPUC - Gestion BTP', href: 'https://opuc.ftci.fr' },
+        { label: 'CATS - Présence', href: 'https://cats.ftci.fr' },
+        { label: 'ScolaGest - Scolaire', href: 'https://scolagest.ftci.fr' },
 ];
 
 const socialLinks = [
@@ -162,7 +162,7 @@ const year = new Date().getFullYear();
                                 <h2 class="ft-nav-title">Services</h2>
                                 <ul class="ft-links">
                                         {services.map((service) => (
-                                                <li><a href={service.href} class="ft-link">{service.label}</a></li>
+                                                <li><a href={service.href} class="ft-link" target="_blank" rel="noopener noreferrer">{service.label}</a></li>
                                         ))}
                                 </ul>
                         </nav>
