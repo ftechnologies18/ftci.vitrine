@@ -777,101 +777,95 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   BINARY MATRIX BACKGROUND — Section Écosystème SaaS / Nos Solutions
-   Arrière-plan avec données binaires (chiffrement) défilant verticalement.
-   Effet "Matrix" subtil avec colonnes décalées, vitesses variables.
-   Étendu sur TOUTE la section sans estompage.
+   MATRIX RAIN BACKGROUND — Section Écosystème SaaS / Nos Solutions
+   Nouvelle approche : Matrix Rain uniforme généré dynamiquement
+   25 colonnes de données binaires couvrant toute la largeur
+   Animation verticale continue avec vitesses et couleurs variées
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.binary-matrix-bg {
+.matrix-rain-bg {
   position: absolute;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 0 0.5%;
 }
 
-/* ── Colonnes binaires individuelles ──────────────────────────────────────── */
-.binary-column {
-  position: absolute;
-  top: -150%;
-  left: var(--col-pos, 0%);
-  width: 12%; /* Largeur uniforme pour couvrir toute la section */
-  height: 400%; /* Hauteur étendue pour couvrir toute la section + animation */
+/* ── Colonnes individuelles du Matrix ────────────────────────────────────── */
+.matrix-col {
+  flex: 1;
+  min-width: 0;
+  height: 250%; /* Étendu pour animation fluide */
+  position: relative;
+  top: -75%; /* Position initiale pour l'animation */
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
-  animation: binaryScroll var(--speed, 20s) linear infinite;
-  animation-delay: var(--delay, 0s);
-  opacity: 0.35; /* Opacité élevée pour bonne visibilité */
+  gap: 0.35em;
+  opacity: 0.4;
+  
+  /* Animation de chute verticale */
+  animation: matrixColFall var(--col-speed, 20s) linear infinite;
+  animation-delay: var(--col-delay, 0s);
 }
 
-/* Colonne en sens inverse pour variété */
-.binary-column--reverse {
-  animation-direction: reverse;
-  animation-name: binaryScrollReverse;
-}
-
-/* ── Texte binaire individuel ─────────────────────────────────────────────── */
-.binary-text {
+/* ── Bits binaires individuels ───────────────────────────────────────────── */
+.matrix-bit {
   display: block;
   font-family: 'Courier New', Courier, monospace;
-  font-size: clamp(9px, 1vw, 13px);
+  font-size: var(--font-size, 11px);
   font-weight: 400;
-  line-height: 1.5;
-  color: #0f1e3d;
-  letter-spacing: 0.08em;
+  line-height: 1.4;
+  color: var(--col-color, #0f1e3d);
+  letter-spacing: 0.06em;
   white-space: nowrap;
-  word-break: keep-all;
   text-transform: uppercase;
+  
+  /* Effet de brillance subtil sur certains bits */
+  transition: opacity 0.3s ease, text-shadow 0.3s ease;
 }
 
-/* Variation de couleur sur certaines colonnes pour profondeur */
-.binary-column:nth-child(even) .binary-text {
-  color: #1e9e4f; /* Vert FTCI */
+/* Variation d'opacité pour effet profondeur */
+.matrix-col:nth-child(odd) .matrix-bit:nth-child(3n+1) {
+  opacity: 0.6;
 }
-.binary-column:nth-child(3n) .binary-text {
-  color: #ee6c1a; /* Orange FTCI */
+.matrix-col:nth-child(even) .matrix-bit:nth-child(4n+2) {
+  opacity: 0.7;
+  text-shadow: 0 0 4px currentColor;
 }
 
-/* ── Animation : défilement vertical continu sur toute la hauteur ──────────── */
-@keyframes binaryScroll {
+/* ── Animation principale : chute verticale continue ─────────────────────── */
+@keyframes matrixColFall {
   0% {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(50%); /* Défile de la moitié de la hauteur (400% * 50% = 200% de déplacement) */
+    transform: translateY(60%); /* Déplacement suffisant pour boucle fluide */
   }
 }
 
-@keyframes binaryScrollReverse {
-  0% {
-    transform: translateY(50%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-/* ── Reduced motion : désactiver l'animation binaire ─────────────────────── */
+/* ── Reduced motion : désactiver l'animation matrix ──────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .binary-matrix-bg {
-    display: none;
+  .matrix-rain-bg {
+    display: none !important;
   }
 }
 
-/* ── Mobile : ajuster la taille mais garder bonne visibilité ───────────── */
+/* ── Mobile : ajuster densité et taille ──────────────────────────────────── */
 @media (max-width: 767px) {
-  .binary-column {
-    width: clamp(60px, 18vw, 140px);
-    gap: 0.4em;
+  .matrix-rain-bg {
+    gap: 1px;
+    padding: 0 0.25%;
   }
-  .binary-text {
-    font-size: 8px;
-    letter-spacing: 0.05em;
+  .matrix-col {
+    gap: 0.25em;
   }
-  .binary-matrix-bg {
-    opacity: 1;
+  .matrix-bit {
+    font-size: 8px !important;
+    letter-spacing: 0.04em;
   }
 }
 
