@@ -777,96 +777,100 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MATRIX RAIN BACKGROUND — Section Écosystème SaaS / Nos Solutions
-   Nouvelle approche : Matrix Rain uniforme généré dynamiquement
-   25 colonnes de données binaires couvrant toute la largeur
-   Animation verticale continue avec vitesses et couleurs variées
+   BINARY MATRIX BACKGROUND — Section Écosystème SaaS / Nos Solutions
+   Approche 100% statique : 20 colonnes HTML pré-générées
+   Couverture UNIFORME de toute la section via flexbox
+   Animation CSS pure (pas de JavaScript requis)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.matrix-rain-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  gap: 2px;
-  padding: 0 0.5%;
+.binary-matrix-bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 1;
+        display: flex;
+        justify-content: stretch; /* Étire les colonnes uniformément */
+        gap: 2px;
+        padding: 0 1%;
 }
 
-/* ── Colonnes individuelles du Matrix ────────────────────────────────────── */
-.matrix-col {
-  flex: 1;
-  min-width: 0;
-  height: 250%; /* Étendu pour animation fluide */
-  position: relative;
-  top: -75%; /* Position initiale pour l'animation */
-  display: flex;
-  flex-direction: column;
-  gap: 0.35em;
-  opacity: 0.4;
-  
-  /* Animation de chute verticale */
-  animation: matrixColFall var(--col-speed, 20s) linear infinite;
-  animation-delay: var(--col-delay, 0s);
+/* ── Colonnes binaires individuelles ──────────────────────────────────────── */
+.binary-col {
+        flex: 1; /* Chaque colonne prend la même largeur → couverture UNIFORME */
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4em;
+        
+        /* Animation de défilement vertical */
+        animation: binaryScroll var(--scroll-speed, 20s) linear infinite;
+        animation-delay: var(--scroll-delay, 0s);
+        opacity: 0.45;
 }
 
-/* ── Bits binaires individuels ───────────────────────────────────────────── */
-.matrix-bit {
-  display: block;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: var(--font-size, 11px);
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--col-color, #0f1e3d);
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  text-transform: uppercase;
-  
-  /* Effet de brillance subtil sur certains bits */
-  transition: opacity 0.3s ease, text-shadow 0.3s ease;
+/* Colonnes en sens inverse pour variété */
+.binary-col--reverse {
+        animation-direction: reverse;
 }
 
-/* Variation d'opacité pour effet profondeur */
-.matrix-col:nth-child(odd) .matrix-bit:nth-child(3n+1) {
-  opacity: 0.6;
-}
-.matrix-col:nth-child(even) .matrix-bit:nth-child(4n+2) {
-  opacity: 0.7;
-  text-shadow: 0 0 4px currentColor;
-}
-
-/* ── Animation principale : chute verticale continue ─────────────────────── */
-@keyframes matrixColFall {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(60%); /* Déplacement suffisant pour boucle fluide */
-  }
+/* ── Caractères binaires individuels ──────────────────────────────────────── */
+.binary-char {
+        display: block;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: clamp(8px, 1.1vw, 12px);
+        font-weight: 500;
+        line-height: 1.5;
+        color: #0f1e3d; /* Navy FTCI par défaut */
+        letter-spacing: 0.07em;
+        white-space: nowrap;
+        word-break: keep-all;
+        text-transform: uppercase;
 }
 
-/* ── Reduced motion : désactiver l'animation matrix ──────────────────────── */
+/* Variation de couleur par colonne pour effet visuel riche */
+/* Utilise --col-index pour alterner les couleurs */
+.binary-col:nth-child(4n+1) .binary-char { color: #0f1e3d; } /* Navy */
+.binary-col:nth-child(4n+2) .binary-char { color: #1e9e4f; } /* Vert FTCI */
+.binary-col:nth-child(4n+3) .binary-char { color: #ee6c1a; } /* Orange FTCI */
+.binary-col:nth-child(4n) .binary-char { color: #6b7fc7; } /* Periwinkle */
+
+/* Effet de brillance subtil sur certaines lignes */
+.binary-col:nth-child(even) .binary-char:nth-child(5n+2) {
+        text-shadow: 0 0 6px currentColor;
+        opacity: 0.85;
+}
+
+/* ── Animation : défilement vertical continu sans coupure ─────────────────── */
+@keyframes binaryScroll {
+        0% {
+                transform: translateY(0);
+        }
+        100% {
+                transform: translateY(-33.333%); /* Décale d'1/3 du contenu (contenu triplé) */
+        }
+}
+
+/* ── Reduced motion : désactiver l'animation binaire ─────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .matrix-rain-bg {
-    display: none !important;
-  }
+        .binary-matrix-bg {
+                display: none !important;
+        }
 }
 
 /* ── Mobile : ajuster densité et taille ──────────────────────────────────── */
 @media (max-width: 767px) {
-  .matrix-rain-bg {
-    gap: 1px;
-    padding: 0 0.25%;
-  }
-  .matrix-col {
-    gap: 0.25em;
-  }
-  .matrix-bit {
-    font-size: 8px !important;
-    letter-spacing: 0.04em;
-  }
+        .binary-matrix-bg {
+                gap: 1px;
+                padding: 0 0.5%;
+        }
+        .binary-col {
+                gap: 0.25em;
+        }
+        .binary-char {
+                font-size: 7px !important;
+                letter-spacing: 0.04em;
+        }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
