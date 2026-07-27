@@ -929,13 +929,24 @@
 .gear:nth-child(3n) .gear-path { stroke: #1e9e4f; } /* Vert */
 .gear:nth-child(4n) .gear-path { stroke: #ee6c1a; } /* Orange */
 
-/* Icône dans l'engrenage AI */
+/* Icône dans les engrenages - VISIBLE */
 .gear-icon {
         color: #0f1e3d;
-        opacity: 0.5;
+        opacity: 0.85; /* Bien visible maintenant */
 }
+
+.gear--with-icon .gear-icon path,
+.gear--with-icon .gear-icon rect,
+.gear--with-icon .gear-icon circle,
+.gear--with-icon .gear-icon line,
+.gear--with-icon .gear-icon polyline {
+        stroke: currentColor;
+        fill: none;
+}
+
 .gear--with-icon .gear-icon text {
         font-family: 'Courier New', monospace;
+        fill: currentColor;
 }
 
 /* Animation de rotation */
