@@ -133,9 +133,48 @@ const keyPoints = [
                         </svg>
                 </div>
                 
-                <!-- Icon 6 : AI / BRAIN (centre-haut) - Texte -->
-                <div class="floating-icon floating-icon--sm floating-icon--ccw floating-icon--text" style="--icon-x: 48%; --icon-y: -2%; --icon-speed: 32s; --icon-color: #6b7fc7;">
-                        <span class="icon-text">AI</span>
+                <!-- Icon 6 : AI / CPU (centre-haut - forme chip avec texte AI) -->
+                <div class="floating-icon floating-icon--lg floating-icon--ccw" style="--icon-x: 42%; --icon-y: 8%; --icon-speed: 35s; --icon-color: #6b7fc7;">
+                        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <!-- Pattes du CPU (haut) -->
+                                <line x1="30" y1="12" x2="30" y2="2"/>
+                                <circle cx="30" cy="2" r="3" fill="currentColor"/>
+                                <line x1="50" y1="10" x2="50" y2="0"/>
+                                <circle cx="50" cy="0" r="3" fill="currentColor"/>
+                                <line x1="70" y1="12" x2="70" y2="2"/>
+                                <circle cx="70" cy="2" r="3" fill="currentColor"/>
+                                
+                                <!-- Pattes du CPU (bas) -->
+                                <line x1="30" y1="88" x2="30" y2="98"/>
+                                <circle cx="30" cy="98" r="3" fill="currentColor"/>
+                                <line x1="50" y1="90" x2="50" y2="100"/>
+                                <circle cx="50" cy="100" r="3" fill="currentColor"/>
+                                <line x1="70" y1="88" x2="70" y2="98"/>
+                                <circle cx="70" cy="98" r="3" fill="currentColor"/>
+                                
+                                <!-- Pattes du CPU (gauche) -->
+                                <line x1="12" y1="30" x2="2" y2="30"/>
+                                <circle cx="2" cy="30" r="3" fill="currentColor"/>
+                                <line x1="10" y1="50" x2="0" y2="50"/>
+                                <circle cx="0" cy="50" r="3" fill="currentColor"/>
+                                <line x1="12" y1="70" x2="2" y2="70"/>
+                                <circle cx="2" cy="70" r="3" fill="currentColor"/>
+                                
+                                <!-- Pattes du CPU (droite) -->
+                                <line x1="88" y1="30" x2="98" y2="30"/>
+                                <circle cx="98" cy="30" r="3" fill="currentColor"/>
+                                <line x1="90" y1="50" x2="100" y2="50"/>
+                                <circle cx="100" cy="50" r="3" fill="currentColor"/>
+                                <line x1="88" y1="70" x2="98" y2="70"/>
+                                <circle cx="98" cy="70" r="3" fill="currentColor"/>
+                                
+                                <!-- Corps du CPU (carré arrondi) -->
+                                <rect x="18" y="18" width="64" height="64" rx="12" fill="currentColor" opacity="0.08"/>
+                                <rect x="18" y="18" width="64" height="64" rx="12"/>
+                                
+                                <!-- Texte AI au centre -->
+                                <text x="50" y="62" text-anchor="middle" font-family="'Courier New', monospace" font-size="28" font-weight="bold" fill="currentColor" stroke="none">AI</text>
+                        </svg>
                 </div>
         </div>
 
