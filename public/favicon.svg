@@ -1,11 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Logo FTCI — triskel numérique bleu, vert, orange">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Logo FTCI — triskel numérique vert, orange, bleu">
   <defs>
-    <linearGradient id="ftci-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e3a5f"/>
-      <stop offset="100%" stop-color="#0f1e3d"/>
-    </linearGradient>
-    <filter id="ftci-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="1.2" result="blur"/>
+    <filter id="ftci-glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="0.4" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
@@ -13,38 +9,37 @@
     </filter>
   </defs>
 
-  <!-- Fond navy arrondi (cohérence marque + visibilité onglet navigateur) -->
-  <rect x="3" y="3" width="122" height="122" rx="26" fill="url(#ftci-bg)"/>
-
-  <!-- Triskel pixelisé : 3 branches horaires (bleu, vert, orange) -->
+  <!-- Triskel pixelisé : 3 branches horaires (vert, orange, bleu) — fond transparent -->
   <g filter="url(#ftci-glow)">
-        <rect x="59.75" y="12.75" width="8.5" height="8.5" rx="1.6" fill="#1a237e"/>
-        <rect x="75.25" y="20.25" width="8.5" height="8.5" rx="1.6" fill="#283189"/>
-        <rect x="85.50" y="32.00" width="8.5" height="8.5" rx="1.6" fill="#353f94"/>
-        <rect x="89.74" y="45.31" width="8.5" height="8.5" rx="1.6" fill="#434d9f"/>
-        <rect x="88.38" y="57.60" width="8.5" height="8.5" rx="1.6" fill="#505caa"/>
-        <rect x="82.82" y="66.87" width="8.5" height="8.5" rx="1.6" fill="#5e6ab5"/>
-        <rect x="75.05" y="71.95" width="8.5" height="8.5" rx="1.6" fill="#6b78c0"/>
-        <rect x="67.25" y="72.74" width="8.5" height="8.5" rx="1.6" fill="#7986cb"/>
-        <rect x="100.45" y="83.25" width="8.5" height="8.5" rx="1.6" fill="#0d4d1a"/>
-        <rect x="86.20" y="92.92" width="8.5" height="8.5" rx="1.6" fill="#0f5922"/>
-        <rect x="70.91" y="95.93" width="8.5" height="8.5" rx="1.6" fill="#126429"/>
-        <rect x="57.26" y="92.94" width="8.5" height="8.5" rx="1.6" fill="#147031"/>
-        <rect x="47.29" y="85.62" width="8.5" height="8.5" rx="1.6" fill="#177b38"/>
-        <rect x="42.05" y="76.17" width="8.5" height="8.5" rx="1.6" fill="#198740"/>
-        <rect x="41.53" y="66.90" width="8.5" height="8.5" rx="1.6" fill="#1c9247"/>
-        <rect x="44.75" y="59.75" width="8.5" height="8.5" rx="1.6" fill="#1e9e4f"/>
-        <rect x="19.05" y="83.25" width="8.5" height="8.5" rx="1.6" fill="#bf360c"/>
-        <rect x="17.80" y="66.07" width="8.5" height="8.5" rx="1.6" fill="#c63e0e"/>
-        <rect x="22.84" y="51.33" width="8.5" height="8.5" rx="1.6" fill="#cc4510"/>
-        <rect x="32.25" y="41.00" width="8.5" height="8.5" rx="1.6" fill="#d34d12"/>
-        <rect x="43.57" y="36.03" width="8.5" height="8.5" rx="1.6" fill="#da5514"/>
-        <rect x="54.38" y="36.21" width="8.5" height="8.5" rx="1.6" fill="#e15d16"/>
-        <rect x="62.67" y="40.40" width="8.5" height="8.5" rx="1.6" fill="#e76418"/>
-        <rect x="67.25" y="46.76" width="8.5" height="8.5" rx="1.6" fill="#ee6c1a"/>
+    <rect x="60.00" y="10.00" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="74.63" y="16.91" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="84.96" y="27.47" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="90.35" y="39.72" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="90.91" y="51.72" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="87.44" y="61.80" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="81.25" y="68.80" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="73.91" y="72.20" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="67.00" y="72.12" width="8" height="8" rx="1.4" fill="#197f04"/>
+    <rect x="103.30" y="85.00" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="90.00" y="94.21" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="75.69" y="97.88" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="62.39" y="96.42" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="51.72" y="90.91" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="44.72" y="82.87" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="41.75" y="74.00" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="42.48" y="65.95" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="46.00" y="60.00" width="8" height="8" rx="1.4" fill="#f65a05"/>
+    <rect x="16.70" y="85.00" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="15.37" y="68.88" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="19.35" y="54.65" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="27.26" y="43.86" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="37.37" y="37.37" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="47.84" y="35.34" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="57.00" y="37.20" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="63.61" y="41.86" width="8" height="8" rx="1.4" fill="#696fa4"/>
+    <rect x="67.00" y="47.88" width="8" height="8" rx="1.4" fill="#696fa4"/>
   </g>
 
-  <!-- Point central lumineux (signal visuel à petite taille) -->
-  <circle cx="64" cy="64" r="4.5" fill="#ffffff" opacity="0.92"/>
-  <circle cx="64" cy="64" r="2" fill="#0f1e3d" opacity="0.6"/>
+  <!-- Point central navy (cohérence avec logo source) -->
+  <circle cx="64" cy="64" r="3.5" fill="#02083e"/>
 </svg>
