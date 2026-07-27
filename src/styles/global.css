@@ -780,7 +780,7 @@
    BINARY MATRIX BACKGROUND — Section Écosystème SaaS / Nos Solutions
    Arrière-plan avec données binaires (chiffrement) défilant verticalement.
    Effet "Matrix" subtil avec colonnes décalées, vitesses variables.
-   Étendu sur toute la section sans estompage.
+   Étendu sur TOUTE la section sans estompage.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .binary-matrix-bg {
@@ -794,9 +794,10 @@
 /* ── Colonnes binaires individuelles ──────────────────────────────────────── */
 .binary-column {
   position: absolute;
-  top: 0;
+  top: -150%;
   left: var(--col-pos, 5%);
   width: clamp(80px, 14vw, 180px);
+  height: 400%; /* Hauteur étendue pour couvrir toute la section + animation */
   display: flex;
   flex-direction: column;
   gap: 0.6em;
@@ -840,22 +841,22 @@
   color: #ee6c1a; /* Orange FTCI */
 }
 
-/* ── Animation : défilement vertical continu ──────────────────────────────── */
+/* ── Animation : défilement vertical continu sur toute la hauteur ──────────── */
 @keyframes binaryScroll {
   0% {
-    transform: translateY(var(--start-pos, -10%));
+    transform: translateY(0);
   }
   100% {
-    transform: translateY(100%);
+    transform: translateY(50%); /* Défile de la moitié de la hauteur (400% * 50% = 200% de déplacement) */
   }
 }
 
 @keyframes binaryScrollReverse {
   0% {
-    transform: translateY(var(--start-pos, -10%));
+    transform: translateY(50%);
   }
   100% {
-    transform: translateY(-120%);
+    transform: translateY(0);
   }
 }
 
