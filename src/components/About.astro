@@ -77,40 +77,89 @@ const keyPoints = [
                 ))}
         </div>
 
-        <!-- ── Couche 2 : Engrenages SVG animés ──────────────────────────────── -->
+        <!-- ── Couche 2 : Engrenages SVG animés avec icônes ───────────────────── -->
         <div class="gears-container" aria-hidden="true">
-                <!-- Grand engrenage haut-gauche -->
-                <svg class="gear gear--lg gear--cw" viewBox="0 0 200 200" style="--gear-size: 280px; --gear-x: -5%; --gear-y: -8%; --gear-speed: 45s;">
+                <!-- Engrenage 1 : MAISON / SMART HOME (haut-gauche) -->
+                <svg class="gear gear--lg gear--cw gear--with-icon" viewBox="0 0 200 200" style="--gear-size: 280px; --gear-x: -5%; --gear-y: -8%; --gear-speed: 45s;">
                         <path class="gear-path" d="M100,20 L110,35 L128,30 L135,48 L155,50 L152,68 L168,80 L158,95 L170,112 L155,120 L160,140 L142,142 L138,162 L120,155 L105,170 L95,155 L78,162 L72,142 L55,140 L60,120 L45,112 L55,95 L45,80 L60,68 L58,48 L78,45 L85,30 Z M100,65 A35,35 0 1,0 100,135 A35,35 0 1,0 100,65" fill="none"/>
+                        <g class="gear-icon" transform="translate(62, 62) scale(0.36)">
+                                <!-- Icône Maison / Smart Home -->
+                                <path d="M100,20 L180,75 L165,75 L165,170 L35,170 L35,75 L20,75 Z M60,150 L60,100 L140,100 L140,150 Z M75,85 L75,70 L125,70 L125,85 Z" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="100" cy="130" r="15" fill="none" stroke-width="8"/>
+                        </g>
                 </svg>
                 
-                <!-- Engrenage moyen droit -->
-                <svg class="gear gear--md gear--ccw" viewBox="0 0 200 200" style="--gear-size: 180px; --gear-x: 82%; --gear-y: 5%; --gear-speed: 35s;">
+                <!-- Engrenage 2 : CLOUD / NUAGE (droit) -->
+                <svg class="gear gear--md gear--ccw gear--with-icon" viewBox="0 0 200 200" style="--gear-size: 180px; --gear-x: 82%; --gear-y: 5%; --gear-speed: 35s;">
                         <path class="gear-path" d="M100,25 L108,40 L125,36 L130,52 L148,55 L146,72 L160,83 L152,97 L163,113 L150,122 L154,140 L138,143 L134,160 L118,154 L105,167 L96,153 L81,159 L76,143 L60,141 L64,123 L51,113 L59,99 L51,86 L64,74 L62,56 L79,53 L86,39 Z M100,62 A32,32 0 1,0 100,126 A32,32 0 1,0 100,62" fill="none"/>
+                        <g class="gear-icon" transform="translate(52, 55) scale(0.44)">
+                                <!-- Icône Cloud -->
+                                <path d="M50,140 L25,140 C12,140 0,128 0,112 C0,98 10,86 24,82 C28,58 50,40 78,40 C102,40 122,54 132,74 C156,76 175,96 175,120 C175,145 155,162 130,162 L50,162 C30,162 15,147 15,127 C15,110 28,95 50,92 Z" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
                 </svg>
                 
-                <!-- Petit engrenage centre-droit -->
-                <svg class="gear gear--sm gear--cw" viewBox="0 0 200 200" style="--gear-size: 120px; --gear-x: 75%; --gear-y: 55%; --gear-speed: 28s;">
+                <!-- Engrenage 3 : CHIP / CPU (centre-droit) -->
+                <svg class="gear gear--sm gear--cw gear--with-icon" viewBox="0 0 200 200" style="--gear-size: 120px; --gear-x: 75%; --gear-y: 55%; --gear-speed: 28s;">
                         <path class="gear-path" d="M100,30 L106,44 L122,42 L126,57 L142,60 L140,76 L154,86 L147,99 L157,114 L144,121 L148,138 L133,140 L130,156 L116,151 L104,163 L96,150 L83,155 L79,140 L65,138 L69,121 L57,114 L66,99 L57,86 L69,76 L67,60 L83,57 L89,43 Z M100,60 A30,30 0 1,0 100,120 A30,30 0 1,0 100,60" fill="none"/>
+                        <g class="gear-icon" transform="translate(55, 55) scale(0.42)">
+                                <!-- Icône Chip / Processeur -->
+                                <rect x="30" y="30" width="140" height="140" rx="15" fill="none" stroke-width="12" stroke-linecap="round"/>
+                                <rect x="55" y="55" width="90" height="90" rx="8" fill="none" stroke-width="10"/>
+                                <!-- Pins haut -->
+                                <line x1="65" y1="15" x2="65" y2="30" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="100" y1="15" x2="100" y2="30" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="135" y1="15" x2="135" y2="30" stroke-width="10" stroke-linecap="round"/>
+                                <!-- Pins bas -->
+                                <line x1="65" y1="170" x2="65" y2="185" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="100" y1="170" x2="100" y2="185" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="135" y1="170" x2="135" y2="185" stroke-width="10" stroke-linecap="round"/>
+                                <!-- Pins gauche -->
+                                <line x1="15" y1="65" x2="30" y2="65" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="15" y1="100" x2="30" y2="100" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="15" y1="135" x2="30" y2="135" stroke-width="10" stroke-linecap="round"/>
+                                <!-- Pins droite -->
+                                <line x1="170" y1="65" x2="185" y2="65" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="170" y1="100" x2="185" y2="100" stroke-width="10" stroke-linecap="round"/>
+                                <line x1="170" y1="135" x2="185" y2="135" stroke-width="10" stroke-linecap="round"/>
+                        </g>
                 </svg>
                 
-                <!-- Engrenage moyen bas-gauche -->
-                <svg class="gear gear--md gear--ccw" viewBox="0 0 200 200" style="--gear-size: 200px; --gear-x: 2%; --gear-y: 60%; --gear-speed: 40s;">
+                <!-- Engrenage 4 : WIFI / CONNECTIVITÉ (bas-gauche) -->
+                <svg class="gear gear--md gear--ccw gear--with-icon" viewBox="0 0 200 200" style="--gear-size: 200px; --gear-x: 2%; --gear-y: 60%; --gear-speed: 40s;">
                         <path class="gear-path" d="M100,22 L109,38 L127,33 L133,51 L153,54 L149,73 L166,85 L156,101 L169,118 L153,127 L158,147 L139,149 L135,170 L117,163 L103,178 L93,162 L75,169 L69,149 L51,147 L56,127 L41,118 L53,101 L41,85 L56,73 L54,51 L75,47 L82,33 Z M100,60 A34,34 0 1,0 100,128 A34,34 0 1,0 100,60" fill="none"/>
+                        <g class="gear-icon" transform="translate(55, 55) scale(0.4)">
+                                <!-- Icône WiFi -->
+                                <circle cx="100" cy="155" r="18" fill="none" stroke-width="12"/>
+                                <path d="M55,115 Q100,65 145,115" fill="none" stroke-width="12" stroke-linecap="round"/>
+                                <path d="M30,85 Q100,20 170,85" fill="none" stroke-width="12" stroke-linecap="round"/>
+                                <path d="M10,55 Q100,-25 190,55" fill="none" stroke-width="12" stroke-linecap="round"/>
+                        </g>
                 </svg>
                 
-                <!-- Mini engrenage bas-droite -->
-                <svg class="gear gear--xs gear--cw" viewBox="0 0 200 200" style="--gear-size: 90px; --gear-x: 88%; --gear-y: 75%; --gear-speed: 25s;">
+                <!-- Engrenage 5 : CODE / TERMINAL (bas-droite) -->
+                <svg class="gear gear--xs gear--cw gear--with-icon" viewBox="0 0 200 200" style="--gear-size: 90px; --gear-x: 88%; --gear-y: 75%; --gear-speed: 25s;">
                         <path class="gear-path" d="M100,35 L105,48 L120,46 L124,60 L139,63 L137,78 L150,87 L143,99 L152,113 L140,119 L143,135 L130,137 L127,152 L115,147 L104,158 L97,145 L85,150 L81,136 L68,134 L71,119 L61,111 L68,99 L61,87 L71,78 L69,63 L84,60 L89,47 Z M100,58 A28,28 0 1,0 100,114 A28,28 0 1,0 100,58" fill="none"/>
+                        <g class="gear-icon" transform="translate(50, 50) scale(0.46)">
+                                <!-- Icône Code / Terminal -->
+                                <rect x="10" y="25" width="180" height="130" rx="12" fill="none" stroke-width="12" stroke-linecap="round"/>
+                                <polyline points="45,75 70,100 45,125" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="155,75 130,100 155,125" fill="none" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="105" y1="135" x2="95" y2="65" stroke-width="10" stroke-linecap="round"/>
+                        </g>
                 </svg>
                 
-                <!-- Engrenage avec icône AI (centre-haut) -->
+                <!-- Engrenage 6 : AI / INTELLIGENCE ARTIFICIELLE (centre-haut) -->
                 <svg class="gear gear--sm gear--ccw gear--with-icon" viewBox="0 0 200 200" style="--gear-size: 140px; --gear-x: 45%; --gear-y: -5%; --gear-speed: 32s;">
                         <path class="gear-path" d="M100,28 L107,43 L124,39 L129,56 L148,59 L145,77 L161,88 L152,103 L165,119 L149,128 L154,148 L135,150 L131,169 L114,162 L102,176 L92,160 L74,167 L68,146 L49,144 L54,125 L41,116 L52,100 L41,86 L54,74 L52,56 L74,52 L81,38 Z M100,58 A31,31 0 1,0 100,120 A31,31 0 1,0 100,58" fill="none"/>
-                        <!-- Icône AI au centre -->
-                        <g class="gear-icon" transform="translate(70, 68) scale(0.28)">
-                                <rect x="10" y="10" width="180" height="180" rx="20" fill="none" stroke-width="8"/>
-                                <text x="100" y="130" text-anchor="middle" font-size="100" font-weight="bold" fill="currentColor">AI</text>
+                        <!-- Icône AI -->
+                        <g class="gear-icon" transform="translate(55, 55) scale(0.42)">
+                                <rect x="15" y="15" width="170" height="170" rx="22" fill="none" stroke-width="11" stroke-linecap="round"/>
+                                <text x="100" y="125" text-anchor="middle" font-size="85" font-weight="bold" font-family="'Courier New', monospace" fill="currentColor">AI</text>
+                                <!-- Points décoratifs -->
+                                <circle cx="45" cy="45" r="10" fill="none" stroke-width="7"/>
+                                <circle cx="155" cy="45" r="10" fill="none" stroke-width="7"/>
+                                <circle cx="45" cy="155" r="10" fill="none" stroke-width="7"/>
+                                <circle cx="155" cy="155" r="10" fill="none" stroke-width="7"/>
                         </g>
                 </svg>
         </div>
