@@ -777,6 +777,125 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   BINARY MATRIX BACKGROUND — Section Écosystème SaaS / Nos Solutions
+   Arrière-plan estompé avec données binaires (chiffrement) défilant verticalement.
+   Effet "Matrix" subtil avec colonnes décalées, vitesses variables.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.binary-matrix-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+  /* Dégradé de masque pour estomper les bords */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+}
+
+/* ── Colonnes binaires individuelles ──────────────────────────────────────── */
+.binary-column {
+  position: absolute;
+  top: 0;
+  left: var(--col-pos, 5%);
+  width: clamp(80px, 14vw, 180px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  animation: binaryScroll var(--speed, 20s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0.06;
+}
+
+/* Positions des colonnes réparties sur la largeur */
+.binary-column:nth-child(1) { --col-pos: 3%; }
+.binary-column:nth-child(2) { --col-pos: 22%; }
+.binary-column:nth-child(3) { --col-pos: 45%; }
+.binary-column:nth-child(4) { --col-pos: 68%; }
+.binary-column:nth-child(5) { --col-pos: 82%; }
+
+/* Colonne en sens inverse pour variété */
+.binary-column--reverse {
+  animation-direction: reverse;
+  animation-name: binaryScrollReverse;
+}
+
+/* ── Texte binaire individuel ─────────────────────────────────────────────── */
+.binary-text {
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: clamp(9px, 1vw, 13px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: #0f1e3d;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  word-break: keep-all;
+  text-transform: uppercase;
+}
+
+/* Variation de couleur sur certaines colonnes pour profondeur */
+.binary-column:nth-child(even) .binary-text {
+  color: #1e9e4f; /* Vert FTCI */
+}
+.binary-column:nth-child(3n) .binary-text {
+  color: #ee6c1a; /* Orange FTCI */
+}
+
+/* ── Animation : défilement vertical continu ──────────────────────────────── */
+@keyframes binaryScroll {
+  0% {
+    transform: translateY(var(--start-pos, -10%));
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes binaryScrollReverse {
+  0% {
+    transform: translateY(var(--start-pos, -10%));
+  }
+  100% {
+    transform: translateY(-120%);
+  }
+}
+
+/* ── Reduced motion : désactiver l'animation binaire ─────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .binary-matrix-bg {
+    display: none;
+  }
+}
+
+/* ── Mobile : réduire la taille et l'opacité ─────────────────────────────── */
+@media (max-width: 767px) {
+  .binary-column {
+    width: clamp(60px, 18vw, 140px);
+    gap: 0.4em;
+  }
+  .binary-text {
+    font-size: 8px;
+    letter-spacing: 0.05em;
+  }
+  .binary-matrix-bg {
+    opacity: 0.7;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    RESPONSIVE & ACCESSIBILITY OVERRIDES
    ═══════════════════════════════════════════════════════════════════════════ */
 
