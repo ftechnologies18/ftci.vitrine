@@ -74,7 +74,7 @@ const slides = [
 ];
 ---
 
-<section class="hero-slider relative min-h-[100svh] overflow-hidden" id="contenu" data-hero-slider>
+<section class="hero-slider relative overflow-hidden" id="contenu" data-hero-slider>
   
   <!-- ═══════════════════════════════════════════════════════════════════════
        BACKGROUND LAYER
@@ -459,8 +459,8 @@ const slides = [
   .hero-slider {
     position: relative;
     width: 100%;
-    height: 100vh;
-    height: 100svh;
+    height: 75vh;
+    height: 75svh;
     background: #070e1a;
     overflow: hidden;
   }
@@ -677,7 +677,8 @@ const slides = [
     max-width: 1500px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    min-height: 100svh;
+    min-height: 75svh;
+    max-height: 75svh;
     align-content: center;
     position: relative;
     z-index: 2;
@@ -748,12 +749,12 @@ const slides = [
     align-items: center;
     justify-content: center;
     order: 2;
-    min-height: 320px;
+    min-height: 240px;
   }
 
   @media (min-width: 1024px) {
     .visual-zone {
-      min-height: 480px;
+      min-height: 360px;
       position: relative;
     }
   }
@@ -809,7 +810,7 @@ const slides = [
     display: block;
     font-family: var(--font-display), sans-serif;
     font-weight: 800;
-    font-size: clamp(2rem, 1.3rem + 3.5vw, 3.5rem);
+    font-size: clamp(1.6rem, 1.1rem + 2.8vw, 2.8rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
     color: white;
@@ -1046,8 +1047,8 @@ const slides = [
 
   .logo-showcase {
     position: relative;
-    width: 300px;
-    height: 320px;
+    width: 240px;
+    height: 260px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1055,8 +1056,8 @@ const slides = [
 
   @media (min-width: 1024px) {
     .logo-showcase {
-      width: 360px;
-      height: 380px;
+      width: 280px;
+      height: 300px;
     }
   }
 
@@ -1390,15 +1391,15 @@ const slides = [
   .dispersion-container {
     position: relative;
     width: 100%;
-    max-width: 450px;
-    height: 400px;
+    max-width: 400px;
+    height: 340px;
     perspective: 1200px;
   }
 
   @media (min-width: 640px) {
     .dispersion-container {
-      max-width: 500px;
-      height: 440px;
+      max-width: 440px;
+      height: 380px;
     }
   }
 
@@ -2233,7 +2234,7 @@ const slides = [
   @media (max-width: 1023px) {
     .visual-zone { display: none; }
     .slide-layout { 
-      padding: 6rem 1.5rem 8rem;
+      padding: 4rem 1.5rem 5rem;
       justify-content: center;
     }
     .mesh-blob { filter: blur(70px); }
