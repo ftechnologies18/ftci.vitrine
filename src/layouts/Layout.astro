@@ -233,57 +233,8 @@ const websiteSchema = {
                                 }
                         }
 
-                        // ── 4. Curseur trail (desktop only, spring follow) ────────────────
-                        if (!isTouch && !prefersReducedMotion) {
-                                const trail = document.createElement('div');
-                                trail.className = 'cursor-trail';
-                                trail.setAttribute('aria-hidden', 'true');
-                                document.body.appendChild(trail);
-
-                                let mouseX = window.innerWidth / 2;
-                                let mouseY = window.innerHeight / 2;
-                                let trailX = mouseX;
-                                let trailY = mouseY;
-                                let rafId: number | null = null;
-
-                                const animate = () => {
-                                        trailX += (mouseX - trailX) * 0.2;
-                                        trailY += (mouseY - trailY) * 0.2;
-                                        trail.style.transform = `translate3d(${trailX.toFixed(1)}px, ${trailY.toFixed(1)}px, 0)`;
-
-                                        if (Math.abs(mouseX - trailX) > 0.5 || Math.abs(mouseY - trailY) > 0.5) {
-                                                rafId = requestAnimationFrame(animate);
-                                        } else {
-                                                rafId = null;
-                                        }
-                                };
-
-                                const schedule = () => {
-                                        if (rafId === null) rafId = requestAnimationFrame(animate);
-                                };
-
-                                document.addEventListener(
-                                        'pointermove',
-                                        (e: PointerEvent) => {
-                                                mouseX = e.clientX;
-                                                mouseY = e.clientY;
-                                                schedule();
-                                        },
-                                        { passive: true },
-                                );
-
-                                // Grow on interactive elements
-                                const interactiveSelector =
-                                        'a, button, [data-magnetic], input, textarea, select, [role="button"]';
-                                document.querySelectorAll(interactiveSelector).forEach((el) => {
-                                        el.addEventListener('pointerenter', () => trail.classList.add('is-active'), {
-                                                passive: true,
-                                        });
-                                        el.addEventListener('pointerleave', () => trail.classList.remove('is-active'), {
-                                                passive: true,
-                                        });
-                                });
-                        }
+                        // ── 4. Curseur trail (désactivé) ────────────────
+                        // Le curseur circulaire a été supprimé à la demande de l'utilisateur
                 </script>
         </body>
 </html>

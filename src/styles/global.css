@@ -592,42 +592,6 @@
   }
 
   /* ══════════════════════════════════════════════════════════════════════════
-     CURSOR TRAIL ENHANCED (Tech Visual Signature)
-     - Desktop only (<1024px disabled — useless for touch)
-     - Minimalist circle/dot with slight lag (interpolation/lerp, not 1:1 follow)
-     - Never interferes with text readability on hover
-     - Grows slightly on interactive elements (a, button, inputs)
-     ══════════════════════════════════════════════════════════════════════════ */
-  .cursor-trail {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border-radius: 50%;
-    border: 1.5px solid var(--color-periwinkle);
-    background: rgba(107, 127, 199, 0.15);
-    pointer-events: none;
-    z-index: 9999;
-    will-change: transform;
-    /* Size transitions handled by CSS, position by JS */
-    transition:
-      width 200ms var(--ease-out),
-      height 200ms var(--ease-out),
-      margin 200ms var(--ease-out),
-      border-color 200ms var(--ease-out),
-      background 200ms var(--ease-out);
-  }
-  .cursor-trail.is-active {
-    width: 44px;
-    height: 44px;
-    margin: -22px 0 0 -22px;
-    border-color: var(--color-orange);
-    background: rgba(238, 108, 26, 0.10);
-  }
-
-  /* ══════════════════════════════════════════════════════════════════════════
      CONTACT SECTION STYLES (Dark Theme + Glassmorphism)
      - Dark navy background matching Hero
      - Glassmorphism form card (bg-white/10 backdrop-blur)
@@ -868,9 +832,6 @@
   .halo-glow::before {
     transition: none !important;
   }
-  .cursor-trail {
-    display: none !important;
-  }
   /* Parallax elements (Task #4) */
   .parallax-bg > * {
     transform: none !important;
@@ -890,13 +851,9 @@
   .tilt-content {
     transform: none !important;
   }
-  .cursor-trail {
-    display: none !important;
-  }
 }
 
 /* ── Touch : pas de hover effects (Emil : hover gating) ─────────────────── */
 @media (hover: none), (pointer: coarse) {
   .halo-glow::before { opacity: 0 !important; }
-  .cursor-trail { display: none !important; }
 }
