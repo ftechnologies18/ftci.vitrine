@@ -19,11 +19,20 @@
 
 import { products, productUrls } from '../data/products';
 
+// Liens vers chaque carte de service de la home (ancres dédiées dans
+// src/components/Services.astro). Les libellés sont alignés avec les
+// titres affichés sur la page d'accueil pour éviter toute confusion.
+//
+// NB : la section « Solutions » du footer liste déjà les 4 produits FTCI
+// (SECT, OPUC, CATS, ScolaGest) vers leurs pages vitrines /solutions/*.
+// La section « Services » ci-dessous liste donc les VRAIS services
+// FTCI (conseil, dév, infra, formation) avec ancres vers les cartes
+// correspondantes de la home — pour ne pas répéter les produits.
 const services = [
-        { label: 'SECT - Évaluation IA', href: 'https://sect.ftci.fr' },
-        { label: 'OPUC - Gestion BTP', href: 'https://opuc.ftci.fr' },
-        { label: 'CATS - Présence', href: 'https://cats.ftci.fr' },
-        { label: 'ScolaGest - Scolaire', href: 'https://scolagest.ftci.fr' },
+        { label: 'Transformation Digitale', href: '/#service-transformation-digitale' },
+        { label: 'Développement Web sur Mesure', href: '/#service-developpement-web' },
+        { label: 'Infrastructure IT', href: '/#service-infrastructure-it' },
+        { label: 'Tech Assistance & Formation', href: '/#service-tech-assistance-formation' },
 ];
 
 const socialLinks = [
@@ -162,7 +171,7 @@ const year = new Date().getFullYear();
                                 <h2 class="ft-nav-title">Services</h2>
                                 <ul class="ft-links">
                                         {services.map((service) => (
-                                                <li><a href={service.href} class="ft-link" target="_blank" rel="noopener noreferrer">{service.label}</a></li>
+                                                <li><a href={service.href} class="ft-link">{service.label}</a></li>
                                         ))}
                                 </ul>
                         </nav>

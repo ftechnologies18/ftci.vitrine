@@ -33,6 +33,7 @@
 const services = [
         {
                 num: '01',
+                slug: 'transformation-digitale',
                 title: 'Transformation Digitale',
                 color: 'orange',
                 gradient: 'from-orange to-orange-600',
@@ -45,6 +46,7 @@ const services = [
         },
         {
                 num: '02',
+                slug: 'developpement-web',
                 title: 'Développement Web sur Mesure',
                 color: 'periwinkle',
                 gradient: 'from-periwinkle to-periwinkle-600',
@@ -57,6 +59,7 @@ const services = [
         },
         {
                 num: '03',
+                slug: 'infrastructure-it',
                 title: 'Infrastructure IT',
                 color: 'green',
                 gradient: 'from-green to-green-600',
@@ -69,6 +72,7 @@ const services = [
         },
         {
                 num: '04',
+                slug: 'tech-assistance-formation',
                 title: 'Tech Assistance & Formation',
                 color: 'orange',
                 gradient: 'from-orange to-orange-600',
@@ -118,7 +122,8 @@ const services = [
 
                         {services.map((service, idx) => (
                                 <div
-                                        class="relative pl-16 md:pl-24 pb-12 last:pb-0 observe-reveal service-card"
+                                        id={`service-${service.slug}`}
+                                        class="relative pl-16 md:pl-24 pb-12 last:pb-0 observe-reveal service-card scroll-mt-24"
                                         data-reveal-delay={idx}
                                 >
                                         <!-- Cercle numéroté gradient -->
