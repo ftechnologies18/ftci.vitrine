@@ -795,23 +795,16 @@
 .binary-column {
   position: absolute;
   top: -150%;
-  left: var(--col-pos, 5%);
-  width: clamp(80px, 14vw, 180px);
+  left: var(--col-pos, 0%);
+  width: 12%; /* Largeur uniforme pour couvrir toute la section */
   height: 400%; /* Hauteur étendue pour couvrir toute la section + animation */
   display: flex;
   flex-direction: column;
-  gap: 0.6em;
+  gap: 0.5em;
   animation: binaryScroll var(--speed, 20s) linear infinite;
   animation-delay: var(--delay, 0s);
   opacity: 0.35; /* Opacité élevée pour bonne visibilité */
 }
-
-/* Positions des colonnes réparties sur la largeur */
-.binary-column:nth-child(1) { --col-pos: 3%; }
-.binary-column:nth-child(2) { --col-pos: 22%; }
-.binary-column:nth-child(3) { --col-pos: 45%; }
-.binary-column:nth-child(4) { --col-pos: 68%; }
-.binary-column:nth-child(5) { --col-pos: 82%; }
 
 /* Colonne en sens inverse pour variété */
 .binary-column--reverse {
