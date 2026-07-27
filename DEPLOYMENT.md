@@ -1,6 +1,80 @@
-# Guide de Déploiement — FTCI sur Cloudflare Pages
+# Guide de Déploiement — FTCI sur Cloudflare Workers
 
-Ce guide détaille le déploiement du site FTCI vitrine sur **Cloudflare Pages** avec le domaine **ftci.fr** (actuellement chez AMEN).
+Ce guide détaille le déploiement du site FTCI vitrine sur **Cloudflare Workers** (via l'adapter `@astrojs/cloudflare`) avec le domaine **ftci.fr**.
+
+> ⚠️ **Note importante** : le projet est déployé sur **Cloudflare Workers** (runtime Workers + static assets), pas sur Cloudflare Pages. Le sous-domaine de preview est `ftci-vitrine.freelancetechnologies-ci.workers.dev`.
+
+---
+
+## 🚀 Pipeline CI/CD (GitHub Actions → Cloudflare Workers)
+
+Le déploiement automatique est piloté par **GitHub Actions** (voir `.github/workflows/deploy.yml`).
+
+### Fonctionnement
+
+```
+git push origin main
+    ↓
+GitHub Actions se déclenche
+    ↓
+1. Checkout du code
+2. Setup Node 22 + pnpm 9.15.0
+3. pnpm install --frozen-lockfile
+4. pnpm run build        (astro build, NODE_ENV=production)
+5. wrangler deploy       (via cloudflare/wrangler-action@v3)
+    ↓
+Worker ftci-vitrine mis à jour sur https://ftci.fr
+```
+
+### Prérequis : secrets GitHub Actions
+
+Le workflow utilise deux secrets à configurer dans **GitHub → Settings → Secrets and variables → Actions → New repository secret** :
+
+| Nom du secret | Valeur | Où la trouver |
+|---|---|---|
+| `CLOUDFLARE_API_TOKEN` | Token API Cloudflare (scoped "Edit Cloudflare Workers") | dash.cloudflare.com → My Profile → API Tokens |
+| `CLOUDFLARE_ACCOUNT_ID` | `319de93db5a99db76b4bf41f9d06b785` | dash.cloudflare.com → (sidebar) Account ID |
+
+⚠️ **Sécurité** : ne JAMAIS committer ces valeurs dans le repo. Elles doivent vivre uniquement dans les secrets GitHub.
+
+### Déclenchement
+
+- **Automatique** : à chaque `git push` sur la branche `main`
+- **Manuel** : onglet "Actions" → "Build & Deploy to Cloudflare Workers" → "Run workflow"
+
+### Annulation des runs concurrents
+
+Un nouveau push annule automatiquement le run précédent s'il est encore en cours (config `concurrency: cancel-in-progress: true`). Cela évite les déploiements concurrents et libère le runner plus tôt.
+
+### Consulter les logs
+
+1. GitHub → onglet **Actions**
+2. Cliquer sur le run concerné
+3. Étape "☁️ Déploiement sur Cloudflare Workers" → logs détaillés du `wrangler deploy`
+
+### En cas d'échec
+
+- **`pnpm install --frozen-lockfile` échoue** : le `pnpm-lock.yaml` n'est pas à jour. Le regénérer localement avec `pnpm install` puis committer.
+- **`wrangler deploy` échoue avec "Authentication error"** : vérifier que `CLOUDFLARE_API_TOKEN` et `CLOUDFLARE_ACCOUNT_ID` sont bien configurés et que le token a les permissions "Edit Cloudflare Workers".
+- **`wrangler deploy` échoue avec "KV namespace not found"** : l'ID `a46dcd55e8ec4c04890ced3cbc1b3557` dans `wrangler.jsonc` ne correspond à aucun namespace du compte. Le recréer dans le dashboard Cloudflare.
+
+---
+
+## 🛠️ Déploiement manuel (fallback)
+
+Si GitHub Actions est indisponible ou pour tester un build local :
+
+```bash
+# 1. Installer les dépendances
+pnpm install
+
+# 2. Build production
+NODE_ENV=production pnpm run build
+
+# 3. Déployer (nécessite CLOUDFLARE_API_TOKEN en env ou `wrangler login`)
+CLOUDFLARE_API_TOKEN=xxxxx CLOUDFLARE_ACCOUNT_ID=319de93db5a99db76b4bf41f9d06b785 \
+  pnpm run deploy
+```
 
 ---
 

@@ -1,0 +1,68 @@
+name: Build & Deploy to Cloudflare Workers
+
+# Déclenchement automatique :
+#   - à chaque push sur main (production)
+#   - manuellement via le bouton "Run workflow" dans l'onglet Actions
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Évite les déploiements concurrents : un nouveau push annule le précédent
+# s'il est encore en cours (et libère le runner plus tôt).
+concurrency:
+  group: deploy-cloudflare-workers
+  cancel-in-progress: true
+
+# Permissions minimales requises par le checkout.
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "9.15.0"
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 🧰 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: 📦 Installation des dépendances
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔨 Build Astro (production)
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: ☁️ Déploiement sur Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
+          # wrangler.jsonc contient déjà le nom du Worker (ftci-vitrine),
+          # le KV namespace MESSAGE_STORE et la compatibility_date.
+          # Pas besoin de préciser --name ici.
+
+      - name: 📢 Notification d'échec
+        if: failure()
+        run: |
+          echo "::error title=Déploiement échoué::Le build ou le déploiement a échoué. Consultez les logs ci-dessus."
+          echo "Vérifiez que les secrets CLOUDFLARE_API_TOKEN et CLOUDFLARE_ACCOUNT_ID sont bien configurés dans Settings → Secrets and variables → Actions."
