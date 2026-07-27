@@ -879,8 +879,12 @@
    Inspiration : Digital Transformation / Industry 4.0
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Container des engrenages ────────────────────────────────────────────── */
-.gears-container {
+/* ═══════════════════════════════════════════════════════════════════════════
+   FLOATING ICONS MATRIX — Icônes technology en rotation (sans engrenages)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Container des icônes flottantes ─────────────────────────────────────── */
+.floating-icons-container {
         position: absolute;
         inset: 0;
         overflow: hidden;
@@ -888,69 +892,59 @@
         z-index: 1;
 }
 
-/* ── Engrenages individuels ──────────────────────────────────────────────── */
-.gear {
+/* ── Icônes individuelles ──────────────────────────────────────────────── */
+.floating-icon {
         position: absolute;
-        width: var(--gear-size, 150px);
-        height: var(--gear-size, 150px);
-        left: var(--gear-x, 50%);
-        top: var(--gear-y, 50%);
-        opacity: 0.06; /* Très estompé */
+        left: var(--icon-x, 50%);
+        top: var(--icon-y, 50%);
+        color: var(--icon-color, #0f1e3d);
         
         /* Animation de rotation continue */
-        animation: gearRotate var(--gear-speed, 30s) linear infinite;
+        animation: iconFloatRotate var(--icon-speed, 30s) linear infinite;
+        
+        /* Subtile pulsation pour effet vivant */
+        filter: drop-shadow(0 2px 8px currentColor);
+}
+
+/* Tailles des icônes */
+.floating-icon--lg { 
+        width: 120px; 
+        height: 120px; 
+        opacity: 0.10;
+}
+.floating-icon--md { 
+        width: 90px; 
+        height: 90px; 
+        opacity: 0.12;
+}
+.floating-icon--sm { 
+        width: 70px; 
+        height: 70px; 
+        opacity: 0.13;
+}
+.floating-icon--xs { 
+        width: 55px; 
+        height: 55px; 
+        opacity: 0.14;
+}
+
+/* SVG inside icon container */
+.floating-icon svg {
+        width: 100%;
+        height: 100%;
 }
 
 /* Sens de rotation */
-.gear--cw {
+.floating-icon--cw {
         /* clockwise - sens horaire (défaut) */
 }
 
-.gear--ccw {
+.floating-icon--ccw {
         animation-direction: reverse; /* counter-clockwise */
 }
 
-/* Tailles spécifiques pour ajustement fin */
-.gear--lg { opacity: 0.05; } /* Grand = plus transparent */
-.gear--md { opacity: 0.06; }
-.gear--sm { opacity: 0.07; }
-.gear--xs { opacity: 0.08; } /* Petit = légèrement plus visible */
-
-/* Chemin des engrenages */
-.gear-path {
-        stroke: #0f1e3d; /* Navy FTCI */
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-}
-
-/* Couleurs variées par engrenage pour richesse visuelle */
-.gear:nth-child(2n) .gear-path { stroke: #6b7fc7; } /* Periwinkle */
-.gear:nth-child(3n) .gear-path { stroke: #1e9e4f; } /* Vert */
-.gear:nth-child(4n) .gear-path { stroke: #ee6c1a; } /* Orange */
-
-/* Icône dans les engrenages - VISIBLE */
-.gear-icon {
-        color: #0f1e3d;
-        opacity: 0.85; /* Bien visible maintenant */
-}
-
-.gear--with-icon .gear-icon path,
-.gear--with-icon .gear-icon rect,
-.gear--with-icon .gear-icon circle,
-.gear--with-icon .gear-icon line,
-.gear--with-icon .gear-icon polyline {
-        stroke: currentColor;
-        fill: none;
-}
-
-.gear--with-icon .gear-icon text {
-        font-family: 'Courier New', monospace;
-        fill: currentColor;
-}
-
-/* Animation de rotation */
-@keyframes gearRotate {
+/* Animation de rotation fluide */
+@keyframes iconFloatRotate {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
 }
@@ -1014,20 +1008,20 @@
         100% { transform: translateY(-50%); }
 }
 
-/* ── Responsive Gear Matrix ──────────────────────────────────────────────── */
+/* ── Responsive Floating Icons Matrix ───────────────────────────────────── */
 @media (max-width: 1024px) {
-        .gear {
-                opacity: 0.04 !important; /* Encore plus subtil sur tablette */
+        .floating-icon {
+                opacity: 0.07 !important; /* Encore plus subtil sur tablette */
         }
-        .gear--lg { --gear-size: 200px !important; }
-        .gear--md { --gear-size: 140px !important; }
-        .gear--sm { --gear-size: 100px !important; }
-        .gear--xs { --gear-size: 70px !important; }
+        .floating-icon--lg { width: 90px !important; height: 90px !important; }
+        .floating-icon--md { width: 70px !important; height: 70px !important; }
+        .floating-icon--sm { width: 55px !important; height: 55px !important; }
+        .floating-icon--xs { width: 45px !important; height: 45px !important; }
 }
 
 @media (max-width: 767px) {
-        .gears-container {
-                display: none; /* Cacher les engrenages sur mobile (trop lourd) */
+        .floating-icons-container {
+                display: none; /* Cacher les icônes sur mobile */
         }
         
         .gear-matrix-binary {
@@ -1046,9 +1040,9 @@
         }
 }
 
-/* ── Reduced Motion : désactiver les animations Gear Matrix ──────────────── */
+/* ── Reduced Motion : désactiver les animations Floating Icons ───────────── */
 @media (prefers-reduced-motion: reduce) {
-        .gears-container,
+        .floating-icons-container,
         .gear-matrix-binary {
                 display: none !important;
         }
