@@ -365,11 +365,27 @@ const nodeColors = products.map((p) => haloHex[p.accentColor]);
     padding: 2rem 0 3rem;
   }
 
-  /* Badges Tech */
+  /* Badges Tech
+     (les utility classes Tailwind `inline-flex items-center gap-1.5 px-4 py-2
+     rounded-full text-xs font-semibold bg-white border border-navy/8 text-navy/70
+     shadow-sm` ont été converties en CSS natif ci-dessous pour rester cohérent
+     avec la règle :hover qui utilise déjà du CSS natif et éviter une erreur
+     PostCSS "Missed semicolon" — on ne peut pas coller des classes Tailwind
+     dans une déclaration `display:`). */
   .eco-badge {
-    display: inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold
-               bg-white border border-navy/8 text-navy/70 shadow-sm
-               transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    background-color: #ffffff;
+    border: 1px solid rgba(15, 30, 61, 0.08);
+    color: rgba(15, 30, 61, 0.7);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .eco-badge:hover {
     border-color: var(--color-orange, #EE6C1A);
