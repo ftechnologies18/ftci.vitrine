@@ -7,6 +7,13 @@ worker-configuration.d.ts
 # dependencies
 node_modules/
 
+# bun lockfile — le projet utilise pnpm (voir package.json `packageManager`).
+# Garder uniquement pnpm-lock.yaml pour éviter toute ambigüité côté CI/CD
+# (Cloudflare Workers Builds et GitHub Actions détectent le package manager
+# via le lockfile présent ; bun.lock en double pouvait causer des builds instables).
+bun.lock
+bun.lockb
+
 # logs
 npm-debug.log*
 yarn-debug.log*

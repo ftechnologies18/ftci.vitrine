@@ -14,20 +14,18 @@
       "binding": "MESSAGE_STORE",
       "id": "a46dcd55e8ec4c04890ced3cbc1b3557"
     }
-  ]
+  ],
 
-  // NOTE — Pipeline CI/CD :
-  // Le build ET le déploiement sont désormais pilotés par GitHub Actions
-  // (voir .github/workflows/deploy.yml). Ce workflow installe les dépendances,
-  // lance `astro build`, puis `wrangler deploy`.
+  // Configuration de build pour Cloudflare Workers Builds (intégration Git native).
+  // Workers Builds lit cette directive pour savoir comment construire le projet
+  // lorsqu'un push GitHub est reçu. Le déploiement (`wrangler deploy`) est
+  // ensuite exécuté automatiquement par Workers Builds après le build.
   //
-  // Aucune directive `build` n'est nécessaire ici : elle serait ignorée par
-  // wrangler (warning "not applicable when using Vite") et n'est utilisée que
-  // par Workers Builds (intégration Git native Cloudflare), que nous n'utilisons
-  // pas. Si vous souhaitez réactiver Workers Builds à l'avenir, décommentez :
-  //
-  // , "build": {
-  //     "command": "pnpm install --no-frozen-lockfile && pnpm run build",
-  //     "cwd": "."
-  //   }
+  // IMPORTANT : ne PAS utiliser `wrangler types` dans le build — cette commande
+  // nécessite un token Cloudflare API et échoue en environnement CI.
+  // Le fichier src/env.d.ts fournit les déclarations de types minimales.
+  "build": {
+    "command": "pnpm install --no-frozen-lockfile && pnpm run build",
+    "cwd": "."
+  }
 }
