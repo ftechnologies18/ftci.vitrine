@@ -248,19 +248,19 @@ const servicePillars = [
                                         </svg>
                                         L'entreprise
                                 </span>
-                                <h2 class="mb-6">À Propos de FTCI</h2>
+                                <h2 class="about-title mb-6">À Propos de FTCI</h2>
 
                                 <p class="text-lg text-gray-text leading-relaxed mb-5">
-                                        <strong class="text-navy font-semibold">FTCI — Freelance Technologies Côte d'Ivoire</strong>
-                                        est une <strong class="text-navy font-semibold">Entreprise de Services du Numérique (ESN)</strong>
+                                        <strong class="text-navy font-semibold">FTCI — Freelance Technologies Côte d'Ivoire</strong>{' '}
+                                        est une <strong class="text-navy font-semibold">Entreprise de Services du Numérique (ESN)</strong>{' '}
                                         basée à Abidjan. Notre cœur métier : accompagner les organisations dans
                                         leur transformation digitale, de la stratégie à la formation des équipes.
                                 </p>
                                 <p class="text-gray-text leading-relaxed mb-6">
                                         Quatre pôles de services structurent notre activité — conseil,
                                         développement sur mesure, infrastructure IT et tech assistance & formation
-                                        — complétés par l'édition de <strong class="text-navy font-semibold">4 solutions SaaS</strong>
-                                        (SECT, OPUC, CATS, ScolaGest) conçues pour les réalités du marché africain.
+                                        — complétés par l'édition de solutions SaaS conçues pour les réalités
+                                        du marché africain.
                                 </p>
 
                                 <!-- ── Pôles de services (cœur métier ESN) ──────────────────────── -->
@@ -556,6 +556,16 @@ const servicePillars = [
 </script>
 
 <style>
+        /* ── Titre de section (aligné sur .section-header h2 du global.css) ────── */
+        /* Le h2 de About n'est pas dans un .section-header (layout 2 colonnes),
+           on reprend donc explicitement la taille responsive + couleur navy pour
+           garder une cohérence typographique avec les autres sections. */
+        .about-title {
+                font-size: clamp(1.875rem, 1.4rem + 2.4vw, 2.75rem);
+                color: var(--color-navy);
+                line-height: var(--lh-h2);
+        }
+
         /* ── Scroll Reveal Enhanced (About section) ────────────────────────────── */
         #about .observe-reveal {
                 opacity: 0;
