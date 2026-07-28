@@ -1,6 +1,6 @@
 # FTCI — Freelance Technologies Côte d'Ivoire
 
-Site vitrine institutionnel pour **Freelance Technologies Côte d'Ivoire**, cabinet de conseil en transformation digitale et éditeur de solutions SaaS pour le marché africain.
+Site vitrine institutionnel pour **Freelance Technologies Côte d'Ivoire**, Entreprise de Services du Numérique (ESN) basée à Abidjan. FTCI accompagne les organisations dans leur transformation digitale à travers 4 pôles de services (conseil, développement sur mesure, infrastructure IT, tech assistance & formation) et édite 4 solutions SaaS (SECT, OPUC, CATS, ScolaGest) pour le marché africain.
 
 **Production** : [https://ftci.fr](https://ftci.fr) · **Preview** : [ftci-vitrine.freelancetechnologies-ci.workers.dev](https://ftci-vitrine.freelancetechnologies-ci.workers.dev)
 

@@ -1,7 +1,7 @@
 # FTCI Site Vitrine - Design Direction
 
 ## Contexte
-Freelance Technologies Côte d'Ivoire (FTCI) est un cabinet de conseil en transformation digitale et éditeur de solutions SaaS. Le site vitrine doit crédibiliser la structure, centraliser la présentation des produits et véhiculer une image d'excellence technique.
+Freelance Technologies Côte d'Ivoire (FTCI) est une Entreprise de Services du Numérique (ESN) basée à Abidjan. Son cœur métier : 4 pôles de services (conseil, développement sur mesure, infrastructure IT, tech assistance & formation), complétés par l'édition de 4 solutions SaaS (SECT, OPUC, CATS, ScolaGest). Le site vitrine doit crédibiliser la structure, centraliser la présentation des services et produits, et véhiculer une image d'excellence technique.
 
 ---
 

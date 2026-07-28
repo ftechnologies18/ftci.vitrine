@@ -54,6 +54,32 @@ const keyPoints = [
                 iconPath: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z',
         },
 ];
+
+// Les 4 pôles de services cœur métier de FTCI (ESN).
+// Affichés dans la refonte de la section About pour ancrer l'identité
+// « Entreprise de Services du Numérique » au-delà des solutions SaaS.
+const servicePillars = [
+        {
+                code: 'Conseil',
+                label: 'Transformation Digitale',
+                desc: 'Audit, roadmap stratégique & conduite du changement.',
+        },
+        {
+                code: 'Dev',
+                label: 'Développement Sur Mesure',
+                desc: 'Applications web, mobiles, API & PWA pour vos processus métiers.',
+        },
+        {
+                code: 'Infra',
+                label: 'Infrastructure IT',
+                desc: 'Cloud, hybride, sécurité & continuité d\'activité.',
+        },
+        {
+                code: 'Académie',
+                label: 'Tech Assistance & Formation',
+                desc: 'Assistance hardware/software, formations IT & Intelligence Artificielle.',
+        },
+];
 ---
 
 <section id="about" class="relative py-20 md:py-32 bg-white overflow-hidden">
@@ -226,22 +252,34 @@ const keyPoints = [
 
                                 <p class="text-lg text-gray-text leading-relaxed mb-5">
                                         <strong class="text-navy font-semibold">FTCI — Freelance Technologies Côte d'Ivoire</strong>
-                                        est un cabinet de conseil en transformation digitale et un éditeur de
-                                        solutions SaaS. Nous concevons des plateformes qui répondent aux défis
-                                        spécifiques du marché africain : éducation, BTP, gestion scolaire et
-                                        présence étudiante.
+                                        est une <strong class="text-navy font-semibold">Entreprise de Services du Numérique (ESN)</strong>
+                                        basée à Abidjan. Notre cœur métier : accompagner les organisations dans
+                                        leur transformation digitale, de la stratégie à la formation des équipes.
                                 </p>
-                                <p class="text-gray-text leading-relaxed mb-8">
-                                        Notre approche combine expertise technique de pointe et compréhension
-                                        profonde du terrain. Chaque solution est pensée pour fonctionner dans
-                                        des contextes de connectivité limitée, avec des modes de paiement locaux
-                                        et des réglementations régionales.
+                                <p class="text-gray-text leading-relaxed mb-6">
+                                        Quatre pôles de services structurent notre activité — conseil,
+                                        développement sur mesure, infrastructure IT et tech assistance & formation
+                                        — complétés par l'édition de <strong class="text-navy font-semibold">4 solutions SaaS</strong>
+                                        (SECT, OPUC, CATS, ScolaGest) conçues pour les réalités du marché africain.
                                 </p>
+
+                                <!-- ── Pôles de services (cœur métier ESN) ──────────────────────── -->
+                                <div class="service-pillars-grid mb-8">
+                                        {servicePillars.map((pillar, idx) => (
+                                                <div class="service-pillar key-point-item" data-key-delay={idx}>
+                                                        <span class="pillar-code">{pillar.code}</span>
+                                                        <div class="pillar-body">
+                                                                <h3 class="text-sm font-display font-bold text-navy leading-tight">{pillar.label}</h3>
+                                                                <p class="text-xs text-gray-text leading-snug mt-0.5">{pillar.desc}</p>
+                                                        </div>
+                                                </div>
+                                        ))}
+                                </div>
 
                                 <!-- 3 points clés avec stagger -->
                                 <div class="space-y-4 mb-8">
                                         {keyPoints.map((point, idx) => (
-                                                <div class="flex items-start gap-4 key-point-item" data-key-delay={idx}>
+                                                <div class="flex items-start gap-4 key-point-item" data-key-delay={idx + 4}>
                                                         <div class={`w-10 h-10 rounded-lg ${point.bgClass} flex items-center justify-center flex-shrink-0 key-point-icon`}>
                                                                 <svg class={`w-5 h-5 ${point.textClass}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={point.iconPath} />
@@ -255,9 +293,9 @@ const keyPoints = [
                                         ))}
                                 </div>
 
-                                <a href="/#contact" data-magnetic="14" class="btn-outline magnetic">
+                                <a href="/#services" data-magnetic="14" class="btn-outline magnetic">
                                         <span>
-                                                En savoir plus
+                                                Découvrir nos services
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                 </svg>
@@ -545,6 +583,78 @@ const keyPoints = [
         .key-point-item.is-visible {
                 opacity: 1;
                 transform: translateX(0);
+        }
+
+        /* ── Service Pillars Grid (cœur métier ESN) ────────────────────────────── */
+        /* Grille 2×2 des 4 pôles de services FTCI. Chaque pilier = code court
+           (badge coloré) + label + description courte. Met en avant l'identité
+           « Entreprise de Services du Numérique » au-dessus des solutions SaaS. */
+        .service-pillars-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.75rem;
+        }
+
+        .service-pillar {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.625rem;
+                padding: 0.75rem 0.875rem;
+                background: var(--color-light-bg, #f6f7fb);
+                border: 1px solid rgba(15, 30, 61, 0.06);
+                border-radius: 0.75rem;
+                transition:
+                        border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+                        background 220ms cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+                .service-pillar:hover {
+                        border-color: rgba(238, 108, 26, 0.35);
+                        background: #fff;
+                        transform: translateY(-1px);
+                }
+        }
+
+        .pillar-code {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 2.5rem;
+                padding: 0.25rem 0.5rem;
+                font-family: var(--font-display, inherit);
+                font-size: 0.7rem;
+                font-weight: 800;
+                line-height: 1;
+                color: #fff;
+                background: linear-gradient(135deg, var(--color-navy) 0%, #1e3a5f 100%);
+                border-radius: 0.5rem;
+                letter-spacing: 0.02em;
+                flex-shrink: 0;
+                align-self: stretch;
+        }
+
+        /* Couleurs alternées par pilier (orange, periwinkle, green, orange) */
+        .service-pillar:nth-child(1) .pillar-code {
+                background: linear-gradient(135deg, var(--color-orange) 0%, #c45414 100%);
+        }
+        .service-pillar:nth-child(2) .pillar-code {
+                background: linear-gradient(135deg, var(--color-periwinkle) 0%, #5563b0 100%);
+        }
+        .service-pillar:nth-child(3) .pillar-code {
+                background: linear-gradient(135deg, var(--color-green) 0%, #156b1f 100%);
+        }
+        .service-pillar:nth-child(4) .pillar-code {
+                background: linear-gradient(135deg, var(--color-navy) 0%, #1e3a5f 100%);
+        }
+
+        .pillar-body {
+                min-width: 0;
+        }
+
+        .pillar-body h3 {
+                margin: 0;
         }
 
         /* Icon subtle pop */
