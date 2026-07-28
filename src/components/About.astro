@@ -227,6 +227,31 @@ const servicePillars = [
                                 <text x="50" y="62" text-anchor="middle" font-family="'Courier New', monospace" font-size="28" font-weight="bold" fill="currentColor" stroke="none">AI</text>
                         </svg>
                 </div>
+                
+                <!-- Icon 7 : CYBERSÉCURITÉ (bas centre) -->
+                <div class="floating-icon floating-icon--md floating-icon--cw" style="--icon-x: 48%; --icon-y: 86%; --icon-speed: 38s; --icon-color: #1e9e4f;">
+                        <svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Bouclier extérieur -->
+                                <path d="M60 5L110 25V65C110 95 85 120 60 135C35 120 10 95 10 65V25L60 5Z" 
+                                        stroke="currentColor" stroke-width="2.5" fill="none"/>
+                                <!-- Bouclier intérieur -->
+                                <path d="M60 15L100 32V63C100 88 80 108 60 120C40 108 20 88 20 63V32L60 15Z" 
+                                        stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.4"/>
+                                <!-- Cadenas -->
+                                <rect x="45" y="62" width="30" height="26" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <!-- Anneau du cadenas -->
+                                <path d="M50 62V52C50 46.477 54.477 42 60 42C65.523 42 70 46.477 70 52V62" 
+                                        stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                <!-- Trou de clé -->
+                                <circle cx="60" cy="73" r="4" fill="currentColor" opacity="0.6"/>
+                                <circle cx="60" cy="73" r="2" fill="currentColor"/>
+                                <!-- Points circuit décoratifs -->
+                                <circle cx="25" cy="55" r="2" fill="currentColor" opacity="0.3"/>
+                                <circle cx="95" cy="55" r="2" fill="currentColor" opacity="0.3"/>
+                                <circle cx="35" cy="105" r="1.5" fill="currentColor" opacity="0.2"/>
+                                <circle cx="85" cy="105" r="1.5" fill="currentColor" opacity="0.2"/>
+                        </svg>
+                </div>
         </div>
 
         <!-- ── Parallax background elements existants ───────────────────────────── -->
@@ -343,31 +368,6 @@ const servicePillars = [
                                 </div>
                         </div>
                 </div>
-        </div>
-
-        <!-- ── Icône Cybersécurité — Espace vide bas de section ─────────────────── -->
-        <div class="cybersecurity-badge" aria-hidden="true">
-                <svg viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="cybersecurity-icon">
-                        <!-- Bouclier extérieur -->
-                        <path d="M60 5L110 25V65C110 95 85 120 60 135C35 120 10 95 10 65V25L60 5Z" 
-                                stroke="currentColor" stroke-width="2" fill="none" class="shield-outline"/>
-                        <!-- Bouclier intérieur -->
-                        <path d="M60 15L100 32V63C100 88 80 108 60 120C40 108 20 88 20 63V32L60 15Z" 
-                                stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.4" class="shield-inner"/>
-                        <!-- Cadenas -->
-                        <rect x="45" y="62" width="30" height="26" rx="4" stroke="currentColor" stroke-width="2" fill="none" class="lock-body"/>
-                        <!-- Anneau du cadenas -->
-                        <path d="M50 62V52C50 46.477 54.477 42 60 42C65.523 42 70 46.477 70 52V62" 
-                                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" class="lock-shackle"/>
-                        /* Trou de clé */
-                        <circle cx="60" cy="73" r="4" fill="currentColor" opacity="0.6" class="keyhole-outer"/>
-                        <circle cx="60" cy="73" r="2" fill="currentColor" class="keyhole-inner"/>
-                        <!-- Points circuit décoratifs -->
-                        <circle cx="25" cy="55" r="2" fill="currentColor" opacity="0.3" class="circuit-dot"/>
-                        <circle cx="95" cy="55" r="2" fill="currentColor" opacity="0.3" class="ircuit-dot"/>
-                        <circle cx="35" cy="105" r="1.5" fill="currentColor" opacity="0.2" class="circuit-dot"/>
-                        <circle cx="85" cy="105" r="1.5" fill="currentColor" opacity="0.2" class="circuit-dot"/>
-                </svg>
         </div>
 </section>
 
@@ -739,73 +739,6 @@ const servicePillars = [
                 transition: none;
         }
 
-        /* ── Cybersécurité Badge (bas de section) ───────────────────────────────── */
-        .cybersecurity-badge {
-                position: absolute;
-                bottom: 2rem;
-                left: 50%;
-                transform: translateX(-50%);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                animation: cyberBadgeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
-                z-index: 5;
-                color: var(--color-green);
-                pointer-events: none;
-        }
-
-        @keyframes cyberBadgeIn {
-                to {
-                        opacity: 1;
-                }
-        }
-
-        .cybersecurity-icon {
-                width: 70px;
-                height: auto;
-                filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.15));
-        }
-
-        /* Animation subtile pulse sur le bouclier */
-        .shield-outline {
-                stroke-dasharray: 300;
-                stroke-dashoffset: 300;
-                animation: shieldDraw 2s ease-out 1.2s forwards;
-        }
-
-        @keyframes shieldDraw {
-                to {
-                        stroke-dashoffset: 0;
-                }
-        }
-
-        /* Pulse subtil sur l'icône */
-        .cybersecurity-icon {
-                animation: iconPulse 3s ease-in-out 1.5s infinite;
-        }
-
-        @keyframes iconPulse {
-                0%, 100% { 
-                        filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.15));
-                        transform: scale(1);
-                }
-                50% { 
-                        filter: drop-shadow(0 6px 20px rgba(16, 185, 129, 0.25));
-                        transform: scale(1.03);
-                }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-                .cybersecurity-badge {
-                        bottom: 1.5rem;
-                }
-                .cybersecurity-icon {
-                        width: 55px;
-                }
-        }
-
         /* ── Reduced Motion Overrides ─────────────────────────────────────────── */
         @media (prefers-reduced-motion: reduce) {
         #about .observe-reveal {
@@ -831,21 +764,6 @@ const servicePillars = [
         .parallax-circuit,
         .parallax-glow {
                 transform: none !important;
-        }
-
-        .cybersecurity-badge {
-                opacity: 0.6 !important;
-                transform: none !important;
-                animation: none !important;
-        }
-
-        .cybersecurity-icon {
-                animation: none !important;
-        }
-
-        .shield-outline {
-                stroke-dashoffset: 0 !important;
-                animation: none !important;
         }
         }
 </style>
