@@ -5,10 +5,20 @@ import config from 'virtual:keystatic-config';
 
 export const prerender = false;
 
-const handler = makeHandler({ config });
+// Lazy-init : makeHandler peut throw à l'initialisation si la config est
+// incomplète (ex: secrets manquants en dev). On wrap pour éviter que le
+// module entier fail et que la route soit marquée "not found" par le routeur.
+let _handler: ReturnType<typeof makeHandler> | null = null;
+function getHandler() {
+        if (!_handler) {
+                _handler = makeHandler({ config });
+        }
+        return _handler;
+}
 
 export const ALL: APIRoute = async (ctx) => {
         try {
+                const handler = getHandler();
                 return await handler(ctx);
         } catch (err) {
                 console.error('[keystatic-api] Handler error:', err);
