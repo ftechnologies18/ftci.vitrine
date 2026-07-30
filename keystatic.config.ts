@@ -60,27 +60,19 @@ export type BlogCategory = (typeof BLOG_CATEGORIES)[number]['value'];
 /**
  * Keystatic storage: `local` in dev, `cloud` in production.
  *
- * We switched from `kind: 'github'` (custom OAuth App) to `kind: 'cloud'`
- * (Keystatic Cloud) because the @keystatic/astro + @astrojs/cloudflare adapter
- * has a deep bug with session cookie propagation — the OAuth callback succeeds
- * but the session cookie never reaches the browser, causing "Authorization
- * failed" on the UI.
+ * We use Keystatic Cloud (https://cloud.keystatic.com) which handles the entire
+ * GitHub authentication flow transparently. No GitHub OAuth App to configure,
+ * no KEYSTATIC_GITHUB_CLIENT_ID / KEYSTATIC_GITHUB_CLIENT_SECRET secrets to
+ * maintain — Keystatic Cloud proxies the OAuth flow through its own service.
  *
- * Keystatic Cloud handles the entire GitHub OAuth flow transparently:
- *   - No GitHub OAuth App to configure
- *   - No KEYSTATIC_GITHUB_CLIENT_ID / KEYSTATIC_GITHUB_CLIENT_SECRET secrets
- *   - Authentication is proxied through cloud.keystatic.com
- *   - Only KEYSTATIC_SECRET is still needed (to sign local session cookies)
+ * Only KEYSTATIC_SECRET is still needed (bound as a Worker secret) to sign the
+ * local session cookies that Keystatic Cloud sets after authentication.
  *
- * Setup (one-time, ~2 min):
- *   1. Go to https://cloud.keystatic.com
- *   2. Sign in with GitHub (must have write access to the repo)
- *   3. Create a project, connect it to ftechnologies18/ftci.vitrine
- *   4. Note the project identifier (format: 'team/project')
- *   5. Set it below in `cloud.project`
- *
- * The `cloud.project` value is NOT secret — it's a public identifier used to
- * route the OAuth flow to the correct Keystatic Cloud project.
+ * Setup (one-time, already done):
+ *   1. Project created on https://cloud.keystatic.com under team 'ftci'
+ *   2. Repo ftechnologies18/ftci.vitrine connected to the project
+ *   3. Project identifier: 'ftci/ftci-vitrine' (set below in cloud.project)
+ *   4. Primary URL set to https://ftci.fr (allowed auth origin)
  *
  * Local dev (`astro dev`) keeps using `kind: 'local'` for offline editing.
  */

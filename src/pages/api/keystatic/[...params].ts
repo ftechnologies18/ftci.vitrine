@@ -7,8 +7,8 @@
  *
  * En mode Keystatic Cloud (storage.kind === 'cloud'), l'authentification
  * GitHub est gérée par api.keystatic.cloud — plus besoin de secrets OAuth
- * GitHub (KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET).
- * Seul KEYSTATIC_SECRET reste nécessaire pour signer les cookies de session.
+ * GitHub. Seul KEYSTATIC_SECRET reste nécessaire pour signer les cookies
+ * de session locaux.
  */
 
 import type { APIRoute } from 'astro';
