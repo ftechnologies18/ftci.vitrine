@@ -8,12 +8,18 @@ export const prerender = false;
 const handler = makeHandler({ config });
 
 export const ALL: APIRoute = async (ctx) => {
-        return new Response(
-                JSON.stringify({
-                        ok: true,
-                        msg: 'makeHandler called successfully',
-                        hasHandler: typeof handler,
-                }),
-                { status: 200, headers: { 'Content-Type': 'application/json' } },
-        );
+        try {
+                const result = await handler(ctx);
+                return result;
+        } catch (err) {
+                console.error('[keystatic-api] Handler error:', err);
+                return new Response(
+                        JSON.stringify({
+                                ok: false,
+                                error: err instanceof Error ? err.message : String(err),
+                                stack: err instanceof Error ? err.stack?.split('\n').slice(0, 8).join('\n') : undefined,
+                        }),
+                        { status: 500, headers: { 'Content-Type': 'application/json' } },
+                );
+        }
 };
