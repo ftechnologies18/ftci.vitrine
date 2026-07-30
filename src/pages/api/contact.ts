@@ -606,14 +606,23 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
         //    ExecutionContext at `locals.cfContext`. The older `locals.runtime.ctx`
         //    path was removed and now throws. We check cfContext first and keep
         //    the legacy path as a fallback for older adapter versions.
+        //
+        //    IMPORTANT: waitUntil must be called AS A METHOD on its context
+        //    object (ctx.waitUntil(p)), never extracted as a bare function.
+        //    Extracting it loses the `this` binding and the Workers runtime
+        //    throws "Illegal invocation: function called with incorrect `this`
+        //    reference."
         const localsAny = locals as {
                 cfContext?: { waitUntil?: (p: Promise<unknown>) => void };
                 runtime?: { ctx?: { waitUntil?: (p: Promise<unknown>) => void } };
         } | undefined;
-        const waitUntil = localsAny?.cfContext?.waitUntil ?? localsAny?.runtime?.ctx?.waitUntil;
+        const cfContext = localsAny?.cfContext;
+        const legacyCtx = localsAny?.runtime?.ctx;
 
-        if (waitUntil) {
-                waitUntil(dispatchNotifications(stored));
+        if (cfContext?.waitUntil) {
+                cfContext.waitUntil(dispatchNotifications(stored));
+        } else if (legacyCtx?.waitUntil) {
+                legacyCtx.waitUntil(dispatchNotifications(stored));
         } else {
                 await dispatchNotifications(stored);
         }
