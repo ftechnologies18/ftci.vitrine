@@ -603,26 +603,23 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
         //    wait is bounded and the form's "Envoi…" spinner covers it.
         //
         //    API note: @astrojs/cloudflare v4 (Astro v6+) exposes the Workers
-        //    ExecutionContext at `locals.cfContext`. The older `locals.runtime.ctx`
-        //    path was removed and now throws. We check cfContext first and keep
-        //    the legacy path as a fallback for older adapter versions.
+        //    ExecutionContext at `locals.cfContext`. The legacy
+        //    `locals.runtime.ctx` path was REMOVED and its getter now throws
+        //    "Astro.locals.runtime.ctx has been removed in Astro v6" — even
+        //    just reading it via optional chaining triggers the throw. So we
+        //    do NOT reference `locals.runtime` at all.
         //
         //    IMPORTANT: waitUntil must be called AS A METHOD on its context
-        //    object (ctx.waitUntil(p)), never extracted as a bare function.
-        //    Extracting it loses the `this` binding and the Workers runtime
-        //    throws "Illegal invocation: function called with incorrect `this`
-        //    reference."
-        const localsAny = locals as {
-                cfContext?: { waitUntil?: (p: Promise<unknown>) => void };
-                runtime?: { ctx?: { waitUntil?: (p: Promise<unknown>) => void } };
-        } | undefined;
-        const cfContext = localsAny?.cfContext;
-        const legacyCtx = localsAny?.runtime?.ctx;
+        //    object (cfContext.waitUntil(p)), never extracted as a bare
+        //    function. Extracting it loses the `this` binding and the Workers
+        //    runtime throws "Illegal invocation: function called with
+        //    incorrect `this` reference."
+        const cfContext = (
+                locals as { cfContext?: { waitUntil?: (p: Promise<unknown>) => void } } | undefined
+        )?.cfContext;
 
         if (cfContext?.waitUntil) {
                 cfContext.waitUntil(dispatchNotifications(stored));
-        } else if (legacyCtx?.waitUntil) {
-                legacyCtx.waitUntil(dispatchNotifications(stored));
         } else {
                 await dispatchNotifications(stored);
         }
