@@ -1,0 +1,46 @@
+diff --git a/dist/keystatic-astro-api.js b/dist/keystatic-astro-api.js
+index 80131fee419d290a8d6c992d5bfcc355b9d39871..3e53ab3b39d4058fe1fd6cfa9118b5644d9e4afc 100644
+--- a/dist/keystatic-astro-api.js
++++ b/dist/keystatic-astro-api.js
+@@ -1,19 +1,36 @@
+ import { makeGenericAPIRouteHandler } from '@keystatic/core/api/generic';
+ import { parseString } from 'set-cookie-parser';
+ 
++// ─── Patch FTCI : compatibilité Astro 7 + @astrojs/cloudflare 14 ─────────────
++// Dans Astro v6+, `context.locals.runtime.env` a été supprimé et remplacé par
++// un getter qui throw. La nouvelle API est `import { env } from 'cloudflare:workers'`.
++// On résout env via dynamic import dans la fonction (le top-level await casserait
++// le build Vite en dev), avec fallback sur `import.meta.env` pour le mode dev
++// (astro dev sans platformProxy, où `cloudflare:workers` n'est pas disponible).
++async function getCfEnv() {
++  try {
++    const mod = await import('cloudflare:workers');
++    return mod.env;
++  } catch {
++    return undefined;
++  }
++}
++// ─── Fin patch FTCI ──────────────────────────────────────────────────────────
++
+ function makeHandler(_config) {
+   return async function keystaticAPIRoute(context) {
+-    var _context$locals, _ref, _config$clientId, _ref2, _config$clientSecret, _ref3, _config$secret;
+-    const envVarsForCf = (_context$locals = context.locals) === null || _context$locals === void 0 || (_context$locals = _context$locals.runtime) === null || _context$locals === void 0 ? void 0 : _context$locals.env;
++    // ─── Patch FTCI : utiliser cloudflare:workers au lieu de locals.runtime.env ──
++    const envVarsForCf = await getCfEnv();
++    // ─── Fin patch FTCI ──────────────────────────────────────────────────────
+     const handler = makeGenericAPIRouteHandler({
+       ..._config,
+-      clientId: (_ref = (_config$clientId = _config.clientId) !== null && _config$clientId !== void 0 ? _config$clientId : envVarsForCf === null || envVarsForCf === void 0 ? void 0 : envVarsForCf.KEYSTATIC_GITHUB_CLIENT_ID) !== null && _ref !== void 0 ? _ref : tryOrUndefined(() => {
++      clientId: _config.clientId ?? envVarsForCf?.KEYSTATIC_GITHUB_CLIENT_ID ?? tryOrUndefined(() => {
+         return import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID;
+       }),
+-      clientSecret: (_ref2 = (_config$clientSecret = _config.clientSecret) !== null && _config$clientSecret !== void 0 ? _config$clientSecret : envVarsForCf === null || envVarsForCf === void 0 ? void 0 : envVarsForCf.KEYSTATIC_GITHUB_CLIENT_SECRET) !== null && _ref2 !== void 0 ? _ref2 : tryOrUndefined(() => {
++      clientSecret: _config.clientSecret ?? envVarsForCf?.KEYSTATIC_GITHUB_CLIENT_SECRET ?? tryOrUndefined(() => {
+         return import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET;
+       }),
+-      secret: (_ref3 = (_config$secret = _config.secret) !== null && _config$secret !== void 0 ? _config$secret : envVarsForCf === null || envVarsForCf === void 0 ? void 0 : envVarsForCf.KEYSTATIC_SECRET) !== null && _ref3 !== void 0 ? _ref3 : tryOrUndefined(() => {
++      secret: _config.secret ?? envVarsForCf?.KEYSTATIC_SECRET ?? tryOrUndefined(() => {
+         return import.meta.env.KEYSTATIC_SECRET;
+       })
+     }, {
