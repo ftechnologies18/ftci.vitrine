@@ -20,6 +20,11 @@ export const ALL: APIRoute = async (context) => {
 
                 const cfEnv = await getCfEnv();
 
+                console.log('[keystatic-api] cfEnv defined:', !!cfEnv);
+                console.log('[keystatic-api] clientId set:', !!cfEnv?.KEYSTATIC_GITHUB_CLIENT_ID);
+                console.log('[keystatic-api] clientSecret set:', !!cfEnv?.KEYSTATIC_GITHUB_CLIENT_SECRET);
+                console.log('[keystatic-api] secret set:', !!cfEnv?.KEYSTATIC_SECRET);
+
                 const handler = makeGenericAPIRouteHandler({
                         config,
                         clientId: cfEnv?.KEYSTATIC_GITHUB_CLIENT_ID,
