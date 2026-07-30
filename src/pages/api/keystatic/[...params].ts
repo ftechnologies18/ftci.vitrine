@@ -13,20 +13,35 @@
 import type { APIRoute } from 'astro';
 import { makeGenericAPIRouteHandler } from '@keystatic/core/api/generic';
 import { parseString } from 'set-cookie-parser';
-import { env } from 'cloudflare:workers';
 // eslint-disable-next-line import/no-unresolved
 import config from 'virtual:keystatic-config';
 
 export const prerender = false;
 
+/**
+ * Résout l'env Cloudflare au runtime via dynamic import.
+ * L'import statique `import { env } from 'cloudflare:workers'` casserait le
+ * build Vite car ce module n'existe qu'au runtime Workers, pas pendant le
+ * prerender/build.
+ */
+async function getCfEnv(): Promise<Record<string, string> | undefined> {
+        try {
+                const mod = await import('cloudflare:workers');
+                return mod.env as Record<string, string>;
+        } catch {
+                return undefined;
+        }
+}
+
 export const ALL: APIRoute = async (context) => {
         // Lecture des secrets depuis l'env Cloudflare (résolu au runtime)
+        const cfEnv = await getCfEnv();
         const handler = makeGenericAPIRouteHandler(
                 {
                         ...config,
-                        clientId: config.clientId ?? env.KEYSTATIC_GITHUB_CLIENT_ID,
-                        clientSecret: config.clientSecret ?? env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-                        secret: config.secret ?? env.KEYSTATIC_SECRET,
+                        clientId: config.clientId ?? cfEnv?.KEYSTATIC_GITHUB_CLIENT_ID,
+                        clientSecret: config.clientSecret ?? cfEnv?.KEYSTATIC_GITHUB_CLIENT_SECRET,
+                        secret: config.secret ?? cfEnv?.KEYSTATIC_SECRET,
                 },
                 {
                         slugEnvName: 'PUBLIC_KEYSTATIC_GITHUB_APP_SLUG',
