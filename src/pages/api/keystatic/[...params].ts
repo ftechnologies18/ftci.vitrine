@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import { parseString } from 'set-cookie-parser';
 // eslint-disable-next-line import/no-unresolved
 import config from 'virtual:keystatic-config';
 
@@ -20,11 +19,6 @@ export const ALL: APIRoute = async (context) => {
 
                 const cfEnv = await getCfEnv();
 
-                console.log('[keystatic-api] cfEnv defined:', !!cfEnv);
-                console.log('[keystatic-api] clientId set:', !!cfEnv?.KEYSTATIC_GITHUB_CLIENT_ID);
-                console.log('[keystatic-api] clientSecret set:', !!cfEnv?.KEYSTATIC_GITHUB_CLIENT_SECRET);
-                console.log('[keystatic-api] secret set:', !!cfEnv?.KEYSTATIC_SECRET);
-
                 const handler = makeGenericAPIRouteHandler({
                         config,
                         clientId: cfEnv?.KEYSTATIC_GITHUB_CLIENT_ID,
@@ -34,29 +28,24 @@ export const ALL: APIRoute = async (context) => {
 
                 const result = await handler(context.request);
 
-                // DEBUG : log tout ce que le handler retourne
-                console.log('[keystatic-api] URL:', context.url.pathname);
-                console.log('[keystatic-api] Status:', result.status);
-                console.log('[keystatic-api] Headers type:', typeof result.headers);
-                console.log('[keystatic-api] Is Array:', Array.isArray(result.headers));
-                console.log('[keystatic-api] Is Headers:', result.headers instanceof Headers);
-                console.log('[keystatic-api] JSON:', JSON.stringify(result.headers)?.substring(0, 500));
+                console.log('[keystatic-api] URL:', context.url.pathname, 'Status:', result.status);
 
-                // Reconstruction des headers en extrayant séparément les Set-Cookie
+                // Reconstruction complète des headers, en forwardant TOUT y compris Set-Cookie
+                // directement dans la Response (sans context.cookies.set() qui ne marche pas
+                // correctement avec l'adapter Cloudflare quand la response est retournée).
                 const responseHeaders = new Headers();
                 const setCookies: string[] = [];
 
                 if (result.headers) {
                         if (result.headers instanceof Headers) {
+                                // getSetCookie() est la seule façon fiable de récupérer
+                                // plusieurs Set-Cookie depuis l'API Headers.
                                 if ('getSetCookie' in result.headers && typeof result.headers.getSetCookie === 'function') {
                                         const sc = result.headers.getSetCookie();
-                                        console.log('[keystatic-api] getSetCookie() returned:', sc.length, 'cookies');
                                         if (sc?.length) setCookies.push(...sc);
                                 }
                                 result.headers.forEach((value, key) => {
-                                        if (key.toLowerCase() === 'set-cookie') {
-                                                setCookies.push(value);
-                                        } else {
+                                        if (key.toLowerCase() !== 'set-cookie') {
                                                 responseHeaders.append(key, value);
                                         }
                                 });
@@ -71,29 +60,15 @@ export const ALL: APIRoute = async (context) => {
                         }
                 }
 
-                console.log('[keystatic-api] Extracted setCookies:', setCookies.length);
+                console.log('[keystatic-api] setCookies:', setCookies.length);
 
-                // Re-pose les cookies via l'API Astro native
+                // Forward direct des Set-Cookie dans les headers de la Response
+                // (ne PAS utiliser context.cookies.set() — l'adapter Cloudflare
+                // ne forward pas correctement les cookies posés via cette API
+                // quand on retourne une Response custom)
                 for (const cookieStr of setCookies) {
-                        try {
-                                const { name, value, ...options } = parseString(cookieStr);
-                                console.log('[keystatic-api] Setting cookie:', name, 'value length:', value.length);
-                                const sameSite = options.sameSite?.toLowerCase();
-                                context.cookies.set(name, value, {
-                                        domain: options.domain,
-                                        expires: options.expires,
-                                        httpOnly: options.httpOnly,
-                                        maxAge: options.maxAge,
-                                        path: options.path || '/',
-                                        sameSite:
-                                                sameSite === 'lax' || sameSite === 'strict' || sameSite === 'none'
-                                                        ? (sameSite as 'lax' | 'strict' | 'none')
-                                                        : undefined,
-                                        secure: options.secure,
-                                });
-                        } catch (cookieErr) {
-                                console.error('[keystatic-api] Cookie parse error:', cookieErr, 'raw:', cookieStr);
-                        }
+                        responseHeaders.append('Set-Cookie', cookieStr);
+                        console.log('[keystatic-api] Forwarded Set-Cookie (first 80 chars):', cookieStr.substring(0, 80));
                 }
 
                 return new Response(result.body, {
