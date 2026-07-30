@@ -33,12 +33,17 @@ const contactInfo = [
         },
 ];
 
-const subjectSuggestions = [
-        'Consultation',
-        'Demande de démo',
-        'Partenariat',
-        'Support technique',
-        'Autre',
+const subjectOptions = [
+        { value: '', label: 'Choisissez un sujet…' },
+        { value: 'devis', label: 'Demande de devis' },
+        { value: 'consultation', label: 'Consultation / Conseil' },
+        { value: 'demo', label: 'Demande de démo' },
+        { value: 'support', label: 'Support technique' },
+        { value: 'partnership', label: 'Partenariat' },
+        { value: 'formation', label: 'Formation' },
+        { value: 'infrastructure', label: 'Infrastructure & Cloud' },
+        { value: 'development', label: 'Développement sur-mesure' },
+        { value: 'other', label: 'Autre' },
 ];
 ---
 
@@ -157,32 +162,23 @@ const subjectSuggestions = [
                                                 </div>
                                         </div>
 
-                                        <!-- Sujet (input libre + suggestions datalist) -->
+                                        <!-- Sujet (select) -->
                                         <div class="mb-5">
                                                 <label for="subject" class="block text-sm font-semibold text-white/90 mb-1.5">
                                                         Sujet <span class="text-orange" aria-hidden="true">*</span>
                                                 </label>
-                                                <input
-                                                        type="text"
+                                                <select
                                                         id="subject"
                                                         name="subject"
-                                                        value="Demande d'information"
-                                                        list="subject-suggestions"
-                                                        autocomplete="off"
                                                         required
                                                         aria-required="true"
-                                                        aria-describedby="error-subject subject-hint"
-                                                        class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
-                                                        placeholder="Saisissez votre sujet…"
-                                                />
-                                                <datalist id="subject-suggestions">
-                                                        {subjectSuggestions.map((label) => (
-                                                                <option value={label} />
+                                                        aria-describedby="error-subject"
+                                                        class="dark-select w-full px-4 py-3 rounded-xl"
+                                                >
+                                                        {subjectOptions.map((opt) => (
+                                                                <option value={opt.value} disabled={opt.value === ''}>{opt.label}</option>
                                                         ))}
-                                                </datalist>
-                                                <p id="subject-hint" class="text-xs text-white/45 mt-1.5">
-                                                        Sujet pré-rempli par défaut. Vous pouvez le modifier ou en saisir un personnalisé.
-                                                </p>
+                                                </select>
                                                 <p id="error-subject" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
                                         </div>
 

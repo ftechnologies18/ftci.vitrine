@@ -41,6 +41,42 @@ import { env } from 'cloudflare:workers';
 /** Force on-demand rendering. Static prerendering would freeze the route at build time. */
 export const prerender = false;
 
+/**
+ * Allowed subject slugs for the contact form. The visitor picks one from the
+ * <select> on the home page; the value sent to this endpoint must match one of
+ * these slugs exactly. Labels in {@linkcode SUBJECT_LABELS} are used for
+ * human-readable rendering in emails and Discord.
+ *
+ * To add a subject: extend this tuple, add the matching entry to
+ * {@linkcode SUBJECT_LABELS}, and add the matching <option> in
+ * `src/components/Contact.astro`.
+ */
+const SUBJECTS = [
+        'devis',
+        'consultation',
+        'demo',
+        'support',
+        'partnership',
+        'formation',
+        'infrastructure',
+        'development',
+        'other',
+] as const;
+type Subject = (typeof SUBJECTS)[number];
+
+/** Human-readable label for each {@linkcode Subject}, used in emails & Discord. */
+const SUBJECT_LABELS: Record<Subject, string> = {
+        devis: 'Demande de devis',
+        consultation: 'Consultation / Conseil',
+        demo: 'Demande de démo',
+        support: 'Support technique',
+        partnership: 'Partenariat',
+        formation: 'Formation',
+        infrastructure: 'Infrastructure & Cloud',
+        development: 'Développement sur-mesure',
+        other: 'Autre',
+};
+
 interface ContactPayload {
         name?: unknown;
         email?: unknown;
@@ -55,8 +91,8 @@ interface StoredMessage {
         receivedAt: string;
         name: string;
         email: string;
-        /** Free-text subject typed by the visitor (default "Demande d'information"). */
-        subject: string;
+        /** Selected subject slug, validated against {@linkcode SUBJECTS}. */
+        subject: Subject;
         message: string;
         ip: string | null;
         userAgent: string | null;
@@ -94,8 +130,7 @@ function validate(payload: ContactPayload): Record<string, string> {
 
         const subject = isString(payload.subject) ? payload.subject.trim() : '';
         if (!subject) errors.subject = 'Le sujet est obligatoire.';
-        else if (subject.length < 2) errors.subject = 'Le sujet doit comporter au moins 2 caractères.';
-        else if (subject.length > 100) errors.subject = 'Le sujet est trop long (max 100 caractères).';
+        else if (!SUBJECTS.includes(subject as Subject)) errors.subject = 'Sujet invalide.';
 
         const message = isString(payload.message) ? payload.message.trim() : '';
         if (!message) errors.message = 'Le message est obligatoire.';
@@ -205,7 +240,7 @@ async function sendTeamEmail(msg: StoredMessage): Promise<boolean> {
                 return false;
         }
 
-        const subject = `[FTCI Vitrine] ${msg.subject} — ${msg.name}`;
+        const subject = `[FTCI Vitrine] ${SUBJECT_LABELS[msg.subject]} — ${msg.name}`;
         const html = renderTeamEmailHtml(msg);
 
         try {
@@ -303,7 +338,7 @@ async function sendDiscordNotification(msg: StoredMessage): Promise<boolean> {
                 return false;
         }
 
-        const subjectLabel = msg.subject;
+        const subjectLabel = SUBJECT_LABELS[msg.subject];
         // Discord embed field values must be non-empty strings.
         const safeMessage = msg.message.length > 1024 ? msg.message.slice(0, 1021) + '…' : msg.message;
         const safeIp = msg.ip ?? 'Inconnue';
@@ -425,7 +460,7 @@ function formatFrenchDate(iso: string): string {
 function renderTeamEmailHtml(msg: StoredMessage): string {
         const eName = escapeHtml(msg.name);
         const eEmail = escapeHtml(msg.email);
-        const eSubject = escapeHtml(msg.subject);
+        const eSubject = escapeHtml(SUBJECT_LABELS[msg.subject]);
         const eMessage = escapeHtml(msg.message);
         const eDate = escapeHtml(formatFrenchDate(msg.receivedAt));
         const eIp = escapeHtml(msg.ip ?? 'Inconnue');
@@ -461,7 +496,7 @@ function renderTeamEmailHtml(msg: StoredMessage): string {
           <div style="padding:16px;background:${BRAND.bgLight};border-radius:8px;font-size:14px;line-height:1.6;white-space:pre-wrap;">${eMessage}</div>
         </td></tr>
         <tr><td style="padding:16px 32px 24px;">
-          <a href="mailto:${eEmail}?subject=Re%3A%20${encodeURIComponent(msg.subject)}" style="display:inline-block;background:${BRAND.orange};color:#ffffff;text-decoration:none;font-weight:600;padding:12px 24px;border-radius:8px;font-size:14px;">Répondre au visiteur</a>
+          <a href="mailto:${eEmail}?subject=Re%3A%20${encodeURIComponent(SUBJECT_LABELS[msg.subject])}" style="display:inline-block;background:${BRAND.orange};color:#ffffff;text-decoration:none;font-weight:600;padding:12px 24px;border-radius:8px;font-size:14px;">Répondre au visiteur</a>
         </td></tr>
         <tr><td style="padding:16px 32px;background:${BRAND.bgLight};font-size:12px;color:${BRAND.textMuted};text-align:center;">
           Message ID : <code style="font-family:monospace;">${escapeHtml(msg.id)}</code>
@@ -480,7 +515,7 @@ function renderTeamEmailHtml(msg: StoredMessage): string {
  */
 function renderVisitorEmailHtml(msg: StoredMessage): string {
         const eName = escapeHtml(msg.name);
-        const eSubject = escapeHtml(msg.subject);
+        const eSubject = escapeHtml(SUBJECT_LABELS[msg.subject]);
         const eMessage = escapeHtml(msg.message);
         const eDate = escapeHtml(formatFrenchDate(msg.receivedAt));
 
@@ -572,7 +607,7 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
                 receivedAt: new Date().toISOString(),
                 name: (payload.name as string).trim(),
                 email: (payload.email as string).trim(),
-                subject: (payload.subject as string).trim(),
+                subject: payload.subject as Subject,
                 message: (payload.message as string).trim(),
                 ip,
                 userAgent: request.headers.get('user-agent'),
