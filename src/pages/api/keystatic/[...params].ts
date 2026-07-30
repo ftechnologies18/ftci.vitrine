@@ -9,7 +9,9 @@ const handler = makeHandler({ config });
 
 export const ALL: APIRoute = async (ctx) => {
         try {
+                console.log('[keystatic-api] Before handler call, url:', ctx.url.pathname);
                 const result = await handler(ctx);
+                console.log('[keystatic-api] Handler returned:', result.status, result.headers.get('location'));
                 return result;
         } catch (err) {
                 console.error('[keystatic-api] Handler error:', err);
