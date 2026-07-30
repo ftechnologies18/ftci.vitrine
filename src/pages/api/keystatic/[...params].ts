@@ -5,14 +5,14 @@ import config from 'virtual:keystatic-config';
 
 export const prerender = false;
 
+const handler = makeHandler({ config });
+
 export const ALL: APIRoute = async (ctx) => {
         return new Response(
                 JSON.stringify({
                         ok: true,
-                        msg: 'both imports OK',
-                        hasConfig: !!config,
-                        hasHandler: typeof makeHandler,
-                        storage: config?.storage?.kind,
+                        msg: 'makeHandler called successfully',
+                        hasHandler: typeof handler,
                 }),
                 { status: 200, headers: { 'Content-Type': 'application/json' } },
         );
