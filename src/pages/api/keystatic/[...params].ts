@@ -33,7 +33,9 @@ export const ALL: APIRoute = async (context) => {
                 console.log('[keystatic-api] URL:', context.url.pathname);
                 console.log('[keystatic-api] Status:', result.status);
                 console.log('[keystatic-api] Headers type:', typeof result.headers);
-                console.log('[keystatic-api] Headers keys:', result.headers instanceof Headers ? [...result.headers.keys()] : Object.keys(result.headers || {}));
+                console.log('[keystatic-api] Is Array:', Array.isArray(result.headers));
+                console.log('[keystatic-api] Is Headers:', result.headers instanceof Headers);
+                console.log('[keystatic-api] JSON:', JSON.stringify(result.headers)?.substring(0, 500));
 
                 // Reconstruction des headers en extrayant séparément les Set-Cookie
                 const responseHeaders = new Headers();
