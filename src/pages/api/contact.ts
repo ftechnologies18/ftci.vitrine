@@ -601,9 +601,16 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
         //    to a plain await so notifications still fire before the request
         //    ends — providers each have their own 8s timeout, so the worst-case
         //    wait is bounded and the form's "Envoi…" spinner covers it.
-        const waitUntil = (
-                locals as { runtime?: { ctx?: { waitUntil?: (p: Promise<unknown>) => void } } } | undefined
-        )?.runtime?.ctx?.waitUntil;
+        //
+        //    API note: @astrojs/cloudflare v4 (Astro v6+) exposes the Workers
+        //    ExecutionContext at `locals.cfContext`. The older `locals.runtime.ctx`
+        //    path was removed and now throws. We check cfContext first and keep
+        //    the legacy path as a fallback for older adapter versions.
+        const localsAny = locals as {
+                cfContext?: { waitUntil?: (p: Promise<unknown>) => void };
+                runtime?: { ctx?: { waitUntil?: (p: Promise<unknown>) => void } };
+        } | undefined;
+        const waitUntil = localsAny?.cfContext?.waitUntil ?? localsAny?.runtime?.ctx?.waitUntil;
 
         if (waitUntil) {
                 waitUntil(dispatchNotifications(stored));
