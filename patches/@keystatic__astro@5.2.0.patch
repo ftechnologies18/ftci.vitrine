@@ -44,3 +44,35 @@ index 80131fee419d290a8d6c992d5bfcc355b9d39871..3e53ab3b39d4058fe1fd6cfa9118b564
          return import.meta.env.KEYSTATIC_SECRET;
        })
      }, {
+diff --git a/dist/keystatic-astro.js b/dist/keystatic-astro.js
+index dab0e4b8731a69befad6a235492cb85fac1c6e8f..52a5e91766135d36e265aedeba5bda21a2aebf9c 100644
+--- a/dist/keystatic-astro.js
++++ b/dist/keystatic-astro.js
+@@ -43,13 +43,20 @@ import "@keystatic/core/ui";
+           pattern: '/keystatic/[...params]',
+           prerender: false
+         });
+-        injectRoute({
+-          // @ts-ignore — kept for Astro 2/3 where the option was named `entryPoint`
+-          entryPoint: '@keystatic/astro/internal/keystatic-api.js',
+-          entrypoint: '@keystatic/astro/internal/keystatic-api.js',
+-          pattern: '/api/keystatic/[...params]',
+-          prerender: false
+-        });
++        // ─── Patch FTCI : ne pas injecter la route API /api/keystatic/[...params] ──
++        // En Astro 7 + @astrojs/cloudflare 14, les routes API injectées par les
++        // intégrations ne sont pas correctement matchées à runtime (404 du static
++        // asset handler Cloudflare). La route est créée manuellement dans
++        // src/pages/api/keystatic/[...params].ts pour contourner le bug.
++        // La page UI /keystatic/[...params] (type: "page") fonctionne correctement
++        // via injectRoute, donc on la garde.
++        // injectRoute({
++        //   entryPoint: '@keystatic/astro/internal/keystatic-api.js',
++        //   entrypoint: '@keystatic/astro/internal/keystatic-api.js',
++        //   pattern: '/api/keystatic/[...params]',
++        //   prerender: false
++        // });
++        // ─── Fin patch FTCI ───────────────────────────────────────────────────
+       }
+     }
+   };
