@@ -1,3 +1,16 @@
+/**
+ * /api/keystatic/[...params] — Route API Keystatic (handler custom).
+ *
+ * Handler custom contournant le wrapper @keystatic/astro/api qui crash en
+ * production sur Astro 7 + Cloudflare Workers. Appelle directement
+ * makeGenericAPIRouteHandler depuis @keystatic/core/api/generic.
+ *
+ * En mode Keystatic Cloud (storage.kind === 'cloud'), l'authentification
+ * GitHub est gérée par api.keystatic.cloud — plus besoin de secrets OAuth
+ * GitHub (KEYSTATIC_GITHUB_CLIENT_ID, KEYSTATIC_GITHUB_CLIENT_SECRET).
+ * Seul KEYSTATIC_SECRET reste nécessaire pour signer les cookies de session.
+ */
+
 import type { APIRoute } from 'astro';
 import { parseString } from 'set-cookie-parser';
 // eslint-disable-next-line import/no-unresolved
@@ -20,10 +33,12 @@ export const ALL: APIRoute = async (context) => {
 
                 const cfEnv = await getCfEnv();
 
+                // En mode cloud, clientId/clientSecret ne sont pas nécessaires —
+                // Keystatic Cloud gère l'OAuth via son propre service.
+                // On passe seulement KEYSTATIC_SECRET (toujours requis pour signer
+                // les cookies de session locaux).
                 const handler = makeGenericAPIRouteHandler({
                         config,
-                        clientId: cfEnv?.KEYSTATIC_GITHUB_CLIENT_ID,
-                        clientSecret: cfEnv?.KEYSTATIC_GITHUB_CLIENT_SECRET,
                         secret: cfEnv?.KEYSTATIC_SECRET,
                 });
 
@@ -60,12 +75,9 @@ export const ALL: APIRoute = async (context) => {
 
                 console.log('[keystatic-api] setCookies:', setCookies.length);
 
-                // CRITICAL : utiliser context.cookies.set() pour poser les cookies.
-                // L'adapter @astrojs/cloudflare STRIP les Set-Cookie headers des
-                // Response custom retournées par les endpoints. La SEULE façon de
-                // poser un cookie qui survive jusqu'au navigateur est d'utiliser
-                // context.cookies.set() — l'adapter injecte ensuite ces cookies
-                // dans la Response finale automatiquement.
+                // Pose les cookies via context.cookies.set() — l'adapter Cloudflare
+                // strip les Set-Cookie des Response custom, donc context.cookies.set()
+                // est la SEULE façon de poser un cookie qui arrive au navigateur.
                 for (const cookieStr of setCookies) {
                         try {
                                 const { name, value, ...options } = parseString(cookieStr);
@@ -88,9 +100,6 @@ export const ALL: APIRoute = async (context) => {
                         }
                 }
 
-                // NE PAS forwarder les Set-Cookie dans responseHeaders —
-                // context.cookies.set() s'en charge, et les doubler ici ferait
-                // que l'adapter Cloudflare les strippe (conflit).
                 return new Response(result.body, {
                         status: result.status,
                         headers: responseHeaders,

@@ -58,32 +58,52 @@ export const CATEGORY_LABELS: Record<string, string> = Object.fromEntries(
 export type BlogCategory = (typeof BLOG_CATEGORIES)[number]['value'];
 
 /**
- * Keystatic storage: `local` in dev, `github` in production.
+ * Keystatic storage: `local` in dev, `cloud` in production.
  *
- * We detect production via `process.env.NODE_ENV` (set to `'production'` by
- * Cloudflare Workers Builds). Keystatic's `github` mode reads the OAuth
- * credentials at runtime from the Cloudflare env (`KEYSTATIC_GITHUB_CLIENT_ID`,
- * `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`) — these are Worker
- * secrets, NOT build-time env vars, so we must not check them here (they would
- * be undefined at build time on Workers Builds and crash the config).
+ * We switched from `kind: 'github'` (custom OAuth App) to `kind: 'cloud'`
+ * (Keystatic Cloud) because the @keystatic/astro + @astrojs/cloudflare adapter
+ * has a deep bug with session cookie propagation — the OAuth callback succeeds
+ * but the session cookie never reaches the browser, causing "Authorization
+ * failed" on the UI.
  *
- * If the OAuth secrets are not yet bound, the `/keystatic` route returns an
- * error at runtime, but the rest of the site (including the blog read side)
- * keeps working.
+ * Keystatic Cloud handles the entire GitHub OAuth flow transparently:
+ *   - No GitHub OAuth App to configure
+ *   - No KEYSTATIC_GITHUB_CLIENT_ID / KEYSTATIC_GITHUB_CLIENT_SECRET secrets
+ *   - Authentication is proxied through cloud.keystatic.com
+ *   - Only KEYSTATIC_SECRET is still needed (to sign local session cookies)
+ *
+ * Setup (one-time, ~2 min):
+ *   1. Go to https://cloud.keystatic.com
+ *   2. Sign in with GitHub (must have write access to the repo)
+ *   3. Create a project, connect it to ftechnologies18/ftci.vitrine
+ *   4. Note the project identifier (format: 'team/project')
+ *   5. Set it below in `cloud.project`
+ *
+ * The `cloud.project` value is NOT secret — it's a public identifier used to
+ * route the OAuth flow to the correct Keystatic Cloud project.
+ *
+ * Local dev (`astro dev`) keeps using `kind: 'local'` for offline editing.
  */
 const isProd = process.env.NODE_ENV === 'production';
 
 export default config({
         storage: isProd
                 ? {
-                        kind: 'github',
-                        repo: {
-                                owner: 'ftechnologies18',
-                                name: 'ftci.vitrine',
-                        },
-                        branchPrefix: 'keystatic/',
+                        kind: 'cloud',
                 }
                 : { kind: 'local' },
+
+        /**
+         * Keystatic Cloud project identifier.
+         *
+         * Replace 'ftci/ftci-vitrine' with your actual project identifier from
+         * https://cloud.keystatic.com once you've created the project.
+         *
+         * Format: '<team-slug>/<project-slug>' (must contain a '/')
+         */
+        cloud: {
+                project: 'ftci/ftci-vitrine',
+        },
 
         collections: {
                 blog: collection({
