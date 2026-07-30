@@ -1,17 +1,3 @@
-/**
- * /api/keystatic/[...params] — Route API Keystatic (handler custom).
- *
- * Handler custom contournant le wrapper @keystatic/astro/api qui crash en
- * production sur Astro 7 + Cloudflare Workers. Appelle directement
- * makeGenericAPIRouteHandler depuis @keystatic/core/api/generic.
- *
- * IMPORTANT : Les cookies de session Set-Cookie retournés par le handler
- * générique doivent être extraits et re-posés via context.cookies.set()
- * (API Astro native). L'adapter Cloudflare ne forward pas correctement les
- * headers Set-Cookie bruts dans la Response — sans context.cookies.set(),
- * la session OAuth n'est jamais posée et l'UI affiche "Authorization failed".
- */
-
 import type { APIRoute } from 'astro';
 import { parseString } from 'set-cookie-parser';
 // eslint-disable-next-line import/no-unresolved
@@ -41,35 +27,34 @@ export const ALL: APIRoute = async (context) => {
                         secret: cfEnv?.KEYSTATIC_SECRET,
                 });
 
-                const { body, headers, status } = await handler(context.request);
+                const result = await handler(context.request);
+
+                // DEBUG : log tout ce que le handler retourne
+                console.log('[keystatic-api] URL:', context.url.pathname);
+                console.log('[keystatic-api] Status:', result.status);
+                console.log('[keystatic-api] Headers type:', typeof result.headers);
+                console.log('[keystatic-api] Headers keys:', result.headers instanceof Headers ? [...result.headers.keys()] : Object.keys(result.headers || {}));
 
                 // Reconstruction des headers en extrayant séparément les Set-Cookie
                 const responseHeaders = new Headers();
                 const setCookies: string[] = [];
 
-                if (headers) {
-                        if (headers instanceof Headers) {
-                                // getSetCookie() est la seule façon fiable de récupérer
-                                // plusieurs Set-Cookie depuis l'API Headers (forEach les dédoublerait).
-                                if ('getSetCookie' in headers && typeof headers.getSetCookie === 'function') {
-                                        const sc = headers.getSetCookie();
+                if (result.headers) {
+                        if (result.headers instanceof Headers) {
+                                if ('getSetCookie' in result.headers && typeof result.headers.getSetCookie === 'function') {
+                                        const sc = result.headers.getSetCookie();
+                                        console.log('[keystatic-api] getSetCookie() returned:', sc.length, 'cookies');
                                         if (sc?.length) setCookies.push(...sc);
                                 }
-                                headers.forEach((value, key) => {
-                                        if (key.toLowerCase() !== 'set-cookie') {
-                                                responseHeaders.append(key, value);
-                                        }
-                                });
-                        } else if (Array.isArray(headers)) {
-                                for (const [key, value] of headers) {
+                                result.headers.forEach((value, key) => {
                                         if (key.toLowerCase() === 'set-cookie') {
                                                 setCookies.push(value);
                                         } else {
                                                 responseHeaders.append(key, value);
                                         }
-                                }
-                        } else if (typeof headers === 'object') {
-                                for (const [key, value] of Object.entries(headers as Record<string, string>)) {
+                                });
+                        } else if (Array.isArray(result.headers)) {
+                                for (const [key, value] of result.headers) {
                                         if (key.toLowerCase() === 'set-cookie') {
                                                 setCookies.push(value);
                                         } else {
@@ -79,11 +64,13 @@ export const ALL: APIRoute = async (context) => {
                         }
                 }
 
-                // Re-pose les cookies via l'API Astro native — requis pour que
-                // l'adapter Cloudflare les inclue réellement dans la response HTTP.
+                console.log('[keystatic-api] Extracted setCookies:', setCookies.length);
+
+                // Re-pose les cookies via l'API Astro native
                 for (const cookieStr of setCookies) {
                         try {
                                 const { name, value, ...options } = parseString(cookieStr);
+                                console.log('[keystatic-api] Setting cookie:', name, 'value length:', value.length);
                                 const sameSite = options.sameSite?.toLowerCase();
                                 context.cookies.set(name, value, {
                                         domain: options.domain,
@@ -102,8 +89,8 @@ export const ALL: APIRoute = async (context) => {
                         }
                 }
 
-                return new Response(body, {
-                        status,
+                return new Response(result.body, {
+                        status: result.status,
                         headers: responseHeaders,
                 });
         } catch (err) {
