@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
+import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro';
 
 // Only use Cloudflare adapter in production (not dev)
@@ -33,6 +34,7 @@ export default defineConfig({
 
   integrations: [
     react(),
+    markdoc(),
     keystatic(),
   ],
 
