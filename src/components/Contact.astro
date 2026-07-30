@@ -226,7 +226,7 @@ const subjectOptions = [
                                                 <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
                                         </div>
 
-                                        <!-- Bouton submit + zone statut -->
+                                        <!-- Bouton submit -->
                                         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                                                 <button
                                                         type="submit"
@@ -245,29 +245,166 @@ const subjectOptions = [
                                                                 <span>Envoi…</span>
                                                         </span>
                                                 </button>
-
-                                                <div
-                                                        id="contact-status"
-                                                        class="hidden text-sm font-medium px-4 py-2.5 rounded-lg"
-                                                        role="status"
-                                                        aria-live="polite"
-                                                ></div>
                                         </div>
                                 </form>
                         </div>
                 </div>
         </div>
+
+        <!-- ── Conteneur de notifications toast (fixed, hors flow) ─────────────── -->
+        <div
+                id="toast-container"
+                class="toast-container"
+                role="region"
+                aria-live="polite"
+                aria-atomic="false"
+                aria-label="Notifications"
+        ></div>
 </section>
 
 <script>
         // ── Formulaire contact : fetch POST /api/contact ────────────────────────
-        // Gestion : erreurs par champ (422), rate limit (429), succès/erreur,
-        // loading state avec spinner. Honeypot inclus.
+        // Gestion : erreurs par champ (422) restent inline (mieux pour la
+        // correction), mais succès / rate-limit / erreur réseau / autre erreur
+        // sont affichés via un toast flottant (non-bloquant, auto-dismiss).
         const form = document.getElementById('contact-form') as HTMLFormElement | null;
         const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
-        const statusEl = document.getElementById('contact-status') as HTMLElement | null;
+        const toastContainer = document.getElementById('toast-container') as HTMLElement | null;
 
-        if (form && submitBtn && statusEl) {
+        // ── Système de toast ───────────────────────────────────────────────────
+        // Conteneur fixed en haut à droite (desktop) / haut centré (mobile).
+        // Chaque toast : icône + titre + message + bouton fermer + barre de
+        // progression. Auto-dismiss après 6s (succès) ou 8s (erreur). Respecte
+        // prefers-reduced-motion (géré globalement dans global.css).
+        type ToastType = 'success' | 'error';
+
+        interface ToastConfig {
+                title: string;
+                message: string;
+                type: ToastType;
+                duration?: number;
+        }
+
+        const TOAST_DURATION: Record<ToastType, number> = {
+                success: 6_000,
+                error: 8_000,
+        };
+
+        const TOAST_ICONS: Record<ToastType, string> = {
+                // Checkmark dans un cercle (succès)
+                success: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+                // Triangle warning (erreur)
+                error: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>',
+        };
+
+        const TOAST_TITLES: Record<ToastType, string> = {
+                success: 'Message envoyé !',
+                error: 'Oups, une erreur est survenue',
+        };
+
+        function showToast(config: ToastConfig): void {
+                if (!toastContainer) return;
+
+                const { title, message, type, duration = TOAST_DURATION[type] } = config;
+
+                // Élément toast
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.setAttribute('role', 'status');
+                toast.innerHTML = `
+                        <div class="toast-icon" aria-hidden="true">${TOAST_ICONS[type]}</div>
+                        <div class="toast-content">
+                                <p class="toast-title">${escapeHtml(title)}</p>
+                                <p class="toast-message">${escapeHtml(message)}</p>
+                        </div>
+                        <button type="button" class="toast-close" aria-label="Fermer la notification">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                        </button>
+                        <div class="toast-progress" aria-hidden="true"></div>
+                `;
+
+                toastContainer.appendChild(toast);
+
+                // Anime l'entrée (force reflow pour que la transition joue)
+                requestAnimationFrame(() => {
+                        toast.classList.add('toast-visible');
+                });
+
+                // Barre de progression
+                const progress = toast.querySelector<HTMLElement>('.toast-progress');
+                if (progress) {
+                        // Force un reflow pour que la transition joue depuis 100%
+                        progress.style.width = '100%';
+                        requestAnimationFrame(() => {
+                                progress.style.transition = `width ${duration}ms linear`;
+                                progress.style.width = '0%';
+                        });
+                }
+
+                // Auto-dismiss
+                let dismissTimer: number | undefined;
+                let isDismissed = false;
+
+                const dismiss = () => {
+                        if (isDismissed) return;
+                        isDismissed = true;
+                        if (dismissTimer) window.clearTimeout(dismissTimer);
+                        toast.classList.remove('toast-visible');
+                        toast.classList.add('toast-leaving');
+                        // Supprime du DOM après la transition de sortie (300ms)
+                        window.setTimeout(() => {
+                                toast.remove();
+                        }, 300);
+                };
+
+                dismissTimer = window.setTimeout(dismiss, duration);
+
+                // Bouton fermer
+                toast.querySelector('.toast-close')?.addEventListener('click', dismiss);
+
+                // Pause au survol (lisibilité si le visiteur lit lentement)
+                toast.addEventListener('mouseenter', () => {
+                        if (dismissTimer) window.clearTimeout(dismissTimer);
+                        // Figer la barre de progression à sa position actuelle
+                        if (progress) {
+                                const computed = getComputedStyle(progress).width;
+                                progress.style.transition = 'none';
+                                progress.style.width = computed;
+                        }
+                });
+                toast.addEventListener('mouseleave', () => {
+                        if (!isDismissed) {
+                                // Repartir pour 2s supplémentaires (barre recalculée)
+                                if (progress) {
+                                        const computed = parseFloat(getComputedStyle(progress).width);
+                                        const parentWidth = progress.parentElement?.clientWidth ?? 1;
+                                        const remainingPct = (computed / parentWidth) * 100;
+                                        if (remainingPct > 0) {
+                                                const remainingMs = (remainingPct / 100) * duration;
+                                                progress.style.transition = `width ${remainingMs}ms linear`;
+                                                progress.style.width = '0%';
+                                                dismissTimer = window.setTimeout(dismiss, remainingMs);
+                                                return;
+                                        }
+                                }
+                                dismissTimer = window.setTimeout(dismiss, 2000);
+                        }
+                });
+        }
+
+        function escapeHtml(s: string): string {
+                return s
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;');
+        }
+
+        // ── Logique formulaire ─────────────────────────────────────────────────
+        if (form && submitBtn) {
                 const labelEl = submitBtn.querySelector('.btn-label');
                 const loadingEl = submitBtn.querySelector('.btn-loading');
 
@@ -298,18 +435,6 @@ const subjectOptions = [
                         ['name', 'email', 'subject', 'message', 'consent'].forEach((f) =>
                                 setFieldError(f, ''),
                         );
-                        statusEl.classList.add('hidden');
-                        statusEl.textContent = '';
-                };
-
-                const showStatus = (message: string, type: 'success' | 'error') => {
-                        statusEl.textContent = message;
-                        statusEl.classList.remove('hidden', 'bg-green/15', 'text-green-400', 'bg-orange/15', 'text-orange-300');
-                        if (type === 'success') {
-                                statusEl.classList.add('bg-green/15', 'text-green-400');
-                        } else {
-                                statusEl.classList.add('bg-orange/15', 'text-orange-300');
-                        }
                 };
 
                 const setLoading = (loading: boolean) => {
@@ -355,40 +480,242 @@ const subjectOptions = [
                                 };
 
                                 if (res.ok) {
-                                        showStatus(
-                                                data.message || 'Message envoyé avec succès. Nous vous recontacterons bientôt.',
-                                                'success',
-                                        );
+                                        // ✅ Succès : toast vert + reset du formulaire
+                                        showToast({
+                                                title: TOAST_TITLES.success,
+                                                message: data.message || 'Nous vous recontacterons bientôt.',
+                                                type: 'success',
+                                        });
                                         form.reset();
                                 } else if (res.status === 422 && data.errors) {
-                                        // Erreurs de validation par champ
+                                        // ⚠️ Erreurs de validation : inline par champ (mieux pour corriger)
                                         Object.entries(data.errors).forEach(([field, msg]) => {
                                                 if (field !== '_honeypot') {
                                                         setFieldError(field, msg as string);
                                                 }
                                         });
-                                        // Focus le premier champ en erreur
                                         const firstError = form.querySelector<HTMLElement>('[aria-invalid="true"]');
                                         firstError?.focus();
+                                        // Toast discret pour signaler qu'il y a des erreurs à corriger
+                                        showToast({
+                                                title: 'Veuillez corriger les champs en erreur',
+                                                message: 'Les champs signalés en orange nécessitent votre attention.',
+                                                type: 'error',
+                                        });
                                 } else if (res.status === 429) {
-                                        showStatus(
-                                                data.error || 'Trop de tentatives. Veuillez réessayer dans une minute.',
-                                                'error',
-                                        );
+                                        showToast({
+                                                title: TOAST_TITLES.error,
+                                                message: data.error || 'Trop de tentatives. Veuillez réessayer dans une minute.',
+                                                type: 'error',
+                                        });
                                 } else {
-                                        showStatus(
-                                                data.error || 'Une erreur est survenue. Veuillez réessayer.',
-                                                'error',
-                                        );
+                                        showToast({
+                                                title: TOAST_TITLES.error,
+                                                message: data.error || 'Une erreur est survenue. Veuillez réessayer.',
+                                                type: 'error',
+                                        });
                                 }
                         } catch (err) {
-                                showStatus(
-                                        'Erreur réseau. Vérifiez votre connexion et réessayez.',
-                                        'error',
-                                );
+                                showToast({
+                                        title: TOAST_TITLES.error,
+                                        message: 'Erreur réseau. Vérifiez votre connexion et réessayez.',
+                                        type: 'error',
+                                });
                         } finally {
                                 setLoading(false);
                         }
                 });
         }
 </script>
+
+<style>
+        /* ── Toast notifications ────────────────────────────────────────────────
+           Conteneur fixed en haut à droite (desktop) / haut centré (mobile).
+           Glassmorphism cohérent avec le formulaire (bg-white/10 backdrop-blur).
+           Animations GPU-only (transform + opacity), respectent prefers-reduced-motion
+           (kill-switch global dans global.css). */
+
+        .toast-container {
+                position: fixed;
+                top: 1.5rem;
+                right: 1.5rem;
+                z-index: 100;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                width: calc(100vw - 3rem);
+                max-width: 26rem;
+                pointer-events: none;
+        }
+
+        @media (max-width: 640px) {
+                .toast-container {
+                        top: 1rem;
+                        right: 50%;
+                        transform: translateX(50%);
+                        width: calc(100vw - 2rem);
+                        max-width: none;
+                }
+        }
+
+        .toast {
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.875rem;
+                padding: 1rem 1.125rem 1.125rem;
+                border-radius: 1rem;
+                background: rgba(15, 30, 61, 0.85);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow:
+                        0 10px 30px rgba(0, 0, 0, 0.3),
+                        0 0 0 1px rgba(0, 0, 0, 0.05);
+                color: #fff;
+                pointer-events: auto;
+                overflow: hidden;
+                /* Entrée : translateY(-16px) + opacity 0 → position finale */
+                opacity: 0;
+                transform: translateY(-16px) scale(0.97);
+                transition:
+                        opacity 400ms var(--ease-spring, cubic-bezier(0.22, 0.9, 0.3, 1)),
+                        transform 400ms var(--ease-spring, cubic-bezier(0.22, 0.9, 0.3, 1));
+                will-change: transform, opacity;
+        }
+
+        .toast.toast-visible {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+        }
+
+        .toast.toast-leaving {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+                transition:
+                        opacity 250ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+                        transform 250ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+        }
+
+        /* Accent gauche coloré selon le type */
+        .toast::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+        }
+
+        .toast-success::before {
+                background: #1E9E4F;
+        }
+
+        .toast-error::before {
+                background: #EE6C1A;
+        }
+
+        /* Icône */
+        .toast-icon {
+                flex-shrink: 0;
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 0.125rem;
+        }
+
+        .toast-success .toast-icon {
+                background: rgba(30, 158, 79, 0.18);
+                color: #4ade80;
+        }
+
+        .toast-error .toast-icon {
+                background: rgba(238, 108, 26, 0.18);
+                color: #fb923c;
+        }
+
+        /* Contenu */
+        .toast-content {
+                flex: 1;
+                min-width: 0;
+        }
+
+        .toast-title {
+                margin: 0 0 0.25rem;
+                font-family: 'Poppins', system-ui, sans-serif;
+                font-size: 0.95rem;
+                font-weight: 600;
+                line-height: 1.3;
+                color: #fff;
+        }
+
+        .toast-message {
+                margin: 0;
+                font-size: 0.875rem;
+                line-height: 1.5;
+                color: rgba(255, 255, 255, 0.75);
+                word-wrap: break-word;
+        }
+
+        /* Bouton fermer */
+        .toast-close {
+                flex-shrink: 0;
+                width: 1.75rem;
+                height: 1.75rem;
+                border-radius: 0.5rem;
+                background: transparent;
+                border: none;
+                color: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 150ms var(--ease-out, ease-out), color 150ms var(--ease-out, ease-out);
+        }
+
+        .toast-close:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+        }
+
+        .toast-close:focus-visible {
+                outline: 2px solid #EE6C1A;
+                outline-offset: 2px;
+        }
+
+        /* Barre de progression en bas */
+        .toast-progress {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 3px;
+                width: 100%;
+        }
+
+        .toast-success .toast-progress {
+                background: #1E9E4F;
+        }
+
+        .toast-error .toast-progress {
+                background: #EE6C1A;
+        }
+
+        /* Reduced motion : pas d'animation, affichage direct */
+        @media (prefers-reduced-motion: reduce) {
+                .toast {
+                        opacity: 1;
+                        transform: none;
+                        transition: none;
+                }
+                .toast.toast-leaving {
+                        opacity: 0;
+                        transition: opacity 100ms linear;
+                }
+                .toast-progress {
+                        transition: none !important;
+                }
+        }
+</style>
