@@ -61,11 +61,17 @@ export type BlogCategory = (typeof BLOG_CATEGORIES)[number]['value'];
  * Keystatic storage: `local` in dev, `github` in production.
  *
  * We detect production via `process.env.NODE_ENV` (set to `'production'` by
- * Cloudflare Workers Builds). Keystatic's `github` mode requires the OAuth
- * secrets above; without them, the `/keystatic` route would crash at runtime,
- * so we fall back to `local` if the env var is missing.
+ * Cloudflare Workers Builds). Keystatic's `github` mode reads the OAuth
+ * credentials at runtime from the Cloudflare env (`KEYSTATIC_GITHUB_CLIENT_ID`,
+ * `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`) — these are Worker
+ * secrets, NOT build-time env vars, so we must not check them here (they would
+ * be undefined at build time on Workers Builds and crash the config).
+ *
+ * If the OAuth secrets are not yet bound, the `/keystatic` route returns an
+ * error at runtime, but the rest of the site (including the blog read side)
+ * keeps working.
  */
-const isProd = process.env.NODE_ENV === 'production' && process.env.KEYSTATIC_GITHUB_CLIENT_ID;
+const isProd = process.env.NODE_ENV === 'production';
 
 export default config({
         storage: isProd
