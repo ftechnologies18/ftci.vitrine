@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { makeHandler } from '@keystatic/astro/api';
+// eslint-disable-next-line import/no-unresolved
 import config from 'virtual:keystatic-config';
 
 export const prerender = false;
@@ -7,8 +8,17 @@ export const prerender = false;
 const handler = makeHandler({ config });
 
 export const ALL: APIRoute = async (ctx) => {
-        return new Response(JSON.stringify({ ok: true, msg: 'handler loaded', hasConfig: !!config }), {
-                status: 200,
-                headers: { 'Content-Type': 'application/json' },
-        });
+        try {
+                return await handler(ctx);
+        } catch (err) {
+                console.error('[keystatic-api] Handler error:', err);
+                return new Response(
+                        JSON.stringify({
+                                ok: false,
+                                error: err instanceof Error ? err.message : String(err),
+                                stack: err instanceof Error ? err.stack?.split('\n').slice(0, 5).join('\n') : undefined,
+                        }),
+                        { status: 500, headers: { 'Content-Type': 'application/json' } },
+                );
+        }
 };
