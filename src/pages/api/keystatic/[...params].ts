@@ -28,7 +28,9 @@ export const ALL: APIRoute = async (context) => {
 
                 const result = await handler(context.request);
 
-                console.log('[keystatic-api] URL:', context.url.pathname, 'Status:', result.status);
+                console.log('[keystatic-api] URL:', context.url.pathname + context.url.search);
+                console.log('[keystatic-api] Status:', result.status);
+                console.log('[keystatic-api] Body preview:', typeof result.body === 'string' ? result.body.substring(0, 200) : 'non-string');
 
                 // Reconstruction complète des headers, en forwardant TOUT y compris Set-Cookie
                 // directement dans la Response (sans context.cookies.set() qui ne marche pas
