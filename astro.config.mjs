@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import react from '@astrojs/react';
+import keystatic from '@keystatic/astro';
 
 // Only use Cloudflare adapter in production (not dev)
 // This avoids workerd crashes during local development
@@ -28,6 +30,11 @@ export default defineConfig({
   // The Cloudflare adapter then serves those on-demand routes on the Workers
   // runtime while streaming the prerendered pages from static assets.
   ...(adapter ? { adapter } : {}),
+
+  integrations: [
+    react(),
+    keystatic(),
+  ],
 
   vite: {
     plugins: [tailwindcss()],

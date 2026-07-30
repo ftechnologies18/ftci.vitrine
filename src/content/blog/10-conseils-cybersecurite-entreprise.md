@@ -1,0 +1,112 @@
+---
+title: "10 conseils pour renforcer la cybersécurité de votre entreprise"
+description: "Cybersécurité en entreprise : 10 bonnes pratiques essentielles applicables dès aujourd'hui, du mot de passe au plan de reprise d'activité, pour PME africaines."
+category: "cybersecurite"
+tags:
+  - cybersécurité
+  - sécurité informatique
+  - PME
+  - bonnes pratiques
+  - protection des données
+publishedAt: 2026-07-15
+author: "Freelance Technologies CI"
+coverImage: "/blog/images/10-conseils-cybersecurite.svg"
+featured: false
+draft: false
+readingTime: 6
+---
+
+La cybersécurité n'est plus l'affaire des seules grandes entreprises. En 2026, une PME subit en moyenne **4 tentatives d'attaque par semaine** — phishing, ransomware, intrusion sur un site web vulnérable. Le coût moyen d'un incident de sécurité pour une PME africaine est estimé entre 3 et 15 millions FCFA, sans compter la perte de confiance des clients.
+
+Voici 10 conseils concrets, applicables dès cette semaine, pour renforcer significativement la sécurité de votre entreprise.
+
+## 1. Activez l'authentification à deux facteurs (2FA) partout
+
+C'est le conseil numéro un, et le plus efficace. Le 2FA ajoute une seconde vérification (code SMS, application authenticateur, clé physique) en plus du mot de passe. Même si un attaquant vole votre mot de passe, il ne peut pas se connecter sans le second facteur.
+
+**Priorité** : activez le 2FA sur vos comptes critiques en priorité — email professionnel, accès banque, comptes cloud (Google Workspace, Microsoft 365), outils de gestion (comptabilité, RH).
+
+## 2. Utilisez un gestionnaire de mots de passe
+
+Arrêtez de réutiliser le même mot de passe partout. Arrêtez de stocker vos mots de passe dans un fichier Excel ou un carnet. Un gestionnaire de mots de passe (Bitwarden, 1Password, Dashlane) génère des mots de passe uniques et complexes pour chaque service, et les remplit automatiquement.
+
+> **Statistique** : 81% des piratages sont dus à des mots de passe faibles ou réutilisés. Un gestionnaire de mots de passe élimine ce risque.
+
+## 3. Mettez à jour automatiquement vos logiciels
+
+Les mises à jour ne sont pas des options — elles corrigent des failles de sécurité connues. Un logiciel non mis à jour est une porte ouverte pour les attaquants.
+
+Activez les mises à jour automatiques sur :
+- Systèmes d'exploitation (Windows, macOS, Linux)
+- Navigateurs web (Chrome, Firefox, Edge)
+- Logiciels critiques (suites office, outils comptables)
+- Plugins et thèmes de votre site web (WordPress, etc.)
+
+## 4. Sauvegardez avec la règle 3-2-1
+
+La règle 3-2-1 est le standard or pour les sauvegardes :
+- **3** copies de vos données
+- **2** supports différents (disque dur + cloud, par exemple)
+- **1** copie hors-site (dans un lieu physiquement séparé)
+
+Cette règle vous protège contre : panne matérielle, vol, incendie, ransomware, effacement accidentel.
+
+## 5. Formez vos équipes au phishing
+
+Le phishing (hameçonnage) est la cause numéro 1 d'incident de sécurité en entreprise. 90% des intrusions commencent par un email de phishing réussi. La formation technique ne suffit pas — il faut des exercices pratiques réguliers.
+
+### Les signaux d'alerte à apprendre à vos équipes
+
+- Urgence inhabituelle ("votre compte va être suspendu dans 24h")
+- Expéditeur qui imite un fournisseur connu mais avec une adresse légèrement modifiée
+- Lien à survoler pour vérifier l'URL réelle avant de cliquer
+- Pièce jointe inattendue (surtout .exe, .zip, .js)
+- Demande d'informations confidentielles par email
+
+## 6. Séparez les comptes administrateurs des comptes utilisateurs
+
+L'erreur classique : tout le monde utilise un compte administrateur au quotidien. Si un attaquant compromet ce compte, il a accès à tout. La bonne pratique :
+
+- Compte administrateur : réservé aux tâches d'administration (installation de logiciels, configuration système)
+- Compte utilisateur standard : pour tout le reste (navigation, email, travail quotidien)
+
+## 7. Chiffrez les appareils mobiles
+
+Ordinateurs portables, smartphones, tablettes — tous contiennent des données entreprise. En cas de vol ou de perte, le chiffrement empêche l'accès aux données.
+
+- **Windows** : BitLocker (inclus dans Windows Pro)
+- **macOS** : FileVault (inclus)
+- **Smartphones** : chiffrement natif (iPhone, Android moderne)
+
+## 8. Sécurisez votre réseau WiFi
+
+- **WiFi bureau** : changez le mot de passe par défaut du routeur, utilisez WPA3 (ou WPA2 minimum), créez un réseau invité séparé
+- **WiFi public** : jamais de connexion professionnelle sans VPN
+- **Accès distant** : utilisez un VPN pour les employés en télétravail
+
+## 9. Auditez régulièrement vos accès
+
+Tous les trimestres, faites un audit :
+- Liste de tous les comptes actifs (qui a accès à quoi ?)
+- Suppression des comptes inactifs ou d'anciens employés
+- Révocation des accès obsolètes (prestataires, stagiaires partis)
+- Vérification des permissions : chaque utilisateur a-t-il accès au minimum nécessaire ?
+
+## 10. Préparez un plan de réponse aux incidents
+
+Même avec toutes les précautions, un incident peut arriver. Avoir un plan écrit et testé fait la différence entre une crise gérée et une catastrophe. Votre plan doit répondre à :
+
+- **Qui appeler** en cas d'incident (DSI, prestataire, autorités)
+- **Que faire dans la première heure** (isoler la machine compromise, sauvegarder les logs, ne pas éteindre)
+- **Comment communiquer** en interne et vers les clients
+- **Comment restaurer** depuis les sauvegardes
+
+## Conclusion
+
+La cybersécurité d'une PME n'est pas un projet ponctuel — c'est une discipline continue. Les 10 conseils ci-dessus ne demandent pas de budget énorme, mais ils demandent de la rigueur dans le temps. Un audit initial, puis une revue trimestrielle, suffisent à maintenir un niveau de sécurité correct.
+
+Si vous souhaitez un audit de votre posture de sécurité actuelle, [contactez FTCI](/#contact). Notre pôle Infrastructure IT réalise des audits cybersécurité complets pour les PME ivoiriennes et ouest-africaines.
+
+---
+
+*Image de couverture : 10 conseils cybersécurité entreprise — FTCI 2026.*

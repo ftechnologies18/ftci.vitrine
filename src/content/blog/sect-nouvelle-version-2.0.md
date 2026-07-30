@@ -1,0 +1,92 @@
+---
+title: "SECT 2.0 : la nouvelle version de notre solution d'évaluation universitaire"
+description: "SECT 2.0 : refonte complète de l'interface, nouveau moteur IA pour la génération de sujets, et mode hors-ligne robuste pour les campus à connectivité limitée."
+category: "actualites-ftci"
+tags:
+  - SECT
+  - évaluation universitaire
+  - IA
+  - mise à jour
+  - produit
+publishedAt: 2026-07-10
+author: "Freelance Technologies CI"
+coverImage: "/blog/images/sect-nouvelle-version.svg"
+featured: false
+draft: false
+readingTime: 5
+---
+
+Nous annonçons aujourd'hui le lancement de **SECT 2.0**, la nouvelle version majeure de notre solution d'évaluation par contrôle technologique pour universités et grandes écoles africaines. Cette refonte, fruit de 8 mois de développement et de retours de nos 12 universités partenaires, apporte trois avancées majeures.
+
+## Une interface entièrement repensée
+
+L'interface de SECT 1.x était fonctionnelle mais montrait ses limites sur mobile, et sa navigation en arborescence profonde déroutait certains enseignants. SECT 2.0 adopte une interface moderne avec :
+
+- **Navigation par onglets** : création d'examen, surveillance, correction, statistiques — accessibles en un clic
+- **Design responsive** : utilisable sur smartphone, tablette, ordinateur (idéal pour les enseignants en déplacement)
+- **Mode sombre** : réduit la fatigue oculaire pendant les longues sessions de correction
+- **Accessibilité renforcée** : conformité WCAG 2.1 AA, support des lecteurs d'écran
+
+> **Retour terrain** : "L'ancienne interface marchait, mais la nouvelle fait gagner 30% de temps sur la création d'examen. Le mode mobile me permet de surveiller depuis n'importe où dans l'amphi." — *Pr. Konan, Université Félix Houphouët-Boigny*
+
+## Un nouveau moteur IA pour la génération de sujets
+
+C'est la nouveauté la plus attendue. SECT 2.0 embarque un moteur IA propriétaire (basé sur un LLM affiné sur 50 000 questions académiques francophones) qui permet :
+
+### Génération multi-niveaux
+
+À partir d'un programme de cours et d'un niveau de difficulté cible, l'IA génère :
+- **Questions à choix multiples (QCM)** avec distracteurs plausibles
+- **Questions ouvertes courtes** avec grille de correction automatique
+- **Études de cas** contextualisées au secteur d'application du cours
+- **Questions de synthèse** qui croisent plusieurs chapitres
+
+### Variantes anti-triche
+
+Pour chaque question générée, le moteur produit automatiquement 5 variantes :
+- Même compétence évaluée
+- Différentes valeurs numériques ou contextes
+- Différent ordre des réponses pour les QCM
+
+Chaque étudiant peut ainsi recevoir un sujet unique, ce qui élimine la triche par copie tout en garantissant l'équité d'évaluation.
+
+### Conformité académique
+
+Le moteur est entraîné sur des contenus validés académiquement. Il respecte :
+- La taxonomie de Bloom (connaissance, compréhension, application, analyse, synthèse, évaluation)
+- Les programmes officiels des universités partenaires
+- La francophonie académique (vocabulaire, conventions)
+
+## Un mode hors-ligne robuste pour les campus
+
+La réalité des campus africains : la connexion internet est parfois instable, coupée, ou inexistante dans certaines salles. SECT 1.x gérait le hors-ligne de façon basique, mais insuffisante pour les examens à enjeu.
+
+SECT 2.0 introduit un **mode hors-ligne complet** :
+
+- **Pré-chargement** : l'enseignant télécharge l'examen complet avant le début (questions, ressources, paramètres)
+- **Cache local sécurisé** : les données sont chiffrées sur la machine de l'enseignant, inaccessibles avant le début de l'examen
+- **Sync différée** : les réponses des étudiants sont stockées localement pendant l'examen, synchronisées automatiquement dès le retour de la connexion
+- **Anti-fraude** : le mode hors-ligne conserve toutes les protections (anti changement d'onglet, détection multi-visages, etc.)
+
+## Comment migrer vers SECT 2.0
+
+La migration est gratuite pour tous les clients existants :
+
+1. **Universités partenaires** : vous recevrez un email avec votre accès SECT 2.0 dans les 2 prochaines semaines
+2. **Nouveaux clients** : [contactez-nous](/#contact) pour une démonstration et un devis personnalisé
+
+Un webinar de présentation des nouveautés est programmé le **15 août 2026 à 14h GMT**. Inscriptions ouvertes sur [sect.ftci.fr](https://sect.ftci.fr).
+
+## Et après ?
+
+SECT 2.0 est en production dès aujourd'hui. Les développements suivants sont déjà en cours :
+
+- **SECT 2.1** (Q4 2026) : intégration CATS pour corrélation présence/résultats
+- **SECT 2.2** (Q1 2027) : support des évaluations orales (enregistrement + transcription IA)
+- **SECT 3.0** (2027) : module de proctoring vidéo avancé avec IA de détection de comportement suspect
+
+Restez connectés pour les prochaines actualités FTCI !
+
+---
+
+*Image de couverture : SECT 2.0 — évaluation universitaire réinventée par l'IA. FTCI 2026.*

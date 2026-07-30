@@ -1,0 +1,239 @@
+---
+/**
+ * /blog — Page d'index du blog FTCI.
+ *
+ * Affiche :
+ *   1. Header de la page (titre + description)
+ *   2. Article à la une (featured: true, ou le plus récent sinon)
+ *   3. Barre de filtres par catégorie
+ *   4. Grille de tous les articles (paginée côté client via les filtres)
+ *
+ * Le filtrage interactif est géré par navigation vers /blog/categorie/[slug]
+ * plutôt que par JS côté client — plus simple, plus accessible, meilleur SEO.
+ */
+
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import FeaturedArticle from '../../components/blog/FeaturedArticle.astro';
+import BlogFilters from '../../components/blog/BlogFilters.astro';
+import ArticleCard from '../../components/blog/ArticleCard.astro';
+import { getAllArticles, getFeaturedArticles, getCategoriesWithCounts } from '../../lib/blog';
+
+const allArticles = await getAllArticles();
+const featuredArticles = await getFeaturedArticles();
+const categories = await getCategoriesWithCounts();
+
+// Article à la une : le premier featured, sinon le plus récent.
+const hero = featuredArticles[0] ?? allArticles[0];
+
+// Articles restants (excluant le hero) pour la grille.
+const restArticles = hero ? allArticles.filter((a) => a.id !== hero.id) : [];
+---
+
+<BlogLayout
+        title="Blog FTCI — Transformation digitale, IA, Cloud & Cybersécurité"
+        canonical="/blog"
+>
+        <!-- ── Hero header du blog ──────────────────────────────────────────── -->
+        <section class="blog-hero">
+                <div class="container">
+                        <div class="blog-hero-content observe" style="--d: 0s;">
+                                <span class="eyebrow">
+                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+                                                <polygon points="4,0 8,4 4,8 0,4" />
+                                        </svg>
+                                        BLOG FTCI
+                                </span>
+                                <h1>Analyses, expertises et actualités tech</h1>
+                                <p class="blog-hero-desc">
+                                        Décryptage des enjeux de la transformation digitale en Afrique, bonnes pratiques
+                                        en cybersécurité, cas d'usage de l'IA, et nouvelles de nos solutions SaaS.
+                                </p>
+                        </div>
+                </div>
+        </section>
+
+        <div class="container blog-body">
+                <!-- ── Article à la une ──────────────────────────────────────────── -->
+                {hero && (
+                        <div class="blog-featured observe" style="--d: 0.1s;">
+                                <FeaturedArticle entry={hero} />
+                        </div>
+                )}
+
+                <!-- ── Filtres par catégorie ────────────────────────────────────── -->
+                <BlogFilters />
+
+                <!-- ── Grille d'articles ────────────────────────────────────────── -->
+                {restArticles.length > 0 ? (
+                        <section aria-label="Tous les articles">
+                                <div class="blog-grid">
+                                        {restArticles.map((entry, i) => (
+                                                <ArticleCard entry={entry} priority={i < 3} />
+                                        ))}
+                                </div>
+                        </section>
+                ) : (
+                        <div class="blog-empty">
+                                <p>Aucun article publié pour le moment. Revenez bientôt !</p>
+                        </div>
+                )}
+
+                <!-- ── Section catégories (navigation alternative) ──────────────── -->
+                {categories.length > 0 && (
+                        <section class="blog-categories-nav observe" style="--d: 0.2s;" aria-label="Parcourir par catégorie">
+                                <h2>Parcourir par thématique</h2>
+                                <div class="blog-categories-grid">
+                                        {categories.map((cat) => (
+                                                <a href={`/blog/categorie/${cat.slug}`} class="blog-cat-card">
+                                                        <span class="blog-cat-label">{cat.label}</span>
+                                                        <span class="blog-cat-count">
+                                                                {cat.count} article{cat.count > 1 ? 's' : ''}
+                                                        </span>
+                                                        <svg class="blog-cat-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                        </svg>
+                                                </a>
+                                        ))}
+                                </div>
+                        </section>
+                )}
+        </div>
+</BlogLayout>
+
+<style>
+        .blog-hero {
+                background: linear-gradient(180deg, #fff 0%, var(--color-light-bg) 100%);
+                padding: 4rem 0 3rem;
+                border-bottom: 1px solid rgba(15, 30, 61, 0.06);
+        }
+        .blog-hero-content {
+                max-width: 720px;
+        }
+        .blog-hero-content .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--color-orange);
+                margin-bottom: 1rem;
+        }
+        .blog-hero-content h1 {
+                font-family: var(--font-display);
+                font-weight: 800;
+                font-size: clamp(2rem, 4vw, 3rem);
+                line-height: 1.1;
+                letter-spacing: -0.025em;
+                color: var(--color-navy);
+                margin: 0 0 1rem;
+        }
+        .blog-hero-desc {
+                font-size: 1.0625rem;
+                line-height: 1.6;
+                color: var(--color-gray-text);
+                margin: 0;
+        }
+
+        .blog-body {
+                padding: 3rem 1.5rem 5rem;
+                max-width: 1200px;
+        }
+        @media (min-width: 768px) {
+                .blog-body {
+                        padding: 3rem 2rem 5rem;
+                }
+        }
+
+        .blog-featured {
+                margin-bottom: 3rem;
+        }
+
+        .blog-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 1.75rem;
+                margin-bottom: 5rem;
+        }
+        @media (max-width: 640px) {
+                .blog-grid {
+                        grid-template-columns: 1fr;
+                        gap: 1.25rem;
+                }
+        }
+
+        .blog-empty {
+                text-align: center;
+                padding: 4rem 1rem;
+                color: var(--color-gray-text);
+                font-size: 1.0625rem;
+        }
+
+        .blog-categories-nav {
+                margin-top: 4rem;
+                padding-top: 3rem;
+                border-top: 1px solid rgba(15, 30, 61, 0.1);
+        }
+        .blog-categories-nav h2 {
+                font-family: var(--font-display);
+                font-weight: 800;
+                font-size: 1.75rem;
+                letter-spacing: -0.02em;
+                color: var(--color-navy);
+                margin: 0 0 1.5rem;
+        }
+        .blog-categories-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 1rem;
+        }
+        .blog-cat-card {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 1.125rem 1.25rem;
+                background: #fff;
+                border: 1px solid rgba(15, 30, 61, 0.1);
+                border-radius: 0.75rem;
+                text-decoration: none;
+                color: var(--color-navy);
+                transition: all 200ms var(--ease-out);
+        }
+        .blog-cat-card:hover {
+                border-color: var(--color-orange);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(238, 108, 26, 0.12);
+        }
+        .blog-cat-label {
+                font-weight: 600;
+                font-size: 0.9375rem;
+                flex: 1;
+        }
+        .blog-cat-count {
+                font-size: 0.8125rem;
+                color: var(--color-gray-text);
+        }
+        .blog-cat-arrow {
+                width: 1.125rem;
+                height: 1.125rem;
+                color: var(--color-orange);
+                opacity: 0;
+                transform: translateX(-4px);
+                transition: all 200ms var(--ease-out);
+        }
+        .blog-cat-card:hover .blog-cat-arrow {
+                opacity: 1;
+                transform: translateX(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .blog-cat-card,
+                .blog-cat-arrow {
+                        transition: none;
+                }
+                .blog-cat-card:hover {
+                        transform: none;
+                }
+        }
+</style>

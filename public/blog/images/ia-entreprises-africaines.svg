@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Intelligence artificielle dans les entreprises africaines">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F1E3D"/>
+      <stop offset="50%" stop-color="#4a60a8"/>
+      <stop offset="100%" stop-color="#6B7FC7"/>
+    </linearGradient>
+    <pattern id="grid2" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg2)"/>
+  <rect width="1200" height="630" fill="url(#grid2)"/>
+  <!-- Réseau de neurones stylisé -->
+  <g transform="translate(820,140)" opacity="0.9">
+    <g stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none">
+      <line x1="40" y1="60" x2="140" y2="30"/>
+      <line x1="40" y1="60" x2="140" y2="100"/>
+      <line x1="40" y1="60" x2="140" y2="170"/>
+      <line x1="40" y1="170" x2="140" y2="30"/>
+      <line x1="40" y1="170" x2="140" y2="100"/>
+      <line x1="40" y1="170" x2="140" y2="170"/>
+      <line x1="40" y1="280" x2="140" y2="100"/>
+      <line x1="40" y1="280" x2="140" y2="170"/>
+      <line x1="140" y1="30" x2="240" y2="100"/>
+      <line x1="140" y1="100" x2="240" y2="100"/>
+      <line x1="140" y1="170" x2="240" y2="100"/>
+    </g>
+    <g fill="#EE6C1A">
+      <circle cx="40" cy="60" r="8"/>
+      <circle cx="40" cy="170" r="8"/>
+      <circle cx="40" cy="280" r="8"/>
+      <circle cx="140" cy="30" r="10" fill="#FFFFFF"/>
+      <circle cx="140" cy="100" r="10" fill="#FFFFFF"/>
+      <circle cx="140" cy="170" r="10" fill="#FFFFFF"/>
+      <circle cx="240" cy="100" r="14"/>
+    </g>
+  </g>
+  <text x="80" y="280" font-family="Poppins, Arial, sans-serif" font-size="56" font-weight="800" fill="#FFFFFF">Intelligence</text>
+  <text x="80" y="350" font-family="Poppins, Arial, sans-serif" font-size="56" font-weight="800" fill="#EE6C1A">artificielle</text>
+  <text x="80" y="430" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="500" fill="rgba(255,255,255,0.7)">Cas d'usage pour les entreprises africaines</text>
+  <text x="80" y="570" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600" fill="#EE6C1A">FTCI · BLOG</text>
+</svg>

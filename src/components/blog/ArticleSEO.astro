@@ -1,0 +1,102 @@
+---
+/**
+ * ArticleSEO.astro — Meta tags SEO spécifiques à un article de blog.
+ *
+ * À utiliser dans <head> via le layout quand on est sur une page article.
+ * Injecte : canonical, Open Graph (article), Twitter Card, et le JSON-LD
+ * schema.org BlogPosting pour le référencement Google (rich snippets).
+ */
+
+import { getCategoryLabel } from '../../lib/blog';
+
+interface Props {
+        title: string;
+        description: string;
+        url: string;
+        publishedAt: Date;
+        author: string;
+        coverImage?: string;
+        category: string;
+        keywords?: string[];
+}
+
+const {
+        title,
+        description,
+        url,
+        publishedAt,
+        author,
+        coverImage,
+        category,
+        keywords = [],
+} = Astro.props;
+
+const siteUrl = 'https://ftci.fr';
+const absoluteUrl = url.startsWith('http') ? url : `${siteUrl}${url}`;
+const absoluteCover = coverImage
+        ? (coverImage.startsWith('http') ? coverImage : `${siteUrl}${coverImage}`)
+        : `${siteUrl}/brand/ftci-a.jpg`;
+
+const categoryLabel = getCategoryLabel(category);
+const allKeywords = [categoryLabel, 'FTCI', 'Freelance Technologies Côte d\'Ivoire', ...keywords];
+
+// Schema.org BlogPosting — rich snippet pour Google
+const blogPostingSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        image: absoluteCover,
+        datePublished: publishedAt.toISOString(),
+        dateModified: publishedAt.toISOString(),
+        author: {
+                '@type': 'Organization',
+                name: author,
+                url: siteUrl,
+        },
+        publisher: {
+                '@type': 'Organization',
+                name: 'FTCI',
+                logo: {
+                        '@type': 'ImageObject',
+                        url: `${siteUrl}/brand/logo-ftci.png`,
+                },
+        },
+        mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': absoluteUrl,
+        },
+        articleSection: categoryLabel,
+        keywords: allKeywords.join(', '),
+        inLanguage: 'fr-FR',
+};
+---
+
+<!-- Canonical -->
+<link rel="canonical" href={absoluteUrl} />
+
+<!-- Meta keywords (SEO) -->
+<meta name="keywords" content={allKeywords.join(', ')} />
+
+<!-- Open Graph (Facebook, LinkedIn) -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={absoluteUrl} />
+<meta property="og:image" content={absoluteCover} />
+<meta property="og:image:alt" content={`Illustration : ${title}`} />
+<meta property="og:site_name" content="FTCI" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="article:published_time" content={publishedAt.toISOString()} />
+<meta property="article:author" content={author} />
+<meta property="article:section" content={categoryLabel} />
+{keywords.map((tag) => <meta property="article:tag" content={tag} />)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absoluteCover} />
+
+<!-- JSON-LD BlogPosting (rich snippets Google) -->
+<script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} is:inline />

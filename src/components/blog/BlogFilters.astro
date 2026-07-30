@@ -1,0 +1,116 @@
+---
+/**
+ * BlogFilters.astro — Barre de filtres du blog (catégories + recherche).
+ *
+ * Affiche une liste de pills pour les 6 catégories FTCI + "Tous", avec le
+ * compte d'articles par catégorie. La catégorie active est mise en évidence.
+ *
+ * Note : ce composant est rendu statiquement côté serveur. Le filtrage
+ * interactif (au clic) est géré par le script de la page index.astro qui
+ * lit les data attributes.
+ */
+
+import { getCategoriesWithCounts } from '../../lib/blog';
+
+interface Props {
+        activeCategory?: string;
+}
+
+const { activeCategory = '' } = Astro.props;
+
+const categories = await getCategoriesWithCounts();
+const totalCount = categories.reduce((sum, c) => sum + c.count, 0);
+---
+
+<div class="blog-filters observe" style="--d: 0.1s;" role="region" aria-label="Filtrer les articles par catégorie">
+        <div class="blog-filters-list">
+                <a
+                        href="/blog"
+                        class={`blog-filter-pill ${!activeCategory ? 'is-active' : ''}`}
+                        data-category=""
+                        aria-current={!activeCategory ? 'page' : undefined}
+                >
+                        <span class="blog-filter-label">Tous</span>
+                        <span class="blog-filter-count">{totalCount}</span>
+                </a>
+                {
+                        categories.map((cat) => (
+                                <a
+                                        href={`/blog/categorie/${cat.slug}`}
+                                        class={`blog-filter-pill ${activeCategory === cat.slug ? 'is-active' : ''}`}
+                                        data-category={cat.slug}
+                                        aria-current={activeCategory === cat.slug ? 'page' : undefined}
+                                >
+                                        <span class="blog-filter-label">{cat.label}</span>
+                                        <span class="blog-filter-count">{cat.count}</span>
+                                </a>
+                        ))
+                }
+        </div>
+</div>
+
+<style>
+        .blog-filters {
+                margin: 2rem 0 3rem;
+        }
+
+        .blog-filters-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+        }
+
+        .blog-filter-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+                border-radius: var(--radius-pill);
+                border: 1px solid rgba(15, 30, 61, 0.15);
+                background: #fff;
+                color: var(--color-navy);
+                font-size: 0.875rem;
+                font-weight: 500;
+                text-decoration: none;
+                transition: all 200ms var(--ease-out);
+                cursor: pointer;
+        }
+        .blog-filter-pill:hover {
+                border-color: var(--color-orange);
+                color: var(--color-orange);
+                transform: translateY(-1px);
+        }
+        .blog-filter-pill.is-active {
+                background: var(--color-navy);
+                border-color: var(--color-navy);
+                color: #fff;
+        }
+        .blog-filter-pill.is-active:hover {
+                color: #fff;
+                opacity: 0.9;
+        }
+
+        .blog-filter-count {
+                font-size: 0.6875rem;
+                font-weight: 600;
+                padding: 0.0625rem 0.4375rem;
+                border-radius: var(--radius-pill);
+                background: rgba(15, 30, 61, 0.08);
+                color: var(--color-navy);
+                min-width: 1.5rem;
+                text-align: center;
+        }
+        .blog-filter-pill.is-active .blog-filter-count {
+                background: rgba(255, 255, 255, 0.2);
+                color: #fff;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .blog-filter-pill {
+                        transition: none;
+                }
+                .blog-filter-pill:hover {
+                        transform: none;
+                }
+        }
+</style>

@@ -1,0 +1,170 @@
+---
+/**
+ * /blog/categorie/[category] — Page listant les articles d'une catégorie.
+ *
+ * Prérendrée statiquement : une page par catégorie FTCI (6 pages générées).
+ * Redirige vers /404 si la catégorie n'existe pas dans le schéma.
+ *
+ * Affiche : header de catégorie, filtres actifs, grille d'articles.
+ */
+
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import BlogFilters from '../../../components/blog/BlogFilters.astro';
+import ArticleCard from '../../../components/blog/ArticleCard.astro';
+import { getArticlesByCategory, getCategoryLabel } from '../../../lib/blog';
+import { BLOG_CATEGORIES } from '../../../../keystatic.config';
+
+export async function getStaticPaths() {
+        return BLOG_CATEGORIES.map((cat) => ({
+                params: { category: cat.value },
+                props: { categorySlug: cat.value },
+        }));
+}
+
+const { categorySlug } = Astro.props;
+const categoryLabel = getCategoryLabel(categorySlug);
+const articles = await getArticlesByCategory(categorySlug);
+
+// Description SEO par catégorie
+const categoryDescriptions: Record<string, string> = {
+        'transformation-digitale': 'Digitalisation des entreprises, dématérialisation, outils numériques et stratégie digitale en Afrique.',
+        'intelligence-artificielle': 'IA générative, automatisation, agents IA, cas d\'usage et bonnes pratiques pour les entreprises africaines.',
+        'cloud-computing': 'Cloud, SaaS, PaaS, hébergement, architecture cloud et meilleures pratiques d\'infrastructure.',
+        'cybersecurite': 'Sécurité informatique, protection des données, bonnes pratiques et conformité pour les organisations.',
+        'tech-innovation': 'Nouvelles technologies, tendances, innovations et analyses du secteur tech en Afrique et ailleurs.',
+        'actualites-ftci': 'Nouveautés, mises à jour et annonces concernant les produits et services FTCI (SECT, OPUC, CATS, ScolaGest).',
+};
+
+const description = categoryDescriptions[categorySlug] ?? `Articles dans la catégorie ${categoryLabel}.`;
+---
+
+<BlogLayout
+        title={`${categoryLabel} — Blog FTCI`}
+        description={description}
+        canonical={`/blog/categorie/${categorySlug}`}
+>
+        <section class="cat-hero">
+                <div class="container">
+                        <div class="cat-hero-content observe" style="--d: 0s;">
+                                <nav aria-label="Fil d'Ariane" class="cat-breadcrumb">
+                                        <a href="/blog">Blog</a>
+                                        <span aria-hidden="true">/</span>
+                                        <span aria-current="page">{categoryLabel}</span>
+                                </nav>
+                                <h1>{categoryLabel}</h1>
+                                <p class="cat-hero-desc">{description}</p>
+                                <p class="cat-hero-count">
+                                        {articles.length} article{articles.length > 1 ? 's' : ''} dans cette catégorie
+                                </p>
+                        </div>
+                </div>
+        </section>
+
+        <div class="container blog-body">
+                <BlogFilters activeCategory={categorySlug} />
+
+                {articles.length > 0 ? (
+                        <section aria-label={`Articles dans la catégorie ${categoryLabel}`}>
+                                <div class="blog-grid">
+                                        {articles.map((entry, i) => (
+                                                <ArticleCard entry={entry} priority={i < 3} />
+                                        ))}
+                                </div>
+                        </section>
+                ) : (
+                        <div class="blog-empty">
+                                <p>Aucun article dans cette catégorie pour le moment.</p>
+                                <a href="/blog" class="cat-empty-link">← Voir tous les articles</a>
+                        </div>
+                )}
+        </div>
+</BlogLayout>
+
+<style>
+        .cat-hero {
+                background: linear-gradient(180deg, #fff 0%, var(--color-light-bg) 100%);
+                padding: 3rem 0 2.5rem;
+                border-bottom: 1px solid rgba(15, 30, 61, 0.06);
+        }
+        .cat-hero-content {
+                max-width: 760px;
+        }
+
+        .cat-breadcrumb {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.8125rem;
+                color: var(--color-gray-text);
+                margin-bottom: 1rem;
+        }
+        .cat-breadcrumb a {
+                color: var(--color-gray-text);
+                text-decoration: none;
+                transition: color 200ms var(--ease-out);
+        }
+        .cat-breadcrumb a:hover {
+                color: var(--color-orange);
+        }
+        .cat-breadcrumb span[aria-current] {
+                color: var(--color-navy);
+                font-weight: 500;
+        }
+
+        .cat-hero-content h1 {
+                font-family: var(--font-display);
+                font-weight: 800;
+                font-size: clamp(1.875rem, 4vw, 2.5rem);
+                line-height: 1.15;
+                letter-spacing: -0.025em;
+                color: var(--color-navy);
+                margin: 0 0 0.875rem;
+        }
+        .cat-hero-desc {
+                font-size: 1.0625rem;
+                line-height: 1.6;
+                color: var(--color-gray-text);
+                margin: 0 0 0.625rem;
+        }
+        .cat-hero-count {
+                font-size: 0.875rem;
+                color: var(--color-orange);
+                font-weight: 500;
+                margin: 0;
+        }
+
+        .blog-body {
+                padding: 2.5rem 1.5rem 5rem;
+                max-width: 1200px;
+        }
+        @media (min-width: 768px) {
+                .blog-body {
+                        padding: 2.5rem 2rem 5rem;
+                }
+        }
+
+        .blog-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 1.75rem;
+        }
+        @media (max-width: 640px) {
+                .blog-grid {
+                        grid-template-columns: 1fr;
+                        gap: 1.25rem;
+                }
+        }
+
+        .blog-empty {
+                text-align: center;
+                padding: 4rem 1rem;
+                color: var(--color-gray-text);
+        }
+        .cat-empty-link {
+                display: inline-block;
+                margin-top: 1rem;
+                color: var(--color-orange);
+                text-decoration: none;
+                font-weight: 500;
+        }
+</style>
