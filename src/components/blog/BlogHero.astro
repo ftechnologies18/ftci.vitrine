@@ -1,0 +1,570 @@
+---
+/**
+ * BlogHero.astro — Hero cinématique IDENTIQUE à la page d'accueil.
+ *
+ * Ce composant réplique exactement le design du Hero.astro de la page d'accueil :
+ *   - Hauteur 85vh / 85svh (identique)
+ *   - Mesh gradient animé avec 4 blobs colorés
+ *   - Grid pattern subtil
+ *   - Formes géométriques animées (diamond, ring, triangle, dot)
+ *   - Gradient overlay identique
+ *   - Animations fluides GPU-only
+ *
+ * Props :
+ *   - eyebrow : texte du badge supérieur
+ *   - title : tableau de lignes de titre
+ *   - subtitle : description sous le titre
+ *   - stats : tableau de statistiques optionnelles
+ */
+
+interface Stat {
+	value: string;
+	label: string;
+	icon: string;
+}
+
+interface Props {
+	eyebrow?: string;
+	title: string[];
+	subtitle?: string;
+	stats?: Stat[];
+	accentIndex?: number; // index de la ligne à mettre en surbrillance (orange)
+}
+
+const {
+	eyebrow = 'Blog FTCI',
+	title,
+	subtitle = '',
+	stats = [],
+	accentIndex = 1,
+} = Astro.props;
+---
+
+<section class="blog-hero-cinematic" data-blog-hero>
+	<!-- ══════════════════════════════════════════════════════════════════════
+	     BACKGROUND LAYER (IDENTIQUE À L'ACCUEIL)
+	     ══════════════════════════════════════════════════════════════════════ -->
+	<div class="hero-bg-layer" aria-hidden="true">
+		<!-- Mesh gradient animé -->
+		<div class="mesh-container">
+			<div class="mesh-blob mesh--periwinkle"></div>
+			<div class="mesh-blob mesh--green"></div>
+			<div class="mesh-blob mesh--orange"></div>
+			<div class="mesh-blob mesh--navy"></div>
+		</div>
+		
+		<!-- Grid pattern -->
+		<div class="grid-pattern"></div>
+		
+		<!-- Formes géométriques -->
+		<div class="geo-shapes">
+			<div class="geo-shape geo--diamond geo--1"></div>
+			<div class="geo-shape geo--ring geo--2"></div>
+			<div class="geo-shape geo--triangle geo--3"></div>
+			<div class="geo-shape geo--dot geo--4"></div>
+		</div>
+		
+		<!-- Gradient overlay -->
+		<div class="gradient-overlay"></div>
+	</div>
+
+	<!-- ══════════════════════════════════════════════════════════════════════
+	     CONTENT
+	     ══════════════════════════════════════════════════════════════════════ -->
+	<div class="hero-content-wrapper">
+		<div class="hero-container">
+			<!-- Eyebrow -->
+			{eyebrow && (
+				<div class="hero-eyebrow">
+					<span class="eyebrow-line"></span>
+					<span class="eyebrow-text">{eyebrow}</span>
+				</div>
+			)}
+
+			<!-- Title -->
+			<h1 class="hero-title">
+				{title.map((line, i) => (
+					<span class={`title-line ${i === accentIndex ? 'highlight' : ''}`}>
+						<span class="line-text">{line}</span>
+						<span class="line-bg"></span>
+					</span>
+				))}
+			</h1>
+
+			<!-- Subtitle -->
+			{subtitle && (
+				<p class="hero-subtitle">{subtitle}</p>
+			)}
+
+			<!-- Stats -->
+			{stats.length > 0 && (
+				<div class="hero-stats-grid">
+					{stats.map((stat, idx) => (
+						<div class="stat-item" data-stat-index={idx}>
+							<div class="stat-icon">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={stat.icon}/>
+								</svg>
+							</div>
+							<div class="stat-value">{stat.value}</div>
+							<div class="stat-label">{stat.label}</div>
+						</div>
+					))}
+				</div>
+			)}
+
+			<!-- Scroll indicator -->
+			<div class="scroll-indicator" aria-hidden="true">
+				<div class="scroll-line"></div>
+				<span class="scroll-text">Scroll</span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   BASE STRUCTURE (IDENTIQUE À HERO.ASTRO)
+	   ═══════════════════════════════════════════════════════════════════════════ */
+	.blog-hero-cinematic {
+		position: relative;
+		width: 100%;
+		height: 85vh;
+		height: 85svh;
+		background: #070e1a;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+	}
+
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   BACKGROUND LAYER (IDENTIQUE À HERO.ASTRO)
+	   ═══════════════════════════════════════════════════════════════════════════ */
+	.hero-bg-layer {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.mesh-container {
+		position: absolute;
+		inset: 0;
+		filter: blur(80px);
+		opacity: 0.6;
+	}
+
+	.mesh-blob {
+		position: absolute;
+		border-radius: 50%;
+		will-change: transform;
+	}
+
+	.mesh--periwinkle {
+		width: 60vw;
+		height: 55vw;
+		top: -15%;
+		left: -10%;
+		background: radial-gradient(circle, rgba(107, 127, 199, 0.4), transparent 70%);
+		animation: meshFloat 25s ease-in-out infinite alternate;
+	}
+
+	.mesh--green {
+		width: 50vw;
+		height: 45vw;
+		top: 5%;
+		right: -15%;
+		background: radial-gradient(circle, rgba(30, 158, 79, 0.3), transparent 70%);
+		animation: meshFloat 30s ease-in-out infinite alternate-reverse;
+	}
+
+	.mesh--orange {
+		width: 55vw;
+		height: 50vw;
+		bottom: -20%;
+		right: 10%;
+		background: radial-gradient(circle, rgba(238, 108, 26, 0.28), transparent 70%);
+		animation: meshFloat 28s ease-in-out infinite alternate;
+	}
+
+	.mesh--navy {
+		width: 45vw;
+		height: 40vw;
+		bottom: -10%;
+		left: 20%;
+		background: radial-gradient(circle, rgba(15, 30, 61, 0.5), transparent 70%);
+		animation: meshFloat 32s ease-in-out infinite alternate-reverse;
+	}
+
+	@keyframes meshFloat {
+		to { transform: translate(4%, 3%) scale(1.08); }
+	}
+
+	.grid-pattern {
+		position: absolute;
+		inset: 0;
+		background-image: 
+			linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+		background-size: 60px 60px;
+		mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+	}
+
+	.geo-shapes {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.geo-shape {
+		position: absolute;
+		opacity: 0.15;
+	}
+
+	.geo--diamond {
+		width: 120px;
+		height: 120px;
+		top: 15%;
+		right: 15%;
+		background: linear-gradient(135deg, #EE6C1A, transparent);
+		transform: rotate(45deg);
+		animation: geoPulse 8s ease-in-out infinite, geoRotate 20s linear infinite;
+	}
+
+	.geo--ring {
+		width: 200px;
+		height: 200px;
+		bottom: 20%;
+		left: 10%;
+		border: 2px solid #1a8c42;
+		border-radius: 50%;
+		animation: geoPulse 10s ease-in-out infinite 1s, geoScale 15s ease-in-out infinite;
+	}
+
+	.geo--triangle {
+		width: 0;
+		height: 0;
+		top: 40%;
+		left: 5%;
+		border-left: 40px solid transparent;
+		border-right: 40px solid transparent;
+		border-bottom: 70px rgba(107, 127, 199, 0.3);
+		animation: geoPulse 12s ease-in-out infinite 2s;
+	}
+
+	.geo--dot {
+		width: 12px;
+		height: 12px;
+		top: 25%;
+		left: 25%;
+		background: #EE6C1A;
+		border-radius: 50%;
+		animation: geoBlink 4s ease-in-out infinite;
+	}
+
+	@keyframes geoPulse {
+		0%, 100% { opacity: 0.1; transform: scale(1); }
+		50% { opacity: 0.25; transform: scale(1.1); }
+	}
+
+	@keyframes geoRotate {
+		to { transform: rotate(405deg); }
+	}
+
+	@keyframes geoScale {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.15); }
+	}
+
+	@keyframes geoBlink {
+		0%, 100% { opacity: 0.2; }
+		50% { opacity: 0.6; }
+	}
+
+	.gradient-overlay {
+		position: absolute;
+		inset: 0;
+		background: 
+			radial-gradient(ellipse at 20% 50%, transparent 40%, #070e1a 90%),
+			linear-gradient(to bottom, transparent 60%, #070e1a 95%);
+	}
+
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   CONTENT WRAPPER
+	   ═══════════════════════════════════════════════════════════════════════════ */
+	.hero-content-wrapper {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		padding: 0 1.5rem;
+	}
+
+	.hero-container {
+		max-width: 900px;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	/* Eyebrow */
+	.hero-eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.eyebrow-line {
+		width: 32px;
+		height: 2px;
+		background: var(--color-orange, #EE6C1A);
+		border-radius: 1px;
+	}
+
+	.eyebrow-text {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--color-orange, #EE6C1A);
+	}
+
+	/* Title */
+	.hero-title {
+		font-family: var(--font-display, system-ui);
+		font-size: clamp(2.5rem, 6vw, 4.5rem);
+		font-weight: 800;
+		line-height: 1.05;
+		letter-spacing: -0.03em;
+		color: #fff;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.1em;
+	}
+
+	.title-line {
+		position: relative;
+		display: inline-block;
+	}
+
+	.line-text {
+		position: relative;
+		z-index: 1;
+		display: block;
+	}
+
+	.title-line.highlight .line-text {
+		background: linear-gradient(135deg, #EE6C1A 0%, #fb923c 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.line-bg {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, rgba(238, 108, 26, 0.15), transparent);
+		border-radius: 0.25em;
+		opacity: 0;
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.title-line.highlight .line-bg {
+		opacity: 1;
+		transform: scaleX(1);
+	}
+
+	/* Subtitle */
+	.hero-subtitle {
+		font-size: clamp(1rem, 2vw, 1.25rem);
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.7);
+		max-width: 600px;
+		margin: 0;
+	}
+
+	/* Stats Grid */
+	.hero-stats-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		margin-top: 1rem;
+	}
+
+	.stat-item {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.75rem 1.25rem;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 12px;
+		backdrop-filter: blur(10px);
+		transition: all 300ms ease;
+	}
+
+	.stat-item:hover {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(238, 108, 26, 0.3);
+		transform: translateY(-2px);
+	}
+
+	.stat-icon {
+		width: 36px;
+		height: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(238, 108, 26, 0.15);
+		border-radius: 8px;
+		color: var(--color-orange, #EE6C1A);
+		flex-shrink: 0;
+	}
+
+	.stat-icon svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.stat-value {
+		font-family: var(--font-display, system-ui);
+		font-size: 1.375rem;
+		font-weight: 700;
+		color: #fff;
+		line-height: 1.2;
+	}
+
+	.stat-label {
+		font-size: 0.75rem;
+		color: rgba(255, 255, 255, 0.55);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	/* Scroll Indicator */
+	.scroll-indicator {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		margin-top: 2rem;
+		opacity: 0.5;
+		transition: opacity 300ms ease;
+	}
+
+	.blog-hero-cinematic:hover .scroll-indicator {
+		opacity: 0.8;
+	}
+
+	.scroll-line {
+		width: 1px;
+		height: 48px;
+		background: linear-gradient(to bottom, var(--color-orange, #EE6C1A), transparent);
+		animation: scrollPulse 2s ease-in-out infinite;
+	}
+
+	@keyframes scrollPulse {
+		0%, 100% { 
+			opacity: 0.4;
+			transform: scaleY(0.8);
+			transform-origin: top;
+		}
+		50% { 
+			opacity: 1;
+			transform: scaleY(1);
+		}
+	}
+
+	.scroll-text {
+		font-size: 0.6875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.blog-hero-cinematic {
+			height: 75vh;
+			height: 75svh;
+		}
+
+		.hero-container {
+			gap: 1rem;
+		}
+
+		.hero-stats-grid {
+			gap: 0.75rem;
+		}
+
+		.stat-item {
+			padding: 0.625rem 1rem;
+		}
+
+		.stat-icon {
+			width: 32px;
+			height: 32px;
+		}
+
+		.stat-icon svg {
+			width: 16px;
+			height: 16px;
+		}
+
+		.stat-value {
+			font-size: 1.125rem;
+		}
+
+		.geo--diamond,
+		.geo--ring {
+			display: none;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.blog-hero-cinematic {
+			height: 70vh;
+			height: 70svh;
+		}
+
+		.stat-item {
+			flex: 1;
+			min-width: calc(50% - 0.5rem);
+		}
+	}
+</style>
+
+<script>
+	// Animation d'entrée au scroll
+	const hero = document.querySelector('[data-blog-hero]') as HTMLElement | null;
+	if (hero) {
+		// Ajouter une classe quand le hero est visible
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						hero.classList.add('is-visible');
+					}
+				});
+			},
+			{ threshold: 0.1 }
+		);
+		observer.observe(hero);
+
+		// Animation des stats au chargement
+		const statItems = hero.querySelectorAll('.stat-item');
+		statItems.forEach((item, idx) => {
+			(item as HTMLElement).style.opacity = '0';
+			(item as HTMLElement).style.transform = 'translateY(20px)';
+			
+			setTimeout(() => {
+				item.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+				item.style.opacity = '1';
+				item.style.transform = 'translateY(0)';
+			}, 150 + idx * 100);
+		});
+	}
+</script>
