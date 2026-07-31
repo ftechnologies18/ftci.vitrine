@@ -5,5 +5,6 @@
 # NOTE: This is handled at the DNS/Cloudflare level, not here.
 # Cloudflare Pages automatically redirects www to apex if both are configured.
 
-# Legacy/old paths (none for now — add as needed)
-# /old-path  /new-path  301
+# Blog article renames (slug alignment with Keystatic slugField: 'title')
+# Ancien slug court → nouveau slug généré depuis le titre complet
+/blog/pourquoi-pme-africaines-digitaliser  /blog/pourquoi-les-pme-africaines-doivent-elles-se-digitaliser-en-2026  301
