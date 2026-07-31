@@ -26,38 +26,40 @@
  * This is what `import { env } from 'cloudflare:workers'` actually returns.
  */
 declare namespace Cloudflare {
-	interface Env {
-		/** Resend API key (https://resend.com/api-keys). Optional: when unset, email dispatch is skipped. */
-		RESEND_API_KEY?: string;
-		/** Discord webhook URL (https://discord.com/api/webhooks/...). Optional: when unset, Discord dispatch is skipped. */
-		DISCORD_WEBHOOK_URL?: string;
-	}
+        interface Env {
+                /** Resend API key (https://resend.com/api-keys). Optional: when unset, email dispatch is skipped. */
+                RESEND_API_KEY?: string;
+                /** Discord webhook URL (https://discord.com/api/webhooks/...). Optional: when unset, Discord dispatch is skipped. */
+                DISCORD_WEBHOOK_URL?: string;
+                /** Resend Audience ID for newsletter subscriptions. Create at https://resend.com/audiences. */
+                RESEND_AUDIENCE_ID?: string;
+        }
 }
 
 /** Global Env interface — merges with the generated `interface Env extends __BaseEnv_Env {}`. */
 interface Env {
-	/** KV namespace for contact form messages. Keyed by messages/YYYY/MM/<id>. */
-	MESSAGE_STORE?: KVNamespace;
-	/** Node version hint for the build environment (set in wrangler.jsonc env.vars). */
-	NODE_VERSION?: string;
+        /** KV namespace for contact form messages. Keyed by messages/YYYY/MM/<id>. */
+        MESSAGE_STORE?: KVNamespace;
+        /** Node version hint for the build environment (set in wrangler.jsonc env.vars). */
+        NODE_VERSION?: string;
 
-	// ── Secrets (set via `wrangler secret put` or dashboard, never in wrangler.jsonc) ──
+        // ── Secrets (set via `wrangler secret put` or dashboard, never in wrangler.jsonc) ──
 
-	/**
-	 * Resend API key used to send the team notification email and the
-	 * visitor confirmation email. Create one at https://resend.com/api-keys
-	 * and bind it as a Worker secret. Optional: when unset, the contact
-	 * form still stores messages in KV but skips email dispatch.
-	 */
-	RESEND_API_KEY?: string;
+        /**
+         * Resend API key used to send the team notification email and the
+         * visitor confirmation email. Create one at https://resend.com/api-keys
+         * and bind it as a Worker secret. Optional: when unset, the contact
+         * form still stores messages in KV but skips email dispatch.
+         */
+        RESEND_API_KEY?: string;
 
-	/**
-	 * Discord webhook URL (https://discord.com/api/webhooks/...) used for
-	 * real-time team notifications. Create one from a Discord channel's
-	 * "Integrations → Webhooks" menu and bind it as a Worker secret.
-	 * Optional: when unset, Discord dispatch is skipped.
-	 */
-	DISCORD_WEBHOOK_URL?: string;
+        /**
+         * Discord webhook URL (https://discord.com/api/webhooks/...) used for
+         * real-time team notifications. Create one from a Discord channel's
+         * "Integrations → Webhooks" menu and bind it as a Worker secret.
+         * Optional: when unset, Discord dispatch is skipped.
+         */
+        DISCORD_WEBHOOK_URL?: string;
 }
 
 // ── Virtual modules (résolus au runtime par Vite/Astro, pas par TS) ──────────
@@ -68,7 +70,7 @@ interface Env {
  * La déclaration ici évite les erreurs TS "Cannot find module" au type-check.
  */
 declare module 'virtual:keystatic-config' {
-	import type { Config } from '@keystatic/core';
-	const config: Config;
-	export default config;
+        import type { Config } from '@keystatic/core';
+        const config: Config;
+        export default config;
 }
