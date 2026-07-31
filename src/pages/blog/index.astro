@@ -201,14 +201,22 @@ const totalCategories = categories.length;
                                 )
                         }
 
-                        <!-- ── NEWSLETTER ULTRA MINIMAL ══════════════════════════ -->
-                        <div class="nl-mini" data-newsletter-card>
-                                <span class="nl-mini__icon" aria-hidden="true">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
-                                </span>
-                                <span class="nl-mini__label">Newsletter</span>
-                                <button type="button" class="nl-mini__btn" data-open-modal aria-label="S'abonner">S'abonner</button>
-                        </div>
+                        <!-- ── NEWSLETTER BAR HORIZONTALE ══════════════════════════ -->
+                        <section class="nl-bar" data-newsletter-card>
+                                <div class="nl-bar__inner">
+                                        <div class="nl-bar__left">
+                                                <span class="nl-bar__icon" aria-hidden="true">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                                                </span>
+                                                <div class="nl-bar__text">
+                                                        <span class="nl-bar__label">Newsletter</span>
+                                                        <span class="nl-bar__desc">Restez informé de nos derniers articles</span>
+                                                </div>
+                                        </div>
+                                        <button type="button" class="nl-bar__btn" data-open-modal>S'abonner</button>
+                                </div>
+                        </section>
+
 
                 </div>
         </div>
@@ -694,63 +702,100 @@ const totalCategories = categories.length;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════════
-           NEWSLETTER ULTRA MINIMAL
+           NEWSLETTER BAR HORIZONTALE (pleine largeur)
            ═══════════════════════════════════════════════════════════════════════════ */
-        .nl-mini {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
+        .nl-bar {
+                width: 100%;
+                margin-top: 2rem;
                 background: var(--color-navy, #0a1628);
                 border: 1px solid rgba(255,255,255,0.08);
-                border-radius: 8px;
-                padding: 0.5rem 0.65rem;
-                color: #fff;
-                margin-top: 2rem;
-                transition: border-color 0.2s;
-        }
-        .nl-mini:hover {
-                border-color: rgba(238,108,26,0.3);
+                border-radius: 12px;
+                overflow: hidden;
         }
 
-        .nl-mini__icon {
+        .nl-bar__inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1.5rem;
+                padding: 1rem 1.25rem;
+        }
+
+        .nl-bar__left {
+                display: flex;
+                align-items: center;
+                gap: 0.875rem;
+                flex: 1;
+                min-width: 0;
+        }
+
+        .nl-bar__icon {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 20px;
-                height: 20px;
+                width: 36px;
+                height: 36px;
                 background: rgba(238,108,26,0.12);
-                border-radius: 5px;
+                border-radius: 9px;
                 color: var(--color-orange, #ee6c1a);
                 flex-shrink: 0;
         }
-        .nl-mini__icon svg {
-                width: 11px;
-                height: 11px;
+        .nl-bar__icon svg {
+                width: 18px;
+                height: 18px;
         }
 
-        .nl-mini__label {
+        .nl-bar__text {
+                display: flex;
+                flex-direction: column;
+                gap: 0.125rem;
+        }
+
+        .nl-bar__label {
                 font-size: 0.75rem;
-                font-weight: 500;
-                color: rgba(255,255,255,0.8);
-                white-space: nowrap;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--color-orange, #ee6c1a);
         }
 
-        .nl-mini__btn {
-                padding: 0.3rem 0.6rem;
+        .nl-bar__desc {
+                font-size: 0.8125rem;
+                color: rgba(255,255,255,0.65);
+                line-height: 1.4;
+        }
+
+        .nl-bar__btn {
+                padding: 0.625rem 1.5rem;
                 background: var(--color-orange, #ee6c1a);
                 color: #fff;
-                font-size: 0.6875rem;
+                font-size: 0.8125rem;
                 font-weight: 600;
                 font-family: inherit;
                 border: none;
-                border-radius: 9999px;
+                border-radius: 8px;
                 cursor: pointer;
                 white-space: nowrap;
+                flex-shrink: 0;
                 transition: background 0.15s, transform 0.15s;
         }
-        .nl-mini__btn:hover {
+        .nl-bar__btn:hover {
                 background: #d4520e;
-                transform: scale(1.03);
+                transform: translateY(-1px);
+        }
+
+        @media (max-width: 640px) {
+                .nl-bar__inner {
+                        flex-direction: column;
+                        gap: 1rem;
+                        padding: 1rem;
+                }
+                .nl-bar__left {
+                        width: 100%;
+                }
+                .nl-bar__btn {
+                        width: 100%;
+                }
         }
 </style>
 
