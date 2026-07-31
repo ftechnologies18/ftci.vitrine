@@ -12,10 +12,11 @@
  * Design tokens : variables CSS --blog-* pour cohérence.
  */
 
-import BlogLayout from '../../layouts/BlogLayout';
+import BlogLayout from '../../layouts/BlogLayout.astro';
 import FeaturedArticle from '../../components/blog/FeaturedArticle.astro';
 import BlogFilters from '../../components/blog/BlogFilters.astro';
 import ArticleCard from '../../components/blog/ArticleCard.astro';
+import NewsletterForm from '../../components/blog/NewsletterForm.astro';
 import { getAllArticles, getFeaturedArticles, getCategoriesWithCounts } from '../../lib/blog';
 
 const allArticles = await getAllArticles();
@@ -221,32 +222,21 @@ const totalCategories = categories.length;
                                         <div class="nl-text-group">
                                                 <h3 class="nl-title">Restez <span class="nl-title-accent">informé</span></h3>
                                                 <p class="nl-desc">Recevez nos analyses exclusives, tutoriels tech et actualités directement dans votre boîte mail.</p>
+                                                <NewsletterForm />
                                         </div>
 
-                                        <!-- CTA avec input stylé -->
-                                        <div class="nl-action">
-                                                <a href="mailto:contact@ftci.fr?subject=Inscription Newsletter FTCI" class="nl-btn">
-                                                        <span class="nl-btn-text">S'abonner</span>
-                                                        <span class="nl-btn-icon">
-                                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-6H6"/></svg>
-                                                        </span>
-                                                        <div class="nl-btn-glow" aria-hidden="true"></div>
-                                                </a>
-                                                <span class="nl-note">Gratuit • Pas de spam</span>
+                                        <!-- Décorations -->
+                                        <div class="nl-deco nl-deco-1" aria-hidden="true">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
                                         </div>
-                                </div>
+                                        <div class="nl-deco nl-deco-2" aria-hidden="true">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                        </div>
 
-                                <!-- Décorations -->
-                                <div class="nl-deco nl-deco-1" aria-hidden="true">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                                        <!-- Coins décoratifs -->
+                                        <div class="nl-corner nl-corner-tl" aria-hidden="true"></div>
+                                        <div class="nl-corner nl-corner-br" aria-hidden="true"></div>
                                 </div>
-                                <div class="nl-deco nl-deco-2" aria-hidden="true">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                </div>
-
-                                <!-- Coins décoratifs -->
-                                <div class="nl-corner nl-corner-tl" aria-hidden="true"></div>
-                                <div class="nl-corner nl-corner-br" aria-hidden="true"></div>
                         </section>
 
                 </div>
@@ -838,9 +828,9 @@ const totalCategories = categories.length;
                 position: relative;
                 z-index: 2;
                 display: grid;
-                grid-template-columns: auto 1fr auto;
+                grid-template-columns: auto 1fr;
                 gap: 1.5rem;
-                align-items: center;
+                align-items: start;
                 padding: 2rem 2.25rem;
                 color: #fff;
         }
@@ -906,89 +896,16 @@ const totalCategories = categories.length;
                 font-size: 0.875rem;
                 line-height: 1.55;
                 color: rgba(255, 255, 255, 0.65);
-                margin: 0;
+                margin: 0 0 0;
+                max-width: 420px;
+        }
+        .nl-text-group :global(.newsletter-form) {
+                margin-top: 0.875rem;
                 max-width: 420px;
         }
         @media (max-width: 768px) {
                 .nl-desc { max-width: none; }
-        }
-
-        /* Action area */
-        .nl-action {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                gap: 0.5rem;
-        }
-        @media (max-width: 768px) {
-                .nl-action { align-items: center; margin-top: 0.5rem; }
-        }
-
-        /* Button premium */
-        .nl-btn {
-                position: relative;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.625rem;
-                padding: 0.875rem 1.75rem;
-                background: linear-gradient(135deg, var(--color-orange) 0%, #d4520e 100%);
-                border: none;
-                border-radius: 100px;
-                color: #fff;
-                font-size: 0.9rem;
-                font-weight: 700;
-                text-decoration: none;
-                cursor: pointer;
-                overflow: hidden;
-                transition: all 400ms cubic-bezier(0.22, 1, 0.36, 1);
-                box-shadow:
-                        0 4px 20px rgba(238, 108, 26, 0.35),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        .nl-btn:hover {
-                transform: translateY(-3px) scale(1.02);
-                box-shadow:
-                        0 8px 30px rgba(238, 108, 26, 0.5),
-                        0 0 50px rgba(238, 108, 26, 0.15),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .nl-btn-text {
-                position: relative;
-                z-index: 1;
-        }
-
-        .nl-btn-icon {
-                position: relative;
-                z-index: 1;
-                display: flex;
-                transition: transform 300ms ease;
-        }
-        .nl-btn-icon svg {
-                width: 16px;
-                height: 16px;
-                transition: transform 300ms ease;
-        }
-        .nl-btn:hover .nl-btn-icon svg {
-                transform: translateX(3px);
-        }
-
-        .nl-btn-glow {
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
-                opacity: 0;
-                transition: opacity 300ms ease;
-        }
-        .nl-btn:hover .nl-btn-glow {
-                opacity: 1;
-        }
-
-        /* Note sous bouton */
-        .nl-note {
-                font-size: 0.6875rem;
-                color: rgba(255, 255, 255, 0.4);
-                letter-spacing: 0.02em;
+                .nl-text-group :global(.newsletter-form) { max-width: none; }
         }
 
         /* Décorations flottantes */
@@ -1055,6 +972,34 @@ const totalCategories = categories.length;
                 border-radius: 0 0 20px 0;
         }
 
+        /* Newsletter form button override (pour NewsletterForm) */
+        .nl-text-group :global(.newsletter-btn) {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.875rem 1.75rem;
+                background: linear-gradient(135deg, var(--color-orange) 0%, #d4520e 100%);
+                color: #fff;
+                font-weight: 700;
+                font-size: 0.9rem;
+                border: none;
+                border-radius: 100px;
+                cursor: pointer;
+                text-decoration: none;
+                transition: all 400ms cubic-bezier(0.22, 1, 0.36, 1);
+                box-shadow: 0 4px 20px rgba(238, 108, 26, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .nl-text-group :global(.newsletter-btn):hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 30px rgba(238, 108, 26, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        .nl-text-group :global(.newsletter-btn svg) {
+                transition: transform 250ms ease;
+        }
+        .nl-text-group :global(.newsletter-btn:hover svg) {
+                transform: translateX(3px);
+        }
+
         @media (prefers-reduced-motion: reduce) {
                 .newsletter-waouh,
                 .nl-mesh,
@@ -1066,6 +1011,5 @@ const totalCategories = categories.length;
                 }
                 .newsletter-waouh { opacity: 1; transform: none; }
                 .nl-shine { display: none; }
-                .nl-btn:hover { transform: none; }
         }
 </style>
