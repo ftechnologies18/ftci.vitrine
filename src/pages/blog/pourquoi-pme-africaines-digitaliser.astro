@@ -1,0 +1,18 @@
+---
+/**
+ * Redirection 301 — ancien slug vers nouveau slug.
+ *
+ * L'article "Pourquoi les PME africaines doivent-elles se digitaliser en 2026 ?"
+ * a été renommé de `pourquoi-pme-africaines-digitaliser` vers
+ * `pourquoi-les-pme-africaines-doivent-elles-se-digitaliser-en-2026` pour
+ * aligner le nom du fichier avec le slug généré par Keystatic (slugField: 'title').
+ *
+ * Cette route assure que les anciens liens (SEO, partage social, bookmarks)
+ * redirigent vers la nouvelle URL sans casser.
+ */
+
+return Astro.redirect(
+	'/blog/pourquoi-les-pme-africaines-doivent-elles-se-digitaliser-en-2026',
+	301,
+);
+---
