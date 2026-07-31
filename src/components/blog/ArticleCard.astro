@@ -16,20 +16,20 @@ import { getArticleUrl, getReadingTime, getCategoryUrl } from '../../lib/blog';
 import CategoryBadge from './CategoryBadge.astro';
 
 interface Props {
-	entry: BlogEntry;
-	priority?: boolean;
-	index?: number;
+        entry: BlogEntry;
+        priority?: boolean;
+        index?: number;
 }
 
-const { entry, priority = false, index = 0 } = Astro.props;
+const { entry, priority = false, index: _index = 0 } = Astro.props;
 const url = getArticleUrl(entry);
 const readingTime = getReadingTime(entry);
 
 // Formatage date FR (ex : "30 juillet 2026")
 const dateStr = entry.data.publishedAt.toLocaleDateString('fr-FR', {
-	day: 'numeric',
-	month: 'short',
-	year: 'numeric',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
 });
 
 // Fallback image : gradient navy → orange FTCI quand pas de coverImage.
@@ -38,309 +38,309 @@ const coverSrc = hasCover ? entry.data.coverImage : '';
 ---
 
 <article 
-	class="article-card-premium" 
-	style="--delay: calc(var(--base-delay, 0s) + var(--i, 0) * 0.08s); --i: {index};"
-	data-article-card
+        class="article-card-premium" 
+        style="--delay: calc(var(--base-delay, 0s) + var(--i, 0) * 0.08s); --i: {index};"
+        data-article-card
 >
-	<a href={url} class="card-link" aria-label={entry.data.title}>
-		<!-- Gradient border wrapper -->
-		<div class="card-border-wrap">
-			<div class="card-inner">
-				<!-- Image container -->
-				<div class="card-cover">
-					{
-						hasCover ? (
-							<img
-								src={coverSrc}
-								alt=""
-								loading={priority ? 'eager' : 'lazy'}
-								decoding="async"
-								class="card-img"
-								width="640"
-								height="360"
-							/>
-						) : (
-							<div class="card-fallback" aria-hidden="true">
-								<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="1.5"
-										d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 0a2 2 0 012 2v8a2 2 0 01-2 2m-4-12V4m0 0l3 3m-3-3l-3 3"
-									/>
-								</svg>
-							</div>
-						)
-					}
-					
-					<!-- Overlay gradient -->
-					<div class="card-cover-overlay" aria-hidden="true"></div>
-					
-					<!-- Badge -->
-					<div class="card-badge">
-						<CategoryBadge
-							category={entry.data.category}
-							size="sm"
-							href={getCategoryUrl(entry.data.category)}
-						/>
-					</div>
+        <a href={url} class="card-link" aria-label={entry.data.title}>
+                <!-- Gradient border wrapper -->
+                <div class="card-border-wrap">
+                        <div class="card-inner">
+                                <!-- Image container -->
+                                <div class="card-cover">
+                                        {
+                                                hasCover ? (
+                                                        <img
+                                                                src={coverSrc}
+                                                                alt=""
+                                                                loading={priority ? 'eager' : 'lazy'}
+                                                                decoding="async"
+                                                                class="card-img"
+                                                                width="640"
+                                                                height="360"
+                                                        />
+                                                ) : (
+                                                        <div class="card-fallback" aria-hidden="true">
+                                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                        <path
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                stroke-width="1.5"
+                                                                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 0a2 2 0 012 2v8a2 2 0 01-2 2m-4-12V4m0 0l3 3m-3-3l-3 3"
+                                                                        />
+                                                                </svg>
+                                                        </div>
+                                                )
+                                        }
+                                        
+                                        <!-- Overlay gradient -->
+                                        <div class="card-cover-overlay" aria-hidden="true"></div>
+                                        
+                                        <!-- Badge -->
+                                        <div class="card-badge">
+                                                <CategoryBadge
+                                                        category={entry.data.category}
+                                                        size="sm"
+                                                        href={getCategoryUrl(entry.data.category)}
+                                                />
+                                        </div>
 
-					<!-- Reading time indicator -->
-					<div class="card-reading-time" aria-hidden="true">
-						<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-						</svg>
-						<span>{readingTime} min</span>
-					</div>
-				</div>
+                                        <!-- Reading time indicator -->
+                                        <div class="card-reading-time" aria-hidden="true">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                <span>{readingTime} min</span>
+                                        </div>
+                                </div>
 
-				<!-- Content -->
-				<div class="card-content">
-					<h3 class="card-title">{entry.data.title}</h3>
-					<p class="card-desc">{entry.data.description}</p>
+                                <!-- Content -->
+                                <div class="card-content">
+                                        <h3 class="card-title">{entry.data.title}</h3>
+                                        <p class="card-desc">{entry.data.description}</p>
 
-					<div class="card-footer">
-						<time datetime={entry.data.publishedAt.toISOString()} class="card-date">
-							{dateStr}
-						</time>
-						<span class="card-arrow" aria-hidden="true">
-							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-							</svg>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</a>
+                                        <div class="card-footer">
+                                                <time datetime={entry.data.publishedAt.toISOString()} class="card-date">
+                                                        {dateStr}
+                                                </time>
+                                                <span class="card-arrow" aria-hidden="true">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                                        </svg>
+                                                </span>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </a>
 </article>
 
 <style>
-	.article-card-premium {
-		opacity: 0;
-		transform: translateY(16px);
-		animation: cardEnter 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-		animation-delay: var(--delay);
-	}
+        .article-card-premium {
+                opacity: 0;
+                transform: translateY(16px);
+                animation: cardEnter 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                animation-delay: var(--delay);
+        }
 
-	@keyframes cardEnter {
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+        @keyframes cardEnter {
+                to {
+                        opacity: 1;
+                        transform: translateY(0);
+                }
+        }
 
-	/* Link */
-	.card-link {
-		display: block;
-		text-decoration: none;
-		color: inherit;
-	}
+        /* Link */
+        .card-link {
+                display: block;
+                text-decoration: none;
+                color: inherit;
+        }
 
-	/* Border wrap - pour le gradient border effect */
-	.card-border-wrap {
-		position: relative;
-		border-radius: var(--radius-card);
-		background: linear-gradient(var(--card-angle, 180deg), rgba(15, 30, 61, 0.06), transparent, rgba(15, 30, 61, 0.03));
-		padding: 1px;
-		transition: all 400ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	.article-card-premium:hover .card-border-wrap {
-		--card-angle: 135deg;
-		background: linear-gradient(135deg, rgba(238, 108, 26, 0.35), rgba(238, 108, 26, 0.1), rgba(107, 127, 199, 0.2));
-		box-shadow: 
-			0 8px 32px rgba(15, 30, 61, 0.08),
-			0 2px 8px rgba(15, 30, 61, 0.04);
-	}
+        /* Border wrap - pour le gradient border effect */
+        .card-border-wrap {
+                position: relative;
+                border-radius: var(--radius-card);
+                background: linear-gradient(var(--card-angle, 180deg), rgba(15, 30, 61, 0.06), transparent, rgba(15, 30, 61, 0.03));
+                padding: 1px;
+                transition: all 400ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .article-card-premium:hover .card-border-wrap {
+                --card-angle: 135deg;
+                background: linear-gradient(135deg, rgba(238, 108, 26, 0.35), rgba(238, 108, 26, 0.1), rgba(107, 127, 199, 0.2));
+                box-shadow: 
+                        0 8px 32px rgba(15, 30, 61, 0.08),
+                        0 2px 8px rgba(15, 30, 61, 0.04);
+        }
 
-	/* Inner card */
-	.card-inner {
-		border-radius: calc(var(--radius-card) - 1px);
-		overflow: hidden;
-		background: #fff;
-		transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	.article-card-premium:hover .card-inner {
-		transform: translateY(-4px);
-	}
+        /* Inner card */
+        .card-inner {
+                border-radius: calc(var(--radius-card) - 1px);
+                overflow: hidden;
+                background: #fff;
+                transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .article-card-premium:hover .card-inner {
+                transform: translateY(-4px);
+        }
 
-	/* Cover image area */
-	.card-cover {
-		position: relative;
-		aspect-ratio: 16 / 10;
-		overflow: hidden;
-		background: linear-gradient(135deg, #0f1e3d 0%, #1c2d54 50%, #ee6c1a 100%);
-	}
+        /* Cover image area */
+        .card-cover {
+                position: relative;
+                aspect-ratio: 16 / 10;
+                overflow: hidden;
+                background: linear-gradient(135deg, #0f1e3d 0%, #1c2d54 50%, #ee6c1a 100%);
+        }
 
-	.card-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	.article-card-premium:hover .card-img {
-		transform: scale(1.06);
-	}
+        .card-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .article-card-premium:hover .card-img {
+                transform: scale(1.06);
+        }
 
-	/* Fallback */
-	.card-fallback {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #fff;
-	}
-	.card-fallback svg {
-		width: 48px;
-		height: 48px;
-		opacity: 0.25;
-	}
+        /* Fallback */
+        .card-fallback {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+        }
+        .card-fallback svg {
+                width: 48px;
+                height: 48px;
+                opacity: 0.25;
+        }
 
-	/* Cover overlay */
-	.card-cover-overlay {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(
-			to bottom,
-			transparent 50%,
-			rgba(15, 30, 61, 0.02) 70%,
-			rgba(15, 30, 61, 0.05) 100%
-		);
-		opacity: 0;
-		transition: opacity 400ms ease;
-		z-index: 1;
-	}
-	.article-card-premium:hover .card-cover-overlay {
-		opacity: 1;
-	}
+        /* Cover overlay */
+        .card-cover-overlay {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                        to bottom,
+                        transparent 50%,
+                        rgba(15, 30, 61, 0.02) 70%,
+                        rgba(15, 30, 61, 0.05) 100%
+                );
+                opacity: 0;
+                transition: opacity 400ms ease;
+                z-index: 1;
+        }
+        .article-card-premium:hover .card-cover-overlay {
+                opacity: 1;
+        }
 
-	/* Badge position */
-	.card-badge {
-		position: absolute;
-		top: 0.75rem;
-		left: 0.75rem;
-		z-index: 2;
-	}
+        /* Badge position */
+        .card-badge {
+                position: absolute;
+                top: 0.75rem;
+                left: 0.75rem;
+                z-index: 2;
+        }
 
-	/* Reading time */
-	.card-reading-time {
-		position: absolute;
-		bottom: 0.75rem;
-		right: 0.75rem;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-		font-size: 0.6875rem;
-		font-weight: 500;
-		color: #fff;
-		padding: 0.25rem 0.625rem;
-		background: rgba(15, 30, 61, 0.7);
-		backdrop-filter: blur(8px);
-		border-radius: var(--radius-pill);
-		z-index: 2;
-		opacity: 0;
-		transform: translateY(4px);
-		transition: all 300ms ease;
-	}
-	.article-card-premium:hover .card-reading-time {
-		opacity: 1;
-		transform: translateY(0);
-	}
+        /* Reading time */
+        .card-reading-time {
+                position: absolute;
+                bottom: 0.75rem;
+                right: 0.75rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                font-size: 0.6875rem;
+                font-weight: 500;
+                color: #fff;
+                padding: 0.25rem 0.625rem;
+                background: rgba(15, 30, 61, 0.7);
+                backdrop-filter: blur(8px);
+                border-radius: var(--radius-pill);
+                z-index: 2;
+                opacity: 0;
+                transform: translateY(4px);
+                transition: all 300ms ease;
+        }
+        .article-card-premium:hover .card-reading-time {
+                opacity: 1;
+                transform: translateY(0);
+        }
 
-	/* Content area */
-	.card-content {
-		padding: 1.25rem 1.375rem 1.375rem;
-	}
+        /* Content area */
+        .card-content {
+                padding: 1.25rem 1.375rem 1.375rem;
+        }
 
-	.card-title {
-		font-family: var(--font-display);
-		font-weight: 700;
-		font-size: 1.0625rem;
-		line-height: 1.38;
-		color: var(--color-navy);
-		margin: 0 0 0.5rem;
-		letter-spacing: -0.01em;
-		transition: color 200ms ease;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-	.article-card-premium:hover .card-title {
-		color: var(--color-orange);
-	}
+        .card-title {
+                font-family: var(--font-display);
+                font-weight: 700;
+                font-size: 1.0625rem;
+                line-height: 1.38;
+                color: var(--color-navy);
+                margin: 0 0 0.5rem;
+                letter-spacing: -0.01em;
+                transition: color 200ms ease;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+        }
+        .article-card-premium:hover .card-title {
+                color: var(--color-orange);
+        }
 
-	.card-desc {
-		font-size: 0.84375rem;
-		line-height: 1.55;
-		color: var(--color-gray-text);
-		margin: 0 0 1rem;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
+        .card-desc {
+                font-size: 0.84375rem;
+                line-height: 1.55;
+                color: var(--color-gray-text);
+                margin: 0 0 1rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+        }
 
-	/* Footer */
-	.card-footer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding-top: 0.875rem;
-		border-top: 1px solid rgba(15, 30, 61, 0.06);
-	}
-	.card-date {
-		font-size: 0.75rem;
-		font-weight: 500;
-		color: var(--color-gray-text);
-		text-transform: uppercase;
-		letter-spacing: 0.03em;
-	}
+        /* Footer */
+        .card-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 0.875rem;
+                border-top: 1px solid rgba(15, 30, 61, 0.06);
+        }
+        .card-date {
+                font-size: 0.75rem;
+                font-weight: 500;
+                color: var(--color-gray-text);
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+        }
 
-	.card-arrow {
-		width: 28px;
-		height: 28px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 50%;
-		background: transparent;
-		color: var(--color-navy);
-		opacity: 0;
-		transform: translateX(-4px);
-		transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	.card-arrow svg {
-		width: 14px;
-		height: 14px;
-	}
-	.article-card-premium:hover .card-arrow {
-		opacity: 1;
-		transform: translateX(0);
-		background: var(--color-orange);
-		color: #fff;
-	}
+        .card-arrow {
+                width: 28px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: transparent;
+                color: var(--color-navy);
+                opacity: 0;
+                transform: translateX(-4px);
+                transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .card-arrow svg {
+                width: 14px;
+                height: 14px;
+        }
+        .article-card-premium:hover .card-arrow {
+                opacity: 1;
+                transform: translateX(0);
+                background: var(--color-orange);
+                color: #fff;
+        }
 
-	@media (prefers-reduced-motion: reduce) {
-		.article-card-premium {
-			animation: none;
-			opacity: 1;
-			transform: none;
-		}
-		.card-border-wrap,
-		.card-inner,
-		.card-img,
-		.card-cover-overlay,
-		.card-reading-time,
-		.card-arrow {
-			transition: none;
-		}
-		.article-card-premium:hover .card-inner {
-			transform: none;
-		}
-		.article-card-premium:hover .card-img {
-			transform: none;
-		}
-	}
+        @media (prefers-reduced-motion: reduce) {
+                .article-card-premium {
+                        animation: none;
+                        opacity: 1;
+                        transform: none;
+                }
+                .card-border-wrap,
+                .card-inner,
+                .card-img,
+                .card-cover-overlay,
+                .card-reading-time,
+                .card-arrow {
+                        transition: none;
+                }
+                .article-card-premium:hover .card-inner {
+                        transform: none;
+                }
+                .article-card-premium:hover .card-img {
+                        transform: none;
+                }
+        }
 </style>
