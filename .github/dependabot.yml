@@ -31,16 +31,20 @@ updates:
     labels:
       - "dependencies"
       - "automated"
-    # ── GROUPING : tout regrouper dans une seule PR ──
+    # ── GROUPING : minor + patch uniquement (pas de major) ──
+    # Les bumps MAJEURS (ex: TypeScript 5 → 7, Astro 7 → 8) cassent souvent le build
+    # et nécessitent une migration manuelle. Ils ne sont PAS groupés — Dependabot
+    # ouvre une PR séparée pour chaque major, ce qui permet de les évaluer
+    # individuellement avant de merger.
     groups:
-      # Toutes les mises à jour non-security vont dans une seule PR
-      all-npm:
+      minor-and-patch:
         patterns:
           - "*"
         update-types:
           - "minor"
           - "patch"
-          - "major"
+        exclude-patterns:
+          - "typescript"  # TS major bumps cassent souvent le build Astro
 
   # ─── GitHub Actions (groupées) ──────────────────────────────────────────
   # Une seule PR par semaine regroupant TOUTES les mises à jour d'actions.
