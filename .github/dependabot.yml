@@ -1,59 +1,66 @@
 # Dependabot — mises à jour automatiques des dépendances
+#
+# Configuration avec GROUPING STRICT pour minimiser le bruit :
+#   - 1 PR groupée pour TOUTES les mises à jour npm (production + dev)
+#   - 1 PR groupée pour TOUTES les mises à jour GitHub Actions
+#   → Maximum 2 PRs par semaine au lieu de 7+ séparées
+#
+# Les mises à jour de SÉCURITÉ critiques restent immédiates (Dependabot
+# ignore le schedule pour les CVE high/critical et ouvre une PR tout de suite).
+#
 # Documentation : https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
 
 updates:
-  # Dépendances npm (production + dev)
-  - package-ecosystem: 'npm'
-    directory: '/'
+  # ─── Dépendances npm (groupées) ─────────────────────────────────────────
+  # Une seule PR par semaine regroupant TOUTES les mises à jour npm.
+  # Cela inclut : astro, @astrojs/*, @keystatic/*, react, eslint, etc.
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: 'weekly' # vérifie chaque lundi
-      day: 'monday'
-      time: '06:00'
-      timezone: 'Africa/Abidjan'
-    open-pull-requests-limit: 5 # max 5 PRs de mise à jour en parallèle
-    versioning-strategy: increase # met à jour le version range dans package.json
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Africa/Abidjan"
+    open-pull-requests-limit: 1  # MAX 1 PR ouverte à la fois (groupée)
+    versioning-strategy: increase
     commit-message:
-      prefix: 'chore(deps)'
-      include: 'scope'
+      prefix: "chore(deps)"
+      include: "scope"
     labels:
-      - 'dependencies'
-      - 'automated'
-    # Regrouper les mise à jour de @astrojs/* ensemble
+      - "dependencies"
+      - "automated"
+    # ── GROUPING : tout regrouper dans une seule PR ──
     groups:
-      astro:
+      # Toutes les mises à jour non-security vont dans une seule PR
+      all-npm:
         patterns:
-          - 'astro'
-          - '@astrojs/*'
-          - '@tailwindcss/*'
-      react:
-        patterns:
-          - 'react'
-          - 'react-dom'
-          - '@types/react*'
-      keystatic:
-        patterns:
-          - '@keystatic/*'
-      eslint:
-        patterns:
-          - 'eslint'
-          - 'eslint-*'
-          - '@eslint/*'
-          - 'typescript-eslint'
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+          - "major"
 
-  # GitHub Actions
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  # ─── GitHub Actions (groupées) ──────────────────────────────────────────
+  # Une seule PR par semaine regroupant TOUTES les mises à jour d'actions.
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: 'weekly'
-      day: 'monday'
-      time: '06:00'
-      timezone: 'Africa/Abidjan'
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Africa/Abidjan"
+    open-pull-requests-limit: 1  # MAX 1 PR ouverte à la fois (groupée)
     commit-message:
-      prefix: 'chore(ci)'
-      include: 'scope'
+      prefix: "chore(ci)"
+      include: "scope"
     labels:
-      - 'dependencies'
-      - 'ci'
-      - 'automated'
+      - "dependencies"
+      - "ci"
+      - "automated"
+    # ── GROUPING : tout regrouper dans une seule PR ──
+    groups:
+      all-actions:
+        patterns:
+          - "*"
