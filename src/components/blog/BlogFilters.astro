@@ -1,13 +1,12 @@
 ---
 /**
- * BlogFilters.astro — Barre de filtres du blog (catégories + recherche).
+ * BlogFilters.astro — Barre de filtres PREMIUM (Pills Animées).
  *
- * Affiche une liste de pills pour les 6 catégories FTCI + "Tous", avec le
- * compte d'articles par catégorie. La catégorie active est mise en évidence.
- *
- * Note : ce composant est rendu statiquement côté serveur. Le filtrage
- * interactif (au clic) est géré par le script de la page index.astro qui
- * lit les data attributes.
+ * Redesign avec :
+ *   - Style pills modernes avec indicateur de comptage
+ *   - Animation smooth de sélection
+ *   - Scroll horizontal sur mobile
+ *   - Micro-interactions raffinées
  */
 
 import { getCategoriesWithCounts } from '../../lib/blog';
@@ -23,98 +22,215 @@ const totalCount = categories.reduce((sum, c) => sum + c.count, 0);
 ---
 
 <div
-	class="blog-filters observe"
-	style="--d: 0.1s;"
+	class="blog-filters-premium"
 	role="region"
 	aria-label="Filtrer les articles par catégorie"
 >
-	<div class="blog-filters-list">
-		<a
-			href="/blog"
-			class={`blog-filter-pill ${!activeCategory ? 'is-active' : ''}`}
-			data-category=""
-			aria-current={!activeCategory ? 'page' : undefined}
-		>
-			<span class="blog-filter-label">Tous</span>
-			<span class="blog-filter-count">{totalCount}</span>
-		</a>
-		{
-			categories.map((cat) => (
-				<a
-					href={`/blog/categorie/${cat.slug}`}
-					class={`blog-filter-pill ${activeCategory === cat.slug ? 'is-active' : ''}`}
-					data-category={cat.slug}
-					aria-current={activeCategory === cat.slug ? 'page' : undefined}
-				>
-					<span class="blog-filter-label">{cat.label}</span>
-					<span class="blog-filter-count">{cat.count}</span>
-				</a>
-			))
-		}
+	<div class="filters-scroll">
+		<div class="filters-list">
+			<a
+				href="/blog"
+				class={`filter-pill ${!activeCategory ? 'is-active' : ''}`}
+				data-category=""
+				aria-current={!activeCategory ? 'page' : undefined}
+			>
+				<span class="pill-icon" aria-hidden="true">
+					<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+				</span>
+				<span class="pill-label">Tous</span>
+				<span class="pill-count">{totalCount}</span>
+			</a>
+			{
+				categories.map((cat) => (
+					<a
+						href={`/blog/categorie/${cat.slug}`}
+						class={`filter-pill ${activeCategory === cat.slug ? 'is-active' : ''}`}
+						data-category={cat.slug}
+						aria-current={activeCategory === cat.slug ? 'page' : undefined}
+					>
+						<span class="pill-dot" data-color={cat.slug} aria-hidden="true"></span>
+						<span class="pill-label">{cat.label}</span>
+						<span class="pill-count">{cat.count}</span>
+					</a>
+				))
+			}
+		</div>
 	</div>
 </div>
 
 <style>
-	.blog-filters {
-		margin: 2rem 0 3rem;
+	.blog-filters-premium {
+		margin: 1rem 1.5rem 2.5rem;
+		position: relative;
 	}
 
-	.blog-filters-list {
+	/* Scroll container for mobile */
+	.filters-scroll {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+		ms-overflow-style: none;
+		mask-image: linear-gradient(
+			to right,
+			transparent 0%,
+			black 3%,
+			black 97%,
+			transparent 100%
+		);
+	}
+	.filters-scroll::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Pills list */
+	.filters-list {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
+		flex-wrap: nowrap;
+		gap: 0.625rem;
+		padding: 0.5rem 0.25rem;
+		min-width: min-content;
 	}
 
-	.blog-filter-pill {
+	/* Individual pill */
+	.filter-pill {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
-		padding: 0.5rem 1rem;
+		padding: 0.625rem 1.125rem;
 		border-radius: var(--radius-pill);
-		border: 1px solid rgba(15, 30, 61, 0.15);
+		border: 1px solid rgba(15, 30, 61, 0.1);
 		background: #fff;
 		color: var(--color-navy);
-		font-size: 0.875rem;
+		font-size: 0.84375rem;
 		font-weight: 500;
 		text-decoration: none;
-		transition: all 200ms var(--ease-out);
+		white-space: nowrap;
 		cursor: pointer;
-	}
-	.blog-filter-pill:hover {
-		border-color: var(--color-orange);
-		color: var(--color-orange);
-		transform: translateY(-1px);
-	}
-	.blog-filter-pill.is-active {
-		background: var(--color-navy);
-		border-color: var(--color-navy);
-		color: #fff;
-	}
-	.blog-filter-pill.is-active:hover {
-		color: #fff;
-		opacity: 0.9;
+		position: relative;
+		overflow: hidden;
+		transition: 
+			all 300ms cubic-bezier(0.22, 1, 0.36, 1),
+			border-color 200ms ease;
 	}
 
-	.blog-filter-count {
+	/* Hover state */
+	.filter-pill:hover:not(.is-active) {
+		border-color: rgba(238, 108, 26, 0.35);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(15, 30, 61, 0.08);
+	}
+	.filter-pill:hover .pill-count {
+		background: rgba(238, 108, 26, 0.12);
+		color: var(--color-orange);
+	}
+
+	/* Active state */
+	.filter-pill.is-active {
+		background: linear-gradient(135deg, var(--color-navy) 0%, #1c2d54 100%);
+		border-color: transparent;
+		color: #fff;
+		box-shadow: 
+			0 4px 16px rgba(15, 30, 61, 0.25),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
+	.filter-pill.is-active .pill-label {
+		color: #fff;
+	}
+	.filter-pill.is-active .pill-count {
+		background: rgba(255, 255, 255, 0.18);
+		color: #fff;
+	}
+	.filter-pill.is-active .pill-dot {
+		background: var(--color-orange) !important;
+		box-shadow: 0 0 8px var(--color-orange);
+	}
+	.filter-pill.is-active .pill-icon {
+		color: var(--color-orange);
+	}
+
+	/* Icon (for "Tous") */
+	.pill-icon {
+		width: 16px;
+		height: 16px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0.6;
+		transition: opacity 200ms ease;
+	}
+	.pill-icon svg {
+		width: 14px;
+		height: 14px;
+	}
+	.filter-pill:hover .pill-icon {
+		opacity: 1;
+	}
+
+	/* Colored dot */
+	.pill-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		flex-shrink: 0;
+		transition: all 250ms ease;
+	}
+	.pill-dot[data-color="transformation-digitale"] {
+		background: var(--color-orange);
+	}
+	.pill-dot[data-color="intelligence-artificielle"] {
+		background: #6b7fc7;
+	}
+	.pill-dot[data-color="cloud-computing"] {
+		background: var(--color-navy);
+	}
+	.pill-dot[data-color="cybersecurite"] {
+		background: var(--color-green);
+	}
+	.pill-dot[data-color="tech-innovation"] {
+		background: #e85d04;
+	}
+	.pill-dot[data-color="actualites-ftci"] {
+		background: #4a5568;
+	}
+
+	/* Label */
+	.pill-label {
+		font-weight: 500;
+	}
+
+	/* Count badge */
+	.pill-count {
 		font-size: 0.6875rem;
 		font-weight: 600;
-		padding: 0.0625rem 0.4375rem;
+		padding: 0.125rem 0.5rem;
 		border-radius: var(--radius-pill);
-		background: rgba(15, 30, 61, 0.08);
-		color: var(--color-navy);
-		min-width: 1.5rem;
+		background: rgba(15, 30, 61, 0.06);
+		color: var(--color-gray-text);
+		min-width: 1.75rem;
 		text-align: center;
+		transition: all 250ms ease;
 	}
-	.blog-filter-pill.is-active .blog-filter-count {
-		background: rgba(255, 255, 255, 0.2);
-		color: #fff;
+
+	@media (min-width: 768px) {
+		.blog-filters-premium {
+			margin: 1.5rem 0 3rem;
+		}
+		.filters-list {
+			flex-wrap: wrap;
+		}
+		.filters-scroll {
+			overflow: visible;
+			mask-image: none;
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.blog-filter-pill {
+		.filter-pill,
+		.pill-count,
+		.pill-dot {
 			transition: none;
 		}
-		.blog-filter-pill:hover {
+		.filter-pill:hover {
 			transform: none;
 		}
 	}

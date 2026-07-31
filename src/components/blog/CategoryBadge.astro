@@ -1,10 +1,11 @@
 ---
 /**
- * CategoryBadge.astro — Badge coloré pour une catégorie de blog.
+ * CategoryBadge.astro — Badge catégorie PREMIUM.
  *
- * Petit pill coloré selon la catégorie, utilisé dans ArticleCard, dans les
- * filtres, et en haut des articles. Couleurs FTCI (orange/vert/pervenche/navy)
- * réparties sur les 6 catégories pour une identification visuelle rapide.
+ * Redesign avec :
+ *   - Couleurs distinctives par catégorie
+ *   - Animation subtile au hover
+ *   - Dot animé
  */
 
 import { CATEGORY_LABELS } from '../../../keystatic.config';
@@ -19,35 +20,129 @@ const { category, href, size = 'md' } = Astro.props;
 
 const label = CATEGORY_LABELS[category] ?? category;
 
-// Mapping catégorie → classes de couleur (bg + text), basé sur la palette FTCI.
-const colorByCategory: Record<string, string> = {
-	'transformation-digitale': 'bg-orange/10 text-orange-700 border-orange/20',
-	'intelligence-artificielle': 'bg-periwinkle/10 text-periwinkle-700 border-periwinkle/20',
-	'cloud-computing': 'bg-navy/10 text-navy border-navy/20',
-	cybersecurite: 'bg-green/10 text-green-700 border-green/20',
-	'tech-innovation': 'bg-orange/10 text-orange border-orange/20',
-	'actualites-ftci': 'bg-navy/10 text-navy-700 border-navy/20',
+// Mapping catégorie → couleurs (bg + text + border + dot)
+const colorByCategory: Record<string, { bg: string; text: string; border: string; dot: string }> = {
+	'transformation-digitale': {
+		bg: 'rgba(238, 108, 26, 0.1)',
+		text: '#c44100',
+		border: 'rgba(238, 108, 26, 0.2)',
+		dot: '#ee6c1a',
+	},
+	'intelligence-artificielle': {
+		bg: 'rgba(107, 127, 199, 0.12)',
+		text: '#4a5aa3',
+		border: 'rgba(107, 127, 199, 0.2)',
+		dot: '#6b7fc7',
+	},
+	'cloud-computing': {
+		bg: 'rgba(15, 30, 61, 0.08)',
+		text: '#0f1e3d',
+		border: 'rgba(15, 30, 61, 0.15)',
+		dot: '#0f1e3d',
+	},
+	cybersecurite: {
+		bg: 'rgba(34, 197, 94, 0.1)',
+		text: '#15803d',
+		border: 'rgba(34, 197, 94, 0.2)',
+		dot: '#22c55e',
+	},
+	'tech-innovation': {
+		bg: 'rgba(232, 93, 4, 0.1)',
+		text: '#c2410c',
+		border: 'rgba(232, 93, 4, 0.2)',
+		dot: '#e85d04',
+	},
+	'actualites-ftci': {
+		bg: 'rgba(74, 85, 104, 0.1)',
+		text: '#374151',
+		border: 'rgba(74, 85, 104, 0.2)',
+		dot: '#4a5568',
+	},
 };
 
-const colorClasses = colorByCategory[category] ?? 'bg-navy/10 text-navy border-navy/20';
-const sizeClasses = size === 'sm' ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 py-1';
+const colors = colorByCategory[category] ?? colorByCategory['cloud-computing'];
+const sizeClasses = size === 'sm' ? 'badge-sm' : 'badge-md';
 ---
 
 {
 	href ? (
 		<a
 			href={href}
-			class={`inline-flex items-center gap-1.5 rounded-full border font-medium transition-colors duration-200 hover:opacity-80 ${colorClasses} ${sizeClasses}`}
+			class={`category-badge ${sizeClasses}`}
+			style={`--badge-bg: ${colors.bg}; --badge-text: ${colors.text}; --badge-border: ${colors.border}; --badge-dot: ${colors.dot};`}
 		>
-			<span class="w-1.5 h-1.5 rounded-full bg-current opacity-60" aria-hidden="true" />
-			{label}
+			<span class="badge-dot" aria-hidden="true"></span>
+			<span class="badge-label">{label}</span>
 		</a>
 	) : (
 		<span
-			class={`inline-flex items-center gap-1.5 rounded-full border font-medium ${colorClasses} ${sizeClasses}`}
+			class={`category-badge ${sizeClasses}`}
+			style={`--badge-bg: ${colors.bg}; --badge-text: ${colors.text}; --badge-border: ${colors.border}; --badge-dot: ${colors.dot};`}
 		>
-			<span class="w-1.5 h-1.5 rounded-full bg-current opacity-60" aria-hidden="true" />
-			{label}
+			<span class="badge-dot" aria-hidden="true"></span>
+			<span class="badge-label">{label}</span>
 		</span>
 	)
 }
+
+<style>
+	.category-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4375rem;
+		border-radius: var(--radius-pill);
+		font-weight: 600;
+		background: var(--badge-bg);
+		color: var(--badge-text);
+		border: 1px solid var(--badge-border);
+		transition: all 250ms ease;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.category-badge:hover {
+		background: var(--badge-bg);
+		opacity: 0.85;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	}
+
+	.badge-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--badge-dot);
+		animation: badgePulse 2s ease-in-out infinite;
+	}
+	@keyframes badgePulse {
+		0%, 100% { opacity: 1; transform: scale(1); }
+		50% { opacity: 0.6; transform: scale(1.15); }
+	}
+
+	.badge-label {
+		line-height: 1;
+	}
+
+	/* Sizes */
+	.badge-sm {
+		font-size: 10px;
+		padding: 0.25rem 0.625rem;
+		letter-spacing: 0.02em;
+	}
+	.badge-md {
+		font-size: 11px;
+		padding: 0.3125rem 0.75rem;
+		letter-spacing: 0.02em;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.badge-dot {
+			animation: none;
+		}
+		.category-badge {
+			transition: none;
+		}
+		.category-badge:hover {
+			transform: none;
+		}
+	}
+</style>

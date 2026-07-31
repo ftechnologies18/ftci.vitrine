@@ -1,15 +1,11 @@
 ---
 /**
- * BlogLayout.astro — Layout commun à toutes les pages du blog.
+ * BlogLayout.astro — Layout blog PREMIUM.
  *
- * Hérite de Layout.astro (racine) mais :
- * - Ajoute un Header avec navigation blog (Accueil, Articles, Catégories)
- * - Fournit un slot `main` pour le contenu de chaque page
- * - Fournit un slot optionnel `head` pour les meta tags SEO spécifiques
- *   (utilisé par [slug].astro pour injecter ArticleSEO.astro)
- * - Inclut le Footer global
- *
- * Utilisé par : /blog/index.astro, /blog/[slug].astro, /blog/categorie/[category].astro
+ * Hérite de Layout.astro (racine) avec :
+ *   - Header navigation
+ *   - Main avec background subtil
+ *   - Footer global
  */
 
 import Layout from '../layouts/Layout.astro';
@@ -25,7 +21,7 @@ interface Props {
 
 const {
 	title,
-	description = "Le blog FTCI — analyses, bonnes pratiques et actualités sur la transformation digitale, l'IA, le cloud, la cybersécurité et l'innovation technologique en Afrique.",
+	description = "Le blog FTCI — analyses, expertises et actualités tech pour décideurs africains.",
 	canonical,
 	noindex = false,
 } = Astro.props;
@@ -45,18 +41,21 @@ const {
 		'cybersécurité',
 		'innovation',
 		'Afrique',
+		'Côte d\'Ivoire',
 	]}
 >
 	<slot name="head" />
 	<Header />
-	<main class="flex-1 blog-main">
+	<main class="blog-main-premium">
 		<slot />
 	</main>
 	<Footer />
 </Layout>
 
 <style>
-	.blog-main {
-		background: var(--color-light-bg);
+	.blog-main-premium {
+		flex: 1;
+		background: #ffffff;
+		min-height: 60vh;
 	}
 </style>

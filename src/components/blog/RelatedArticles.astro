@@ -1,9 +1,11 @@
 ---
 /**
- * RelatedArticles.astro — Liste d'articles connexes en bas d'un article.
+ * RelatedArticles.astro — Articles connexes PREMIUM (Grid Asymétrique).
  *
- * Affiche jusqu'à 3 articles liés (même catégorie en priorité). Utilisé par
- * [slug].astro pour prolonger la lecture et augmenter le temps sur site.
+ * Redesign avec :
+ *   - Header stylisé avec accent
+ *   - Grid responsive asymétrique
+ *   - Cards premium intégrées
  */
 
 import type { BlogEntry } from '../../lib/blog';
@@ -21,40 +23,137 @@ const related = await getRelatedArticles(current, limit);
 
 {
 	related.length > 0 && (
-		<section class="related-articles" aria-label="Articles liés">
-			<h2 class="related-title">À lire également</h2>
-			<div class="related-grid">
-				{related.map((entry) => (
-					<ArticleCard entry={entry} />
-				))}
+		<section class="related-premium" aria-label="Articles liés">
+			<div class="related-container">
+				<div class="related-header">
+					<div class="related-header-left">
+						<span class="related-accent" aria-hidden="true"></span>
+						<div>
+							<h2 class="related-title">Pour aller plus loin</h2>
+							<p class="related-subtitle">Continuez votre lecture avec ces articles connexes</p>
+						</div>
+					</div>
+					<a href="/blog" class="related-view-all">
+						Voir tous
+						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+					</a>
+				</div>
+
+				<div class="related-grid">
+					{related.map((entry, i) => (
+						<div class={`related-item ${i === 0 ? 'related-featured' : ''}`}>
+							<ArticleCard entry={entry} index={i} />
+						</div>
+					))}
+				</div>
 			</div>
 		</section>
 	)
 }
 
 <style>
-	.related-articles {
-		margin-top: 4rem;
-		padding-top: 3rem;
-		border-top: 1px solid rgba(15, 30, 61, 0.1);
+	.related-premium {
+		background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+		padding: 3rem 1.5rem;
+		border-top: 1px solid rgba(15, 30, 61, 0.06);
+	}
+	@media (min-width: 768px) {
+		.related-premium {
+			padding: 4rem 2rem;
+		}
+	}
+
+	.related-container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	/* Header */
+	.related-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+		flex-wrap: wrap;
+	}
+	.related-header-left {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+	.related-accent {
+		width: 4px;
+		height: 48px;
+		background: linear-gradient(180deg, var(--color-orange) 0%, rgba(238, 108, 26, 0.3) 100%);
+		border-radius: 4px;
+		flex-shrink: 0;
 	}
 	.related-title {
 		font-family: var(--font-display);
 		font-weight: 800;
-		font-size: 1.75rem;
+		font-size: 1.625rem;
 		line-height: 1.2;
 		letter-spacing: -0.02em;
 		color: var(--color-navy);
-		margin: 0 0 2rem;
+		margin: 0 0 0.25rem;
 	}
+	.related-subtitle {
+		font-size: 0.9375rem;
+		color: var(--color-gray-text);
+		margin: 0;
+	}
+
+	/* View all link */
+	.related-view-all {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--color-orange);
+		text-decoration: none;
+		padding: 0.5rem 1rem;
+		border: 1px solid rgba(238, 108, 26, 0.25);
+		border-radius: var(--radius-pill);
+		transition: all 250ms ease;
+		flex-shrink: 0;
+	}
+	.related-view-all:hover {
+		background: var(--color-orange);
+		color: #fff;
+		border-color: transparent;
+	}
+	.related-view-all svg {
+		width: 14px;
+		height: 14px;
+		transition: transform 250ms ease;
+	}
+	.related-view-all:hover svg {
+		transform: translateX(3px);
+	}
+
+	/* Grid */
 	.related-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		grid-template-columns: 1fr;
 		gap: 1.5rem;
 	}
-	@media (max-width: 640px) {
+	@media (min-width: 768px) {
 		.related-grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (min-width: 1024px) {
+		.related-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	/* Featured item (first) spans larger on desktop */
+	@media (min-width: 1024px) {
+		.related-featured {
+			grid-column: span 1;
 		}
 	}
 </style>

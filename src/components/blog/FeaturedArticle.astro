@@ -1,10 +1,14 @@
 ---
 /**
- * FeaturedArticle.astro — Article à la une (hero du blog).
+ * FeaturedArticle.astro — Article à la une PREMIUM (Magazine Format).
  *
- * Grand format avec image de fond, badge catégorie, titre H2, description,
- * métadonnées. Utilisé sur la page d'index du blog pour le premier article
- * featured, ou le plus récent si aucun n'est marqué featured.
+ * Redesign avec :
+ *   - Effet "shine" au hover (reflet lumineux)
+ *   - Overlay dégradé multi-couches
+ *   - Typographie display impactante
+ *   - Badge catégorie animé
+ *   - Métadonnées élégantes
+ *   - Animation d'entrée staggered
  */
 
 import type { BlogEntry } from '../../lib/blog';
@@ -28,8 +32,9 @@ const dateStr = entry.data.publishedAt.toLocaleDateString('fr-FR', {
 const hasCover = !!entry.data.coverImage;
 ---
 
-<article class="featured-article observe" style="--d: 0s;">
+<article class="featured-premium" style="--delay: 0s;">
 	<a href={url} class="featured-link" aria-label={entry.data.title}>
+		<!-- Image container avec shine effect -->
 		<div class="featured-cover">
 			{
 				hasCover ? (
@@ -45,22 +50,35 @@ const hasCover = !!entry.data.coverImage;
 					/>
 				) : (
 					<div class="featured-fallback" aria-hidden="true">
-						<svg class="w-16 h-16 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<div class="fallback-pattern"></div>
+						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								stroke-width="1.5"
+								stroke-width="1.2"
 								d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
 							/>
 						</svg>
 					</div>
 				)
 			}
-			<div class="featured-overlay"></div>
+			
+			<!-- Overlay multi-couches -->
+			<div class="featured-overlay" aria-hidden="true"></div>
+			
+			<!-- Shine effect -->
+			<div class="featured-shine" aria-hidden="true"></div>
+			
+			<!-- Gradient border subtil -->
+			<div class="featured-border-glow" aria-hidden="true"></div>
 		</div>
 
+		<!-- Contenu -->
 		<div class="featured-content">
-			<div class="featured-badge">
+			<div class="featured-top">
+				<span class="featured-star" aria-hidden="true">
+					<svg fill="currentColor" viewBox="0 0 24 24"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+				</span>
 				<CategoryBadge
 					category={entry.data.category}
 					size="sm"
@@ -72,31 +90,48 @@ const hasCover = !!entry.data.coverImage;
 			<p class="featured-desc">{entry.data.description}</p>
 
 			<div class="featured-meta">
-				<span>À la une</span>
-				<span class="featured-dot" aria-hidden="true">·</span>
-				<time datetime={entry.data.publishedAt.toISOString()}>{dateStr}</time>
-				<span class="featured-dot" aria-hidden="true">·</span>
-				<span>{readingTime} min de lecture</span>
+				<div class="featured-meta-left">
+					<span class="featured-date">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+						</svg>
+						{dateStr}
+					</span>
+					<span class="featured-reading">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						{readingTime} min
+					</span>
+				</div>
+				<span class="featured-cta">
+					Lire l'article
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+					</svg>
+				</span>
 			</div>
 		</div>
 	</a>
 </article>
 
 <style>
-	.featured-article {
-		border-radius: calc(var(--radius-card) + 4px);
+	.featured-premium {
+		position: relative;
+		border-radius: calc(var(--radius-card) + 6px);
 		overflow: hidden;
-		box-shadow: 0 10px 30px rgba(15, 30, 61, 0.15);
 		background: var(--color-navy);
 		opacity: 0;
-		transform: translateY(20px);
-		transition:
-			opacity 600ms var(--ease-out),
-			transform 600ms var(--ease-out);
+		transform: translateY(24px);
+		animation: featuredEnter 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+		animation-delay: var(--delay, 0s);
 	}
-	.featured-article.is-visible {
-		opacity: 1;
-		transform: translateY(0);
+
+	@keyframes featuredEnter {
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.featured-link {
@@ -104,9 +139,10 @@ const hasCover = !!entry.data.coverImage;
 		position: relative;
 	}
 
+	/* Cover */
 	.featured-cover {
 		position: relative;
-		aspect-ratio: 21 / 9;
+		aspect-ratio: 21 / 10;
 		overflow: hidden;
 	}
 	@media (max-width: 768px) {
@@ -114,15 +150,18 @@ const hasCover = !!entry.data.coverImage;
 			aspect-ratio: 16 / 10;
 		}
 	}
+
 	.featured-img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		transition: transform 700ms var(--ease-out);
+		transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
-	.featured-article:hover .featured-img {
-		transform: scale(1.04);
+	.featured-premium:hover .featured-img {
+		transform: scale(1.03);
 	}
+
+	/* Fallback gradient */
 	.featured-fallback {
 		width: 100%;
 		height: 100%;
@@ -130,21 +169,78 @@ const hasCover = !!entry.data.coverImage;
 		align-items: center;
 		justify-content: center;
 		color: #fff;
-		background: linear-gradient(135deg, #0f1e3d 0%, #1c2d54 40%, #6b7fc7 70%, #ee6c1a 100%);
+		position: relative;
+		background: linear-gradient(135deg, #0f1e3d 0%, #1c2d54 30%, #2a3f6f 50%, #ee6c1a 100%);
+	}
+	.fallback-pattern {
+		position: absolute;
+		inset: 0;
+		background-image: 
+			radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 50%),
+			radial-gradient(circle at 80% 70%, rgba(238,108,26,0.15) 0%, transparent 40%);
+	}
+	.featured-fallback svg {
+		width: 64px;
+		height: 64px;
+		opacity: 0.3;
+		position: relative;
+		z-index: 1;
 	}
 
+	/* Overlay multi-couches */
 	.featured-overlay {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(
-			to top,
-			rgba(15, 30, 61, 0.95) 0%,
-			rgba(15, 30, 61, 0.7) 40%,
-			rgba(15, 30, 61, 0.25) 70%,
-			rgba(15, 30, 61, 0.1) 100%
-		);
+		background: 
+			linear-gradient(
+				to top,
+				rgba(15, 30, 61, 0.98) 0%,
+				rgba(15, 30, 61, 0.92) 15%,
+				rgba(15, 30, 61, 0.7) 35%,
+				rgba(15, 30, 61, 0.4) 55%,
+				rgba(15, 30, 61, 0.15) 75%,
+				transparent 100%
+			);
+		z-index: 1;
 	}
 
+	/* Shine effect */
+	.featured-shine {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			105deg,
+			transparent 40%,
+			rgba(255, 255, 255, 0.15) 45%,
+			rgba(255, 255, 255, 0.08) 50%,
+			transparent 55%
+		);
+		transform: translateX(-100%);
+		transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+		z-index: 2;
+		pointer-events: none;
+	}
+	.featured-premium:hover .featured-shine {
+		transform: translateX(100%);
+	}
+
+	/* Border glow */
+	.featured-border-glow {
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+		z-index: 3;
+		pointer-events: none;
+		transition: box-shadow 400ms ease;
+	}
+	.featured-premium:hover .featured-border-glow {
+		box-shadow: 
+			inset 0 0 0 1px rgba(238, 108, 26, 0.3),
+			0 0 30px rgba(238, 108, 26, 0.1);
+	}
+
+	/* Content */
 	.featured-content {
 		position: absolute;
 		bottom: 0;
@@ -152,6 +248,7 @@ const hasCover = !!entry.data.coverImage;
 		right: 0;
 		padding: 2rem 2.5rem;
 		color: #fff;
+		z-index: 4;
 	}
 	@media (max-width: 768px) {
 		.featured-content {
@@ -159,49 +256,122 @@ const hasCover = !!entry.data.coverImage;
 		}
 	}
 
-	.featured-badge {
-		margin-bottom: 0.875rem;
+	/* Top row */
+	.featured-top {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+	}
+	.featured-star {
+		width: 28px;
+		height: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(238, 108, 26, 0.2);
+		border-radius: 8px;
+		color: var(--color-orange);
+	}
+	.featured-star svg {
+		width: 14px;
+		height: 14px;
 	}
 
+	/* Title */
 	.featured-title {
 		font-family: var(--font-display);
 		font-weight: 800;
-		font-size: clamp(1.5rem, 3vw, 2.25rem);
+		font-size: clamp(1.5rem, 3.5vw, 2.5rem);
 		line-height: 1.15;
 		letter-spacing: -0.025em;
-		margin: 0 0 0.625rem;
-		max-width: 60ch;
+		margin: 0 0 0.75rem;
+		max-width: 58ch;
+		transition: color 200ms ease;
 	}
+	.featured-premium:hover .featured-title {
+		color: rgba(255, 255, 255, 0.95);
+	}
+
+	/* Description */
 	.featured-desc {
 		font-size: 1rem;
-		line-height: 1.5;
-		color: rgba(255, 255, 255, 0.8);
-		margin: 0 0 1rem;
-		max-width: 70ch;
+		line-height: 1.55;
+		color: rgba(255, 255, 255, 0.78);
+		margin: 0 0 1.25rem;
+		max-width: 65ch;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
 
+	/* Meta */
 	.featured-meta {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+	.featured-meta-left {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	.featured-date,
+	.featured-reading {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		font-size: 0.8125rem;
+		color: rgba(255, 255, 255, 0.65);
+	}
+	.featured-date svg,
+	.featured-reading svg {
+		opacity: 0.6;
+	}
+
+	/* CTA */
+	.featured-cta {
+		display: inline-flex;
+		align-items: center;
 		gap: 0.5rem;
 		font-size: 0.8125rem;
-		color: rgba(255, 255, 255, 0.7);
+		font-weight: 600;
+		color: var(--color-orange);
+		padding: 0.5rem 1rem;
+		background: rgba(238, 108, 26, 0.15);
+		border-radius: var(--radius-pill);
+		transition: all 250ms ease;
 	}
-	.featured-dot {
-		opacity: 0.5;
+	.featured-cta svg {
+		transition: transform 250ms ease;
+	}
+	.featured-premium:hover .featured-cta {
+		background: var(--color-orange);
+		color: #fff;
+	}
+	.featured-premium:hover .featured-cta svg {
+		transform: translateX(4px);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.featured-article,
-		.featured-img {
+		.featured-premium {
+			animation: none;
+			opacity: 1;
+			transform: none;
+		}
+		.featured-img,
+		.featured-shine,
+		.featured-cta svg {
 			transition: none;
 		}
-		.featured-article:hover .featured-img {
+		.featured-premium:hover .featured-img {
 			transform: none;
+		}
+		.featured-premium:hover .featured-shine {
+			transform: translateX(-100%);
 		}
 	}
 </style>

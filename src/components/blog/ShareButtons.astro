@@ -1,13 +1,11 @@
 ---
 /**
- * ShareButtons.astro — Boutons de partage social d'un article.
+ * ShareButtons.astro — Boutons de partage PREMIUM.
  *
- * Trois canaux : LinkedIn (B2B principal pour FTCI), X/Twitter, et copier le
- * lien dans le presse-papier. Le partage Facebook est volontairement absent
- * (peu pertinent pour une ESN tech).
- *
- * Les URLs de partage sont construites côté serveur (pas de JS pour
- * l'ouverture), seule la copie de lien nécessite un script léger.
+ * Redesign avec :
+ *   - Style pills modernes
+ *   - Hover effects colorés
+ *   - Animation au copier
  */
 
 interface Props {
@@ -29,173 +27,185 @@ const xUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedT
 const whatsappUrl = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
 ---
 
-<div class="share-buttons" role="group" aria-label="Partager cet article">
-	<span class="share-label">Partager :</span>
+<div class="share-premium" role="group" aria-label="Partager cet article">
+	<span class="share-label-premium">Partager l'article</span>
 
-	<a
-		href={linkedinUrl}
-		target="_blank"
-		rel="noopener noreferrer"
-		class="share-btn share-btn-linkedin"
-		aria-label="Partager sur LinkedIn"
-		title="Partager sur LinkedIn"
-	>
-		<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-			<path
-				d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"
-			></path>
-		</svg>
-	</a>
-
-	<a
-		href={xUrl}
-		target="_blank"
-		rel="noopener noreferrer"
-		class="share-btn share-btn-x"
-		aria-label="Partager sur X (Twitter)"
-		title="Partager sur X (Twitter)"
-	>
-		<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-			<path
-				d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-			></path>
-		</svg>
-	</a>
-
-	<a
-		href={whatsappUrl}
-		target="_blank"
-		rel="noopener noreferrer"
-		class="share-btn share-btn-whatsapp"
-		aria-label="Partager sur WhatsApp"
-		title="Partager sur WhatsApp"
-	>
-		<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-			<path
-				d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-			></path>
-		</svg>
-	</a>
-
-	<button
-		type="button"
-		class="share-btn share-btn-copy"
-		data-share-url={absoluteUrl}
-		aria-label="Copier le lien de l'article"
-		title="Copier le lien"
-	>
-		<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-			<path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-			></path>
-		</svg>
-		<svg
-			class="w-4 h-4 share-copy-check hidden"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-			aria-hidden="true"
+	<div class="share-buttons-list">
+		<a
+			href={linkedinUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="share-btn-premium share-btn-linkedin"
+			aria-label="Partager sur LinkedIn"
+			title="LinkedIn"
 		>
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"
-			></path>
-		</svg>
-	</button>
+			<svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+			<span class="share-btn-label">LinkedIn</span>
+		</a>
+
+		<a
+			href={xUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="share-btn-premium share-btn-x"
+			aria-label="Partager sur X (Twitter)"
+			title="X / Twitter"
+		>
+			<svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+			<span class="share-btn-label">X</span>
+		</a>
+
+		<a
+			href={whatsappUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="share-btn-premium share-btn-whatsapp"
+			aria-label="Partager sur WhatsApp"
+			title="WhatsApp"
+		>
+			<svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+			<span class="share-btn-label">WhatsApp</span>
+		</a>
+
+		<button
+			type="button"
+			class="share-btn-premium share-btn-copy"
+			data-share-url={absoluteUrl}
+			aria-label="Copier le lien"
+			title="Copier le lien"
+		>
+			<svg class="copy-icon-default" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+			<svg class="copy-icon-success hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+			<span class="share-btn-label copy-label">Copier</span>
+		</button>
+	</div>
 </div>
 
 <style>
-	.share-buttons {
+	.share-premium {
 		display: flex;
 		align-items: center;
-		gap: 0.625rem;
+		gap: 1rem;
 		padding: 1.5rem 0;
 		flex-wrap: wrap;
 	}
-	.share-label {
-		font-size: 0.875rem;
+	.share-label-premium {
+		font-size: 0.8125rem;
 		font-weight: 600;
 		color: var(--color-navy);
-		margin-right: 0.25rem;
-	}
-	.share-btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.25rem;
-		height: 2.25rem;
-		border-radius: 0.625rem;
-		border: 1px solid rgba(15, 30, 61, 0.15);
-		background: #fff;
-		color: var(--color-navy);
-		cursor: pointer;
-		transition: all 200ms var(--ease-out);
-	}
-	.share-btn:hover {
-		transform: translateY(-2px);
-		border-color: transparent;
-	}
-	.share-btn:focus-visible {
-		outline: 2px solid var(--color-orange);
-		outline-offset: 2px;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
 	}
 
+	.share-buttons-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.625rem;
+	}
+
+	.share-btn-premium {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		border-radius: var(--radius-pill);
+		border: 1px solid rgba(15, 30, 61, 0.12);
+		background: #fff;
+		color: var(--color-navy);
+		font-size: 0.8125rem;
+		font-weight: 500;
+		cursor: pointer;
+		text-decoration: none;
+		transition: all 250ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	.share-btn-premium svg {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
+	}
+	.share-btn-label {
+		line-height: 1;
+	}
+
+	/* Hover states */
+	.share-btn-premium:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	}
 	.share-btn-linkedin:hover {
 		background: #0a66c2;
+		border-color: #0a66c2;
 		color: #fff;
 	}
 	.share-btn-x:hover {
 		background: #000;
+		border-color: #000;
 		color: #fff;
 	}
 	.share-btn-whatsapp:hover {
 		background: #25d366;
+		border-color: #25d366;
 		color: #fff;
 	}
 	.share-btn-copy:hover {
 		background: var(--color-navy);
+		border-color: var(--color-navy);
 		color: #fff;
 	}
 	.share-btn-copy.copied {
 		background: var(--color-green);
-		color: #fff;
 		border-color: var(--color-green);
+		color: #fff;
 	}
-	.share-copy-check.hidden {
+	.copy-icon-success.hidden {
 		display: none;
 	}
-	.share-btn-copy.copied .share-copy-link {
+	.share-btn-copy.copied .copy-icon-default {
 		display: none;
+	}
+	.share-btn-copy.copied .copy-icon-success {
+		display: block;
+	}
+	.share-btn-copy.copied .copy-label::after {
+		content: ' ✓';
+	}
+
+	/* Focus */
+	.share-btn-premium:focus-visible {
+		outline: 2px solid var(--color-orange);
+		outline-offset: 2px;
+	}
+
+	@media (max-width: 640px) {
+		.share-btn-label {
+			display: none;
+		}
+		.share-btn-premium {
+			padding: 0.5rem;
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.share-btn {
+		.share-btn-premium {
 			transition: none;
 		}
-		.share-btn:hover {
+		.share-btn-premium:hover {
 			transform: none;
 		}
 	}
 </style>
 
 <script>
-	// Copier le lien de l'article dans le presse-papier au clic.
 	document.querySelectorAll<HTMLButtonElement>('.share-btn-copy').forEach((btn) => {
 		btn.addEventListener('click', async () => {
 			const url = btn.dataset.shareUrl;
 			if (!url) return;
-			const linkIcon = btn.querySelector('svg:first-child');
-			const checkIcon = btn.querySelector('.share-copy-check');
+
 			try {
 				await navigator.clipboard.writeText(url);
 				btn.classList.add('copied');
-				linkIcon?.classList.add('hidden');
-				checkIcon?.classList.remove('hidden');
 				window.setTimeout(() => {
 					btn.classList.remove('copied');
-					linkIcon?.classList.remove('hidden');
-					checkIcon?.classList.add('hidden');
 				}, 2000);
 			} catch (err) {
 				console.error('Clipboard write failed:', err);
