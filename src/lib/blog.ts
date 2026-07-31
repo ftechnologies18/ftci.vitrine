@@ -30,15 +30,15 @@ const shouldShowDrafts = import.meta.env.DEV;
  * sort is stable on `publishedAt` then on `id` for deterministic ordering.
  */
 export async function getAllArticles(): Promise<BlogEntry[]> {
-        const all = await getCollection('blog');
-        return all
-                .filter((entry) => shouldShowDrafts || !entry.data.draft)
-                .sort((a, b) => {
-                        const da = a.data.publishedAt.getTime();
-                        const db = b.data.publishedAt.getTime();
-                        if (db !== da) return db - da;
-                        return a.id.localeCompare(b.id);
-                });
+	const all = await getCollection('blog');
+	return all
+		.filter((entry) => shouldShowDrafts || !entry.data.draft)
+		.sort((a, b) => {
+			const da = a.data.publishedAt.getTime();
+			const db = b.data.publishedAt.getTime();
+			if (db !== da) return db - da;
+			return a.id.localeCompare(b.id);
+		});
 }
 
 /**
@@ -46,8 +46,8 @@ export async function getAllArticles(): Promise<BlogEntry[]> {
  * Useful for the hero section of the blog index page.
  */
 export async function getFeaturedArticles(): Promise<BlogEntry[]> {
-        const all = await getAllArticles();
-        return all.filter((entry) => entry.data.featured);
+	const all = await getAllArticles();
+	return all.filter((entry) => entry.data.featured);
 }
 
 /**
@@ -55,8 +55,8 @@ export async function getFeaturedArticles(): Promise<BlogEntry[]> {
  * Returns an empty array if the category slug is unknown.
  */
 export async function getArticlesByCategory(category: string): Promise<BlogEntry[]> {
-        const all = await getAllArticles();
-        return all.filter((entry) => entry.data.category === category);
+	const all = await getAllArticles();
+	return all.filter((entry) => entry.data.category === category);
 }
 
 /**
@@ -64,13 +64,13 @@ export async function getArticlesByCategory(category: string): Promise<BlogEntry
  * Matching priority: same category first, then any other published article.
  */
 export async function getRelatedArticles(current: BlogEntry, limit = 3): Promise<BlogEntry[]> {
-        const all = await getAllArticles();
-        const others = all.filter((entry) => entry.id !== current.id);
+	const all = await getAllArticles();
+	const others = all.filter((entry) => entry.id !== current.id);
 
-        const sameCategory = others.filter((entry) => entry.data.category === current.data.category);
-        const differentCategory = others.filter((entry) => entry.data.category !== current.data.category);
+	const sameCategory = others.filter((entry) => entry.data.category === current.data.category);
+	const differentCategory = others.filter((entry) => entry.data.category !== current.data.category);
 
-        return [...sameCategory, ...differentCategory].slice(0, limit);
+	return [...sameCategory, ...differentCategory].slice(0, limit);
 }
 
 /**
@@ -78,11 +78,11 @@ export async function getRelatedArticles(current: BlogEntry, limit = 3): Promise
  * `undefined` if not found or if it's a draft hidden in production.
  */
 export async function getArticleBySlug(slug: string): Promise<BlogEntry | undefined> {
-        const all = await getCollection('blog');
-        const entry = all.find((e) => e.id === slug || e.id === `${slug}.md`);
-        if (!entry) return undefined;
-        if (!shouldShowDrafts && entry.data.draft) return undefined;
-        return entry;
+	const all = await getCollection('blog');
+	const entry = all.find((e) => e.id === slug || e.id === `${slug}.md`);
+	if (!entry) return undefined;
+	if (!shouldShowDrafts && entry.data.draft) return undefined;
+	return entry;
 }
 
 /**
@@ -90,7 +90,7 @@ export async function getArticleBySlug(slug: string): Promise<BlogEntry | undefi
  * slug itself if unknown (defensive — should never happen with valid data).
  */
 export function getCategoryLabel(slug: string): string {
-        return CATEGORY_LABELS[slug] ?? slug;
+	return CATEGORY_LABELS[slug] ?? slug;
 }
 
 /**
@@ -99,21 +99,21 @@ export function getCategoryLabel(slug: string): string {
  * blog sidebar / filters UI.
  */
 export async function getCategoriesWithCounts(): Promise<
-        { slug: BlogCategory; label: string; count: number }[]
+	{ slug: BlogCategory; label: string; count: number }[]
 > {
-        const all = await getAllArticles();
-        const counts = new Map<string, number>();
-        for (const article of all) {
-                const c = article.data.category;
-                counts.set(c, (counts.get(c) ?? 0) + 1);
-        }
-        return (Object.entries(CATEGORY_LABELS) as [string, string][])
-                .map(([slug, label]) => ({
-                        slug: slug as BlogCategory,
-                        label,
-                        count: counts.get(slug) ?? 0,
-                }))
-                .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+	const all = await getAllArticles();
+	const counts = new Map<string, number>();
+	for (const article of all) {
+		const c = article.data.category;
+		counts.set(c, (counts.get(c) ?? 0) + 1);
+	}
+	return (Object.entries(CATEGORY_LABELS) as [string, string][])
+		.map(([slug, label]) => ({
+			slug: slug as BlogCategory,
+			label,
+			count: counts.get(slug) ?? 0,
+		}))
+		.sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 }
 
 /**
@@ -122,12 +122,12 @@ export async function getCategoriesWithCounts(): Promise<
  * (≈200 words/minute in French).
  */
 export function getReadingTime(entry: BlogEntry): number {
-        if (entry.data.readingTime) return entry.data.readingTime;
-        // The rendered content is available after `render(entry)`, but for a
-        // cheap estimate we count words in the raw body if present.
-        const body = (entry.body as string | undefined) ?? '';
-        const wordCount = body.split(/\s+/).filter(Boolean).length;
-        return Math.max(1, Math.round(wordCount / 200));
+	if (entry.data.readingTime) return entry.data.readingTime;
+	// The rendered content is available after `render(entry)`, but for a
+	// cheap estimate we count words in the raw body if present.
+	const body = (entry.body as string | undefined) ?? '';
+	const wordCount = body.split(/\s+/).filter(Boolean).length;
+	return Math.max(1, Math.round(wordCount / 200));
 }
 
 /**
@@ -135,12 +135,12 @@ export function getReadingTime(entry: BlogEntry): number {
  * canonical links, Open Graph tags, and the RSS feed.
  */
 export function getArticleUrl(entry: BlogEntry): string {
-        return `/blog/${entry.id.replace(/\.md$/, '')}`;
+	return `/blog/${entry.id.replace(/\.md$/, '')}`;
 }
 
 /**
  * Returns the absolute URL of a category page on the production site.
  */
 export function getCategoryUrl(slug: string): string {
-        return `/blog/categorie/${slug}`;
+	return `/blog/categorie/${slug}`;
 }

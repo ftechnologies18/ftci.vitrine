@@ -1,0 +1,59 @@
+# Dependabot — mises à jour automatiques des dépendances
+# Documentation : https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+
+updates:
+  # Dépendances npm (production + dev)
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly' # vérifie chaque lundi
+      day: 'monday'
+      time: '06:00'
+      timezone: 'Africa/Abidjan'
+    open-pull-requests-limit: 5 # max 5 PRs de mise à jour en parallèle
+    versioning-strategy: increase # met à jour le version range dans package.json
+    commit-message:
+      prefix: 'chore(deps)'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'automated'
+    # Regrouper les mise à jour de @astrojs/* ensemble
+    groups:
+      astro:
+        patterns:
+          - 'astro'
+          - '@astrojs/*'
+          - '@tailwindcss/*'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react*'
+      keystatic:
+        patterns:
+          - '@keystatic/*'
+      eslint:
+        patterns:
+          - 'eslint'
+          - 'eslint-*'
+          - '@eslint/*'
+          - 'typescript-eslint'
+
+  # GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'Africa/Abidjan'
+    commit-message:
+      prefix: 'chore(ci)'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'ci'
+      - 'automated'

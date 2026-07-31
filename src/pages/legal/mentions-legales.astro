@@ -2,86 +2,159 @@
 import LegalLayout from '../../components/LegalLayout.astro';
 
 const sections = [
-        { id: 'editeur', title: "Éditeur du site" },
-        { id: 'responsable', title: 'Responsable de publication' },
-        { id: 'hebergeur', title: 'Hébergeur' },
-        { id: 'propriete', title: 'Propriété intellectuelle' },
-        { id: 'marques', title: 'Marques et logos' },
-        { id: 'liens', title: 'Liens externes' },
-        { id: 'responsabilite', title: 'Limitation de responsabilité' },
-        { id: 'cookies', title: 'Cookies et traceurs' },
-        { id: 'droit-applicable', title: 'Droit applicable et juridiction' },
-        { id: 'contact', title: 'Contact' },
+	{ id: 'editeur', title: 'Éditeur du site' },
+	{ id: 'responsable', title: 'Responsable de publication' },
+	{ id: 'hebergeur', title: 'Hébergeur' },
+	{ id: 'propriete', title: 'Propriété intellectuelle' },
+	{ id: 'marques', title: 'Marques et logos' },
+	{ id: 'liens', title: 'Liens externes' },
+	{ id: 'responsabilite', title: 'Limitation de responsabilité' },
+	{ id: 'cookies', title: 'Cookies et traceurs' },
+	{ id: 'droit-applicable', title: 'Droit applicable et juridiction' },
+	{ id: 'contact', title: 'Contact' },
 ];
 
 const updatedAt = '25 juillet 2026';
 ---
 
 <LegalLayout
-        title="Mentions légales"
-        description="Mentions légales du site FTCI — Freelance Technologies Côte d'Ivoire. Informations sur l'éditeur, l'hébergeur et la propriété intellectuelle."
-        canonical="/legal/mentions-legales"
-        updatedAt={updatedAt}
-        sections={sections}
+	title="Mentions légales"
+	description="Mentions légales du site FTCI — Freelance Technologies Côte d'Ivoire. Informations sur l'éditeur, l'hébergeur et la propriété intellectuelle."
+	canonical="/legal/mentions-legales"
+	updatedAt={updatedAt}
+	sections={sections}
 >
-        <h2 id="editeur">Éditeur du site</h2>
-        <p>Le présent site <strong>https://ftci.fr</strong> est édité par :</p>
-        <ul>
-                <li><strong>Dénomination sociale :</strong> Freelance Technologies Côte d'Ivoire (FTCI)</li>
-                <li><strong>Forme juridique :</strong> Entrepreneur individuel / Prestataire de services informatiques</li>
-                <li><strong>Siège social :</strong> Abidjan, Côte d'Ivoire</li>
-                <li><strong>Capital social :</strong> Non applicable (entreprise individuelle)</li>
-                <li><strong>Immatriculation :</strong> RCCM en cours d'enregistrement</li>
-                <li><strong>Numéro de contribuable :</strong> À compléter</li>
-                <li><strong>Email :</strong> <a href="mailto:contact@ftci.fr">contact@ftci.fr</a></li>
-                <li><strong>Téléphone :</strong> <a href="tel:+2250566184040">+225 05 6618 4040</a></li>
-        </ul>
+	<h2 id="editeur">Éditeur du site</h2>
+	<p>Le présent site <strong>https://ftci.fr</strong> est édité par :</p>
+	<ul>
+		<li><strong>Dénomination sociale :</strong> Freelance Technologies Côte d'Ivoire (FTCI)</li>
+		<li>
+			<strong>Forme juridique :</strong> Entrepreneur individuel / Prestataire de services informatiques
+		</li>
+		<li><strong>Siège social :</strong> Abidjan, Côte d'Ivoire</li>
+		<li><strong>Capital social :</strong> Non applicable (entreprise individuelle)</li>
+		<li><strong>Immatriculation :</strong> RCCM en cours d'enregistrement</li>
+		<li><strong>Numéro de contribuable :</strong> À compléter</li>
+		<li><strong>Email :</strong> <a href="mailto:contact@ftci.fr">contact@ftci.fr</a></li>
+		<li><strong>Téléphone :</strong> <a href="tel:+2250566184040">+225 05 6618 4040</a></li>
+	</ul>
 
-        <h2 id="responsable">Responsable de publication</h2>
-        <p>Le responsable de la publication est le représentant légal de FTCI — Freelance Technologies Côte d'Ivoire.</p>
-        <p>Pour toute demande relative au contenu éditorial du site, contacter : <a href="mailto:contact@ftci.fr">contact@ftci.fr</a>.</p>
+	<h2 id="responsable">Responsable de publication</h2>
+	<p>
+		Le responsable de la publication est le représentant légal de FTCI — Freelance Technologies Côte
+		d'Ivoire.
+	</p>
+	<p>
+		Pour toute demande relative au contenu éditorial du site, contacter : <a
+			href="mailto:contact@ftci.fr">contact@ftci.fr</a
+		>.
+	</p>
 
-        <h2 id="hebergeur">Hébergeur</h2>
-        <p>Le site est hébergé par :</p>
-        <ul>
-                <li><strong>Société :</strong> Cloudflare, Inc.</li>
-                <li><strong>Adresse :</strong> 101 Townsend Street, San Francisco, CA 94107, États-Unis</li>
-                <li><strong>Site web :</strong> <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">www.cloudflare.com</a></li>
-                <li><strong>Capacité d'hébergement :</strong> CDN mondial avec Points de Présence en Afrique de l'Ouest</li>
-        </ul>
-        <p>Les sous-domaines produits (sect.ftci.fr, opuc.ftci.fr, cats.ftci.fr, scolagest.ftci.fr) sont hébergés séparément sur la plateforme Vercel.</p>
+	<h2 id="hebergeur">Hébergeur</h2>
+	<p>Le site est hébergé par :</p>
+	<ul>
+		<li><strong>Société :</strong> Cloudflare, Inc.</li>
+		<li><strong>Adresse :</strong> 101 Townsend Street, San Francisco, CA 94107, États-Unis</li>
+		<li>
+			<strong>Site web :</strong>
+			<a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer"
+				>www.cloudflare.com</a>
+		</li>
+		<li>
+			<strong>Capacité d'hébergement :</strong> CDN mondial avec Points de Présence en Afrique de l'Ouest
+		</li>
+	</ul>
+	<p>
+		Les sous-domaines produits (sect.ftci.fr, opuc.ftci.fr, cats.ftci.fr, scolagest.ftci.fr) sont
+		hébergés séparément sur la plateforme Vercel.
+	</p>
 
-        <h2 id="propriete">Propriété intellectuelle</h2>
-        <p>L'ensemble des éléments présents sur ce site (textes, graphismes, logos, images, vidéos, sons, animations, mises en page, structure du site, codes source, etc.) est, sauf mention contraire, la propriété exclusive de FTCI — Freelance Technologies Côte d'Ivoire ou de ses partenaires.</p>
-        <p>Ces éléments sont protégés par les lois en vigueur sur la propriété intellectuelle, notamment le Code de la propriété intellectuelle de la République de Côte d'Ivoire, la Convention de Berne et les traités internationaux relatifs au droit d'auteur.</p>
-        <p><strong>Toute reproduction, représentation, modification, publication, adaptation, totale ou partielle, des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite</strong> sans l'autorisation écrite préalable de FTCI.</p>
-        <p>Toute exploitation non autorisée du site ou de l'un quelconque des éléments qu'il contient sera considérée comme constitutive d'une contrefaçon et poursuivie conformément aux dispositions des articles L. 335-2 et suivants du Code de la propriété intellectuelle.</p>
+	<h2 id="propriete">Propriété intellectuelle</h2>
+	<p>
+		L'ensemble des éléments présents sur ce site (textes, graphismes, logos, images, vidéos, sons,
+		animations, mises en page, structure du site, codes source, etc.) est, sauf mention contraire,
+		la propriété exclusive de FTCI — Freelance Technologies Côte d'Ivoire ou de ses partenaires.
+	</p>
+	<p>
+		Ces éléments sont protégés par les lois en vigueur sur la propriété intellectuelle, notamment le
+		Code de la propriété intellectuelle de la République de Côte d'Ivoire, la Convention de Berne et
+		les traités internationaux relatifs au droit d'auteur.
+	</p>
+	<p>
+		<strong
+			>Toute reproduction, représentation, modification, publication, adaptation, totale ou
+			partielle, des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite</strong
+		> sans l'autorisation écrite préalable de FTCI.
+	</p>
+	<p>
+		Toute exploitation non autorisée du site ou de l'un quelconque des éléments qu'il contient sera
+		considérée comme constitutive d'une contrefaçon et poursuivie conformément aux dispositions des
+		articles L. 335-2 et suivants du Code de la propriété intellectuelle.
+	</p>
 
-        <h2 id="marques">Marques et logos</h2>
-        <p>Les marques « FTCI », « SECT », « OPUC », « CATS » et « ScolaGest » ainsi que les logos associés sont des marques de FTCI — Freelance Technologies Côte d'Ivoire.</p>
-        <p>Toute reproduction, imitation ou utilisation de ces marques et logos sans autorisation expresse et écrite de FTCI est interdite et expose son auteur à des poursuites judiciaires.</p>
+	<h2 id="marques">Marques et logos</h2>
+	<p>
+		Les marques « FTCI », « SECT », « OPUC », « CATS » et « ScolaGest » ainsi que les logos associés
+		sont des marques de FTCI — Freelance Technologies Côte d'Ivoire.
+	</p>
+	<p>
+		Toute reproduction, imitation ou utilisation de ces marques et logos sans autorisation expresse
+		et écrite de FTCI est interdite et expose son auteur à des poursuites judiciaires.
+	</p>
 
-        <h2 id="liens">Liens externes</h2>
-        <p>Le site peut contenir des liens hypertexte vers d'autres sites (notamment vers les sous-domaines produits sect.ftci.fr, opuc.ftci.fr, cats.ftci.fr, scolagest.ftci.fr) ou vers des sites de partenaires.</p>
-        <p>FTCI ne dispose d'aucun moyen de contrôle sur ces sites et décline toute responsabilité quant à leur contenu, leurs pratiques en matière de protection des données, ou leur disponibilité.</p>
+	<h2 id="liens">Liens externes</h2>
+	<p>
+		Le site peut contenir des liens hypertexte vers d'autres sites (notamment vers les sous-domaines
+		produits sect.ftci.fr, opuc.ftci.fr, cats.ftci.fr, scolagest.ftci.fr) ou vers des sites de
+		partenaires.
+	</p>
+	<p>
+		FTCI ne dispose d'aucun moyen de contrôle sur ces sites et décline toute responsabilité quant à
+		leur contenu, leurs pratiques en matière de protection des données, ou leur disponibilité.
+	</p>
 
-        <h2 id="responsabilite">Limitation de responsabilité</h2>
-        <p>FTCI s'efforce de fournir sur ce site des informations aussi précises que possible. Toutefois, FTCI ne pourra être tenu responsable des omissions, des inexactitudes ou des carences dans la mise à jour, qu'elles soient de son fait ou du fait des tiers partenaires qui lui fournissent ces informations.</p>
-        <p>Les informations fournies sur ce site sont à titre indicatif et ne sauraient dispenser l'utilisateur d'une analyse complémentaire et personnalisée. FTCI ne saurait être tenu pour responsable des dommages directs ou indirects résultant de l'utilisation de ce site, notamment perte de données, intrusion, virus, ou panne technique.</p>
+	<h2 id="responsabilite">Limitation de responsabilité</h2>
+	<p>
+		FTCI s'efforce de fournir sur ce site des informations aussi précises que possible. Toutefois,
+		FTCI ne pourra être tenu responsable des omissions, des inexactitudes ou des carences dans la
+		mise à jour, qu'elles soient de son fait ou du fait des tiers partenaires qui lui fournissent
+		ces informations.
+	</p>
+	<p>
+		Les informations fournies sur ce site sont à titre indicatif et ne sauraient dispenser
+		l'utilisateur d'une analyse complémentaire et personnalisée. FTCI ne saurait être tenu pour
+		responsable des dommages directs ou indirects résultant de l'utilisation de ce site, notamment
+		perte de données, intrusion, virus, ou panne technique.
+	</p>
 
-        <h2 id="cookies">Cookies et traceurs</h2>
-        <p>Le site FTCI utilise un minimum de traceurs nécessaires à son fonctionnement. Pour plus d'informations sur l'utilisation des cookies et la gestion de vos données personnelles, consultez notre <a href="/legal/confidentialite">Politique de confidentialité</a>.</p>
+	<h2 id="cookies">Cookies et traceurs</h2>
+	<p>
+		Le site FTCI utilise un minimum de traceurs nécessaires à son fonctionnement. Pour plus
+		d'informations sur l'utilisation des cookies et la gestion de vos données personnelles,
+		consultez notre <a href="/legal/confidentialite">Politique de confidentialité</a>.
+	</p>
 
-        <h2 id="droit-applicable">Droit applicable et juridiction</h2>
-        <p>Les présentes mentions légales sont régies par le droit ivoirien. En cas de litige et à défaut d'accord amiable, les tribunaux ivoiriens seront seuls compétents pour connaître de ce litige.</p>
+	<h2 id="droit-applicable">Droit applicable et juridiction</h2>
+	<p>
+		Les présentes mentions légales sont régies par le droit ivoirien. En cas de litige et à défaut
+		d'accord amiable, les tribunaux ivoiriens seront seuls compétents pour connaître de ce litige.
+	</p>
 
-        <h2 id="contact">Contact</h2>
-        <p>Pour toute question relative aux présentes mentions légales ou pour signaler un contenu illicite, vous pouvez contacter FTCI :</p>
-        <ul>
-                <li><strong>Email :</strong> <a href="mailto:contact@ftci.fr">contact@ftci.fr</a></li>
-                <li><strong>Téléphone :</strong> <a href="tel:+2250566184040">+225 05 6618 4040</a></li>
-                <li><strong>Adresse :</strong> Abidjan & Dabou, Côte d'Ivoire</li>
-        </ul>
-        <hr />
-        <p><em>Cette page a été mise à jour le {updatedAt}. FTCI se réserve le droit de modifier les présentes mentions légales à tout moment. Les utilisateurs sont invités à les consulter régulièrement.</em></p>
+	<h2 id="contact">Contact</h2>
+	<p>
+		Pour toute question relative aux présentes mentions légales ou pour signaler un contenu
+		illicite, vous pouvez contacter FTCI :
+	</p>
+	<ul>
+		<li><strong>Email :</strong> <a href="mailto:contact@ftci.fr">contact@ftci.fr</a></li>
+		<li><strong>Téléphone :</strong> <a href="tel:+2250566184040">+225 05 6618 4040</a></li>
+		<li><strong>Adresse :</strong> Abidjan & Dabou, Côte d'Ivoire</li>
+	</ul>
+	<hr />
+	<p>
+		<em
+			>Cette page a été mise à jour le {updatedAt}. FTCI se réserve le droit de modifier les
+			présentes mentions légales à tout moment. Les utilisateurs sont invités à les consulter
+			régulièrement.</em>
+	</p>
 </LegalLayout>

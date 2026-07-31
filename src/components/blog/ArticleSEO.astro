@@ -11,65 +11,67 @@ import { getCategoryLabel } from '../../lib/blog';
 import { safeJsonStringify } from '../../lib/sanitize';
 
 interface Props {
-        title: string;
-        description: string;
-        url: string;
-        publishedAt: Date;
-        author: string;
-        coverImage?: string;
-        category: string;
-        keywords?: string[];
+	title: string;
+	description: string;
+	url: string;
+	publishedAt: Date;
+	author: string;
+	coverImage?: string;
+	category: string;
+	keywords?: string[];
 }
 
 const {
-        title,
-        description,
-        url,
-        publishedAt,
-        author,
-        coverImage,
-        category,
-        keywords = [],
+	title,
+	description,
+	url,
+	publishedAt,
+	author,
+	coverImage,
+	category,
+	keywords = [],
 } = Astro.props;
 
 const siteUrl = 'https://ftci.fr';
 const absoluteUrl = url.startsWith('http') ? url : `${siteUrl}${url}`;
 const absoluteCover = coverImage
-        ? (coverImage.startsWith('http') ? coverImage : `${siteUrl}${coverImage}`)
-        : `${siteUrl}/brand/ftci-a.jpg`;
+	? coverImage.startsWith('http')
+		? coverImage
+		: `${siteUrl}${coverImage}`
+	: `${siteUrl}/brand/ftci-a.jpg`;
 
 const categoryLabel = getCategoryLabel(category);
-const allKeywords = [categoryLabel, 'FTCI', 'Freelance Technologies Côte d\'Ivoire', ...keywords];
+const allKeywords = [categoryLabel, 'FTCI', "Freelance Technologies Côte d'Ivoire", ...keywords];
 
 // Schema.org BlogPosting — rich snippet pour Google
 const blogPostingSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        headline: title,
-        description,
-        image: absoluteCover,
-        datePublished: publishedAt.toISOString(),
-        dateModified: publishedAt.toISOString(),
-        author: {
-                '@type': 'Organization',
-                name: author,
-                url: siteUrl,
-        },
-        publisher: {
-                '@type': 'Organization',
-                name: 'FTCI',
-                logo: {
-                        '@type': 'ImageObject',
-                        url: `${siteUrl}/brand/logo-ftci.png`,
-                },
-        },
-        mainEntityOfPage: {
-                '@type': 'WebPage',
-                '@id': absoluteUrl,
-        },
-        articleSection: categoryLabel,
-        keywords: allKeywords.join(', '),
-        inLanguage: 'fr-FR',
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: title,
+	description,
+	image: absoluteCover,
+	datePublished: publishedAt.toISOString(),
+	dateModified: publishedAt.toISOString(),
+	author: {
+		'@type': 'Organization',
+		name: author,
+		url: siteUrl,
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: 'FTCI',
+		logo: {
+			'@type': 'ImageObject',
+			url: `${siteUrl}/brand/logo-ftci.png`,
+		},
+	},
+	mainEntityOfPage: {
+		'@type': 'WebPage',
+		'@id': absoluteUrl,
+	},
+	articleSection: categoryLabel,
+	keywords: allKeywords.join(', '),
+	inLanguage: 'fr-FR',
 };
 ---
 

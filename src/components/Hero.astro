@@ -2270,7 +2270,6 @@ function initHeroSliderV8() {
   const prevBtn = slider.querySelector<HTMLElement>('.nav-prev');
   const nextBtn = slider.querySelector<HTMLElement>('.nav-next');
   const progressTrack = slider.querySelector<HTMLElement>('.progress-track');
-  const progressFill = slider.querySelector<HTMLElement>('.progress-fill');
   const counterCurrent = slider.querySelector<HTMLElement>('.counter-current');
   const dotsNav = slider.querySelector<HTMLElement>('.dots-nav');
 
@@ -2437,7 +2436,10 @@ function initHeroSliderV8() {
   slider.addEventListener('touchend', (e: TouchEvent) => {
     touchEndX = e.changedTouches[0].screenX;
     const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+    }
     resumeAutoplay();
   }, { passive: true });
 
@@ -2458,8 +2460,10 @@ function initHeroSliderV8() {
   if (!prefersReducedMotion) startAutoplay();
 }
 
-document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', initHeroSliderV8)
-  : initHeroSliderV8();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHeroSliderV8);
+} else {
+  initHeroSliderV8();
+}
 </script>
  

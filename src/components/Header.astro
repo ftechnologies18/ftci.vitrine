@@ -12,241 +12,289 @@
  */
 
 const navLinks = [
-        { href: '/#solutions', label: 'Nos solutions' },
-        { href: '/#services', label: 'Nos services' },
-        { href: '/#about', label: 'À propos' },
-        { href: '/blog', label: 'Blog' },
-        { href: '/#contact', label: 'Contact' },
+	{ href: '/#solutions', label: 'Nos solutions' },
+	{ href: '/#services', label: 'Nos services' },
+	{ href: '/#about', label: 'À propos' },
+	{ href: '/blog', label: 'Blog' },
+	{ href: '/#contact', label: 'Contact' },
 ];
 ---
 
 <header
-        class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-navy/5"
-        style="min-height: var(--header-h);"
+	class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-navy/5"
+	style="min-height: var(--header-h);"
 >
-        <div class="container flex items-center justify-between h-[72px]">
-                <!-- ── Brand : logo réel + wordmark ──────────────────────────────── -->
-                <a href="/" class="flex items-center gap-2.5 group" aria-label="FTCI — Accueil">
-                        <img
-                                src="/brand/logo-ftci.png"
-                                alt="Logo FTCI"
-                                width="40"
-                                height="41"
-                                class="h-9 w-auto transition-transform duration-200 group-hover:scale-[1.04]"
-                                loading="eager"
-                                decoding="async"
-                        />
-                        <span class="flex items-baseline gap-0.5 select-none">
-                                <span class="font-display font-extrabold text-navy text-xl tracking-[-0.03em]">
-                                        FTCI
-                                </span>
-                                <span class="font-display font-extrabold text-orange text-sm tracking-tight">
-                                        Technologies
-                                </span>
-                        </span>
-                </a>
+	<div class="container flex items-center justify-between h-[72px]">
+		<!-- ── Brand : logo réel + wordmark ──────────────────────────────── -->
+		<a href="/" class="flex items-center gap-2.5 group" aria-label="FTCI — Accueil">
+			<img
+				src="/brand/logo-ftci.png"
+				alt="Logo FTCI"
+				width="40"
+				height="41"
+				class="h-9 w-auto transition-transform duration-200 group-hover:scale-[1.04]"
+				loading="eager"
+				decoding="async"
+			/>
+			<span class="flex items-baseline gap-0.5 select-none">
+				<span class="font-display font-extrabold text-navy text-xl tracking-[-0.03em]"> FTCI </span>
+				<span class="font-display font-extrabold text-orange text-sm tracking-tight">
+					Technologies
+				</span>
+			</span>
+		</a>
 
-                <!-- ── Navigation desktop ─────────────────────────────────────────── -->
-                <nav class="hidden md:flex items-center gap-8" aria-label="Navigation principale">
-                        {navLinks.map((link) => (
-                                <a
-                                        href={link.href}
-                                        class="text-sm font-medium text-navy/75 hover:text-orange transition-colors duration-200"
-                                >
-                                        {link.label}
-                                </a>
-                        ))}
-                </nav>
+		<!-- ── Navigation desktop ─────────────────────────────────────────── -->
+		<nav class="hidden md:flex items-center gap-8" aria-label="Navigation principale">
+			{
+				navLinks.map((link) => (
+					<a
+						href={link.href}
+						class="text-sm font-medium text-navy/75 hover:text-orange transition-colors duration-200"
+					>
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
 
-                <!-- ── CTA desktop ────────────────────────────────────────────────── -->
-                <a
-                        href="/#contact"
-                        data-magnetic="14"
-                        class="btn-primary magnetic hidden md:inline-flex"
-                >
-                        <span>
-                                Nous contacter
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                        </span>
-                </a>
+		<!-- ── CTA desktop ────────────────────────────────────────────────── -->
+		<a href="/#contact" data-magnetic="14" class="btn-primary magnetic hidden md:inline-flex">
+			<span>
+				Nous contacter
+				<svg
+					class="w-4 h-4"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+				</svg>
+			</span>
+		</a>
 
-                <!-- ── Bouton menu mobile ─────────────────────────────────────────── -->
-                <button
-                        type="button"
-                        id="menu-toggle"
-                        class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-lg text-navy hover:bg-navy/5 transition-colors"
-                        aria-label="Ouvrir le menu"
-                        aria-expanded="false"
-                        aria-controls="mobile-drawer"
-                >
-                        <svg class="w-6 h-6 menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg class="w-6 h-6 menu-icon-close hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                </button>
-        </div>
+		<!-- ── Bouton menu mobile ─────────────────────────────────────────── -->
+		<button
+			type="button"
+			id="menu-toggle"
+			class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 rounded-lg text-navy hover:bg-navy/5 transition-colors"
+			aria-label="Ouvrir le menu"
+			aria-expanded="false"
+			aria-controls="mobile-drawer"
+		>
+			<svg
+				class="w-6 h-6 menu-icon-open"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				aria-hidden="true"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M4 6h16M4 12h16M4 18h16"></path>
+			</svg>
+			<svg
+				class="w-6 h-6 menu-icon-close hidden"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				aria-hidden="true"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M6 18L18 6M6 6l12 12"></path>
+			</svg>
+		</button>
+	</div>
 
-        <!-- ── Drawer mobile ─────────────────────────────────────────────────── -->
-        <div
-                id="mobile-drawer"
-                class="md:hidden fixed inset-0 z-40 invisible opacity-0 transition-opacity duration-200 ease-out"
-                role="dialog"
-                aria-modal="true"
-                aria-label="Menu de navigation mobile"
-        >
-                <!-- Backdrop -->
-                <div class="absolute inset-0 bg-navy/40 backdrop-blur-sm" data-drawer-close></div>
+	<!-- ── Drawer mobile ─────────────────────────────────────────────────── -->
+	<div
+		id="mobile-drawer"
+		class="md:hidden fixed inset-0 z-40 invisible opacity-0 transition-opacity duration-200 ease-out"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Menu de navigation mobile"
+	>
+		<!-- Backdrop -->
+		<div class="absolute inset-0 bg-navy/40 backdrop-blur-sm" data-drawer-close></div>
 
-                <!-- Panel -->
-                <div
-                        class="mobile-drawer-panel absolute right-0 top-0 h-full w-[min(82vw,360px)] bg-white shadow-2xl flex flex-col"
-                >
-                        <div class="flex items-center justify-between h-[72px] px-5 border-b border-navy/5 shrink-0">
-                                <span class="font-display font-extrabold text-navy">Menu</span>
-                                <button
-                                        type="button"
-                                        id="menu-close"
-                                        class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-navy hover:bg-navy/5 transition-colors"
-                                        aria-label="Fermer le menu"
-                                >
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                </button>
-                        </div>
+		<!-- Panel -->
+		<div
+			class="mobile-drawer-panel absolute right-0 top-0 h-full w-[min(82vw,360px)] bg-white shadow-2xl flex flex-col"
+		>
+			<div class="flex items-center justify-between h-[72px] px-5 border-b border-navy/5 shrink-0">
+				<span class="font-display font-extrabold text-navy">Menu</span>
+				<button
+					type="button"
+					id="menu-close"
+					class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-navy hover:bg-navy/5 transition-colors"
+					aria-label="Fermer le menu"
+				>
+					<svg
+						class="w-5 h-5"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				</button>
+			</div>
 
-                        <nav class="flex-1 overflow-y-auto px-5 py-6" aria-label="Navigation mobile">
-                                <ul class="space-y-1">
-                                        {navLinks.map((link) => (
-                                                <li>
-                                                        <a
-                                                                href={link.href}
-                                                                class="block px-4 py-3.5 text-lg font-medium text-navy hover:bg-light-bg hover:text-orange rounded-xl transition-colors duration-200"
-                                                                data-drawer-link
-                                                        >
-                                                                {link.label}
-                                                        </a>
-                                                </li>
-                                        ))}
-                                </ul>
-                        </nav>
+			<nav class="flex-1 overflow-y-auto px-5 py-6" aria-label="Navigation mobile">
+				<ul class="space-y-1">
+					{
+						navLinks.map((link) => (
+							<li>
+								<a
+									href={link.href}
+									class="block px-4 py-3.5 text-lg font-medium text-navy hover:bg-light-bg hover:text-orange rounded-xl transition-colors duration-200"
+									data-drawer-link
+								>
+									{link.label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
 
-                        <div class="p-5 border-t border-navy/5 shrink-0">
-                                <a href="/#contact" class="btn-primary w-full" data-drawer-link>
-                                        <span>
-                                                Nous contacter
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                                </svg>
-                                        </span>
-                                </a>
-                        </div>
-                </div>
-        </div>
+			<div class="p-5 border-t border-navy/5 shrink-0">
+				<a href="/#contact" class="btn-primary w-full" data-drawer-link>
+					<span>
+						Nous contacter
+						<svg
+							class="w-4 h-4"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+						</svg>
+					</span>
+				</a>
+			</div>
+		</div>
+	</div>
 </header>
 
 <style>
-        /* Drawer : état ouvert */
-        #mobile-drawer.is-open {
-                visibility: visible;
-                opacity: 1;
-        }
-        #mobile-drawer.is-open .mobile-drawer-panel {
-                transform: translateX(0);
-        }
-        .mobile-drawer-panel {
-                transform: translateX(100%);
-                transition: transform 280ms var(--ease-drawer);
-                will-change: transform;
-        }
-        @media (prefers-reduced-motion: reduce) {
-                .mobile-drawer-panel {
-                        transition: none;
-                }
-        }
+	/* Drawer : état ouvert */
+	#mobile-drawer.is-open {
+		visibility: visible;
+		opacity: 1;
+	}
+	#mobile-drawer.is-open .mobile-drawer-panel {
+		transform: translateX(0);
+	}
+	.mobile-drawer-panel {
+		transform: translateX(100%);
+		transition: transform 280ms var(--ease-drawer);
+		will-change: transform;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.mobile-drawer-panel {
+			transition: none;
+		}
+	}
 </style>
 
 <script>
-        // ── Drawer mobile accessible ────────────────────────────────────────────
-        // aria-expanded, aria-controls, role=dialog, Escape, scroll lock, focus
-        const toggle = document.getElementById('menu-toggle');
-        const closeBtn = document.getElementById('menu-close');
-        const drawer = document.getElementById('mobile-drawer');
-        const openIcon = toggle?.querySelector('.menu-icon-open');
-        const closeIcon = toggle?.querySelector('.menu-icon-close');
+	// ── Drawer mobile accessible ────────────────────────────────────────────
+	// aria-expanded, aria-controls, role=dialog, Escape, scroll lock, focus
+	const toggle = document.getElementById('menu-toggle');
+	const closeBtn = document.getElementById('menu-close');
+	const drawer = document.getElementById('mobile-drawer');
+	const openIcon = toggle?.querySelector('.menu-icon-open');
+	const closeIcon = toggle?.querySelector('.menu-icon-close');
 
-        if (toggle && drawer && closeBtn) {
-                let lastFocused: HTMLElement | null = null;
-                const focusableSelector =
-                        'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
+	if (toggle && drawer && closeBtn) {
+		let lastFocused: HTMLElement | null = null;
+		const focusableSelector =
+			'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
 
-                const open = () => {
-                        lastFocused = document.activeElement as HTMLElement;
-                        drawer.classList.add('is-open');
-                        toggle.setAttribute('aria-expanded', 'true');
-                        toggle.setAttribute('aria-label', 'Fermer le menu');
-                        openIcon?.classList.add('hidden');
-                        closeIcon?.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden';
-                        // Focus le premier lien du drawer
-                        const firstFocusable = drawer.querySelector<HTMLElement>(focusableSelector);
-                        requestAnimationFrame(() => firstFocusable?.focus());
-                };
+		const open = () => {
+			lastFocused = document.activeElement as HTMLElement;
+			drawer.classList.add('is-open');
+			toggle.setAttribute('aria-expanded', 'true');
+			toggle.setAttribute('aria-label', 'Fermer le menu');
+			openIcon?.classList.add('hidden');
+			closeIcon?.classList.remove('hidden');
+			document.body.style.overflow = 'hidden';
+			// Focus le premier lien du drawer
+			const firstFocusable = drawer.querySelector<HTMLElement>(focusableSelector);
+			requestAnimationFrame(() => firstFocusable?.focus());
+		};
 
-                const close = () => {
-                        drawer.classList.remove('is-open');
-                        toggle.setAttribute('aria-expanded', 'false');
-                        toggle.setAttribute('aria-label', 'Ouvrir le menu');
-                        openIcon?.classList.remove('hidden');
-                        closeIcon?.classList.add('hidden');
-                        document.body.style.overflow = '';
-                        lastFocused?.focus();
-                };
+		const close = () => {
+			drawer.classList.remove('is-open');
+			toggle.setAttribute('aria-expanded', 'false');
+			toggle.setAttribute('aria-label', 'Ouvrir le menu');
+			openIcon?.classList.remove('hidden');
+			closeIcon?.classList.add('hidden');
+			document.body.style.overflow = '';
+			lastFocused?.focus();
+		};
 
-                toggle.addEventListener('click', () => {
-                        if (drawer.classList.contains('is-open')) close();
-                        else open();
-                });
+		toggle.addEventListener('click', () => {
+			if (drawer.classList.contains('is-open')) close();
+			else open();
+		});
 
-                closeBtn.addEventListener('click', close);
+		closeBtn.addEventListener('click', close);
 
-                // Backdrop click
-                drawer.querySelectorAll('[data-drawer-close]').forEach((el) => {
-                        el.addEventListener('click', close);
-                });
+		// Backdrop click
+		drawer.querySelectorAll('[data-drawer-close]').forEach((el) => {
+			el.addEventListener('click', close);
+		});
 
-                // Liens du drawer → fermer après navigation
-                drawer.querySelectorAll('[data-drawer-link]').forEach((el) => {
-                        el.addEventListener('click', close);
-                });
+		// Liens du drawer → fermer après navigation
+		drawer.querySelectorAll('[data-drawer-link]').forEach((el) => {
+			el.addEventListener('click', close);
+		});
 
-                // Escape pour fermer
-                document.addEventListener('keydown', (e) => {
-                        if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
-                                close();
-                        }
-                });
+		// Escape pour fermer
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+				close();
+			}
+		});
 
-                // Focus trap dans le drawer
-                drawer.addEventListener('keydown', (e) => {
-                        if (e.key !== 'Tab' || !drawer.classList.contains('is-open')) return;
-                        const focusables = Array.from(
-                                drawer.querySelectorAll<HTMLElement>(focusableSelector),
-                        ).filter((el) => el.offsetParent !== null);
-                        if (focusables.length === 0) return;
-                        const first = focusables[0];
-                        const last = focusables[focusables.length - 1];
-                        if (e.shiftKey && document.activeElement === first) {
-                                e.preventDefault();
-                                last.focus();
-                        } else if (!e.shiftKey && document.activeElement === last) {
-                                e.preventDefault();
-                                first.focus();
-                        }
-                });
-        }
+		// Focus trap dans le drawer
+		drawer.addEventListener('keydown', (e) => {
+			if (e.key !== 'Tab' || !drawer.classList.contains('is-open')) return;
+			const focusables = Array.from(drawer.querySelectorAll<HTMLElement>(focusableSelector)).filter(
+				(el) => el.offsetParent !== null,
+			);
+			if (focusables.length === 0) return;
+			const first = focusables[0];
+			const last = focusables[focusables.length - 1];
+			if (e.shiftKey && document.activeElement === first) {
+				e.preventDefault();
+				last.focus();
+			} else if (!e.shiftKey && document.activeElement === last) {
+				e.preventDefault();
+				first.focus();
+			}
+		});
+	}
 </script>

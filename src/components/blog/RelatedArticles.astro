@@ -11,8 +11,8 @@ import { getRelatedArticles } from '../../lib/blog';
 import ArticleCard from './ArticleCard.astro';
 
 interface Props {
-        current: BlogEntry;
-        limit?: number;
+	current: BlogEntry;
+	limit?: number;
 }
 
 const { current, limit = 3 } = Astro.props;
@@ -20,41 +20,41 @@ const related = await getRelatedArticles(current, limit);
 ---
 
 {
-        related.length > 0 && (
-                <section class="related-articles" aria-label="Articles liés">
-                        <h2 class="related-title">À lire également</h2>
-                        <div class="related-grid">
-                                {related.map((entry) => (
-                                        <ArticleCard entry={entry} />
-                                ))}
-                        </div>
-                </section>
-        )
+	related.length > 0 && (
+		<section class="related-articles" aria-label="Articles liés">
+			<h2 class="related-title">À lire également</h2>
+			<div class="related-grid">
+				{related.map((entry) => (
+					<ArticleCard entry={entry} />
+				))}
+			</div>
+		</section>
+	)
 }
 
 <style>
-        .related-articles {
-                margin-top: 4rem;
-                padding-top: 3rem;
-                border-top: 1px solid rgba(15, 30, 61, 0.1);
-        }
-        .related-title {
-                font-family: var(--font-display);
-                font-weight: 800;
-                font-size: 1.75rem;
-                line-height: 1.2;
-                letter-spacing: -0.02em;
-                color: var(--color-navy);
-                margin: 0 0 2rem;
-        }
-        .related-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 1.5rem;
-        }
-        @media (max-width: 640px) {
-                .related-grid {
-                        grid-template-columns: 1fr;
-                }
-        }
+	.related-articles {
+		margin-top: 4rem;
+		padding-top: 3rem;
+		border-top: 1px solid rgba(15, 30, 61, 0.1);
+	}
+	.related-title {
+		font-family: var(--font-display);
+		font-weight: 800;
+		font-size: 1.75rem;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		color: var(--color-navy);
+		margin: 0 0 2rem;
+	}
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 1.5rem;
+	}
+	@media (max-width: 640px) {
+		.related-grid {
+			grid-template-columns: 1fr;
+		}
+	}
 </style>

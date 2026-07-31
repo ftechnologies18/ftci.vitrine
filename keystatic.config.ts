@@ -41,17 +41,17 @@ import { config, fields, collection, singleton } from '@keystatic/core';
  * the editor and on the site.
  */
 export const BLOG_CATEGORIES = [
-        { value: 'transformation-digitale', label: 'Transformation digitale' },
-        { value: 'intelligence-artificielle', label: 'Intelligence artificielle' },
-        { value: 'cloud-computing', label: 'Cloud & infrastructures' },
-        { value: 'cybersecurite', label: 'Cybersécurité' },
-        { value: 'tech-innovation', label: 'Tech & Innovation' },
-        { value: 'actualites-ftci', label: 'Actualités FTCI' },
+	{ value: 'transformation-digitale', label: 'Transformation digitale' },
+	{ value: 'intelligence-artificielle', label: 'Intelligence artificielle' },
+	{ value: 'cloud-computing', label: 'Cloud & infrastructures' },
+	{ value: 'cybersecurite', label: 'Cybersécurité' },
+	{ value: 'tech-innovation', label: 'Tech & Innovation' },
+	{ value: 'actualites-ftci', label: 'Actualités FTCI' },
 ] as const;
 
 /** Lookup table from category slug to human-readable label. */
 export const CATEGORY_LABELS: Record<string, string> = Object.fromEntries(
-        BLOG_CATEGORIES.map((c) => [c.value, c.label]),
+	BLOG_CATEGORIES.map((c) => [c.value, c.label]),
 );
 
 /** Convenience type for a category slug. */
@@ -79,98 +79,95 @@ export type BlogCategory = (typeof BLOG_CATEGORIES)[number]['value'];
 const isProd = process.env.NODE_ENV === 'production';
 
 export default config({
-        storage: isProd
-                ? {
-                        kind: 'cloud',
-                }
-                : { kind: 'local' },
+	storage: isProd
+		? {
+				kind: 'cloud',
+			}
+		: { kind: 'local' },
 
-        /**
-         * Keystatic Cloud project identifier.
-         *
-         * Replace 'ftci/ftci-vitrine' with your actual project identifier from
-         * https://cloud.keystatic.com once you've created the project.
-         *
-         * Format: '<team-slug>/<project-slug>' (must contain a '/')
-         */
-        cloud: {
-                project: 'ftci/ftci-vitrine',
-        },
+	/**
+	 * Keystatic Cloud project identifier.
+	 *
+	 * Replace 'ftci/ftci-vitrine' with your actual project identifier from
+	 * https://cloud.keystatic.com once you've created the project.
+	 *
+	 * Format: '<team-slug>/<project-slug>' (must contain a '/')
+	 */
+	cloud: {
+		project: 'ftci/ftci-vitrine',
+	},
 
-        collections: {
-                blog: collection({
-                        label: 'Articles de blog',
-                        path: 'src/content/blog/*',
-                        slugField: 'title',
-                        entryLayout: 'content',
-                        format: { contentField: 'content' },
-                        columns: ['title', 'category', 'publishedAt'],
-                        schema: {
-                                title: fields.slug({
-                                        name: {
-                                                label: 'Titre',
-                                                validation: { length: { min: 5, max: 120 } },
-                                        },
-                                }),
-                                description: fields.text({
-                                        label: 'Description (SEO — meta description, 50-160 caractères)',
-                                        validation: { length: { min: 50, max: 160 } },
-                                        multiline: true,
-                                }),
-                                category: fields.select({
-                                        label: 'Catégorie',
-                                        options: BLOG_CATEGORIES,
-                                        defaultValue: 'transformation-digitale',
-                                }),
-                                tags: fields.array(
-                                        fields.text({ label: 'Tag' }),
-                                        {
-                                                label: 'Tags',
-                                                itemLabel: (props) => props.value,
-                                        },
-                                ),
-                                publishedAt: fields.date({
-                                        label: 'Date de publication',
-                                        validation: { isRequired: true },
-                                }),
-                                author: fields.text({
-                                        label: 'Auteur',
-                                        defaultValue: 'Freelance Technologies CI',
-                                        validation: { isRequired: true },
-                                }),
-                                coverImage: fields.image({
-                                        label: 'Image de couverture',
-                                        directory: 'public/blog/images',
-                                        publicPath: '/blog/images/',
-                                        validation: { isRequired: false },
-                                }),
-                                featured: fields.checkbox({
-                                        label: 'Article à la une (mis en avant sur la page d\'accueil du blog)',
-                                        defaultValue: false,
-                                }),
-                                draft: fields.checkbox({
-                                        label: 'Brouillon (masqué en production, visible en preview)',
-                                        defaultValue: false,
-                                }),
-                                readingTime: fields.integer({
-                                        label: 'Temps de lecture (minutes, optionnel — auto si vide)',
-                                        defaultValue: 5,
-                                        validation: { isRequired: false },
-                                }),
-                                content: fields.markdoc({
-                                        label: 'Contenu',
-                                        options: {
-                                                image: {
-                                                        directory: 'public/blog/images',
-                                                        publicPath: '/blog/images/',
-                                                },
-                                        },
-                                }),
-                        },
-                }),
-        },
+	collections: {
+		blog: collection({
+			label: 'Articles de blog',
+			path: 'src/content/blog/*',
+			slugField: 'title',
+			entryLayout: 'content',
+			format: { contentField: 'content' },
+			columns: ['title', 'category', 'publishedAt'],
+			schema: {
+				title: fields.slug({
+					name: {
+						label: 'Titre',
+						validation: { length: { min: 5, max: 120 } },
+					},
+				}),
+				description: fields.text({
+					label: 'Description (SEO — meta description, 50-160 caractères)',
+					validation: { length: { min: 50, max: 160 } },
+					multiline: true,
+				}),
+				category: fields.select({
+					label: 'Catégorie',
+					options: BLOG_CATEGORIES,
+					defaultValue: 'transformation-digitale',
+				}),
+				tags: fields.array(fields.text({ label: 'Tag' }), {
+					label: 'Tags',
+					itemLabel: (props) => props.value,
+				}),
+				publishedAt: fields.date({
+					label: 'Date de publication',
+					validation: { isRequired: true },
+				}),
+				author: fields.text({
+					label: 'Auteur',
+					defaultValue: 'Freelance Technologies CI',
+					validation: { isRequired: true },
+				}),
+				coverImage: fields.image({
+					label: 'Image de couverture',
+					directory: 'public/blog/images',
+					publicPath: '/blog/images/',
+					validation: { isRequired: false },
+				}),
+				featured: fields.checkbox({
+					label: "Article à la une (mis en avant sur la page d'accueil du blog)",
+					defaultValue: false,
+				}),
+				draft: fields.checkbox({
+					label: 'Brouillon (masqué en production, visible en preview)',
+					defaultValue: false,
+				}),
+				readingTime: fields.integer({
+					label: 'Temps de lecture (minutes, optionnel — auto si vide)',
+					defaultValue: 5,
+					validation: { isRequired: false },
+				}),
+				content: fields.markdoc({
+					label: 'Contenu',
+					options: {
+						image: {
+							directory: 'public/blog/images',
+							publicPath: '/blog/images/',
+						},
+					},
+				}),
+			},
+		}),
+	},
 
-        singletons: {
-                // Reserved for future use (e.g. blog settings, featured articles order).
-        },
+	singletons: {
+		// Reserved for future use (e.g. blog settings, featured articles order).
+	},
 });

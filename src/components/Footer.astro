@@ -2,18 +2,18 @@
 /**
  * Footer.astro — Pied de page Minimaliste "Effet Waouh" Circuit Tech
  * ────────────────────────────────────────────────────────────────────────────
- * 
+ *
  * 🎨 DESIGN:
  * - Background: Circuit informatique SVG animé (lignes + nœuds qui pulsent)
  * - Layout compact: 1 ligne principale + 1 ligne bottom
  * - Style: Dark tech avec accents orange/periwinkle
- * 
+ *
  * ✨ ANIMATIONS:
  * 1. Circuit lines: dash-offset animation (flux de données)
  * 2. Nodes pulse: points lumineux qui clignotent séquentiellement
  * 3. Liens hover: slide effect + glow
  * 4. Back-to-top: minimal avec hover effect
- * 
+ *
  * ♿ ACCESSIBILITÉ: prefers-reduced-motion désactive tout
  */
 
@@ -31,719 +31,900 @@ import { products } from '../data/products';
 // FTCI (conseil, dév, infra, formation) avec ancres vers les cartes
 // correspondantes de la home — pour ne pas répéter les produits.
 const services = [
-        { label: 'Transformation Digitale', href: '/#service-transformation-digitale' },
-        { label: 'Développement Web sur Mesure', href: '/#service-developpement-web' },
-        { label: 'Infrastructure IT', href: '/#service-infrastructure-it' },
-        { label: 'Tech Assistance & Formation', href: '/#service-tech-assistance-formation' },
+	{ label: 'Transformation Digitale', href: '/#service-transformation-digitale' },
+	{ label: 'Développement Web sur Mesure', href: '/#service-developpement-web' },
+	{ label: 'Infrastructure IT', href: '/#service-infrastructure-it' },
+	{ label: 'Tech Assistance & Formation', href: '/#service-tech-assistance-formation' },
 ];
 
 const socialLinks = [
-        { label: 'LinkedIn', href: 'https://www.linkedin.com/company/ftci', icon: 'linkedin' },
-        { label: 'GitHub', href: 'https://github.com/ftechnologies18', icon: 'github' },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/ftci', icon: 'linkedin' },
+	{ label: 'GitHub', href: 'https://github.com/ftechnologies18', icon: 'github' },
 ];
 
 const legalLinks = [
-        { label: 'Mentions légales', href: '/legal/mentions-legales' },
-        { label: 'Confidentialité', href: '/legal/confidentialite' },
-        { label: 'CGU', href: '/legal/cgu' },
+	{ label: 'Mentions légales', href: '/legal/mentions-legales' },
+	{ label: 'Confidentialité', href: '/legal/confidentialite' },
+	{ label: 'CGU', href: '/legal/cgu' },
 ];
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="ft-footer" role="contentinfo">
-        <!-- ═══════════════════════════════════════════════════════════════════════
+	<!-- ═══════════════════════════════════════════════════════════════════════
              CIRCUIT INFORMATIQUE ANIMÉ
              SVG avec lignes de flux de données + nœuds pulsants
              ═══════════════════════════════════════════════════════════════════════ -->
-        <div class="ft-circuit" aria-hidden="true">
-                <svg class="circuit-svg" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid slice">
-                        <defs>
-                                <!-- Gradient pour les lignes -->
-                                <linearGradient id="circuit-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#6B7FC7" stop-opacity="0" />
-                                        <stop offset="30%" stop-color="#6B7FC7" stop-opacity="0.6" />
-                                        <stop offset="70%" stop-color="#EE6C1A" stop-opacity="0.8" />
-                                        <stop offset="100%" stop-color="#EE6C1A" stop-opacity="0" />
-                                </linearGradient>
-                                
-                                <!-- Glow filter -->
-                                <filter id="circuit-glow" x="-50%" y="-50%" width="200%" height="200%">
-                                        <feGaussianBlur stdDeviation="2" result="blur" />
-                                        <feMerge>
-                                                <feMergeNode in="blur" />
-                                                <feMergeNode in="SourceGraphic" />
-                                        </feMerge>
-                                </filter>
+	<div class="ft-circuit" aria-hidden="true">
+		<svg class="circuit-svg" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid slice">
+			<defs>
+				<!-- Gradient pour les lignes -->
+				<linearGradient id="circuit-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+					<stop offset="0%" stop-color="#6B7FC7" stop-opacity="0"></stop>
+					<stop offset="30%" stop-color="#6B7FC7" stop-opacity="0.6"></stop>
+					<stop offset="70%" stop-color="#EE6C1A" stop-opacity="0.8"></stop>
+					<stop offset="100%" stop-color="#EE6C1A" stop-opacity="0"></stop>
+				</linearGradient>
 
-                                <!-- Pattern grille fine -->
-                                <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-                                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(107,127,199,0.08)" stroke-width="0.5" />
-                                        <circle cx="0" cy="0" r="1" fill="rgba(107,127,199,0.15)" />
-                                </pattern>
-                        </defs>
-                        
-                        <!-- Grille de fond -->
-                        <rect width="100%" height="100%" fill="url(#grid-pattern)" />
-                        
-                        <!-- Lignes horizontales principales (circuit) -->
-                        <g class="circuit-lines" fill="none" stroke="url(#circuit-grad)" stroke-width="1" filter="url(#circuit-glow)">
-                                <!-- Ligne 1 - supérieure -->
-                                <path class="circuit-path circuit-path--1" d="M0,30 H150 L160,40 H350 L360,30 H550 L560,50 H750 L760,35 H950 L960,45 H1100 L1110,35 H1200" />
-                                <!-- Ligne 2 - milieu haute -->
-                                <path class="circuit-path circuit-path--2" d="M0,70 H100 L110,85 H280 L290,70 H500 L510,90 H720 L730,75 H900 L910,90 H1080 L1090,75 H1200" />
-                                <!-- Ligne 3 - milieu basse -->
-                                <path class="circuit-path circuit-path--3" d="M0,120 H180 L190,105 H400 L410,120 H650 L660,100 H850 L860,115 H1050 L1060,100 H1200" />
-                                <!-- Ligne 4 - inférieure -->
-                                <path class="circuit-path circuit-path--4" d="M0,160 H220 L230,175 H480 L490,160 H700 L710,178 H920 L930,162 H1150 L1160,175 H1200" />
-                        </g>
-                        
-                        <!-- Connexions verticales -->
-                        <g class="circuit-vlines" stroke="rgba(107,127,199,0.25)" stroke-width="0.75">
-                                <line x1="160" y1="40" x2="160" y2="80" class="v-line v-line--1" />
-                                <line x1="360" y1="30" x2="360" y2="130" class="v-line v-line--2" />
-                                <line x1="560" y1="50" x2="560" y2="140" class="v-line v-line--3" />
-                                <line x1="760" y1="35" x2="760" y2="125" class="v-line v-line--4" />
-                                <line x1="960" y1="45" x2="960" y2="155" class="v-line v-line--5" />
-                        </g>
-                        
-                        <!-- Nœuds pulsants (points de connexion) -->
-                        <g class="circuit-nodes">
-                                <circle class="node node--1" cx="160" cy="40" r="3" />
-                                <circle class="node node--2" cx="360" cy="30" r="3" />
-                                <circle class="node node--3" cx="560" cy="50" r="3" />
-                                <circle class="node node--4" cx="760" cy="35" r="4" />
-                                <circle class="node node--5" cx="960" cy="45" r="3" />
-                                <circle class="node node--6" cx="290" cy="70" r="2.5" />
-                                <circle class="node node--7" cx="510" cy="90" r="2.5" />
-                                <circle class="node node--8" cx="730" cy="75" r="3" />
-                                <circle class="node node--9" cx="190" cy="105" r="2.5" />
-                                <circle class="node node--10" cx="660" cy="100" r="3" />
-                                <circle class="node node--11" cx="1060" cy="100" r="2.5" />
-                        </g>
-                        
-                        <!-- Particules de données (petits carrés qui se déplacent) -->
-                        <g class="data-particles" fill="#EE6C1A">
-                                <rect class="data-particle dp--1" x="0" y="28" width="4" height="4" rx="0.5" />
-                                <rect class="data-particle dp--2" x="0" y="68" width="4" height="4" rx="0.5" />
-                                <rect class="data-particle dp--3" x="0" y="118" width="4" height="4" rx="0.5" />
-                                <rect class="data-particle dp--4" x="0" y="158" width="4" height="4" rx="0.5" />
-                        </g>
-                </svg>
-        </div>
+				<!-- Glow filter -->
+				<filter id="circuit-glow" x="-50%" y="-50%" width="200%" height="200%">
+					<feGaussianBlur stdDeviation="2" result="blur"></feGaussianBlur>
+					<feMerge>
+						<feMergeNode in="blur"></feMergeNode>
+						<feMergeNode in="SourceGraphic"></feMergeNode>
+					</feMerge>
+				</filter>
 
-        <!-- ═══════════════════════════════════════════════════════════════════════
+				<!-- Pattern grille fine -->
+				<pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(107,127,199,0.08)" stroke-width="0.5"
+					></path>
+					<circle cx="0" cy="0" r="1" fill="rgba(107,127,199,0.15)"></circle>
+				</pattern>
+			</defs>
+
+			<!-- Grille de fond -->
+			<rect width="100%" height="100%" fill="url(#grid-pattern)"></rect>
+
+			<!-- Lignes horizontales principales (circuit) -->
+			<g
+				class="circuit-lines"
+				fill="none"
+				stroke="url(#circuit-grad)"
+				stroke-width="1"
+				filter="url(#circuit-glow)"
+			>
+				<!-- Ligne 1 - supérieure -->
+				<path
+					class="circuit-path circuit-path--1"
+					d="M0,30 H150 L160,40 H350 L360,30 H550 L560,50 H750 L760,35 H950 L960,45 H1100 L1110,35 H1200"
+				></path>
+				<!-- Ligne 2 - milieu haute -->
+				<path
+					class="circuit-path circuit-path--2"
+					d="M0,70 H100 L110,85 H280 L290,70 H500 L510,90 H720 L730,75 H900 L910,90 H1080 L1090,75 H1200"
+				></path>
+				<!-- Ligne 3 - milieu basse -->
+				<path
+					class="circuit-path circuit-path--3"
+					d="M0,120 H180 L190,105 H400 L410,120 H650 L660,100 H850 L860,115 H1050 L1060,100 H1200"
+				></path>
+				<!-- Ligne 4 - inférieure -->
+				<path
+					class="circuit-path circuit-path--4"
+					d="M0,160 H220 L230,175 H480 L490,160 H700 L710,178 H920 L930,162 H1150 L1160,175 H1200"
+				></path>
+			</g>
+
+			<!-- Connexions verticales -->
+			<g class="circuit-vlines" stroke="rgba(107,127,199,0.25)" stroke-width="0.75">
+				<line x1="160" y1="40" x2="160" y2="80" class="v-line v-line--1"></line>
+				<line x1="360" y1="30" x2="360" y2="130" class="v-line v-line--2"></line>
+				<line x1="560" y1="50" x2="560" y2="140" class="v-line v-line--3"></line>
+				<line x1="760" y1="35" x2="760" y2="125" class="v-line v-line--4"></line>
+				<line x1="960" y1="45" x2="960" y2="155" class="v-line v-line--5"></line>
+			</g>
+
+			<!-- Nœuds pulsants (points de connexion) -->
+			<g class="circuit-nodes">
+				<circle class="node node--1" cx="160" cy="40" r="3"></circle>
+				<circle class="node node--2" cx="360" cy="30" r="3"></circle>
+				<circle class="node node--3" cx="560" cy="50" r="3"></circle>
+				<circle class="node node--4" cx="760" cy="35" r="4"></circle>
+				<circle class="node node--5" cx="960" cy="45" r="3"></circle>
+				<circle class="node node--6" cx="290" cy="70" r="2.5"></circle>
+				<circle class="node node--7" cx="510" cy="90" r="2.5"></circle>
+				<circle class="node node--8" cx="730" cy="75" r="3"></circle>
+				<circle class="node node--9" cx="190" cy="105" r="2.5"></circle>
+				<circle class="node node--10" cx="660" cy="100" r="3"></circle>
+				<circle class="node node--11" cx="1060" cy="100" r="2.5"></circle>
+			</g>
+
+			<!-- Particules de données (petits carrés qui se déplacent) -->
+			<g class="data-particles" fill="#EE6C1A">
+				<rect class="data-particle dp--1" x="0" y="28" width="4" height="4" rx="0.5"></rect>
+				<rect class="data-particle dp--2" x="0" y="68" width="4" height="4" rx="0.5"></rect>
+				<rect class="data-particle dp--3" x="0" y="118" width="4" height="4" rx="0.5"></rect>
+				<rect class="data-particle dp--4" x="0" y="158" width="4" height="4" rx="0.5"></rect>
+			</g>
+		</svg>
+	</div>
+
+	<!-- ═══════════════════════════════════════════════════════════════════════
              CONTENU PRINCIPAL (COMPACT)
              ═══════════════════════════════════════════════════════════════════════ -->
-        <div class="ft-content">
-                <div class="ft-inner">
-                        <!-- Brand + Social -->
-                        <div class="ft-brand">
-                                <a href="/" class="ft-logo" aria-label="FTCI — Accueil">
-                                        <img src="/brand/logo-ftci.png" alt="FTCI" width="32" height="33" class="ft-logo-img" loading="lazy" />
-                                        <span class="ft-logo-text">FTCI<span class="ft-logo-accent">Technologies</span></span>
-                                </a>
-                                <p class="ft-tagline">Entreprise de Services du Numérique (ESN) — Abidjan, Côte d'Ivoire</p>
-                                <div class="ft-socials">
-                                        {socialLinks.map((social) => (
-                                                <a href={social.href} target="_blank" rel="noopener noreferrer" class="ft-social" aria-label={social.label}>
-                                                        {social.icon === 'linkedin' && (
-                                                                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                                                        )}
-                                                        {social.icon === 'github' && (
-                                                                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.213 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                                                        )}
-                                                </a>
-                                        ))}
-                                </div>
-                        </div>
+	<div class="ft-content">
+		<div class="ft-inner">
+			<!-- Brand + Social -->
+			<div class="ft-brand">
+				<a href="/" class="ft-logo" aria-label="FTCI — Accueil">
+					<img
+						src="/brand/logo-ftci.png"
+						alt="FTCI"
+						width="32"
+						height="33"
+						class="ft-logo-img"
+						loading="lazy"
+					/>
+					<span class="ft-logo-text">FTCI<span class="ft-logo-accent">Technologies</span></span>
+				</a>
+				<p class="ft-tagline">Entreprise de Services du Numérique (ESN) — Abidjan, Côte d'Ivoire</p>
+				<div class="ft-socials">
+					{
+						socialLinks.map((social) => (
+							<a
+								href={social.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="ft-social"
+								aria-label={social.label}
+							>
+								{social.icon === 'linkedin' && (
+									<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+										<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+									</svg>
+								)}
+								{social.icon === 'github' && (
+									<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+										<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.213 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+									</svg>
+								)}
+							</a>
+						))
+					}
+				</div>
+			</div>
 
-                        <!-- Solutions -->
-                        <nav class="ft-nav" aria-label="Solutions">
-                                <h2 class="ft-nav-title">Solutions</h2>
-                                <ul class="ft-links">
-                                        {products.map((product) => (
-                                                <li>
-                                                        <a
-                                                                href={product.externalUrl}
-                                                                class="ft-link ft-link--external"
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                aria-label={`${product.name} — ouvrir la plateforme dans un nouvel onglet`}
-                                                        >
-                                                                {product.name}
-                                                                <svg class="ft-link-icon" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
-                                                                        <path d="M3 1h6v6M9 1L4 6M7 9H2a1 1 0 01-1-1V3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                                </svg>
-                                                        </a>
-                                                </li>
-                                        ))}
-                                </ul>
-                        </nav>
+			<!-- Solutions -->
+			<nav class="ft-nav" aria-label="Solutions">
+				<h2 class="ft-nav-title">Solutions</h2>
+				<ul class="ft-links">
+					{
+						products.map((product) => (
+							<li>
+								<a
+									href={product.externalUrl}
+									class="ft-link ft-link--external"
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={`${product.name} — ouvrir la plateforme dans un nouvel onglet`}
+								>
+									{product.name}
+									<svg
+										class="ft-link-icon"
+										width="10"
+										height="10"
+										viewBox="0 0 10 10"
+										aria-hidden="true"
+										focusable="false"
+									>
+										<path
+											d="M3 1h6v6M9 1L4 6M7 9H2a1 1 0 01-1-1V3"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
 
-                        <!-- Services -->
-                        <nav class="ft-nav" aria-label="Services">
-                                <h2 class="ft-nav-title">Services</h2>
-                                <ul class="ft-links">
-                                        {services.map((service) => (
-                                                <li><a href={service.href} class="ft-link">{service.label}</a></li>
-                                        ))}
-                                </ul>
-                        </nav>
+			<!-- Services -->
+			<nav class="ft-nav" aria-label="Services">
+				<h2 class="ft-nav-title">Services</h2>
+				<ul class="ft-links">
+					{
+						services.map((service) => (
+							<li>
+								<a href={service.href} class="ft-link">
+									{service.label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
 
-                        <!-- Contact -->
-                        <div class="ft-contact">
-                                <h2 class="ft-nav-title">Contact</h2>
-                                <a href="mailto:contact@ftci.fr" class="ft-contact-link">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                        contact@ftci.fr
-                                </a>
-                                <a href="tel:+2250566184040" class="ft-contact-link">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                        +225 05 6618 4040
-                                </a>
-                                <span class="ft-contact-link ft-contact-link--static">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
-                                        Abidjan, CI
-                                </span>
-                        </div>
-                </div>
+			<!-- Contact -->
+			<div class="ft-contact">
+				<h2 class="ft-nav-title">Contact</h2>
+				<a href="mailto:contact@ftci.fr" class="ft-contact-link">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						width="14"
+						height="14"
+						><path
+							d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+						></path></svg
+					>
+					contact@ftci.fr
+				</a>
+				<a href="tel:+2250566184040" class="ft-contact-link">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						width="14"
+						height="14"
+						><path
+							d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+						></path></svg
+					>
+					+225 05 6618 4040
+				</a>
+				<span class="ft-contact-link ft-contact-link--static">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						width="14"
+						height="14"
+						><path
+							d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+						></path><circle cx="12" cy="11" r="3"></circle></svg
+					>
+					Abidjan, CI
+				</span>
+			</div>
+		</div>
 
-                <!-- Bottom bar -->
-                <div class="ft-bottom">
-                        <span class="ft-copyright">© {year} FTCI — Freelance Technologies Côte d'Ivoire</span>
-                        <nav class="ft-legal" aria-label="Liens légaux">
-                                {legalLinks.map((link) => (
-                                        <a href={link.href} class="ft-legal-link">{link.label}</a>
-                                ))}
-                        </nav>
-                </div>
-        </div>
+		<!-- Bottom bar -->
+		<div class="ft-bottom">
+			<span class="ft-copyright">© {year} FTCI — Freelance Technologies Côte d'Ivoire</span>
+			<nav class="ft-legal" aria-label="Liens légaux">
+				{
+					legalLinks.map((link) => (
+						<a href={link.href} class="ft-legal-link">
+							{link.label}
+						</a>
+					))
+				}
+			</nav>
+		</div>
+	</div>
 
-        <!-- Back to top minimal -->
-        <button type="button" id="back-to-top" class="ft-btt" aria-label="Revenir en haut">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-        </button>
+	<!-- Back to top minimal -->
+	<button type="button" id="back-to-top" class="ft-btt" aria-label="Revenir en haut">
+		<svg
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2.5"
+			width="16"
+			height="16"><path d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg
+		>
+	</button>
 </footer>
 
 <style>
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            VARIABLES
            ═══════════════════════════════════════════════════════════════════════════ */
-        :root {
-                --ft-bg: #070f1e;
-                --ft-surface: rgba(15, 30, 61, 0.5);
-                --ft-border: rgba(255,255,255,0.06);
-                --ft-text: rgba(255,255,255,0.65);
-                --ft-text-hover: #ffffff;
-                --ft-orange: #EE6C1A;
-                --ft-periwinkle: #6B7FC7;
-                --ft-green: #1E9E4F;
-                --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-        }
+	:root {
+		--ft-bg: #070f1e;
+		--ft-surface: rgba(15, 30, 61, 0.5);
+		--ft-border: rgba(255, 255, 255, 0.06);
+		--ft-text: rgba(255, 255, 255, 0.65);
+		--ft-text-hover: #ffffff;
+		--ft-orange: #ee6c1a;
+		--ft-periwinkle: #6b7fc7;
+		--ft-green: #1e9e4f;
+		--ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            BASE FOOTER
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-footer {
-                position: relative;
-                background: var(--ft-bg);
-                color: #fff;
-                margin-top: auto;
-                overflow: hidden;
-        }
+	.ft-footer {
+		position: relative;
+		background: var(--ft-bg);
+		color: #fff;
+		margin-top: auto;
+		overflow: hidden;
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            CIRCUIT ANIMÉ
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-circuit {
-                position: absolute;
-                inset: 0;
-                z-index: 0;
-                opacity: 0.6;
-                mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
-                -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
-        }
+	.ft-circuit {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		opacity: 0.6;
+		mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+	}
 
-        .circuit-svg {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-        }
+	.circuit-svg {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
 
-        /* Lignes de circuit - animation dash-offset (flux de données) */
-        .circuit-path {
-                stroke-dasharray: 200 800;
-                animation: data-flow 8s linear infinite;
-        }
+	/* Lignes de circuit - animation dash-offset (flux de données) */
+	.circuit-path {
+		stroke-dasharray: 200 800;
+		animation: data-flow 8s linear infinite;
+	}
 
-        .circuit-path--1 { animation-duration: 7s; }
-        .circuit-path--2 { animation-duration: 9s; animation-delay: -2s; }
-        .circuit-path--3 { animation-duration: 11s; animation-delay: -4s; }
-        .circuit-path--4 { animation-duration: 8.5s; animation-delay: -1s; }
+	.circuit-path--1 {
+		animation-duration: 7s;
+	}
+	.circuit-path--2 {
+		animation-duration: 9s;
+		animation-delay: -2s;
+	}
+	.circuit-path--3 {
+		animation-duration: 11s;
+		animation-delay: -4s;
+	}
+	.circuit-path--4 {
+		animation-duration: 8.5s;
+		animation-delay: -1s;
+	}
 
-        @keyframes data-flow {
-                0% { stroke-dashoffset: 1000; }
-                100% { stroke-dashoffset: 0; }
-        }
+	@keyframes data-flow {
+		0% {
+			stroke-dashoffset: 1000;
+		}
+		100% {
+			stroke-dashoffset: 0;
+		}
+	}
 
-        /* Lignes verticales - pulse subtil */
-        .v-line {
-                stroke-dasharray: 30 50;
-                animation: vline-pulse 4s ease-in-out infinite;
-        }
+	/* Lignes verticales - pulse subtil */
+	.v-line {
+		stroke-dasharray: 30 50;
+		animation: vline-pulse 4s ease-in-out infinite;
+	}
 
-        .v-line--2, .v-line--4 { animation-delay: -1.5s; }
-        .v-line--3, .v-line--5 { animation-delay: -3s; }
+	.v-line--2,
+	.v-line--4 {
+		animation-delay: -1.5s;
+	}
+	.v-line--3,
+	.v-line--5 {
+		animation-delay: -3s;
+	}
 
-        @keyframes vline-pulse {
-                0%, 100% { opacity: 0.3; }
-                50% { opacity: 0.7; }
-        }
+	@keyframes vline-pulse {
+		0%,
+		100% {
+			opacity: 0.3;
+		}
+		50% {
+			opacity: 0.7;
+		}
+	}
 
-        /* Nœuds pulsants */
-        .node {
-                fill: var(--ft-periwinkle);
-                filter: drop-shadow(0 0 4px rgba(107,127,199,0.6));
-                animation: node-pulse 3s ease-in-out infinite;
-        }
+	/* Nœuds pulsants */
+	.node {
+		fill: var(--ft-periwinkle);
+		filter: drop-shadow(0 0 4px rgba(107, 127, 199, 0.6));
+		animation: node-pulse 3s ease-in-out infinite;
+	}
 
-        .node:nth-child(odd) {
-                fill: var(--ft-orange);
-                filter: drop-shadow(0 0 4px rgba(238,108,26,0.6));
-        }
+	.node:nth-child(odd) {
+		fill: var(--ft-orange);
+		filter: drop-shadow(0 0 4px rgba(238, 108, 26, 0.6));
+	}
 
-        .node--1 { animation-delay: 0s; }
-        .node--2 { animation-delay: -0.5s; }
-        .node--3 { animation-delay: -1s; }
-        .node--4 { animation-delay: -1.5s; animation-duration: 2s; }
-        .node--5 { animation-delay: -2s; }
-        .node--6 { animation-delay: -0.3s; }
-        .node--7 { animation-delay: -0.8s; }
-        .node--8 { animation-delay: -1.3s; animation-duration: 2.5s; }
-        .node--9 { animation-delay: -1.8s; }
-        .node--10 { animation-delay: -2.3s; }
-        .node--11 { animation-delay: -2.6s; }
+	.node--1 {
+		animation-delay: 0s;
+	}
+	.node--2 {
+		animation-delay: -0.5s;
+	}
+	.node--3 {
+		animation-delay: -1s;
+	}
+	.node--4 {
+		animation-delay: -1.5s;
+		animation-duration: 2s;
+	}
+	.node--5 {
+		animation-delay: -2s;
+	}
+	.node--6 {
+		animation-delay: -0.3s;
+	}
+	.node--7 {
+		animation-delay: -0.8s;
+	}
+	.node--8 {
+		animation-delay: -1.3s;
+		animation-duration: 2.5s;
+	}
+	.node--9 {
+		animation-delay: -1.8s;
+	}
+	.node--10 {
+		animation-delay: -2.3s;
+	}
+	.node--11 {
+		animation-delay: -2.6s;
+	}
 
-        @keyframes node-pulse {
-                0%, 100% { 
-                        opacity: 0.5; 
-                        r: 2px;
-                }
-                50% { 
-                        opacity: 1; 
-                        r: 4px;
-                }
-        }
+	@keyframes node-pulse {
+		0%,
+		100% {
+			opacity: 0.5;
+			r: 2px;
+		}
+		50% {
+			opacity: 1;
+			r: 4px;
+		}
+	}
 
-        /* Particules de données qui traversent le circuit */
-        .data-particle {
-                opacity: 0;
-                animation: particle-travel 6s linear infinite;
-        }
+	/* Particules de données qui traversent le circuit */
+	.data-particle {
+		opacity: 0;
+		animation: particle-travel 6s linear infinite;
+	}
 
-        .dp--1 { animation-duration: 5s; }
-        .dp--2 { animation-duration: 7s; animation-delay: -2s; }
-        .dp--3 { animation-duration: 6.5s; animation-delay: -3.5s; }
-        .dp--4 { animation-duration: 8s; animation-delay: -1s; }
+	.dp--1 {
+		animation-duration: 5s;
+	}
+	.dp--2 {
+		animation-duration: 7s;
+		animation-delay: -2s;
+	}
+	.dp--3 {
+		animation-duration: 6.5s;
+		animation-delay: -3.5s;
+	}
+	.dp--4 {
+		animation-duration: 8s;
+		animation-delay: -1s;
+	}
 
-        @keyframes particle-travel {
-                0% { transform: translateX(-10px); opacity: 0; }
-                10% { opacity: 0.9; }
-                90% { opacity: 0.9; }
-                100% { transform: translateX(1210px); opacity: 0; }
-        }
+	@keyframes particle-travel {
+		0% {
+			transform: translateX(-10px);
+			opacity: 0;
+		}
+		10% {
+			opacity: 0.9;
+		}
+		90% {
+			opacity: 0.9;
+		}
+		100% {
+			transform: translateX(1210px);
+			opacity: 0;
+		}
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            CONTENU
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-content {
-                position: relative;
-                z-index: 10;
-                padding: 2rem 1.5rem 1.25rem;
-                max-width: 1280px;
-                margin: 0 auto;
-        }
+	.ft-content {
+		position: relative;
+		z-index: 10;
+		padding: 2rem 1.5rem 1.25rem;
+		max-width: 1280px;
+		margin: 0 auto;
+	}
 
-        .ft-inner {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding-bottom: 1.5rem;
-                border-bottom: 1px solid var(--ft-border);
-        }
+	.ft-inner {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid var(--ft-border);
+	}
 
-        @media (min-width: 640px) {
-                .ft-inner {
-                        grid-template-columns: repeat(2, 1fr);
-                }
-        }
+	@media (min-width: 640px) {
+		.ft-inner {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
 
-        @media (min-width: 1024px) {
-                .ft-inner {
-                        grid-template-columns: 1.5fr 1fr 1fr 1fr;
-                        gap: 2rem;
-                }
-                
-                .ft-content {
-                        padding: 2.5rem 1.5rem 1.5rem;
-                }
-        }
+	@media (min-width: 1024px) {
+		.ft-inner {
+			grid-template-columns: 1.5fr 1fr 1fr 1fr;
+			gap: 2rem;
+		}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+		.ft-content {
+			padding: 2.5rem 1.5rem 1.5rem;
+		}
+	}
+
+	/* ═══════════════════════════════════════════════════════════════════════════
            BRAND SECTION
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-brand {
-                display: flex;
-                flex-direction: column;
-                gap: 0.75rem;
-        }
+	.ft-brand {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
 
-        .ft-logo {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.6rem;
-                text-decoration: none;
-                width: fit-content;
-        }
+	.ft-logo {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		text-decoration: none;
+		width: fit-content;
+	}
 
-        .ft-logo-img {
-                width: 32px;
-                height: auto;
-                transition: transform 300ms var(--ease-expo);
-        }
+	.ft-logo-img {
+		width: 32px;
+		height: auto;
+		transition: transform 300ms var(--ease-expo);
+	}
 
-        @media (hover: hover) and (pointer: fine) {
-                .ft-logo:hover .ft-logo-img {
-                        transform: scale(1.08) rotate(-3deg);
-                }
-        }
+	@media (hover: hover) and (pointer: fine) {
+		.ft-logo:hover .ft-logo-img {
+			transform: scale(1.08) rotate(-3deg);
+		}
+	}
 
-        .ft-logo-text {
-                font-family: var(--font-display), 'Poppins', sans-serif;
-                font-size: 1.1rem;
-                font-weight: 800;
-                letter-spacing: -0.02em;
-                color: #fff;
-                line-height: 1;
-        }
+	.ft-logo-text {
+		font-family: var(--font-display), 'Poppins', sans-serif;
+		font-size: 1.1rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		color: #fff;
+		line-height: 1;
+	}
 
-        .ft-logo-accent {
-                font-size: 0.65rem;
-                font-weight: 700;
-                color: var(--ft-orange);
-                margin-left: 0.15em;
-        }
+	.ft-logo-accent {
+		font-size: 0.65rem;
+		font-weight: 700;
+		color: var(--ft-orange);
+		margin-left: 0.15em;
+	}
 
-        .ft-tagline {
-                font-size: 0.8rem;
-                line-height: 1.5;
-                color: var(--ft-text);
-                margin: 0;
-                max-width: 260px;
-        }
+	.ft-tagline {
+		font-size: 0.8rem;
+		line-height: 1.5;
+		color: var(--ft-text);
+		margin: 0;
+		max-width: 260px;
+	}
 
-        .ft-socials {
-                display: flex;
-                gap: 0.5rem;
-        }
+	.ft-socials {
+		display: flex;
+		gap: 0.5rem;
+	}
 
-        .ft-social {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 32px;
-                height: 32px;
-                background: rgba(255,255,255,0.04);
-                border: 1px solid rgba(255,255,255,0.08);
-                border-radius: 0.5rem;
-                color: var(--ft-text);
-                text-decoration: none;
-                transition: all 250ms var(--ease-expo);
-        }
+	.ft-social {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		background: rgba(255, 255, 255, 0.04);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 0.5rem;
+		color: var(--ft-text);
+		text-decoration: none;
+		transition: all 250ms var(--ease-expo);
+	}
 
-        @media (hover: hover) and (pointer: fine) {
-                .ft-social:hover {
-                        background: rgba(238,108,26,0.1);
-                        border-color: rgba(238,108,26,0.3);
-                        color: var(--ft-orange);
-                        transform: translateY(-2px);
-                }
-        }
+	@media (hover: hover) and (pointer: fine) {
+		.ft-social:hover {
+			background: rgba(238, 108, 26, 0.1);
+			border-color: rgba(238, 108, 26, 0.3);
+			color: var(--ft-orange);
+			transform: translateY(-2px);
+		}
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            NAV SECTIONS
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-nav-title {
-                font-family: var(--font-display), 'Poppins', sans-serif;
-                font-size: 0.7rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.1em;
-                color: rgba(255,255,255,0.4);
-                margin: 0 0 0.75rem;
-        }
+	.ft-nav-title {
+		font-family: var(--font-display), 'Poppins', sans-serif;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: rgba(255, 255, 255, 0.4);
+		margin: 0 0 0.75rem;
+	}
 
-        .ft-links {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                flex-direction: column;
-                gap: 0.35rem;
-        }
+	.ft-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
 
-        .ft-link {
-                font-size: 0.82rem;
-                color: var(--ft-text);
-                text-decoration: none;
-                position: relative;
-                display: inline-block;
-                width: fit-content;
-                padding: 0.15rem 0;
-                transition: color 220ms var(--ease-expo);
-        }
+	.ft-link {
+		font-size: 0.82rem;
+		color: var(--ft-text);
+		text-decoration: none;
+		position: relative;
+		display: inline-block;
+		width: fit-content;
+		padding: 0.15rem 0;
+		transition: color 220ms var(--ease-expo);
+	}
 
-        .ft-link::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 0;
-                height: 1px;
-                background: var(--ft-orange);
-                transition: width 250ms var(--ease-expo);
-        }
+	.ft-link::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 0;
+		height: 1px;
+		background: var(--ft-orange);
+		transition: width 250ms var(--ease-expo);
+	}
 
-        @media (hover: hover) and (pointer: fine) {
-                .ft-link:hover {
-                        color: var(--ft-text-hover);
-                }
-                .ft-link:hover::after {
-                        width: 100%;
-                }
-        }
+	@media (hover: hover) and (pointer: fine) {
+		.ft-link:hover {
+			color: var(--ft-text-hover);
+		}
+		.ft-link:hover::after {
+			width: 100%;
+		}
+	}
 
-        /* Variante « lien externe » : petite icône ↗ discrète après le libellé
+	/* Variante « lien externe » : petite icône ↗ discrète après le libellé
            pour signaler que le lien s'ouvre dans un nouvel onglet (sous-domaines
            des applications SECT, OPUC, CATS, ScolaGest). */
-        .ft-link--external {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.3rem;
-        }
+	.ft-link--external {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+	}
 
-        .ft-link-icon {
-                opacity: 0.55;
-                flex-shrink: 0;
-                transition: opacity 220ms var(--ease-expo), transform 220ms var(--ease-expo);
-        }
+	.ft-link-icon {
+		opacity: 0.55;
+		flex-shrink: 0;
+		transition:
+			opacity 220ms var(--ease-expo),
+			transform 220ms var(--ease-expo);
+	}
 
-        @media (hover: hover) and (pointer: fine) {
-                .ft-link--external:hover .ft-link-icon {
-                        opacity: 1;
-                        transform: translate(1px, -1px);
-                }
-        }
+	@media (hover: hover) and (pointer: fine) {
+		.ft-link--external:hover .ft-link-icon {
+			opacity: 1;
+			transform: translate(1px, -1px);
+		}
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            CONTACT
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-contact {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-        }
+	.ft-contact {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
 
-        .ft-contact-link {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                font-size: 0.82rem;
-                color: var(--ft-text);
-                text-decoration: none;
-                padding: 0.2rem 0;
-                transition: all 220ms var(--ease-expo);
-                width: fit-content;
-        }
+	.ft-contact-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.82rem;
+		color: var(--ft-text);
+		text-decoration: none;
+		padding: 0.2rem 0;
+		transition: all 220ms var(--ease-expo);
+		width: fit-content;
+	}
 
-        .ft-contact-link svg {
-                flex-shrink: 0;
-                opacity: 0.6;
-                transition: opacity 220ms var(--ease-expo), color 220ms var(--ease-expo);
-        }
+	.ft-contact-link svg {
+		flex-shrink: 0;
+		opacity: 0.6;
+		transition:
+			opacity 220ms var(--ease-expo),
+			color 220ms var(--ease-expo);
+	}
 
-        .ft-contact-link--static {
-                cursor: default;
-        }
+	.ft-contact-link--static {
+		cursor: default;
+	}
 
-        @media (hover: hover) and (pointer: fine) {
-                .ft-contact-link:not(.ft-contact-link--static):hover {
-                        color: var(--ft-text-hover);
-                }
-                .ft-contact-link:not(.ft-contact-link--static):hover svg {
-                        opacity: 1;
-                        color: var(--ft-orange);
-                }
-        }
+	@media (hover: hover) and (pointer: fine) {
+		.ft-contact-link:not(.ft-contact-link--static):hover {
+			color: var(--ft-text-hover);
+		}
+		.ft-contact-link:not(.ft-contact-link--static):hover svg {
+			opacity: 1;
+			color: var(--ft-orange);
+		}
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            BOTTOM BAR
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-bottom {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.75rem;
-                padding-top: 1.25rem;
-                font-size: 0.72rem;
-                color: rgba(255,255,255,0.35);
-        }
+	.ft-bottom {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		padding-top: 1.25rem;
+		font-size: 0.72rem;
+		color: rgba(255, 255, 255, 0.35);
+	}
 
-        @media (min-width: 768px) {
-                .ft-bottom {
-                        flex-direction: row;
-                        justify-content: space-between;
-                }
-        }
+	@media (min-width: 768px) {
+		.ft-bottom {
+			flex-direction: row;
+			justify-content: space-between;
+		}
+	}
 
-        .ft-copyright {
-                display: flex;
-                align-items: center;
-                gap: 0.4rem;
-        }
+	.ft-copyright {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
 
-        .ft-legal {
-                display: flex;
-                align-items: center;
-                gap: 1.25rem;
-                flex-wrap: wrap;
-                justify-content: center;
-        }
+	.ft-legal {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
 
-        .ft-legal-link {
-                color: inherit;
-                text-decoration: none;
-                transition: color 200ms var(--ease-expo);
-                position: relative;
-        }
+	.ft-legal-link {
+		color: inherit;
+		text-decoration: none;
+		transition: color 200ms var(--ease-expo);
+		position: relative;
+	}
 
-        .ft-legal-link::before {
-                content: '';
-                position: absolute;
-                bottom: -2px;
-                left: 0;
-                width: 0;
-                height: 1px;
-                background: currentColor;
-                transition: width 200ms var(--ease-expo);
-        }
+	.ft-legal-link::before {
+		content: '';
+		position: absolute;
+		bottom: -2px;
+		left: 0;
+		width: 0;
+		height: 1px;
+		background: currentColor;
+		transition: width 200ms var(--ease-expo);
+	}
 
-        @media (hover: hover) and (pointer: fine) {
-                .ft-legal-link:hover {
-                        color: rgba(255,255,255,0.6);
-                }
-                .ft-legal-link:hover::before {
-                        width: 100%;
-                }
-        }
+	@media (hover: hover) and (pointer: fine) {
+		.ft-legal-link:hover {
+			color: rgba(255, 255, 255, 0.6);
+		}
+		.ft-legal-link:hover::before {
+			width: 100%;
+		}
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            BACK TO TOP MINIMAL
            ═══════════════════════════════════════════════════════════════════════════ */
-        .ft-btt {
-                position: fixed;
-                bottom: 1.5rem;
-                right: 1.5rem;
-                z-index: 100;
-                width: 40px;
-                height: 40px;
-                background: rgba(238,108,26,0.9);
-                border: none;
-                border-radius: 0.625rem;
-                color: #fff;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(8px);
-                box-shadow: 0 4px 15px rgba(238,108,26,0.3);
-                transition: all 300ms var(--ease-expo);
-        }
+	.ft-btt {
+		position: fixed;
+		bottom: 1.5rem;
+		right: 1.5rem;
+		z-index: 100;
+		width: 40px;
+		height: 40px;
+		background: rgba(238, 108, 26, 0.9);
+		border: none;
+		border-radius: 0.625rem;
+		color: #fff;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(8px);
+		box-shadow: 0 4px 15px rgba(238, 108, 26, 0.3);
+		transition: all 300ms var(--ease-expo);
+	}
 
-        .ft-btt.is-visible {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-        }
+	.ft-btt.is-visible {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
 
-        @media (hover: hover) and (pointer: fine) {
-                .ft-btt:hover {
-                        transform: translateY(-3px);
-                        box-shadow: 0 8px 25px rgba(238,108,26,0.4);
-                }
-        }
+	@media (hover: hover) and (pointer: fine) {
+		.ft-btt:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 25px rgba(238, 108, 26, 0.4);
+		}
+	}
 
-        .ft-btt:active {
-                transform: scale(0.95) !important;
-        }
+	.ft-btt:active {
+		transform: scale(0.95) !important;
+	}
 
-        /* ═══════════════════════════════════════════════════════════════════════════
+	/* ═══════════════════════════════════════════════════════════════════════════
            REDUCED MOTION
            ═══════════════════════════════════════════════════════════════════════════ */
-        @media (prefers-reduced-motion: reduce) {
-                .circuit-path,
-                .v-line,
-                .node,
-                .data-particle {
-                        animation: none !important;
-                }
-                
-                .node {
-                        opacity: 0.7;
-                        r: 3px;
-                }
-                
-                .data-particle {
-                        display: none;
-                }
-                
-                * {
-                        animation-duration: 0.01ms !important;
-                        transition-duration: 0.1s !important;
-                }
-        }
+	@media (prefers-reduced-motion: reduce) {
+		.circuit-path,
+		.v-line,
+		.node,
+		.data-particle {
+			animation: none !important;
+		}
+
+		.node {
+			opacity: 0.7;
+			r: 3px;
+		}
+
+		.data-particle {
+			display: none;
+		}
+
+		* {
+			animation-duration: 0.01ms !important;
+			transition-duration: 0.1s !important;
+		}
+	}
 </style>
 
 <script>
-        // Back to top
-        const btt = document.getElementById('back-to-top');
-        if (btt) {
-                let ticking = false;
-                
-                const update = () => {
-                        btt.classList.toggle('is-visible', window.scrollY > 400);
-                        ticking = false;
-                };
-                
-                window.addEventListener('scroll', () => {
-                        if (!ticking) {
-                                ticking = true;
-                                requestAnimationFrame(update);
-                        }
-                }, { passive: true });
-                
-                btt.addEventListener('click', () => {
-                        window.scrollTo({
-                                top: 0,
-                                behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-                        });
-                });
-                
-                update();
-        }
+	// Back to top
+	const btt = document.getElementById('back-to-top');
+	if (btt) {
+		let ticking = false;
+
+		const update = () => {
+			btt.classList.toggle('is-visible', window.scrollY > 400);
+			ticking = false;
+		};
+
+		window.addEventListener(
+			'scroll',
+			() => {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(update);
+				}
+			},
+			{ passive: true },
+		);
+
+		btt.addEventListener('click', () => {
+			window.scrollTo({
+				top: 0,
+				behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+			});
+		});
+
+		update();
+	}
 </script>

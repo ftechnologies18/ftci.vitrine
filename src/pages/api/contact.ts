@@ -52,50 +52,50 @@ export const prerender = false;
  * `src/components/Contact.astro`.
  */
 const SUBJECTS = [
-        'devis',
-        'consultation',
-        'demo',
-        'support',
-        'partnership',
-        'formation',
-        'infrastructure',
-        'development',
-        'other',
+	'devis',
+	'consultation',
+	'demo',
+	'support',
+	'partnership',
+	'formation',
+	'infrastructure',
+	'development',
+	'other',
 ] as const;
 type Subject = (typeof SUBJECTS)[number];
 
 /** Human-readable label for each {@linkcode Subject}, used in emails & Discord. */
 const SUBJECT_LABELS: Record<Subject, string> = {
-        devis: 'Demande de devis',
-        consultation: 'Consultation / Conseil',
-        demo: 'Demande de démo',
-        support: 'Support technique',
-        partnership: 'Partenariat',
-        formation: 'Formation',
-        infrastructure: 'Infrastructure & Cloud',
-        development: 'Développement sur-mesure',
-        other: 'Autre',
+	devis: 'Demande de devis',
+	consultation: 'Consultation / Conseil',
+	demo: 'Demande de démo',
+	support: 'Support technique',
+	partnership: 'Partenariat',
+	formation: 'Formation',
+	infrastructure: 'Infrastructure & Cloud',
+	development: 'Développement sur-mesure',
+	other: 'Autre',
 };
 
 interface ContactPayload {
-        name?: unknown;
-        email?: unknown;
-        subject?: unknown;
-        message?: unknown;
-        consent?: unknown;
-        website?: unknown;
+	name?: unknown;
+	email?: unknown;
+	subject?: unknown;
+	message?: unknown;
+	consent?: unknown;
+	website?: unknown;
 }
 
 interface StoredMessage {
-        id: string;
-        receivedAt: string;
-        name: string;
-        email: string;
-        /** Selected subject slug, validated against {@linkcode SUBJECTS}. */
-        subject: Subject;
-        message: string;
-        ip: string | null;
-        userAgent: string | null;
+	id: string;
+	receivedAt: string;
+	name: string;
+	email: string;
+	/** Selected subject slug, validated against {@linkcode SUBJECTS}. */
+	subject: Subject;
+	message: string;
+	ip: string | null;
+	userAgent: string | null;
 }
 
 const isString = (v: unknown): v is string => typeof v === 'string';
@@ -112,36 +112,39 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
  * success (see the POST handler).
  */
 function validate(payload: ContactPayload): Record<string, string> {
-        const errors: Record<string, string> = {};
+	const errors: Record<string, string> = {};
 
-        // Honeypot: legitimate users leave the hidden `website` field empty.
-        if (isString(payload.website) && payload.website.trim() !== '') {
-                errors._honeypot = 'spam detected';
-                return errors;
-        }
+	// Honeypot: legitimate users leave the hidden `website` field empty.
+	if (isString(payload.website) && payload.website.trim() !== '') {
+		errors._honeypot = 'spam detected';
+		return errors;
+	}
 
-        const name = isString(payload.name) ? payload.name.trim() : '';
-        if (!name) errors.name = 'Le nom est obligatoire.';
-        else if (name.length < 2) errors.name = 'Le nom doit comporter au moins 2 caractères.';
-        else if (name.length > 100) errors.name = 'Le nom est trop long (max 100 caractères).';
+	const name = isString(payload.name) ? payload.name.trim() : '';
+	if (!name) errors.name = 'Le nom est obligatoire.';
+	else if (name.length < 2) errors.name = 'Le nom doit comporter au moins 2 caractères.';
+	else if (name.length > 100) errors.name = 'Le nom est trop long (max 100 caractères).';
 
-        const email = isString(payload.email) ? payload.email.trim() : '';
-        if (!email) errors.email = "L'adresse email est obligatoire.";
-        else if (!EMAIL_RE.test(email)) errors.email = "L'adresse email est invalide.";
-        else if (email.length > 254) errors.email = "L'adresse email est trop longue.";
+	const email = isString(payload.email) ? payload.email.trim() : '';
+	if (!email) errors.email = "L'adresse email est obligatoire.";
+	else if (!EMAIL_RE.test(email)) errors.email = "L'adresse email est invalide.";
+	else if (email.length > 254) errors.email = "L'adresse email est trop longue.";
 
-        const subject = isString(payload.subject) ? payload.subject.trim() : '';
-        if (!subject) errors.subject = 'Le sujet est obligatoire.';
-        else if (!SUBJECTS.includes(subject as Subject)) errors.subject = 'Sujet invalide.';
+	const subject = isString(payload.subject) ? payload.subject.trim() : '';
+	if (!subject) errors.subject = 'Le sujet est obligatoire.';
+	else if (!SUBJECTS.includes(subject as Subject)) errors.subject = 'Sujet invalide.';
 
-        const message = isString(payload.message) ? payload.message.trim() : '';
-        if (!message) errors.message = 'Le message est obligatoire.';
-        else if (message.length < 10) errors.message = 'Le message doit comporter au moins 10 caractères.';
-        else if (message.length > 5000) errors.message = 'Le message est trop long (max 5000 caractères).';
+	const message = isString(payload.message) ? payload.message.trim() : '';
+	if (!message) errors.message = 'Le message est obligatoire.';
+	else if (message.length < 10)
+		errors.message = 'Le message doit comporter au moins 10 caractères.';
+	else if (message.length > 5000)
+		errors.message = 'Le message est trop long (max 5000 caractères).';
 
-        if (payload.consent !== true) errors.consent = "Vous devez accepter que FTCI utilise vos informations pour vous contacter.";
+	if (payload.consent !== true)
+		errors.consent = 'Vous devez accepter que FTCI utilise vos informations pour vous contacter.';
 
-        return errors;
+	return errors;
 }
 
 const RATE_LIMIT_WINDOW_SECONDS = 60;
@@ -160,25 +163,25 @@ const RATE_LIMIT_MAX = 3;
 const devHits = new Map<string, { count: number; firstAt: number }>();
 
 async function rateLimited(ip: string, kv: KVNamespace | null): Promise<boolean> {
-        // Dev fallback : Map in-memory (pas fiable en prod, OK pour dev local)
-        if (!kv) {
-                const now = Date.now();
-                const entry = devHits.get(ip);
-                if (!entry || now - entry.firstAt > RATE_LIMIT_WINDOW_SECONDS * 1000) {
-                        devHits.set(ip, { count: 1, firstAt: now });
-                        return false;
-                }
-                entry.count += 1;
-                return entry.count > RATE_LIMIT_MAX;
-        }
+	// Dev fallback : Map in-memory (pas fiable en prod, OK pour dev local)
+	if (!kv) {
+		const now = Date.now();
+		const entry = devHits.get(ip);
+		if (!entry || now - entry.firstAt > RATE_LIMIT_WINDOW_SECONDS * 1000) {
+			devHits.set(ip, { count: 1, firstAt: now });
+			return false;
+		}
+		entry.count += 1;
+		return entry.count > RATE_LIMIT_MAX;
+	}
 
-        // Prod : KV distribué (fiable entre isolates)
-        const key = `ratelimit/${ip}`;
-        const raw = await kv.get(key);
-        const count = raw ? parseInt(raw, 10) : 0;
-        if (count >= RATE_LIMIT_MAX) return true;
-        await kv.put(key, String(count + 1), { expirationTtl: RATE_LIMIT_WINDOW_SECONDS });
-        return false;
+	// Prod : KV distribué (fiable entre isolates)
+	const key = `ratelimit/${ip}`;
+	const raw = await kv.get(key);
+	const count = raw ? parseInt(raw, 10) : 0;
+	if (count >= RATE_LIMIT_MAX) return true;
+	await kv.put(key, String(count + 1), { expirationTtl: RATE_LIMIT_WINDOW_SECONDS });
+	return false;
 }
 
 /**
@@ -187,18 +190,18 @@ async function rateLimited(ip: string, kv: KVNamespace | null): Promise<boolean>
  * pour les tests preview). En dev, accepte localhost.
  */
 const ALLOWED_ORIGINS = [
-        'https://ftci.fr',
-        'https://www.ftci.fr',
-        'https://ftci-vitrine.freelancetechnologies-ci.workers.dev',
+	'https://ftci.fr',
+	'https://www.ftci.fr',
+	'https://ftci-vitrine.freelancetechnologies-ci.workers.dev',
 ];
 
 function isOriginAllowed(request: Request): boolean {
-        // En dev, on bypass la vérification (localhost)
-        if (import.meta.env.DEV) return true;
+	// En dev, on bypass la vérification (localhost)
+	if (import.meta.env.DEV) return true;
 
-        const origin = request.headers.get('origin') || request.headers.get('referer') || '';
-        if (!origin) return false;
-        return ALLOWED_ORIGINS.some((allowed) => origin.startsWith(allowed));
+	const origin = request.headers.get('origin') || request.headers.get('referer') || '';
+	if (!origin) return false;
+	return ALLOWED_ORIGINS.some((allowed) => origin.startsWith(allowed));
 }
 
 /**
@@ -210,15 +213,15 @@ function isOriginAllowed(request: Request): boolean {
  * after changing `wrangler.jsonc` bindings if you rely on the generated types.
  */
 function getMessageStore(): KVNamespace | null {
-        try {
-                const kv = env.MESSAGE_STORE;
-                if (kv) return kv;
-                console.log('[contact] MESSAGE_STORE not bound — using console.log fallback');
-                return null;
-        } catch (err) {
-                console.error('[contact] Error accessing env.MESSAGE_STORE:', err);
-                return null;
-        }
+	try {
+		const kv = env.MESSAGE_STORE;
+		if (kv) return kv;
+		console.log('[contact] MESSAGE_STORE not bound — using console.log fallback');
+		return null;
+	} catch (err) {
+		console.error('[contact] Error accessing env.MESSAGE_STORE:', err);
+		return null;
+	}
 }
 
 /**
@@ -227,16 +230,16 @@ function getMessageStore(): KVNamespace | null {
  * list --prefix messages/2026/01/` enumerate a single day's submissions.
  */
 async function persistMessage(msg: StoredMessage): Promise<void> {
-        const kv = getMessageStore();
+	const kv = getMessageStore();
 
-        if (kv) {
-                const d = new Date(msg.receivedAt);
-                const key = `messages/${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, '0')}/${msg.id}`;
-                await kv.put(key, JSON.stringify(msg), { expirationTtl: 60 * 60 * 24 * 365 });
-                console.log(`[contact] Message stored in KV: ${key}`);
-        } else {
-                console.log('[contact] Message stored (dev mode — no KV):', JSON.stringify(msg, null, 2));
-        }
+	if (kv) {
+		const d = new Date(msg.receivedAt);
+		const key = `messages/${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, '0')}/${msg.id}`;
+		await kv.put(key, JSON.stringify(msg), { expirationTtl: 60 * 60 * 24 * 365 });
+		console.log(`[contact] Message stored in KV: ${key}`);
+	} else {
+		console.log('[contact] Message stored (dev mode — no KV):', JSON.stringify(msg, null, 2));
+	}
 }
 
 // ─── Notification layer ───────────────────────────────────────────────────────
@@ -252,12 +255,12 @@ async function persistMessage(msg: StoredMessage): Promise<void> {
 
 /** FTCI brand colors used in email + Discord styling. */
 const BRAND = {
-        navy: '#0F1E3D',
-        orange: '#EE6C1A',
-        periwinkle: '#6B7FC7',
-        green: '#1E9E4F',
-        bgLight: '#F2F4F8',
-        textMuted: '#6B7280',
+	navy: '#0F1E3D',
+	orange: '#EE6C1A',
+	periwinkle: '#6B7FC7',
+	green: '#1E9E4F',
+	bgLight: '#F2F4F8',
+	textMuted: '#6B7280',
 } as const;
 
 /** Sender identity used for every outbound email. The domain must be verified in Resend. */
@@ -274,46 +277,46 @@ const NOTIFY_TIMEOUT_MS = 8_000;
  * @returns `true` on success, `false` on any failure (logged but not thrown).
  */
 async function sendTeamEmail(msg: StoredMessage): Promise<boolean> {
-        const apiKey = env.RESEND_API_KEY;
-        if (!apiKey) {
-                console.warn('[contact] RESEND_API_KEY not set — skipping team email');
-                return false;
-        }
+	const apiKey = env.RESEND_API_KEY;
+	if (!apiKey) {
+		console.warn('[contact] RESEND_API_KEY not set — skipping team email');
+		return false;
+	}
 
-        const subject = `[FTCI Vitrine] ${SUBJECT_LABELS[msg.subject]} — ${msg.name}`;
-        const html = renderTeamEmailHtml(msg);
+	const subject = `[FTCI Vitrine] ${SUBJECT_LABELS[msg.subject]} — ${msg.name}`;
+	const html = renderTeamEmailHtml(msg);
 
-        try {
-                const res = await fetchWithTimeout(
-                        'https://api.resend.com/emails',
-                        {
-                                method: 'POST',
-                                headers: {
-                                        Authorization: `Bearer ${apiKey}`,
-                                        'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                        from: EMAIL_FROM,
-                                        to: [TEAM_EMAIL_TO],
-                                        reply_to: msg.email,
-                                        subject,
-                                        html,
-                                }),
-                        },
-                        NOTIFY_TIMEOUT_MS,
-                );
+	try {
+		const res = await fetchWithTimeout(
+			'https://api.resend.com/emails',
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${apiKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					from: EMAIL_FROM,
+					to: [TEAM_EMAIL_TO],
+					reply_to: msg.email,
+					subject,
+					html,
+				}),
+			},
+			NOTIFY_TIMEOUT_MS,
+		);
 
-                if (!res.ok) {
-                        const body = await res.text().catch(() => '<no body>');
-                        console.error(`[contact] Resend team email failed (${res.status}):`, body);
-                        return false;
-                }
-                console.log('[contact] Team email sent via Resend');
-                return true;
-        } catch (err) {
-                console.error('[contact] Resend team email error:', err);
-                return false;
-        }
+		if (!res.ok) {
+			const body = await res.text().catch(() => '<no body>');
+			console.error(`[contact] Resend team email failed (${res.status}):`, body);
+			return false;
+		}
+		console.log('[contact] Team email sent via Resend');
+		return true;
+	} catch (err) {
+		console.error('[contact] Resend team email error:', err);
+		return false;
+	}
 }
 
 /**
@@ -323,45 +326,45 @@ async function sendTeamEmail(msg: StoredMessage): Promise<boolean> {
  * @returns `true` on success, `false` on any failure (logged but not thrown).
  */
 async function sendVisitorEmail(msg: StoredMessage): Promise<boolean> {
-        const apiKey = env.RESEND_API_KEY;
-        if (!apiKey) {
-                // Already warned by sendTeamEmail; no need to repeat.
-                return false;
-        }
+	const apiKey = env.RESEND_API_KEY;
+	if (!apiKey) {
+		// Already warned by sendTeamEmail; no need to repeat.
+		return false;
+	}
 
-        const subject = 'Confirmation de réception de votre message — FTCI';
-        const html = renderVisitorEmailHtml(msg);
+	const subject = 'Confirmation de réception de votre message — FTCI';
+	const html = renderVisitorEmailHtml(msg);
 
-        try {
-                const res = await fetchWithTimeout(
-                        'https://api.resend.com/emails',
-                        {
-                                method: 'POST',
-                                headers: {
-                                        Authorization: `Bearer ${apiKey}`,
-                                        'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                        from: EMAIL_FROM,
-                                        to: [msg.email],
-                                        subject,
-                                        html,
-                                }),
-                        },
-                        NOTIFY_TIMEOUT_MS,
-                );
+	try {
+		const res = await fetchWithTimeout(
+			'https://api.resend.com/emails',
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${apiKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					from: EMAIL_FROM,
+					to: [msg.email],
+					subject,
+					html,
+				}),
+			},
+			NOTIFY_TIMEOUT_MS,
+		);
 
-                if (!res.ok) {
-                        const body = await res.text().catch(() => '<no body>');
-                        console.error(`[contact] Resend visitor email failed (${res.status}):`, body);
-                        return false;
-                }
-                console.log(`[contact] Confirmation email sent (id=${msg.id})`);
-                return true;
-        } catch (err) {
-                console.error('[contact] Resend visitor email error:', err);
-                return false;
-        }
+		if (!res.ok) {
+			const body = await res.text().catch(() => '<no body>');
+			console.error(`[contact] Resend visitor email failed (${res.status}):`, body);
+			return false;
+		}
+		console.log(`[contact] Confirmation email sent (id=${msg.id})`);
+		return true;
+	} catch (err) {
+		console.error('[contact] Resend visitor email error:', err);
+		return false;
+	}
 }
 
 /**
@@ -372,58 +375,58 @@ async function sendVisitorEmail(msg: StoredMessage): Promise<boolean> {
  * @returns `true` on success, `false` on any failure (logged but not thrown).
  */
 async function sendDiscordNotification(msg: StoredMessage): Promise<boolean> {
-        const webhookUrl = env.DISCORD_WEBHOOK_URL;
-        if (!webhookUrl) {
-                console.warn('[contact] DISCORD_WEBHOOK_URL not set — skipping Discord notification');
-                return false;
-        }
+	const webhookUrl = env.DISCORD_WEBHOOK_URL;
+	if (!webhookUrl) {
+		console.warn('[contact] DISCORD_WEBHOOK_URL not set — skipping Discord notification');
+		return false;
+	}
 
-        const subjectLabel = SUBJECT_LABELS[msg.subject];
-        // Discord embed field values must be non-empty strings.
-        const safeMessage = msg.message.length > 1024 ? msg.message.slice(0, 1021) + '…' : msg.message;
-        const safeIp = msg.ip ?? 'Inconnue';
+	const subjectLabel = SUBJECT_LABELS[msg.subject];
+	// Discord embed field values must be non-empty strings.
+	const safeMessage = msg.message.length > 1024 ? msg.message.slice(0, 1021) + '…' : msg.message;
+	const safeIp = msg.ip ?? 'Inconnue';
 
-        const payload = {
-                username: 'FTCI Vitrine',
-                embeds: [
-                        {
-                                title: ` Nouveau message — ${subjectLabel}`,
-                                color: 0xee6c1a, // FTCI orange as a decimal int.
-                                fields: [
-                                        { name: 'Nom', value: msg.name, inline: true },
-                                        { name: 'Email', value: msg.email, inline: true },
-                                        { name: 'Sujet', value: subjectLabel, inline: true },
-                                        { name: 'Adresse IP', value: safeIp, inline: true },
-                                        { name: 'Message', value: safeMessage },
-                                ],
-                                footer: { text: "FTCI — Freelance Technologies Côte d'Ivoire" },
-                                timestamp: msg.receivedAt,
-                        },
-                ],
-        };
+	const payload = {
+		username: 'FTCI Vitrine',
+		embeds: [
+			{
+				title: ` Nouveau message — ${subjectLabel}`,
+				color: 0xee6c1a, // FTCI orange as a decimal int.
+				fields: [
+					{ name: 'Nom', value: msg.name, inline: true },
+					{ name: 'Email', value: msg.email, inline: true },
+					{ name: 'Sujet', value: subjectLabel, inline: true },
+					{ name: 'Adresse IP', value: safeIp, inline: true },
+					{ name: 'Message', value: safeMessage },
+				],
+				footer: { text: "FTCI — Freelance Technologies Côte d'Ivoire" },
+				timestamp: msg.receivedAt,
+			},
+		],
+	};
 
-        try {
-                const res = await fetchWithTimeout(
-                        webhookUrl,
-                        {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(payload),
-                        },
-                        NOTIFY_TIMEOUT_MS,
-                );
+	try {
+		const res = await fetchWithTimeout(
+			webhookUrl,
+			{
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload),
+			},
+			NOTIFY_TIMEOUT_MS,
+		);
 
-                if (!res.ok) {
-                        const body = await res.text().catch(() => '<no body>');
-                        console.error(`[contact] Discord webhook failed (${res.status}):`, body);
-                        return false;
-                }
-                console.log('[contact] Discord notification sent');
-                return true;
-        } catch (err) {
-                console.error('[contact] Discord webhook error:', err);
-                return false;
-        }
+		if (!res.ok) {
+			const body = await res.text().catch(() => '<no body>');
+			console.error(`[contact] Discord webhook failed (${res.status}):`, body);
+			return false;
+		}
+		console.log('[contact] Discord notification sent');
+		return true;
+	} catch (err) {
+		console.error('[contact] Discord webhook error:', err);
+		return false;
+	}
 }
 
 /**
@@ -434,18 +437,18 @@ async function sendDiscordNotification(msg: StoredMessage): Promise<boolean> {
  * and `allSettled` adds a second safety net.
  */
 async function dispatchNotifications(msg: StoredMessage): Promise<void> {
-        const results = await Promise.allSettled([
-                sendTeamEmail(msg),
-                sendVisitorEmail(msg),
-                sendDiscordNotification(msg),
-        ]);
+	const results = await Promise.allSettled([
+		sendTeamEmail(msg),
+		sendVisitorEmail(msg),
+		sendDiscordNotification(msg),
+	]);
 
-        const labels = ['team email', 'visitor email', 'discord'] as const;
-        results.forEach((r, i) => {
-                if (r.status === 'rejected') {
-                        console.error(`[contact] ${labels[i]} dispatcher rejected:`, r.reason);
-                }
-        });
+	const labels = ['team email', 'visitor email', 'discord'] as const;
+	results.forEach((r, i) => {
+		if (r.status === 'rejected') {
+			console.error(`[contact] ${labels[i]} dispatcher rejected:`, r.reason);
+		}
+	});
 }
 
 /**
@@ -453,17 +456,17 @@ async function dispatchNotifications(msg: StoredMessage): Promise<void> {
  * never stall the request. Workers support `AbortController` natively.
  */
 async function fetchWithTimeout(
-        url: string,
-        init: RequestInit,
-        timeoutMs: number,
+	url: string,
+	init: RequestInit,
+	timeoutMs: number,
 ): Promise<Response> {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), timeoutMs);
-        try {
-                return await fetch(url, { ...init, signal: controller.signal });
-        } finally {
-                clearTimeout(timer);
-        }
+	const controller = new AbortController();
+	const timer = setTimeout(() => controller.abort(), timeoutMs);
+	try {
+		return await fetch(url, { ...init, signal: controller.signal });
+	} finally {
+		clearTimeout(timer);
+	}
 }
 
 // ─── Email HTML templates ─────────────────────────────────────────────────────
@@ -473,24 +476,34 @@ async function fetchWithTimeout(
 
 /** Escapes HTML special characters in user input before injecting into email markup. */
 function escapeHtml(s: string): string {
-        return s
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
+	return s
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
 }
 
 /** Formats an ISO date string as a readable French date (e.g. "15 janvier 2026 à 14:32 UTC"). */
 function formatFrenchDate(iso: string): string {
-        const d = new Date(iso);
-        const mois = [
-                'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-                'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
-        ];
-        const hh = String(d.getUTCHours()).padStart(2, '0');
-        const mm = String(d.getUTCMinutes()).padStart(2, '0');
-        return `${d.getUTCDate()} ${mois[d.getUTCMonth()]} ${d.getUTCFullYear()} à ${hh}:${mm} UTC`;
+	const d = new Date(iso);
+	const mois = [
+		'janvier',
+		'février',
+		'mars',
+		'avril',
+		'mai',
+		'juin',
+		'juillet',
+		'août',
+		'septembre',
+		'octobre',
+		'novembre',
+		'décembre',
+	];
+	const hh = String(d.getUTCHours()).padStart(2, '0');
+	const mm = String(d.getUTCMinutes()).padStart(2, '0');
+	return `${d.getUTCDate()} ${mois[d.getUTCMonth()]} ${d.getUTCFullYear()} à ${hh}:${mm} UTC`;
 }
 
 /**
@@ -498,15 +511,15 @@ function formatFrenchDate(iso: string): string {
  * triage and reply: name, email (reply-to), subject, message, date, IP, UA.
  */
 function renderTeamEmailHtml(msg: StoredMessage): string {
-        const eName = escapeHtml(msg.name);
-        const eEmail = escapeHtml(msg.email);
-        const eSubject = escapeHtml(SUBJECT_LABELS[msg.subject]);
-        const eMessage = escapeHtml(msg.message);
-        const eDate = escapeHtml(formatFrenchDate(msg.receivedAt));
-        const eIp = escapeHtml(msg.ip ?? 'Inconnue');
-        const eUa = escapeHtml(msg.userAgent ?? 'Inconnu');
+	const eName = escapeHtml(msg.name);
+	const eEmail = escapeHtml(msg.email);
+	const eSubject = escapeHtml(SUBJECT_LABELS[msg.subject]);
+	const eMessage = escapeHtml(msg.message);
+	const eDate = escapeHtml(formatFrenchDate(msg.receivedAt));
+	const eIp = escapeHtml(msg.ip ?? 'Inconnue');
+	const eUa = escapeHtml(msg.userAgent ?? 'Inconnu');
 
-        return `<!DOCTYPE html>
+	return `<!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:${BRAND.bgLight};font-family:Inter,Arial,sans-serif;color:${BRAND.navy};">
@@ -554,12 +567,12 @@ function renderTeamEmailHtml(msg: StoredMessage): string {
  * so they have a copy in their mailbox.
  */
 function renderVisitorEmailHtml(msg: StoredMessage): string {
-        const eName = escapeHtml(msg.name);
-        const eSubject = escapeHtml(SUBJECT_LABELS[msg.subject]);
-        const eMessage = escapeHtml(msg.message);
-        const eDate = escapeHtml(formatFrenchDate(msg.receivedAt));
+	const eName = escapeHtml(msg.name);
+	const eSubject = escapeHtml(SUBJECT_LABELS[msg.subject]);
+	const eMessage = escapeHtml(msg.message);
+	const eDate = escapeHtml(formatFrenchDate(msg.receivedAt));
 
-        return `<!DOCTYPE html>
+	return `<!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:${BRAND.bgLight};font-family:Inter,Arial,sans-serif;color:${BRAND.navy};">
@@ -617,107 +630,107 @@ function renderVisitorEmailHtml(msg: StoredMessage): string {
  *   - `500` is left to the runtime for unhandled throws.
  */
 export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
-        // CSRF : vérifier l'origine de la requête
-        if (!isOriginAllowed(request)) {
-                return jsonResponse(403, { ok: false, error: 'Origine non autorisée.' });
-        }
+	// CSRF : vérifier l'origine de la requête
+	if (!isOriginAllowed(request)) {
+		return jsonResponse(403, { ok: false, error: 'Origine non autorisée.' });
+	}
 
-        // IP : préférer cf-connecting-ip (fiable côté Workers) à clientAddress
-        const ip = request.headers.get('cf-connecting-ip') || clientAddress || null;
+	// IP : préférer cf-connecting-ip (fiable côté Workers) à clientAddress
+	const ip = request.headers.get('cf-connecting-ip') || clientAddress || null;
 
-        const kv = getMessageStore();
+	const kv = getMessageStore();
 
-        if (ip && await rateLimited(ip, kv)) {
-                return jsonResponse(429, {
-                        ok: false,
-                        error: 'Trop de tentatives. Veuillez réessayer dans une minute.',
-                });
-        }
+	if (ip && (await rateLimited(ip, kv))) {
+		return jsonResponse(429, {
+			ok: false,
+			error: 'Trop de tentatives. Veuillez réessayer dans une minute.',
+		});
+	}
 
-        let payload: ContactPayload;
-        try {
-                payload = (await request.json()) as ContactPayload;
-        } catch {
-                return jsonResponse(400, { ok: false, error: 'Format de requête invalide (JSON attendu).' });
-        }
+	let payload: ContactPayload;
+	try {
+		payload = (await request.json()) as ContactPayload;
+	} catch {
+		return jsonResponse(400, { ok: false, error: 'Format de requête invalide (JSON attendu).' });
+	}
 
-        const errors = validate(payload);
-        if (Object.keys(errors).length > 0) {
-                // Honeypot triggered — pretend success so bots cannot probe the rule.
-                if (errors._honeypot) {
-                        return jsonResponse(200, { ok: true, message: 'Message reçu avec succès.' });
-                }
-                return jsonResponse(422, { ok: false, errors });
-        }
+	const errors = validate(payload);
+	if (Object.keys(errors).length > 0) {
+		// Honeypot triggered — pretend success so bots cannot probe the rule.
+		if (errors._honeypot) {
+			return jsonResponse(200, { ok: true, message: 'Message reçu avec succès.' });
+		}
+		return jsonResponse(422, { ok: false, errors });
+	}
 
-        const stored: StoredMessage = {
-                id: `msg_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-                receivedAt: new Date().toISOString(),
-                name: (payload.name as string).trim(),
-                email: (payload.email as string).trim(),
-                subject: payload.subject as Subject,
-                message: (payload.message as string).trim(),
-                ip,
-                userAgent: (request.headers.get('user-agent') ?? '').slice(0, 256), // cap pour éviter DoS KV
-        };
+	const stored: StoredMessage = {
+		id: `msg_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+		receivedAt: new Date().toISOString(),
+		name: (payload.name as string).trim(),
+		email: (payload.email as string).trim(),
+		subject: payload.subject as Subject,
+		message: (payload.message as string).trim(),
+		ip,
+		userAgent: (request.headers.get('user-agent') ?? '').slice(0, 256), // cap pour éviter DoS KV
+	};
 
-        // Log pseudonymisé : on n'expose pas l'email (PII) dans les logs opérationnels
-        console.log(`[contact] New message received (id=${stored.id}, subject=${stored.subject})`);
+	// Log pseudonymisé : on n'expose pas l'email (PII) dans les logs opérationnels
+	console.log(`[contact] New message received (id=${stored.id}, subject=${stored.subject})`);
 
-        // 1. Persist to KV first — this is the source of truth and must succeed
-        //    before we tell the visitor "message received".
-        await persistMessage(stored);
+	// 1. Persist to KV first — this is the source of truth and must succeed
+	//    before we tell the visitor "message received".
+	await persistMessage(stored);
 
-        // 2. Dispatch notifications. On Cloudflare Workers we use `ctx.waitUntil`
-        //    so the runtime keeps the isolate alive after the response is sent,
-        //    letting Resend/Discord complete in the background without making
-        //    the visitor wait. In local dev (no runtime context) we fall back
-        //    to a plain await so notifications still fire before the request
-        //    ends — providers each have their own 8s timeout, so the worst-case
-        //    wait is bounded and the form's "Envoi…" spinner covers it.
-        //
-        //    API note: @astrojs/cloudflare v4 (Astro v6+) exposes the Workers
-        //    ExecutionContext at `locals.cfContext`. The legacy
-        //    `locals.runtime.ctx` path was REMOVED and its getter now throws
-        //    "Astro.locals.runtime.ctx has been removed in Astro v6" — even
-        //    just reading it via optional chaining triggers the throw. So we
-        //    do NOT reference `locals.runtime` at all.
-        //
-        //    IMPORTANT: waitUntil must be called AS A METHOD on its context
-        //    object (cfContext.waitUntil(p)), never extracted as a bare
-        //    function. Extracting it loses the `this` binding and the Workers
-        //    runtime throws "Illegal invocation: function called with
-        //    incorrect `this` reference."
-        const cfContext = (
-                locals as { cfContext?: { waitUntil?: (p: Promise<unknown>) => void } } | undefined
-        )?.cfContext;
+	// 2. Dispatch notifications. On Cloudflare Workers we use `ctx.waitUntil`
+	//    so the runtime keeps the isolate alive after the response is sent,
+	//    letting Resend/Discord complete in the background without making
+	//    the visitor wait. In local dev (no runtime context) we fall back
+	//    to a plain await so notifications still fire before the request
+	//    ends — providers each have their own 8s timeout, so the worst-case
+	//    wait is bounded and the form's "Envoi…" spinner covers it.
+	//
+	//    API note: @astrojs/cloudflare v4 (Astro v6+) exposes the Workers
+	//    ExecutionContext at `locals.cfContext`. The legacy
+	//    `locals.runtime.ctx` path was REMOVED and its getter now throws
+	//    "Astro.locals.runtime.ctx has been removed in Astro v6" — even
+	//    just reading it via optional chaining triggers the throw. So we
+	//    do NOT reference `locals.runtime` at all.
+	//
+	//    IMPORTANT: waitUntil must be called AS A METHOD on its context
+	//    object (cfContext.waitUntil(p)), never extracted as a bare
+	//    function. Extracting it loses the `this` binding and the Workers
+	//    runtime throws "Illegal invocation: function called with
+	//    incorrect `this` reference."
+	const cfContext = (
+		locals as { cfContext?: { waitUntil?: (p: Promise<unknown>) => void } } | undefined
+	)?.cfContext;
 
-        if (cfContext?.waitUntil) {
-                cfContext.waitUntil(dispatchNotifications(stored));
-        } else {
-                await dispatchNotifications(stored);
-        }
+	if (cfContext?.waitUntil) {
+		cfContext.waitUntil(dispatchNotifications(stored));
+	} else {
+		await dispatchNotifications(stored);
+	}
 
-        return jsonResponse(200, {
-                ok: true,
-                message: 'Message reçu avec succès. Nous vous recontacterons bientôt.',
-        });
+	return jsonResponse(200, {
+		ok: true,
+		message: 'Message reçu avec succès. Nous vous recontacterons bientôt.',
+	});
 };
 
 /** Rejects every non-POST method with `405 Method Not Allowed`. */
 export const ALL: APIRoute = () =>
-        new Response(JSON.stringify({ ok: false, error: 'Méthode non autorisée.' }), {
-                status: 405,
-                headers: { 'Content-Type': 'application/json', Allow: 'POST' },
-        });
+	new Response(JSON.stringify({ ok: false, error: 'Méthode non autorisée.' }), {
+		status: 405,
+		headers: { 'Content-Type': 'application/json', Allow: 'POST' },
+	});
 
 /** Builds a JSON `Response` with `no-store` caching, since every call is dynamic. */
 function jsonResponse(status: number, body: unknown): Response {
-        return new Response(JSON.stringify(body), {
-                status,
-                headers: {
-                        'Content-Type': 'application/json; charset=utf-8',
-                        'Cache-Control': 'no-store',
-                },
-        });
+	return new Response(JSON.stringify(body), {
+		status,
+		headers: {
+			'Content-Type': 'application/json; charset=utf-8',
+			'Cache-Control': 'no-store',
+		},
+	});
 }

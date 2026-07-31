@@ -19,31 +19,31 @@
 import { safeJsonStringify } from '../lib/sanitize';
 
 export interface Props {
-        title: string;
-        description?: string;
-        canonical?: string;
-        ogImage?: string;
-        ogType?: 'website' | 'article' | 'product';
-        schema?: Record<string, unknown> | Record<string, unknown>[];
-        noindex?: boolean;
-        keywords?: string[];
+	title: string;
+	description?: string;
+	canonical?: string;
+	ogImage?: string;
+	ogType?: 'website' | 'article' | 'product';
+	schema?: Record<string, unknown> | Record<string, unknown>[];
+	noindex?: boolean;
+	keywords?: string[];
 }
 
 const {
-        title,
-        description = "FTCI — Entreprise de Services du Numérique (ESN) basée à Abidjan. Conseil, développement, infrastructure IT, formation + 4 solutions SaaS (SECT, OPUC, CATS, ScolaGest) pour le marché africain.",
-        canonical,
-        ogImage = '/og-default.png',
-        ogType = 'website',
-        schema,
-        noindex = false,
-        keywords = [],
+	title,
+	description = 'FTCI — Entreprise de Services du Numérique (ESN) basée à Abidjan. Conseil, développement, infrastructure IT, formation + 4 solutions SaaS (SECT, OPUC, CATS, ScolaGest) pour le marché africain.',
+	canonical,
+	ogImage = '/og-default.png',
+	ogType = 'website',
+	schema,
+	noindex = false,
+	keywords = [],
 } = Astro.props;
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://ftci.fr';
 const canonicalUrl = canonical
-        ? new URL(canonical, siteUrl).toString()
-        : new URL(Astro.url.pathname, siteUrl).toString();
+	? new URL(canonical, siteUrl).toString()
+	: new URL(Astro.url.pathname, siteUrl).toString();
 const ogImageUrl = new URL(ogImage, siteUrl).toString();
 
 // JSON-LD injection
@@ -84,6 +84,4 @@ const jsonLd = schema ? safeJsonStringify(schema) : null;
 <meta name="theme-color" content="#0F1E3D" />
 
 <!-- JSON-LD structured data -->
-{jsonLd && (
-        <script type="application/ld+json" set:html={jsonLd} />
-)}
+{jsonLd && <script type="application/ld+json" set:html={jsonLd} />}

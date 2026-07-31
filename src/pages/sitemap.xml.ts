@@ -22,52 +22,52 @@ import { BLOG_CATEGORIES } from '../../keystatic.config';
 const SITE_URL = 'https://ftci.fr';
 
 interface SitemapEntry {
-        loc: string;
-        lastmod?: string;
-        changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-        priority?: number;
+	loc: string;
+	lastmod?: string;
+	changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+	priority?: number;
 }
 
 const today = new Date().toISOString().split('T')[0];
 
 const STATIC_ROUTES: SitemapEntry[] = [
-        {
-                loc: '/',
-                lastmod: today,
-                changefreq: 'weekly',
-                priority: 1.0,
-        },
-        {
-                loc: '/blog',
-                lastmod: today,
-                changefreq: 'daily',
-                priority: 0.9,
-        },
-        // One entry per blog category (6 categories).
-        ...BLOG_CATEGORIES.map((cat) => ({
-                loc: `/blog/categorie/${cat.value}`,
-                lastmod: today,
-                changefreq: 'weekly' as const,
-                priority: 0.7,
-        })),
-        {
-                loc: '/legal/mentions-legales',
-                lastmod: today,
-                changefreq: 'yearly' as const,
-                priority: 0.3,
-        },
-        {
-                loc: '/legal/confidentialite',
-                lastmod: today,
-                changefreq: 'yearly' as const,
-                priority: 0.3,
-        },
-        {
-                loc: '/legal/cgu',
-                lastmod: today,
-                changefreq: 'yearly' as const,
-                priority: 0.3,
-        },
+	{
+		loc: '/',
+		lastmod: today,
+		changefreq: 'weekly',
+		priority: 1.0,
+	},
+	{
+		loc: '/blog',
+		lastmod: today,
+		changefreq: 'daily',
+		priority: 0.9,
+	},
+	// One entry per blog category (6 categories).
+	...BLOG_CATEGORIES.map((cat) => ({
+		loc: `/blog/categorie/${cat.value}`,
+		lastmod: today,
+		changefreq: 'weekly' as const,
+		priority: 0.7,
+	})),
+	{
+		loc: '/legal/mentions-legales',
+		lastmod: today,
+		changefreq: 'yearly' as const,
+		priority: 0.3,
+	},
+	{
+		loc: '/legal/confidentialite',
+		lastmod: today,
+		changefreq: 'yearly' as const,
+		priority: 0.3,
+	},
+	{
+		loc: '/legal/cgu',
+		lastmod: today,
+		changefreq: 'yearly' as const,
+		priority: 0.3,
+	},
 ];
 
 /**
@@ -75,14 +75,14 @@ const STATIC_ROUTES: SitemapEntry[] = [
  * published blog article (dynamic, fetched from the content collection).
  */
 async function buildAllRoutes(): Promise<SitemapEntry[]> {
-        const articles = await getAllArticles();
-        const articleRoutes: SitemapEntry[] = articles.map((entry) => ({
-                loc: getArticleUrl(entry),
-                lastmod: entry.data.publishedAt.toISOString().split('T')[0],
-                changefreq: 'monthly',
-                priority: 0.8,
-        }));
-        return [...STATIC_ROUTES, ...articleRoutes];
+	const articles = await getAllArticles();
+	const articleRoutes: SitemapEntry[] = articles.map((entry) => ({
+		loc: getArticleUrl(entry),
+		lastmod: entry.data.publishedAt.toISOString().split('T')[0],
+		changefreq: 'monthly',
+		priority: 0.8,
+	}));
+	return [...STATIC_ROUTES, ...articleRoutes];
 }
 
 /**
@@ -93,17 +93,22 @@ async function buildAllRoutes(): Promise<SitemapEntry[]> {
  * decimal to match the spec example output.
  */
 function buildSitemapXml(routes: SitemapEntry[]): string {
-        const urlElements = routes
-                .map((route) => {
-                        const url = `${SITE_URL}${route.loc}`;
-                        const lastmod = route.lastmod ? `\n    <lastmod>${route.lastmod}</lastmod>` : '';
-                        const changefreq = route.changefreq ? `\n    <changefreq>${route.changefreq}</changefreq>` : '';
-                        const priority = route.priority !== undefined ? `\n    <priority>${route.priority.toFixed(1)}</priority>` : '';
-                        return `  <url>\n    <loc>${url}</loc>${lastmod}${changefreq}${priority}\n  </url>`;
-                })
-                .join('\n');
+	const urlElements = routes
+		.map((route) => {
+			const url = `${SITE_URL}${route.loc}`;
+			const lastmod = route.lastmod ? `\n    <lastmod>${route.lastmod}</lastmod>` : '';
+			const changefreq = route.changefreq
+				? `\n    <changefreq>${route.changefreq}</changefreq>`
+				: '';
+			const priority =
+				route.priority !== undefined
+					? `\n    <priority>${route.priority.toFixed(1)}</priority>`
+					: '';
+			return `  <url>\n    <loc>${url}</loc>${lastmod}${changefreq}${priority}\n  </url>`;
+		})
+		.join('\n');
 
-        return `<?xml version="1.0" encoding="UTF-8"?>
+	return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urlElements}
 </urlset>`;
@@ -115,14 +120,14 @@ ${urlElements}
  * sitemap itself.
  */
 export const GET: APIRoute = async () => {
-        const routes = await buildAllRoutes();
-        const xml = buildSitemapXml(routes);
-        return new Response(xml, {
-                status: 200,
-                headers: {
-                        'Content-Type': 'application/xml; charset=utf-8',
-                        'Cache-Control': 'public, max-age=3600',
-                        'X-Robots-Tag': 'noindex',
-                },
-        });
+	const routes = await buildAllRoutes();
+	const xml = buildSitemapXml(routes);
+	return new Response(xml, {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/xml; charset=utf-8',
+			'Cache-Control': 'public, max-age=3600',
+			'X-Robots-Tag': 'noindex',
+		},
+	});
 };

@@ -43,7 +43,7 @@ const haloHex: Record<string, string> = {
                         <div class={`gmb-col ${colIndex % 4 === 0 ? 'gmb-col--reverse' : ''}`}
                                 style={`--gmb-speed: ${20 + (colIndex % 6) * 3}s; --gmb-delay: ${(colIndex * -1.5)}s;`}>
                                 {/* Contenu triplé pour animation fluide et couverture complète */}
-                                {[...Array(3)].map(() => Array.from({length: 20}).map((_, i) => (
+                                {[...Array(3)].map(() => Array.from({length: 20}).map(() => (
                                         <span class="gmb-char">{Math.random() > 0.5 ? '01' : '10'} {Math.random() > 0.5 ? '00' : '11'} {Math.random() > 0.5 ? '10' : '01'} {Math.random() > 0.5 ? '11' : '00'}</span>
                                 )))}
                         </div>
@@ -219,8 +219,8 @@ const haloHex: Record<string, string> = {
                                         const centerX = rect.left + rect.width / 2;
                                         const centerY = rect.top + rect.height / 2;
                                         
-                                        let deltaX = e.clientX - centerX;
-                                        let deltaY = e.clientY - centerY;
+                                        const deltaX = e.clientX - centerX;
+                                        const deltaY = e.clientY - centerY;
                                         
                                         // Apply multipliers: X * 0.18, Y * 0.3
                                         let translateX = deltaX * 0.18;

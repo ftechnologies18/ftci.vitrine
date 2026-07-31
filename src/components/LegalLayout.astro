@@ -7,123 +7,125 @@
 import Layout from '../layouts/Layout.astro';
 
 export interface LegalSection {
-        id: string;
-        title: string;
+	id: string;
+	title: string;
 }
 
 export interface Props {
-        title: string;
-        description: string;
-        canonical: string;
-        /** Date de dernière mise à jour (ISO ou affichée) */
-        updatedAt: string;
-        sections: LegalSection[];
+	title: string;
+	description: string;
+	canonical: string;
+	/** Date de dernière mise à jour (ISO ou affichée) */
+	updatedAt: string;
+	sections: LegalSection[];
 }
 
 const { title, description, canonical, updatedAt, sections } = Astro.props;
 ---
 
 <Layout title={`${title} | FTCI`} description={description} canonical={canonical} noindex={true}>
-        <!-- Header -->
-        <section class="bg-navy text-white py-16 md:py-20">
-                <div class="container">
-                        <nav class="mb-4 text-sm text-white/60" aria-label="Fil d'Ariane">
-                                <ol class="flex items-center gap-2">
-                                        <li><a href="/" class="hover:text-orange transition-colors">Accueil</a></li>
-                                        <li aria-hidden="true">/</li>
-                                        <li class="text-white font-medium" aria-current="page">{title}</li>
-                                </ol>
-                        </nav>
-                        <h1 class="text-4xl md:text-5xl font-bold mb-3">{title}</h1>
-                        <p class="text-white/70">Dernière mise à jour : {updatedAt}</p>
-                </div>
-        </section>
+	<!-- Header -->
+	<section class="bg-navy text-white py-16 md:py-20">
+		<div class="container">
+			<nav class="mb-4 text-sm text-white/60" aria-label="Fil d'Ariane">
+				<ol class="flex items-center gap-2">
+					<li><a href="/" class="hover:text-orange transition-colors">Accueil</a></li>
+					<li aria-hidden="true">/</li>
+					<li class="text-white font-medium" aria-current="page">{title}</li>
+				</ol>
+			</nav>
+			<h1 class="text-4xl md:text-5xl font-bold mb-3">{title}</h1>
+			<p class="text-white/70">Dernière mise à jour : {updatedAt}</p>
+		</div>
+	</section>
 
-        <!-- Content with table of contents -->
-        <section class="py-16 md:py-20 bg-light-bg flex-1">
-                <div class="container">
-                        <div class="grid lg:grid-cols-[280px_1fr] gap-10">
-                                <!-- Table of contents -->
-                                <aside class="hidden lg:block">
-                                        <div class="sticky top-24 bg-white rounded-xl p-6 shadow-sm">
-                                                <h2 class="text-sm font-bold text-navy mb-4 uppercase tracking-wide">Sommaire</h2>
-                                                <nav aria-label="Sommaire">
-                                                        <ol class="space-y-2 text-sm">
-                                                                {sections.map((section, idx) => (
-                                                                        <li>
-                                                                                <a
-                                                                                        href={`#${section.id}`}
-                                                                                        class="block text-gray-text hover:text-orange transition-colors py-1"
-                                                                                >
-                                                                                        <span class="text-navy/40 mr-2">{String(idx + 1).padStart(2, '0')}</span>
-                                                                                        {section.title}
-                                                                                </a>
-                                                                        </li>
-                                                                ))}
-                                                        </ol>
-                                                </nav>
-                                        </div>
-                                </aside>
+	<!-- Content with table of contents -->
+	<section class="py-16 md:py-20 bg-light-bg flex-1">
+		<div class="container">
+			<div class="grid lg:grid-cols-[280px_1fr] gap-10">
+				<!-- Table of contents -->
+				<aside class="hidden lg:block">
+					<div class="sticky top-24 bg-white rounded-xl p-6 shadow-sm">
+						<h2 class="text-sm font-bold text-navy mb-4 uppercase tracking-wide">Sommaire</h2>
+						<nav aria-label="Sommaire">
+							<ol class="space-y-2 text-sm">
+								{
+									sections.map((section, idx) => (
+										<li>
+											<a
+												href={`#${section.id}`}
+												class="block text-gray-text hover:text-orange transition-colors py-1"
+											>
+												<span class="text-navy/40 mr-2">{String(idx + 1).padStart(2, '0')}</span>
+												{section.title}
+											</a>
+										</li>
+									))
+								}
+							</ol>
+						</nav>
+					</div>
+				</aside>
 
-                                <!-- Main content -->
-                                <div class="bg-white rounded-xl p-6 md:p-10 lg:p-12 max-w-none prose prose-navy">
-                                        <slot />
-                                </div>
-                        </div>
-                </div>
-        </section>
+				<!-- Main content -->
+				<div class="bg-white rounded-xl p-6 md:p-10 lg:p-12 max-w-none prose prose-navy">
+					<slot />
+				</div>
+			</div>
+		</div>
+	</section>
 </Layout>
 
 <style is:global>
-        /* Typography styles for legal content */
-        .prose-navy h2 {
-                color: #0F1E3D;
-                font-weight: 700;
-                font-size: 1.5rem;
-                line-height: 1.3;
-                margin-top: 2.5rem;
-                margin-bottom: 1rem;
-                scroll-margin-top: 6rem;
-        }
-        .prose-navy h2:first-child {
-                margin-top: 0;
-        }
-        .prose-navy h3 {
-                color: #0F1E3D;
-                font-weight: 600;
-                font-size: 1.125rem;
-                margin-top: 1.5rem;
-                margin-bottom: 0.75rem;
-        }
-        .prose-navy p {
-                color: #6B7280;
-                line-height: 1.7;
-                margin-bottom: 1rem;
-        }
-        .prose-navy ul {
-                color: #6B7280;
-                line-height: 1.7;
-                margin-bottom: 1rem;
-                padding-left: 1.5rem;
-        }
-        .prose-navy ul li {
-                margin-bottom: 0.5rem;
-                list-style-type: disc;
-        }
-        .prose-navy strong {
-                color: #0F1E3D;
-                font-weight: 600;
-        }
-        .prose-navy a {
-                color: #EE6C1A;
-                text-decoration: underline;
-        }
-        .prose-navy a:hover {
-                color: #c5571a;
-        }
-        .prose-navy hr {
-                border: none;
-                border-top: 1px solid #E5E7EB;
-                margin: 2rem 0;
-        }
+	/* Typography styles for legal content */
+	.prose-navy h2 {
+		color: #0f1e3d;
+		font-weight: 700;
+		font-size: 1.5rem;
+		line-height: 1.3;
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+		scroll-margin-top: 6rem;
+	}
+	.prose-navy h2:first-child {
+		margin-top: 0;
+	}
+	.prose-navy h3 {
+		color: #0f1e3d;
+		font-weight: 600;
+		font-size: 1.125rem;
+		margin-top: 1.5rem;
+		margin-bottom: 0.75rem;
+	}
+	.prose-navy p {
+		color: #6b7280;
+		line-height: 1.7;
+		margin-bottom: 1rem;
+	}
+	.prose-navy ul {
+		color: #6b7280;
+		line-height: 1.7;
+		margin-bottom: 1rem;
+		padding-left: 1.5rem;
+	}
+	.prose-navy ul li {
+		margin-bottom: 0.5rem;
+		list-style-type: disc;
+	}
+	.prose-navy strong {
+		color: #0f1e3d;
+		font-weight: 600;
+	}
+	.prose-navy a {
+		color: #ee6c1a;
+		text-decoration: underline;
+	}
+	.prose-navy a:hover {
+		color: #c5571a;
+	}
+	.prose-navy hr {
+		border: none;
+		border-top: 1px solid #e5e7eb;
+		margin: 2rem 0;
+	}
 </style>

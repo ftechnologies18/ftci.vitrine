@@ -1,31 +1,31 @@
 {
-  // Nom du Worker déployé sur Cloudflare (ftci-vitrine.<subdomain>.workers.dev).
-  "name": "ftci-vitrine",
+	// Nom du Worker déployé sur Cloudflare (ftci-vitrine.<subdomain>.workers.dev).
+	"name": "ftci-vitrine",
 
-  // Date de compatibilité du runtime Workers.
-  // À mettre à jour lors des montées de version d'Astro/@astrojs/cloudflare.
-  "compatibility_date": "2026-04-15",
+	// Date de compatibilité du runtime Workers.
+	// À mettre à jour lors des montées de version d'Astro/@astrojs/cloudflare.
+	"compatibility_date": "2026-04-15",
 
-  // KV namespace pour le formulaire de contact (src/pages/api/contact.ts).
-  // L'ID correspond au namespace MESSAGE_STORE du compte Cloudflare
-  // 319de93db5a99db76b4bf41f9d06b785.
-  "kv_namespaces": [
-    {
-      "binding": "MESSAGE_STORE",
-      "id": "a46dcd55e8ec4c04890ced3cbc1b3557"
-    }
-  ],
+	// KV namespace pour le formulaire de contact (src/pages/api/contact.ts).
+	// L'ID correspond au namespace MESSAGE_STORE du compte Cloudflare
+	// 319de93db5a99db76b4bf41f9d06b785.
+	"kv_namespaces": [
+		{
+			"binding": "MESSAGE_STORE",
+			"id": "a46dcd55e8ec4c04890ced3cbc1b3557",
+		},
+	],
 
-  // Configuration de build pour Cloudflare Workers Builds (intégration Git native).
-  // Workers Builds lit cette directive pour savoir comment construire le projet
-  // lorsqu'un push GitHub est reçu. Le déploiement (`wrangler deploy`) est
-  // ensuite exécuté automatiquement par Workers Builds après le build.
-  //
-  // IMPORTANT : ne PAS utiliser `wrangler types` dans le build — cette commande
-  // nécessite un token Cloudflare API et échoue en environnement CI.
-  // Le fichier src/env.d.ts fournit les déclarations de types minimales.
-  "build": {
-    "command": "pnpm install --no-frozen-lockfile && pnpm run build",
-    "cwd": "."
-  }
+	// Configuration de build pour Cloudflare Workers Builds (intégration Git native).
+	// Workers Builds lit cette directive pour savoir comment construire le projet
+	// lorsqu'un push GitHub est reçu. Le déploiement (`wrangler deploy`) est
+	// ensuite exécuté automatiquement par Workers Builds après le build.
+	//
+	// IMPORTANT : ne PAS utiliser `wrangler types` dans le build — cette commande
+	// nécessite un token Cloudflare API et échoue en environnement CI.
+	// Le fichier src/env.d.ts fournit les déclarations de types minimales.
+	"build": {
+		"command": "pnpm install --no-frozen-lockfile && pnpm run build",
+		"cwd": ".",
+	},
 }

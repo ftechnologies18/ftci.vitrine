@@ -1,0 +1,55 @@
+name: ✨ Demande de fonctionnalité
+description: Proposer une nouvelle fonctionnalité ou amélioration
+title: "[FEAT] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci pour votre suggestion ! 🚀
+
+        Avant de soumettre, vérifiez que la fonctionnalité n'est pas déjà
+        demandée dans les [issues existantes](https://github.com/ftechnologies18/ftci.vitrine/issues).
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème à résoudre
+      description: Quel problème cette fonctionnalité résout-elle ? (ex : "En tant que visiteur, je ne peux pas...")
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée
+      description: Comment voyez-vous la résolution ? Décrivez le comportement attendu.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives envisagées
+      description: Avez-vous pensé à d'autres approches ? Pourquoi les avez-vous écartées ?
+    validations:
+      required: false
+
+  - type: textarea
+    id: mockup
+    attributes:
+      label: Maquette / exemple
+      description: Si applicable, ajoutez un lien vers un site de référence, une capture, ou un mockup
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité business
+      options:
+        - Basse (nice to have)
+        - Moyenne (améliore l'UX)
+        - Haute (bloquant business)
+    validations:
+      required: true

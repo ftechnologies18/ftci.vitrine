@@ -15,121 +15,109 @@ import SEO from '../components/SEO.astro';
 import '../styles/global.css';
 
 export interface Props {
-        title: string;
-        description?: string;
-        canonical?: string;
-        ogImage?: string;
-        noindex?: boolean;
-        keywords?: string[];
+	title: string;
+	description?: string;
+	canonical?: string;
+	ogImage?: string;
+	noindex?: boolean;
+	keywords?: string[];
 }
 
-const {
-        title,
-        description,
-        canonical,
-        ogImage,
-        noindex = false,
-        keywords = [],
-} = Astro.props;
+const { title, description, canonical, ogImage, noindex = false, keywords = [] } = Astro.props;
 
 const siteUrl = 'https://ftci.fr';
 
 // Schema.org Organization — toujours présent
 const orgSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: "FTCI — Freelance Technologies Côte d'Ivoire",
-        alternateName: 'FTCI',
-        url: siteUrl,
-        logo: `${siteUrl}/brand/logo-ftci.png`,
-        description:
-                "Entreprise de Services du Numérique (ESN) basée à Abidjan. FTCI accompagne les organisations dans leur transformation digitale à travers 4 pôles de services (conseil, développement, infrastructure, formation) et édite 4 solutions SaaS (SECT, OPUC, CATS, ScolaGest) pensées pour le marché africain.",
-        foundingDate: '2023',
-        address: {
-                '@type': 'PostalAddress',
-                addressLocality: 'Abidjan',
-                addressRegion: 'Lagunes',
-                addressCountry: 'CI',
-        },
-        areaServed: ['Côte d\'Ivoire', 'Afrique de l\'Ouest', 'Afrique'],
-        knowsAbout: [
-                'Entreprise de Services du Numérique',
-                'Transformation digitale',
-                'Développement web sur mesure',
-                'Infrastructure IT & Cloud',
-                'Assistance technique & Formation IT',
-                'Intelligence Artificielle',
-                'Solutions SaaS',
-                'Évaluation académique',
-                'Gestion BTP',
-                'Gestion scolaire',
-        ],
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: "FTCI — Freelance Technologies Côte d'Ivoire",
+	alternateName: 'FTCI',
+	url: siteUrl,
+	logo: `${siteUrl}/brand/logo-ftci.png`,
+	description:
+		'Entreprise de Services du Numérique (ESN) basée à Abidjan. FTCI accompagne les organisations dans leur transformation digitale à travers 4 pôles de services (conseil, développement, infrastructure, formation) et édite 4 solutions SaaS (SECT, OPUC, CATS, ScolaGest) pensées pour le marché africain.',
+	foundingDate: '2023',
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Abidjan',
+		addressRegion: 'Lagunes',
+		addressCountry: 'CI',
+	},
+	areaServed: ["Côte d'Ivoire", "Afrique de l'Ouest", 'Afrique'],
+	knowsAbout: [
+		'Entreprise de Services du Numérique',
+		'Transformation digitale',
+		'Développement web sur mesure',
+		'Infrastructure IT & Cloud',
+		'Assistance technique & Formation IT',
+		'Intelligence Artificielle',
+		'Solutions SaaS',
+		'Évaluation académique',
+		'Gestion BTP',
+		'Gestion scolaire',
+	],
 };
 
 // Schema.org WebSite — toujours présent
 const websiteSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'FTCI',
-        url: siteUrl,
-        inLanguage: 'fr-FR',
-        publisher: { '@type': 'Organization', name: 'FTCI' },
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: 'FTCI',
+	url: siteUrl,
+	inLanguage: 'fr-FR',
+	publisher: { '@type': 'Organization', name: 'FTCI' },
 };
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr" class="scroll-smooth">
-        <head>
-                <meta charset="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-                <!-- SEO (meta, OG, Twitter, JSON-LD Organization + WebSite) -->
-                <SEO
-                        title={title}
-                        description={description}
-                        canonical={canonical}
-                        ogImage={ogImage}
-                        noindex={noindex}
-                        keywords={keywords}
-                        schema={[orgSchema, websiteSchema]}
-                />
+		<!-- SEO (meta, OG, Twitter, JSON-LD Organization + WebSite) -->
+		<SEO
+			title={title}
+			description={description}
+			canonical={canonical}
+			ogImage={ogImage}
+			noindex={noindex}
+			keywords={keywords}
+			schema={[orgSchema, websiteSchema]}
+		/>
 
-                <!-- Favicon (triskel pixelisé bleu/vert/orange sur fond navy) -->
-                <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-                <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
-                <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" sizes="180x180" />
-                <link rel="mask-icon" href="/favicon.svg" color="#0F1E3D" />
-                <!-- PWA / Android Chrome -->
-                <link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png" />
-                <link rel="icon" type="image/png" sizes="512x512" href="/brand/icon-512.png" />
+		<!-- Favicon (triskel pixelisé bleu/vert/orange sur fond navy) -->
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" sizes="180x180" />
+		<link rel="mask-icon" href="/favicon.svg" color="#0F1E3D" />
+		<!-- PWA / Android Chrome -->
+		<link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png" />
+		<link rel="icon" type="image/png" sizes="512x512" href="/brand/icon-512.png" />
 
-                <!-- RSS blog auto-discovery -->
-                <link
-                        rel="alternate"
-                        type="application/rss+xml"
-                        title="Blog FTCI — Flux RSS"
-                        href="/rss.xml"
-                />
+		<!-- RSS blog auto-discovery -->
+		<link rel="alternate" type="application/rss+xml" title="Blog FTCI — Flux RSS" href="/rss.xml" />
 
-                <!-- Fonts Google : Poppins (display) + Inter (corps) — preconnect + display=swap -->
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-                <link
-                        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800&display=swap"
-                        rel="stylesheet"
-                />
-        </head>
+		<!-- Fonts Google : Poppins (display) + Inter (corps) — preconnect + display=swap -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
 
-        <body class="min-h-screen flex flex-col bg-light-bg text-navy antialiased">
-                <a
-                        href="#contenu"
-                        class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-navy focus:text-white focus:rounded-lg"
-                >
-                        Aller au contenu
-                </a>
-                <slot />
+	<body class="min-h-screen flex flex-col bg-light-bg text-navy antialiased">
+		<a
+			href="#contenu"
+			class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-navy focus:text-white focus:rounded-lg"
+		>
+			Aller au contenu
+		</a>
+		<slot />
 
-                <!-- ──────────────────────────────────────────────────────────────────
+		<!-- ──────────────────────────────────────────────────────────────────
                      SCRIPT GLOBAL
                      - Scroll reveal (IntersectionObserver .observe → .is-visible)
                      - Magnetic buttons (pointermove + rAF lerp, desktop only)
@@ -137,118 +125,111 @@ const websiteSchema = {
                      - Curseur trail (desktop only, spring follow, grow on interactive)
                      Tous reduced-motion aware, passive listeners, rAF throttled.
                      ────────────────────────────────────────────────────────────────── -->
-                <script>
-                        const prefersReducedMotion = window.matchMedia(
-                                '(prefers-reduced-motion: reduce)',
-                        ).matches;
-                        const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+		<script>
+			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-                        // ── 1. Scroll reveal ──────────────────────────────────────────────
-                        const revealElements = document.querySelectorAll('.observe');
-                        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-                                revealElements.forEach((el) => el.classList.add('is-visible'));
-                        } else {
-                                const observer = new IntersectionObserver(
-                                        (entries) => {
-                                                entries.forEach((entry) => {
-                                                        if (entry.isIntersecting) {
-                                                                entry.target.classList.add('is-visible');
-                                                                observer.unobserve(entry.target);
-                                                        }
-                                                });
-                                        },
-                                        { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
-                                );
-                                revealElements.forEach((el) => observer.observe(el));
-                        }
+			// ── 1. Scroll reveal ──────────────────────────────────────────────
+			const revealElements = document.querySelectorAll('.observe');
+			if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+				revealElements.forEach((el) => el.classList.add('is-visible'));
+			} else {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+				);
+				revealElements.forEach((el) => observer.observe(el));
+			}
 
-                        // ── 2. Magnetic buttons (desktop, reduced-motion OK) ──────────────
-                        if (!isTouch) {
-                                const magnets = document.querySelectorAll<HTMLElement>('[data-magnetic]');
-                                magnets.forEach((el) => {
-                                        const strength = parseFloat(el.dataset.magnetic || '') || 20;
-                                        let targetX = 0;
-                                        let targetY = 0;
-                                        let currentX = 0;
-                                        let currentY = 0;
-                                        let rafId: number | null = null;
+			// ── 2. Magnetic buttons (desktop, reduced-motion OK) ──────────────
+			if (!isTouch) {
+				const magnets = document.querySelectorAll<HTMLElement>('[data-magnetic]');
+				magnets.forEach((el) => {
+					const strength = parseFloat(el.dataset.magnetic || '') || 20;
+					let targetX = 0;
+					let targetY = 0;
+					let currentX = 0;
+					let currentY = 0;
+					let rafId: number | null = null;
 
-                                        const loop = () => {
-                                                currentX += (targetX - currentX) * 0.18;
-                                                currentY += (targetY - currentY) * 0.18;
-                                                el.style.transform = `translate(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px)`;
+					const loop = () => {
+						currentX += (targetX - currentX) * 0.18;
+						currentY += (targetY - currentY) * 0.18;
+						el.style.transform = `translate(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px)`;
 
-                                                if (
-                                                        Math.abs(targetX - currentX) > 0.15 ||
-                                                        Math.abs(targetY - currentY) > 0.15
-                                                ) {
-                                                        rafId = requestAnimationFrame(loop);
-                                                } else {
-                                                        if (targetX === 0 && targetY === 0) {
-                                                                el.style.transform = '';
-                                                        }
-                                                        rafId = null;
-                                                }
-                                        };
+						if (Math.abs(targetX - currentX) > 0.15 || Math.abs(targetY - currentY) > 0.15) {
+							rafId = requestAnimationFrame(loop);
+						} else {
+							if (targetX === 0 && targetY === 0) {
+								el.style.transform = '';
+							}
+							rafId = null;
+						}
+					};
 
-                                        const schedule = () => {
-                                                if (rafId === null) rafId = requestAnimationFrame(loop);
-                                        };
+					const schedule = () => {
+						if (rafId === null) rafId = requestAnimationFrame(loop);
+					};
 
-                                        el.addEventListener(
-                                                'pointermove',
-                                                (e: PointerEvent) => {
-                                                        const r = el.getBoundingClientRect();
-                                                        const cx = r.left + r.width / 2;
-                                                        const cy = r.top + r.height / 2;
-                                                        targetX = ((e.clientX - cx) / r.width) * strength;
-                                                        targetY = ((e.clientY - cy) / r.height) * strength;
-                                                        schedule();
-                                                },
-                                                { passive: true },
-                                        );
+					el.addEventListener(
+						'pointermove',
+						(e: PointerEvent) => {
+							const r = el.getBoundingClientRect();
+							const cx = r.left + r.width / 2;
+							const cy = r.top + r.height / 2;
+							targetX = ((e.clientX - cx) / r.width) * strength;
+							targetY = ((e.clientY - cy) / r.height) * strength;
+							schedule();
+						},
+						{ passive: true },
+					);
 
-                                        el.addEventListener('pointerleave', () => {
-                                                targetX = 0;
-                                                targetY = 0;
-                                                schedule();
-                                        });
-                                });
-                        }
+					el.addEventListener('pointerleave', () => {
+						targetX = 0;
+						targetY = 0;
+						schedule();
+					});
+				});
+			}
 
-                        // ── 3. Parallax (rAF throttled) ───────────────────────────────────
-                        if (!prefersReducedMotion) {
-                                const parallaxEls = Array.from(
-                                        document.querySelectorAll<HTMLElement>('[data-parallax]'),
-                                );
-                                if (parallaxEls.length > 0) {
-                                        let ticking = false;
+			// ── 3. Parallax (rAF throttled) ───────────────────────────────────
+			if (!prefersReducedMotion) {
+				const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
+				if (parallaxEls.length > 0) {
+					let ticking = false;
 
-                                        const update = () => {
-                                                const scrollY = window.scrollY;
-                                                parallaxEls.forEach((el) => {
-                                                        const speed = parseFloat(el.dataset.parallax || '') || 0.2;
-                                                        // Limite : ne pas parallaxer hors de ~2 viewports
-                                                        const offset = scrollY * speed;
-                                                        el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
-                                                });
-                                                ticking = false;
-                                        };
+					const update = () => {
+						const scrollY = window.scrollY;
+						parallaxEls.forEach((el) => {
+							const speed = parseFloat(el.dataset.parallax || '') || 0.2;
+							// Limite : ne pas parallaxer hors de ~2 viewports
+							const offset = scrollY * speed;
+							el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+						});
+						ticking = false;
+					};
 
-                                        const onScroll = () => {
-                                                if (!ticking) {
-                                                        ticking = true;
-                                                        requestAnimationFrame(update);
-                                                }
-                                        };
+					const onScroll = () => {
+						if (!ticking) {
+							ticking = true;
+							requestAnimationFrame(update);
+						}
+					};
 
-                                        window.addEventListener('scroll', onScroll, { passive: true });
-                                        update();
-                                }
-                        }
+					window.addEventListener('scroll', onScroll, { passive: true });
+					update();
+				}
+			}
 
-                        // ── 4. Curseur trail (désactivé) ────────────────
-                        // Le curseur circulaire a été supprimé à la demande de l'utilisateur
-                </script>
-        </body>
+			// ── 4. Curseur trail (désactivé) ────────────────
+			// Le curseur circulaire a été supprimé à la demande de l'utilisateur
+		</script>
+	</body>
 </html>

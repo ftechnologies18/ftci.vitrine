@@ -17,37 +17,46 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
-        title: string;
-        description?: string;
-        canonical?: string;
-        noindex?: boolean;
+	title: string;
+	description?: string;
+	canonical?: string;
+	noindex?: boolean;
 }
 
 const {
-        title,
-        description = 'Le blog FTCI — analyses, bonnes pratiques et actualités sur la transformation digitale, l\'IA, le cloud, la cybersécurité et l\'innovation technologique en Afrique.',
-        canonical,
-        noindex = false,
+	title,
+	description = "Le blog FTCI — analyses, bonnes pratiques et actualités sur la transformation digitale, l'IA, le cloud, la cybersécurité et l'innovation technologique en Afrique.",
+	canonical,
+	noindex = false,
 } = Astro.props;
 ---
 
 <Layout
-        title={title}
-        description={description}
-        canonical={canonical}
-        noindex={noindex}
-        keywords={['blog', 'FTCI', 'transformation digitale', 'IA', 'cloud', 'cybersécurité', 'innovation', 'Afrique']}
+	title={title}
+	description={description}
+	canonical={canonical}
+	noindex={noindex}
+	keywords={[
+		'blog',
+		'FTCI',
+		'transformation digitale',
+		'IA',
+		'cloud',
+		'cybersécurité',
+		'innovation',
+		'Afrique',
+	]}
 >
-        <slot name="head" />
-        <Header />
-        <main class="flex-1 blog-main">
-                <slot />
-        </main>
-        <Footer />
+	<slot name="head" />
+	<Header />
+	<main class="flex-1 blog-main">
+		<slot />
+	</main>
+	<Footer />
 </Layout>
 
 <style>
-        .blog-main {
-                background: var(--color-light-bg);
-        }
+	.blog-main {
+		background: var(--color-light-bg);
+	}
 </style>

@@ -20,10 +20,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
 # environment variables
 .env
 .env.production
+.env.local
+.env.*.local
 
 # macOS-specific files
 .DS_Store
@@ -31,9 +32,25 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# vscode (garder extensions.json et launch.json qui sont committés)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+
 # local contact form storage (dev mode)
 storage/
 
 # wrangler local cache (dev only — remote KV bindings are in wrangler.jsonc)
 .wrangler/
+
+# husky internals (générés, ne pas committer)
+.husky/_/
+
+# Prettier / ESLint cache
+.eslintcache
+.cache/
+
+# Coverage (si tests ajoutés un jour)
+coverage/
+*.lcov
 

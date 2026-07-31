@@ -10,9 +10,9 @@
 import { CATEGORY_LABELS } from '../../../keystatic.config';
 
 interface Props {
-        category: string;
-        href?: string;
-        size?: 'sm' | 'md';
+	category: string;
+	href?: string;
+	size?: 'sm' | 'md';
 }
 
 const { category, href, size = 'md' } = Astro.props;
@@ -21,12 +21,12 @@ const label = CATEGORY_LABELS[category] ?? category;
 
 // Mapping catégorie → classes de couleur (bg + text), basé sur la palette FTCI.
 const colorByCategory: Record<string, string> = {
-        'transformation-digitale': 'bg-orange/10 text-orange-700 border-orange/20',
-        'intelligence-artificielle': 'bg-periwinkle/10 text-periwinkle-700 border-periwinkle/20',
-        'cloud-computing': 'bg-navy/10 text-navy border-navy/20',
-        'cybersecurite': 'bg-green/10 text-green-700 border-green/20',
-        'tech-innovation': 'bg-orange/10 text-orange border-orange/20',
-        'actualites-ftci': 'bg-navy/10 text-navy-700 border-navy/20',
+	'transformation-digitale': 'bg-orange/10 text-orange-700 border-orange/20',
+	'intelligence-artificielle': 'bg-periwinkle/10 text-periwinkle-700 border-periwinkle/20',
+	'cloud-computing': 'bg-navy/10 text-navy border-navy/20',
+	cybersecurite: 'bg-green/10 text-green-700 border-green/20',
+	'tech-innovation': 'bg-orange/10 text-orange border-orange/20',
+	'actualites-ftci': 'bg-navy/10 text-navy-700 border-navy/20',
 };
 
 const colorClasses = colorByCategory[category] ?? 'bg-navy/10 text-navy border-navy/20';
@@ -34,20 +34,20 @@ const sizeClasses = size === 'sm' ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 
 ---
 
 {
-        href ? (
-                <a
-                        href={href}
-                        class={`inline-flex items-center gap-1.5 rounded-full border font-medium transition-colors duration-200 hover:opacity-80 ${colorClasses} ${sizeClasses}`}
-                >
-                        <span class="w-1.5 h-1.5 rounded-full bg-current opacity-60" aria-hidden="true" />
-                        {label}
-                </a>
-        ) : (
-                <span
-                        class={`inline-flex items-center gap-1.5 rounded-full border font-medium ${colorClasses} ${sizeClasses}`}
-                >
-                        <span class="w-1.5 h-1.5 rounded-full bg-current opacity-60" aria-hidden="true" />
-                        {label}
-                </span>
-        )
+	href ? (
+		<a
+			href={href}
+			class={`inline-flex items-center gap-1.5 rounded-full border font-medium transition-colors duration-200 hover:opacity-80 ${colorClasses} ${sizeClasses}`}
+		>
+			<span class="w-1.5 h-1.5 rounded-full bg-current opacity-60" aria-hidden="true" />
+			{label}
+		</a>
+	) : (
+		<span
+			class={`inline-flex items-center gap-1.5 rounded-full border font-medium ${colorClasses} ${sizeClasses}`}
+		>
+			<span class="w-1.5 h-1.5 rounded-full bg-current opacity-60" aria-hidden="true" />
+			{label}
+		</span>
+	)
 }

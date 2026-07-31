@@ -2,120 +2,240 @@
 import LegalLayout from '../../components/LegalLayout.astro';
 
 const sections = [
-        { id: 'objet', title: 'Objet des CGU' },
-        { id: 'definitions', title: 'Définitions' },
-        { id: 'acceptation', title: 'Acceptation des CGU' },
-        { id: 'acces', title: "Conditions d'accès au site" },
-        { id: 'utilisation', title: "Conditions d'utilisation" },
-        { id: 'compte', title: 'Comptes utilisateurs (produits SaaS)' },
-        { id: 'responsabilites-editeur', title: 'Responsabilités de FTCI' },
-        { id: 'responsabilites-utilisateur', title: "Responsabilités de l'utilisateur" },
-        { id: 'propriete', title: 'Propriété intellectuelle' },
-        { id: 'liens', title: 'Liens vers des sites tiers' },
-        { id: 'donnees', title: 'Données personnelles' },
-        { id: 'force-majeure', title: 'Force majeure' },
-        { id: 'modifications-cgu', title: 'Modification des CGU' },
-        { id: 'droit-applicable', title: 'Droit applicable et juridiction' },
-        { id: 'contact', title: 'Contact' },
+	{ id: 'objet', title: 'Objet des CGU' },
+	{ id: 'definitions', title: 'Définitions' },
+	{ id: 'acceptation', title: 'Acceptation des CGU' },
+	{ id: 'acces', title: "Conditions d'accès au site" },
+	{ id: 'utilisation', title: "Conditions d'utilisation" },
+	{ id: 'compte', title: 'Comptes utilisateurs (produits SaaS)' },
+	{ id: 'responsabilites-editeur', title: 'Responsabilités de FTCI' },
+	{ id: 'responsabilites-utilisateur', title: "Responsabilités de l'utilisateur" },
+	{ id: 'propriete', title: 'Propriété intellectuelle' },
+	{ id: 'liens', title: 'Liens vers des sites tiers' },
+	{ id: 'donnees', title: 'Données personnelles' },
+	{ id: 'force-majeure', title: 'Force majeure' },
+	{ id: 'modifications-cgu', title: 'Modification des CGU' },
+	{ id: 'droit-applicable', title: 'Droit applicable et juridiction' },
+	{ id: 'contact', title: 'Contact' },
 ];
 
 const updatedAt = '25 juillet 2026';
 ---
 
 <LegalLayout
-        title="Conditions générales d'utilisation"
-        description="Conditions générales d'utilisation du site FTCI et de ses solutions SaaS. Règles d'accès, d'utilisation, responsabilités et propriété intellectuelle."
-        canonical="/legal/cgu"
-        updatedAt={updatedAt}
-        sections={sections}
+	title="Conditions générales d'utilisation"
+	description="Conditions générales d'utilisation du site FTCI et de ses solutions SaaS. Règles d'accès, d'utilisation, responsabilités et propriété intellectuelle."
+	canonical="/legal/cgu"
+	updatedAt={updatedAt}
+	sections={sections}
 >
-        <h2 id="objet">1. Objet des CGU</h2>
-        <p>Les présentes Conditions Générales d'Utilisation (« CGU ») ont pour objet de définir les modalités et conditions d'accès et d'utilisation du site <a href="https://ftci.fr">https://ftci.fr</a> (« le Site ») et des services proposés par FTCI — Freelance Technologies Côte d'Ivoire (« FTCI », « l'Éditeur »).</p>
-        <p>Elles s'appliquent à tout utilisateur (« Utilisateur ») accédant au Site, qu'il soit visiteur non enregistré ou titulaire d'un compte client sur l'une des solutions SaaS de FTCI (SECT, OPUC, CATS, ScolaGest).</p>
+	<h2 id="objet">1. Objet des CGU</h2>
+	<p>
+		Les présentes Conditions Générales d'Utilisation (« CGU ») ont pour objet de définir les
+		modalités et conditions d'accès et d'utilisation du site <a href="https://ftci.fr"
+			>https://ftci.fr</a
+		> (« le Site ») et des services proposés par FTCI — Freelance Technologies Côte d'Ivoire (« FTCI »,
+		« l'Éditeur »).
+	</p>
+	<p>
+		Elles s'appliquent à tout utilisateur (« Utilisateur ») accédant au Site, qu'il soit visiteur
+		non enregistré ou titulaire d'un compte client sur l'une des solutions SaaS de FTCI (SECT, OPUC,
+		CATS, ScolaGest).
+	</p>
 
-        <h2 id="definitions">2. Définitions</h2>
-        <ul>
-                <li><strong>Site :</strong> le site web accessible à l'adresse <a href="https://ftci.fr">https://ftci.fr</a> et ses sous-pages.</li>
-                <li><strong>Solutions SaaS :</strong> les produits logiciels édités par FTCI, à savoir SECT, OPUC, CATS et ScolaGest, accessibles via leurs sous-domaines respectifs (sect.ftci.fr, opuc.ftci.fr, cats.ftci.fr, scolagest.ftci.fr).</li>
-                <li><strong>Utilisateur :</strong> toute personne physique ou morale accédant au Site ou aux Solutions SaaS.</li>
-                <li><strong>Compte :</strong> espace personnel créé par un Utilisateur pour accéder à une Solution SaaS.</li>
-                <li><strong>Contenu :</strong> l'ensemble des textes, images, vidéos, données et informations disponibles sur le Site et les Solutions SaaS.</li>
-        </ul>
+	<h2 id="definitions">2. Définitions</h2>
+	<ul>
+		<li>
+			<strong>Site :</strong> le site web accessible à l'adresse <a href="https://ftci.fr"
+				>https://ftci.fr</a
+			> et ses sous-pages.
+		</li>
+		<li>
+			<strong>Solutions SaaS :</strong> les produits logiciels édités par FTCI, à savoir SECT, OPUC, CATS
+			et ScolaGest, accessibles via leurs sous-domaines respectifs (sect.ftci.fr, opuc.ftci.fr, cats.ftci.fr,
+			scolagest.ftci.fr).
+		</li>
+		<li>
+			<strong>Utilisateur :</strong> toute personne physique ou morale accédant au Site ou aux Solutions
+			SaaS.
+		</li>
+		<li>
+			<strong>Compte :</strong> espace personnel créé par un Utilisateur pour accéder à une Solution SaaS.
+		</li>
+		<li>
+			<strong>Contenu :</strong> l'ensemble des textes, images, vidéos, données et informations disponibles
+			sur le Site et les Solutions SaaS.
+		</li>
+	</ul>
 
-        <h2 id="acceptation">3. Acceptation des CGU</h2>
-        <p>L'accès et l'utilisation du Site impliquent l'acceptation pleine et entière des présentes CGU par l'Utilisateur. Cette acceptation est matérialisée par la simple navigation sur le Site.</p>
-        <p>Pour les Solutions SaaS nécessitant la création d'un Compte, l'acceptation des présentes CGU — et le cas échéant des Conditions Générales de Vente / d'Abonnement spécifiques au produit — est formalisée lors de l'inscription par case à cocher obligatoire.</p>
-        <p>Si l'Utilisateur n'accepte pas tout ou partie des CGU, il est invité à ne pas utiliser le Site et les Solutions SaaS.</p>
+	<h2 id="acceptation">3. Acceptation des CGU</h2>
+	<p>
+		L'accès et l'utilisation du Site impliquent l'acceptation pleine et entière des présentes CGU
+		par l'Utilisateur. Cette acceptation est matérialisée par la simple navigation sur le Site.
+	</p>
+	<p>
+		Pour les Solutions SaaS nécessitant la création d'un Compte, l'acceptation des présentes CGU —
+		et le cas échéant des Conditions Générales de Vente / d'Abonnement spécifiques au produit — est
+		formalisée lors de l'inscription par case à cocher obligatoire.
+	</p>
+	<p>
+		Si l'Utilisateur n'accepte pas tout ou partie des CGU, il est invité à ne pas utiliser le Site
+		et les Solutions SaaS.
+	</p>
 
-        <h2 id="acces">4. Conditions d'accès au site</h2>
-        <p>L'accès au Site est gratuit pour tout Utilisateur disposant d'une connexion à Internet. Les frais matériels, logiciels et de connexion nécessaires à l'accès au Site restent à la charge de l'Utilisateur.</p>
-        <p>FTCI s'efforce de maintenir le Site accessible 24 heures sur 24 et 7 jours sur 7, mais ne peut garantir une accessibilité absolue. L'accès peut être interrompu pour des raisons de maintenance, de mise à jour, ou pour des raisons techniques indépendantes de la volonté de FTCI.</p>
-        <p>FTCI se réserve le droit, sans préavis ni indemnité, de suspendre ou de refuser l'accès au Site à tout Utilisateur ne respectant pas les présentes CGU.</p>
+	<h2 id="acces">4. Conditions d'accès au site</h2>
+	<p>
+		L'accès au Site est gratuit pour tout Utilisateur disposant d'une connexion à Internet. Les
+		frais matériels, logiciels et de connexion nécessaires à l'accès au Site restent à la charge de
+		l'Utilisateur.
+	</p>
+	<p>
+		FTCI s'efforce de maintenir le Site accessible 24 heures sur 24 et 7 jours sur 7, mais ne peut
+		garantir une accessibilité absolue. L'accès peut être interrompu pour des raisons de
+		maintenance, de mise à jour, ou pour des raisons techniques indépendantes de la volonté de FTCI.
+	</p>
+	<p>
+		FTCI se réserve le droit, sans préavis ni indemnité, de suspendre ou de refuser l'accès au Site
+		à tout Utilisateur ne respectant pas les présentes CGU.
+	</p>
 
-        <h2 id="utilisation">5. Conditions d'utilisation</h2>
-        <p>L'Utilisateur s'engage à utiliser le Site et les Solutions SaaS dans le respect des présentes CGU, des lois et règlements en vigueur, et des droits des tiers. Il s'interdit notamment :</p>
-        <ul>
-                <li>D'utiliser le Site à des fins illégales, frauduleuses ou nuisibles ;</li>
-                <li>De tenter d'accéder à des données qui ne lui sont pas destinées ;</li>
-                <li>De porter atteinte à l'intégrité ou au bon fonctionnement du Site, notamment par des attaques de type déni de service, injection de code malveillant, ou tentative d'intrusion ;</li>
-                <li>De collecter automatiquement des données du Site (scraping, crawling) sans autorisation préalable de FTCI ;</li>
-                <li>De diffuser des contenus illicites, injurieux, diffamatoires ou portant atteinte à la dignité humaine ;</li>
-                <li>De se faire passer pour une autre personne ou de usurper l'identité d'un autre Utilisateur ;</li>
-                <li>De désactiver, contourner ou modifier les dispositifs de sécurité du Site.</li>
-        </ul>
-        <p>Tout manquement à ces obligations pourra entraîner la suspension immédiate du Compte de l'Utilisateur, sans préjudice des poursuites civiles et pénales applicables.</p>
+	<h2 id="utilisation">5. Conditions d'utilisation</h2>
+	<p>
+		L'Utilisateur s'engage à utiliser le Site et les Solutions SaaS dans le respect des présentes
+		CGU, des lois et règlements en vigueur, et des droits des tiers. Il s'interdit notamment :
+	</p>
+	<ul>
+		<li>D'utiliser le Site à des fins illégales, frauduleuses ou nuisibles ;</li>
+		<li>De tenter d'accéder à des données qui ne lui sont pas destinées ;</li>
+		<li>
+			De porter atteinte à l'intégrité ou au bon fonctionnement du Site, notamment par des attaques
+			de type déni de service, injection de code malveillant, ou tentative d'intrusion ;
+		</li>
+		<li>
+			De collecter automatiquement des données du Site (scraping, crawling) sans autorisation
+			préalable de FTCI ;
+		</li>
+		<li>
+			De diffuser des contenus illicites, injurieux, diffamatoires ou portant atteinte à la dignité
+			humaine ;
+		</li>
+		<li>
+			De se faire passer pour une autre personne ou de usurper l'identité d'un autre Utilisateur ;
+		</li>
+		<li>De désactiver, contourner ou modifier les dispositifs de sécurité du Site.</li>
+	</ul>
+	<p>
+		Tout manquement à ces obligations pourra entraîner la suspension immédiate du Compte de
+		l'Utilisateur, sans préjudice des poursuites civiles et pénales applicables.
+	</p>
 
-        <h2 id="compte">6. Comptes utilisateurs (produits SaaS)</h2>
-        <p>L'accès aux Solutions SaaS peut nécessiter la création d'un Compte. L'Utilisateur est responsable de la confidentialité de ses identifiants (email et mot de passe) et de toute activité réalisée depuis son Compte.</p>
-        <p>L'Utilisateur s'engage à :</p>
-        <ul>
-                <li>Communiquer des informations exactes et à les maintenir à jour ;</li>
-                <li>Utiliser un mot de passe robuste et à le renouveler périodiquement ;</li>
-                <li>Notifier immédiatement FTCI de toute utilisation non autorisée de son Compte ;</li>
-                <li>Ne pas partager son Compte avec des tiers.</li>
-        </ul>
+	<h2 id="compte">6. Comptes utilisateurs (produits SaaS)</h2>
+	<p>
+		L'accès aux Solutions SaaS peut nécessiter la création d'un Compte. L'Utilisateur est
+		responsable de la confidentialité de ses identifiants (email et mot de passe) et de toute
+		activité réalisée depuis son Compte.
+	</p>
+	<p>L'Utilisateur s'engage à :</p>
+	<ul>
+		<li>Communiquer des informations exactes et à les maintenir à jour ;</li>
+		<li>Utiliser un mot de passe robuste et à le renouveler périodiquement ;</li>
+		<li>Notifier immédiatement FTCI de toute utilisation non autorisée de son Compte ;</li>
+		<li>Ne pas partager son Compte avec des tiers.</li>
+	</ul>
 
-        <h2 id="responsabilites-editeur">7. Responsabilités de FTCI</h2>
-        <p>FTCI met tout en œuvre pour offrir un Site disponible, sûr et exact. Toutefois, FTCI ne peut garantir :</p>
-        <ul>
-                <li>Que le Site sera exempt d'erreurs, de bugs ou de virus ;</li>
-                <li>Que le Site sera accessible en continu sans interruption ;</li>
-                <li>L'exactitude, l'exhaustivité ou l'actualité des informations diffusées.</li>
-        </ul>
-        <p>FTCI ne saurait être tenu responsable des dommages directs ou indirects résultant de l'utilisation du Site, notamment perte de données, perte de chiffre d'affaires, ou interruption d'activité.</p>
+	<h2 id="responsabilites-editeur">7. Responsabilités de FTCI</h2>
+	<p>
+		FTCI met tout en œuvre pour offrir un Site disponible, sûr et exact. Toutefois, FTCI ne peut
+		garantir :
+	</p>
+	<ul>
+		<li>Que le Site sera exempt d'erreurs, de bugs ou de virus ;</li>
+		<li>Que le Site sera accessible en continu sans interruption ;</li>
+		<li>L'exactitude, l'exhaustivité ou l'actualité des informations diffusées.</li>
+	</ul>
+	<p>
+		FTCI ne saurait être tenu responsable des dommages directs ou indirects résultant de
+		l'utilisation du Site, notamment perte de données, perte de chiffre d'affaires, ou interruption
+		d'activité.
+	</p>
 
-        <h2 id="responsabilites-utilisateur">8. Responsabilités de l'utilisateur</h2>
-        <p>L'Utilisateur est seul responsable de l'usage qu'il fait du Site et des Solutions SaaS. Il est responsable de la sauvegarde de ses propres données et s'engage à ne pas importer de données dont il ne détient pas les droits.</p>
-        <p>L'Utilisateur garantit FTCI contre tout recours fondé sur une utilisation non conforme aux présentes CGU.</p>
+	<h2 id="responsabilites-utilisateur">8. Responsabilités de l'utilisateur</h2>
+	<p>
+		L'Utilisateur est seul responsable de l'usage qu'il fait du Site et des Solutions SaaS. Il est
+		responsable de la sauvegarde de ses propres données et s'engage à ne pas importer de données
+		dont il ne détient pas les droits.
+	</p>
+	<p>
+		L'Utilisateur garantit FTCI contre tout recours fondé sur une utilisation non conforme aux
+		présentes CGU.
+	</p>
 
-        <h2 id="propriete">9. Propriété intellectuelle</h2>
-        <p>Le Site et les Solutions SaaS, ainsi que l'ensemble de leurs éléments (textes, graphismes, logos, codes source, bases de données), sont protégés par le droit de la propriété intellectuelle et sont la propriété exclusive de FTCI ou de ses partenaires.</p>
-        <p>Toute reproduction, représentation, modification ou exploitation non autorisée est interdite et expose son auteur à des poursuites. Pour plus de détails, consulter nos <a href="/legal/mentions-legales">Mentions légales</a>.</p>
+	<h2 id="propriete">9. Propriété intellectuelle</h2>
+	<p>
+		Le Site et les Solutions SaaS, ainsi que l'ensemble de leurs éléments (textes, graphismes,
+		logos, codes source, bases de données), sont protégés par le droit de la propriété
+		intellectuelle et sont la propriété exclusive de FTCI ou de ses partenaires.
+	</p>
+	<p>
+		Toute reproduction, représentation, modification ou exploitation non autorisée est interdite et
+		expose son auteur à des poursuites. Pour plus de détails, consulter nos <a
+			href="/legal/mentions-legales">Mentions légales</a
+		>.
+	</p>
 
-        <h2 id="liens">10. Liens vers des sites tiers</h2>
-        <p>Le Site peut contenir des liens vers des sites tiers (notamment les sous-domaines des Solutions SaaS). FTCI n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu et leurs pratiques.</p>
+	<h2 id="liens">10. Liens vers des sites tiers</h2>
+	<p>
+		Le Site peut contenir des liens vers des sites tiers (notamment les sous-domaines des Solutions
+		SaaS). FTCI n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur
+		contenu et leurs pratiques.
+	</p>
 
-        <h2 id="donnees">11. Données personnelles</h2>
-        <p>Le traitement des données personnelles des Utilisateurs est décrit dans notre <a href="/legal/confidentialite">Politique de confidentialité</a>, que l'Utilisateur reconnaît avoir consultée.</p>
+	<h2 id="donnees">11. Données personnelles</h2>
+	<p>
+		Le traitement des données personnelles des Utilisateurs est décrit dans notre <a
+			href="/legal/confidentialite">Politique de confidentialité</a
+		>, que l'Utilisateur reconnaît avoir consultée.
+	</p>
 
-        <h2 id="force-majeure">12. Force majeure</h2>
-        <p>FTCI ne pourra être tenu responsable de l'inexécution de ses obligations résultant d'un cas de force majeure tel que défini par la jurisprudence ivoirienne et française, incluant notamment les catastrophes naturelles, pannes de réseau, attaques informatiques, décisions gouvernementales, ou grèves.</p>
+	<h2 id="force-majeure">12. Force majeure</h2>
+	<p>
+		FTCI ne pourra être tenu responsable de l'inexécution de ses obligations résultant d'un cas de
+		force majeure tel que défini par la jurisprudence ivoirienne et française, incluant notamment
+		les catastrophes naturelles, pannes de réseau, attaques informatiques, décisions
+		gouvernementales, ou grèves.
+	</p>
 
-        <h2 id="modifications-cgu">13. Modification des CGU</h2>
-        <p>FTCI se réserve le droit de modifier les présentes CGU à tout moment. Les CGU applicables sont celles en vigueur au moment de l'utilisation du Site. Les modifications entrent en vigueur dès leur publication sur cette page.</p>
-        <p>Il appartient à l'Utilisateur de consulter régulièrement cette page pour prendre connaissance des éventuelles évolutions. L'utilisation continue du Site après modification vaut acceptation des nouvelles CGU.</p>
+	<h2 id="modifications-cgu">13. Modification des CGU</h2>
+	<p>
+		FTCI se réserve le droit de modifier les présentes CGU à tout moment. Les CGU applicables sont
+		celles en vigueur au moment de l'utilisation du Site. Les modifications entrent en vigueur dès
+		leur publication sur cette page.
+	</p>
+	<p>
+		Il appartient à l'Utilisateur de consulter régulièrement cette page pour prendre connaissance
+		des éventuelles évolutions. L'utilisation continue du Site après modification vaut acceptation
+		des nouvelles CGU.
+	</p>
 
-        <h2 id="droit-applicable">14. Droit applicable et juridiction</h2>
-        <p>Les présentes CGU sont régies par le droit ivoirien. En cas de litige relatif à leur interprétation ou à leur exécution, les parties s'efforceront de résoudre amiablement leur différend avant toute action contentieuse.</p>
-        <p>À défaut d'accord amiable dans un délai de 60 jours, les tribunaux ivoiriens seront seuls compétents pour statuer sur le litige, sous réserve des dispositions impératives relatives à la protection des consommateurs.</p>
+	<h2 id="droit-applicable">14. Droit applicable et juridiction</h2>
+	<p>
+		Les présentes CGU sont régies par le droit ivoirien. En cas de litige relatif à leur
+		interprétation ou à leur exécution, les parties s'efforceront de résoudre amiablement leur
+		différend avant toute action contentieuse.
+	</p>
+	<p>
+		À défaut d'accord amiable dans un délai de 60 jours, les tribunaux ivoiriens seront seuls
+		compétents pour statuer sur le litige, sous réserve des dispositions impératives relatives à la
+		protection des consommateurs.
+	</p>
 
-        <h2 id="contact">15. Contact</h2>
-        <p>Pour toute question relative aux présentes CGU :</p>
-        <ul>
-                <li><strong>Email :</strong> <a href="mailto:contact@ftci.fr">contact@ftci.fr</a></li>
-                <li><strong>Téléphone :</strong> <a href="tel:+2250566184040">+225 05 6618 4040</a></li>
-                <li><strong>Adresse :</strong> Abidjan & Dabou, Côte d'Ivoire</li>
-        </ul>
-        <hr />
-        <p><em>Ces CGU ont été mises à jour le {updatedAt}.</em></p>
+	<h2 id="contact">15. Contact</h2>
+	<p>Pour toute question relative aux présentes CGU :</p>
+	<ul>
+		<li><strong>Email :</strong> <a href="mailto:contact@ftci.fr">contact@ftci.fr</a></li>
+		<li><strong>Téléphone :</strong> <a href="tel:+2250566184040">+225 05 6618 4040</a></li>
+		<li><strong>Adresse :</strong> Abidjan & Dabou, Côte d'Ivoire</li>
+	</ul>
+	<hr />
+	<p><em>Ces CGU ont été mises à jour le {updatedAt}.</em></p>
 </LegalLayout>

@@ -1,0 +1,30 @@
+# EditorConfig — https://editorconfig.org
+# Maintient une configuration uniforme entre éditeurs (VSCode, JetBrains, Vim,
+# Emacs, Sublime, etc.). Tous les développeurs utilisent les mêmes règles
+# d'indentation, fin de ligne, encodage, etc. sans configuration manuelle.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+indent_size = 8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Fichiers front-end : indentation 2 espaces (standard web)
+[*.{astro,html,css,scss,js,mjs,cjs,jsx,ts,tsx,json,jsonc,yaml,yml,md,mdoc}]
+indent_style = tab
+indent_size = 2
+
+# Markdown : préserver les espaces de fin (2 espaces = saut de ligne)
+[*.md]
+trim_trailing_whitespace = false
+
+[*.mdoc]
+trim_trailing_whitespace = false
+
+# Makefile : tabs obligatoires
+[Makefile]
+indent_style = tab

@@ -1,0 +1,40 @@
+# Prettier ignore — fichiers à ne pas formater automatiquement
+# (générés, third-party, ou sensibles au formatage)
+
+# Dépendances
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Lockfiles (formatage casserait le hash)
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+bun.lock
+
+# Fichiers générés
+worker-configuration.d.ts
+.astro/types.d.ts
+
+# Patchs third-party
+patches/
+
+# Assets binaires
+public/brand/*.png
+public/brand/*.ico
+public/blog/images/*.svg
+
+# Fichiers Astro complexes (scripts inline volumineux qui cassent Prettier)
+src/components/Hero.astro
+src/components/About.astro
+src/components/Products.astro
+src/components/Services.astro
+src/components/Contact.astro
+src/pages/legal/*.astro
+
+# GitHub templates YAML (syntaxe particulière non supportée par Prettier)
+.github/ISSUE_TEMPLATE/*.yml
+.github/workflows/*.yml
+.github/dependabot.yml

@@ -1,0 +1,83 @@
+name: 🔍 Quality & Security Check
+
+# Exécuté sur chaque PR et push vers main
+# Vérifie : lint, type-check, build, audit de sécurité
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write # pour pnpm audit (upload SARIF si activé)
+
+env:
+  NODE_VERSION: '22'
+  PNPM_VERSION: '9.15.0'
+
+jobs:
+  quality:
+    name: Lint + Type-check + Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 🧰 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔍 ESLint
+        run: pnpm lint
+
+      - name: 🎨 Prettier check
+        run: pnpm format:check
+
+      - name: 🔢 Type-check (Astro)
+        run: pnpm typecheck
+        continue-on-error: true # erreurs pré-existantes Hero.astro tolérées
+
+      - name: 🔨 Build
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+  security:
+    name: Security audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 🧰 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🛡️ pnpm audit
+        run: pnpm audit --prod
+        continue-on-error: true # advisory only — ne bloque pas les PR

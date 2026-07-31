@@ -17,35 +17,35 @@ import { getAllArticles, getArticleUrl, getCategoryLabel } from '../lib/blog';
 const SITE_URL = 'https://ftci.fr';
 const FEED_TITLE = 'Blog FTCI — Transformation digitale, IA, Cloud & Cybersécurité';
 const FEED_DESCRIPTION =
-        "Analyses, expertises et actualités de Freelance Technologies Côte d'Ivoire — transformation digitale, intelligence artificielle, cloud, cybersécurité et innovation technologique en Afrique.";
+	"Analyses, expertises et actualités de Freelance Technologies Côte d'Ivoire — transformation digitale, intelligence artificielle, cloud, cybersécurité et innovation technologique en Afrique.";
 
 function escapeXml(s: string): string {
-        return s
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&apos;');
+	return s
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&apos;');
 }
 
 export const GET: APIRoute = async () => {
-        const articles = (await getAllArticles()).slice(0, 20);
+	const articles = (await getAllArticles()).slice(0, 20);
 
-        const itemsXml = articles
-                .map((entry) => {
-                        const url = `${SITE_URL}${getArticleUrl(entry)}`;
-                        const pubDate = entry.data.publishedAt.toUTCString();
-                        const category = getCategoryLabel(entry.data.category);
-                        const description = escapeXml(entry.data.description);
-                        const title = escapeXml(entry.data.title);
-                        const author = escapeXml(entry.data.author);
-                        const coverImage = entry.data.coverImage
-                                ? (entry.data.coverImage.startsWith('http')
-                                                ? entry.data.coverImage
-                                                : `${SITE_URL}${entry.data.coverImage}`)
-                                : '';
+	const itemsXml = articles
+		.map((entry) => {
+			const url = `${SITE_URL}${getArticleUrl(entry)}`;
+			const pubDate = entry.data.publishedAt.toUTCString();
+			const category = getCategoryLabel(entry.data.category);
+			const description = escapeXml(entry.data.description);
+			const title = escapeXml(entry.data.title);
+			const author = escapeXml(entry.data.author);
+			const coverImage = entry.data.coverImage
+				? entry.data.coverImage.startsWith('http')
+					? entry.data.coverImage
+					: `${SITE_URL}${entry.data.coverImage}`
+				: '';
 
-                        return `    <item>
+			return `    <item>
       <title>${title}</title>
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
@@ -55,12 +55,12 @@ export const GET: APIRoute = async () => {
       <description>${description}</description>
       ${coverImage ? `<enclosure url="${escapeXml(coverImage)}" type="image/jpeg" length="0" />\n      ` : ''}<comments>${url}</comments>
     </item>`;
-                })
-                .join('\n');
+		})
+		.join('\n');
 
-        const lastBuildDate = articles[0]?.data.publishedAt.toUTCString() ?? new Date().toUTCString();
+	const lastBuildDate = articles[0]?.data.publishedAt.toUTCString() ?? new Date().toUTCString();
 
-        const xml = `<?xml version="1.0" encoding="UTF-8"?>
+	const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(FEED_TITLE)}</title>
@@ -82,12 +82,12 @@ ${itemsXml}
   </channel>
 </rss>`;
 
-        return new Response(xml, {
-                status: 200,
-                headers: {
-                        'Content-Type': 'application/rss+xml; charset=utf-8',
-                        'Cache-Control': 'public, max-age=3600',
-                        'X-Robots-Tag': 'noindex',
-                },
-        });
-}
+	return new Response(xml, {
+		status: 200,
+		headers: {
+			'Content-Type': 'application/rss+xml; charset=utf-8',
+			'Cache-Control': 'public, max-age=3600',
+			'X-Robots-Tag': 'noindex',
+		},
+	});
+};

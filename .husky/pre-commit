@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# Husky pre-commit hook — exécuté avant chaque `git commit`
+#
+# Lint-staged ne formate/lint que les fichiers stagés (rapide), pas tout le repo.
+# Si un fichier a des erreurs ESLint non fixables, le commit est bloqué.
+
+pnpm exec lint-staged
