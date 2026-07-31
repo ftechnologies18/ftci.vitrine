@@ -34,763 +34,1038 @@ const totalCategories = categories.length;
 ---
 
 <BlogLayout
-	title="Blog FTCI — Expertise Tech Africaine"
-	canonical="/blog"
+        title="Blog FTCI — Expertise Tech Africaine"
+        canonical="/blog"
 >
-	<!-- ══════════════════════════════════════════════════════════════════════ -->
-	<!-- HERO CINÉMATIQUE PREMIUM                                               -->
-	<!-- ══════════════════════════════════════════════════════════════════════ -->
-	<section class="blog-hero-premium">
-		<!-- Animated background elements -->
-		<div class="hero-bg" aria-hidden="true">
-			<div class="hero-mesh"></div>
-			<div class="hero-grid-pattern"></div>
-			<div class="hero-float hero-float-1"></div>
-			<div class="hero-float hero-float-2"></div>
-			<div class="hero-float hero-float-3"></div>
-		</div>
+        <!-- ══════════════════════════════════════════════════════════════════════ -->
+        <!-- HERO CINÉMATIQUE PREMIUM                                               -->
+        <!-- ══════════════════════════════════════════════════════════════════════ -->
+        <section class="blog-hero-premium">
+                <!-- Animated background elements -->
+                <div class="hero-bg" aria-hidden="true">
+                        <div class="hero-mesh"></div>
+                        <div class="hero-grid-pattern"></div>
+                        <div class="hero-float hero-float-1"></div>
+                        <div class="hero-float hero-float-2"></div>
+                        <div class="hero-float hero-float-3"></div>
+                </div>
 
-		<div class="container">
-			<div class="hero-content">
-				<!-- Eyebrow animé -->
-				<div class="hero-eyebrow">
-					<span class="hero-eyebrow-dot"></span>
-					<span>ESPACE EDITORIAL</span>
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-					</svg>
-				</div>
+                <div class="container">
+                        <div class="hero-content">
+                                <!-- Eyebrow animé -->
+                                <div class="hero-eyebrow">
+                                        <span class="hero-eyebrow-dot"></span>
+                                        <span>ESPACE EDITORIAL</span>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                        </svg>
+                                </div>
 
-				<!-- Titre principal avec effet reveal -->
-				<h1 class="hero-title">
-					<span class="hero-title-line hero-title-line-1">Expertises &</span>
-					<span class="hero-title-line hero-title-line-2">Innovations <span class="hero-title-accent">Tech</span></span>
-				</h1>
+                                <!-- Titre principal avec effet reveal -->
+                                <h1 class="hero-title">
+                                        <span class="hero-title-line hero-title-line-1">Expertises &</span>
+                                        <span class="hero-title-line hero-title-line-2">Innovations <span class="hero-title-accent">Tech</span></span>
+                                </h1>
 
-				<!-- Description -->
-				<p class="hero-description">
-					Décryptons ensemble les enjeux du numérique en Afrique. Analyses pointues, 
-					cas d'usage concrets et visions d'avenir pour les décideurs tech.
-				</p>
+                                <!-- Description -->
+                                <p class="hero-description">
+                                        Décryptons ensemble les enjeux du numérique en Afrique. Analyses pointues, 
+                                        cas d'usage concrets et visions d'avenir pour les décideurs tech.
+                                </p>
 
-				<!-- Stats animées -->
-				<div class="hero-stats">
-					<div class="hero-stat">
-						<span class="hero-stat-number">{totalArticles}</span>
-						<span class="hero-stat-label">Articles</span>
-					</div>
-					<div class="hero-stat-divider" aria-hidden="true"></div>
-					<div class="hero-stat">
-						<span class="hero-stat-number">{totalCategories}</span>
-						<span class="hero-stat-label">Thématiques</span>
-					</div>
-					<div class="hero-stat-divider" aria-hidden="true"></div>
-					<div class="hero-stat">
-						<span class="hero-stat-number">∞</span>
-						<span class="hero-stat-label">Idées</span>
-					</div>
-				</div>
+                                <!-- Stats animées -->
+                                <div class="hero-stats">
+                                        <div class="hero-stat">
+                                                <span class="hero-stat-number">{totalArticles}</span>
+                                                <span class="hero-stat-label">Articles</span>
+                                        </div>
+                                        <div class="hero-stat-divider" aria-hidden="true"></div>
+                                        <div class="hero-stat">
+                                                <span class="hero-stat-number">{totalCategories}</span>
+                                                <span class="hero-stat-label">Thématiques</span>
+                                        </div>
+                                        <div class="hero-stat-divider" aria-hidden="true"></div>
+                                        <div class="hero-stat">
+                                                <span class="hero-stat-number">∞</span>
+                                                <span class="hero-stat-label">Idées</span>
+                                        </div>
+                                </div>
 
-				<!-- Indicateur scroll -->
-				<div class="hero-scroll-indicator" aria-hidden="true">
-					<div class="scroll-line"></div>
-				</div>
-			</div>
-		</div>
-	</section>
+                                <!-- Indicateur scroll -->
+                                <div class="hero-scroll-indicator" aria-hidden="true">
+                                        <div class="scroll-line"></div>
+                                </div>
+                        </div>
+                </div>
+        </section>
 
-	<!-- ══════════════════════════════════════════════════════════════════════ -->
-	<!-- CONTENU PRINCIPAL                                                     -->
-	<!-- ══════════════════════════════════════════════════════════════════════ -->
-	<div class="blog-body-premium">
-		<div class="container">
+        <!-- ══════════════════════════════════════════════════════════════════════ -->
+        <!-- CONTENU PRINCIPAL                                                     -->
+        <!-- ══════════════════════════════════════════════════════════════════════ -->
+        <div class="blog-body-premium">
+                <div class="container">
 
-			<!-- ── ARTICLE À LA UNE (Magazine Format) ──────────────────────── -->
-			{
-				hero && (
-					<section class="featured-section" aria-label="À la une">
-						<div class="featured-header">
-							<span class="featured-badge-text">
-								<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-									<path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/>
-								</svg>
-								ARTICLE À LA UNE
-							</span>
-						</div>
-						<FeaturedArticle entry={hero} />
-					</section>
-				)
-			}
+                        <!-- ── ARTICLE À LA UNE (Magazine Format) ──────────────────────── -->
+                        {
+                                hero && (
+                                        <section class="featured-section" aria-label="À la une">
+                                                <div class="featured-header">
+                                                        <span class="featured-badge-text">
+                                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                        <path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/>
+                                                                </svg>
+                                                                ARTICLE À LA UNE
+                                                        </span>
+                                                </div>
+                                                <FeaturedArticle entry={hero} />
+                                        </section>
+                                )
+                        }
 
-			<!-- ── FILTRES PAR CATÉGORIE ──────────────────────────────────── -->
-			<BlogFilters />
+                        <!-- ── FILTRES PAR CATÉGORIE ──────────────────────────────────── -->
+                        <BlogFilters />
 
-			<!-- ── GRILLE D'ARTICLES ──────────────────────────────────────── -->
-			{
-				restArticles.length > 0 ? (
-					<section class="articles-grid-section" aria-label="Tous les articles">
-						<div class="articles-header">
-							<h2 class="articles-title">Dernières publications</h2>
-							<span class="articles-count">{restArticles.length} article{restArticles.length > 1 ? 's' : ''}</span>
-						</div>
-						<div class="articles-grid">
-							{restArticles.map((entry, i) => (
-								<ArticleCard entry={entry} priority={i < 6} index={i} />
-							))}
-						</div>
-					</section>
-				) : (
-					<div class="blog-empty-premium">
-						<div class="empty-icon" aria-hidden="true">
-							<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-							</svg>
-						</div>
-						<p class="empty-title">Rendez-vous très bientôt</p>
-						<p class="empty-desc">Nos équipes préparent des contenus exclusifs pour vous.</p>
-					</div>
-				)
-			}
+                        <!-- ── GRILLE D'ARTICLES ──────────────────────────────────────── -->
+                        {
+                                restArticles.length > 0 ? (
+                                        <section class="articles-grid-section" aria-label="Tous les articles">
+                                                <div class="articles-header">
+                                                        <h2 class="articles-title">Dernières publications</h2>
+                                                        <span class="articles-count">{restArticles.length} article{restArticles.length > 1 ? 's' : ''}</span>
+                                                </div>
+                                                <div class="articles-grid">
+                                                        {restArticles.map((entry, i) => (
+                                                                <ArticleCard entry={entry} priority={i < 6} index={i} />
+                                                        ))}
+                                                </div>
+                                        </section>
+                                ) : (
+                                        <div class="blog-empty-premium">
+                                                <div class="empty-icon" aria-hidden="true">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                                        </svg>
+                                                </div>
+                                                <p class="empty-title">Rendez-vous très bientôt</p>
+                                                <p class="empty-desc">Nos équipes préparent des contenus exclusifs pour vous.</p>
+                                        </div>
+                                )
+                        }
 
-			<!-- ── SECTION CATÉGORIES THÉMATIQUES ──────────────────────────── -->
-			{
-				categories.length > 0 && (
-					<section class="categories-showcase" aria-label="Explorer par thématique">
-						<div class="categories-header">
-							<h2 class="categories-title">Explorer par thématique</h2>
-							<p class="categories-subtitle">Plongez dans nos domaines d'expertise</p>
-						</div>
-						<div class="categories-grid">
-							{categories.map((cat) => (
-								<a href={`/blog/categorie/${cat.slug}`} class="category-card" data-category={cat.slug}>
-									<div class="category-card-bg" aria-hidden="true"></div>
-									<div class="category-card-icon">
-										{cat.slug === 'transformation-digitale' && (
-											<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-										)}
-										{cat.slug === 'intelligence-artificielle' && (
-											<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-										)}
-										{cat.slug === 'cloud-computing' && (
-											<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
-										)}
-										{cat.slug === 'cybersecurite' && (
-											<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-										)}
-										{cat.slug === 'tech-innovation' && (
-											<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-										)}
-										{cat.slug === 'actualites-ftci' && (
-											<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 0a2 2 0 012 2v8a2 2 0 01-2 2m-4-12V4m0 0l-4 4m4-4l4 4"/></svg>
-										)}
-									</div>
-									<div class="category-card-content">
-										<span class="category-card-name">{cat.label}</span>
-										<span class="category-card-meta">
-											{cat.count} article{cat.count > 1 ? 's' : ''}
-										</span>
-									</div>
-									<div class="category-card-arrow" aria-hidden="true">
-										<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-									</div>
-								</a>
-							))}
-						</div>
-					</section>
-				)
-			}
+                        <!-- ── SECTION CATÉGORIES THÉMATIQUES ──────────────────────────── -->
+                        {
+                                categories.length > 0 && (
+                                        <section class="categories-showcase" aria-label="Explorer par thématique">
+                                                <div class="categories-header">
+                                                        <h2 class="categories-title">Explorer par thématique</h2>
+                                                        <p class="categories-subtitle">Plongez dans nos domaines d'expertise</p>
+                                                </div>
+                                                <div class="categories-grid">
+                                                        {categories.map((cat) => (
+                                                                <a href={`/blog/categorie/${cat.slug}`} class="category-card" data-category={cat.slug}>
+                                                                        <div class="category-card-bg" aria-hidden="true"></div>
+                                                                        <div class="category-card-icon">
+                                                                                {cat.slug === 'transformation-digitale' && (
+                                                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                                                                )}
+                                                                                {cat.slug === 'intelligence-artificielle' && (
+                                                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                                                                )}
+                                                                                {cat.slug === 'cloud-computing' && (
+                                                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                                                                                )}
+                                                                                {cat.slug === 'cybersecurite' && (
+                                                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                                                                )}
+                                                                                {cat.slug === 'tech-innovation' && (
+                                                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                                                                )}
+                                                                                {cat.slug === 'actualites-ftci' && (
+                                                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 0a2 2 0 012 2v8a2 2 0 01-2 2m-4-12V4m0 0l-4 4m4-4l4 4"/></svg>
+                                                                                )}
+                                                                        </div>
+                                                                        <div class="category-card-content">
+                                                                                <span class="category-card-name">{cat.label}</span>
+                                                                                <span class="category-card-meta">
+                                                                                        {cat.count} article{cat.count > 1 ? 's' : ''}
+                                                                                </span>
+                                                                        </div>
+                                                                        <div class="category-card-arrow" aria-hidden="true">
+                                                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                                                        </div>
+                                                                </a>
+                                                        ))}
+                                                </div>
+                                        </section>
+                                )
+                        }
 
-			<!-- ── NEWSLETTER CTA ──────────────────────────────────────────── -->
-			<section class="newsletter-cta">
-				<div class="newsletter-content">
-					<div class="newsletter-icon" aria-hidden="true">
-						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-						</svg>
-					</div>
-					<div class="newsletter-text">
-						<h3 class="newsletter-title">Restez informé</h3>
-						<p class="newsletter-desc">Recevez nos derniers articles et analyses directement dans votre boîte mail.</p>
-					</div>
-					<a href="mailto:contact@ftci.fr" class="newsletter-btn">
-						S'abonner
-						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-					</a>
-				</div>
-			</section>
+                        <!-- ── NEWSLETTER CTA WAOUH ══════════════════════════════════ -->
+                        <section class="newsletter-waouh" data-newsletter-card>
+                                <div class="nl-bg-effects" aria-hidden="true">
+                                        <div class="nl-mesh"></div>
+                                        <div class="nl-grid"></div>
+                                        <div class="nl-orb nl-orb-1"></div>
+                                        <div class="nl-orb nl-orb-2"></div>
+                                        <div class="nl-shine"></div>
+                                </div>
 
-		</div>
-	</div>
+                                <div class="nl-content">
+                                        <!-- Badge -->
+                                        <div class="nl-badge">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                                <span>NEWSLETTER</span>
+                                        </div>
+
+                                        <!-- Texte principal -->
+                                        <div class="nl-text-group">
+                                                <h3 class="nl-title">Restez <span class="nl-title-accent">informé</span></h3>
+                                                <p class="nl-desc">Recevez nos analyses exclusives, tutoriels tech et actualités directement dans votre boîte mail.</p>
+                                        </div>
+
+                                        <!-- CTA avec input stylé -->
+                                        <div class="nl-action">
+                                                <a href="mailto:contact@ftci.fr?subject=Inscription Newsletter FTCI" class="nl-btn">
+                                                        <span class="nl-btn-text">S'abonner</span>
+                                                        <span class="nl-btn-icon">
+                                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-6H6"/></svg>
+                                                        </span>
+                                                        <div class="nl-btn-glow" aria-hidden="true"></div>
+                                                </a>
+                                                <span class="nl-note">Gratuit • Pas de spam</span>
+                                        </div>
+                                </div>
+
+                                <!-- Décorations -->
+                                <div class="nl-deco nl-deco-1" aria-hidden="true">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                                </div>
+                                <div class="nl-deco nl-deco-2" aria-hidden="true">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                </div>
+
+                                <!-- Coins décoratifs -->
+                                <div class="nl-corner nl-corner-tl" aria-hidden="true"></div>
+                                <div class="nl-corner nl-corner-br" aria-hidden="true"></div>
+                        </section>
+
+                </div>
+        </div>
 </BlogLayout>
 
 <style>
-	/* ═══════════════════════════════════════════════════════════════════════════
-	   HERO CINÉMATIQUE PREMIUM
-	   ═══════════════════════════════════════════════════════════════════════════ */
-	.blog-hero-premium {
-		position: relative;
-		min-height: 520px;
-		display: flex;
-		align-items: center;
-		overflow: hidden;
-		padding: 5rem 0 4rem;
-	}
+        /* ═══════════════════════════════════════════════════════════════════════════
+           HERO CINÉMATIQUE PREMIUM
+           ═══════════════════════════════════════════════════════════════════════════ */
+        .blog-hero-premium {
+                position: relative;
+                min-height: 520px;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                padding: 5rem 0 4rem;
+        }
 
-	.hero-bg {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-	}
+        .hero-bg {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+        }
 
-	/* Mesh gradient animé */
-	.hero-mesh {
-		position: absolute;
-		inset: 0;
-		background: 
-			radial-gradient(ellipse 80% 60% at 20% 30%, rgba(238, 108, 26, 0.15) 0%, transparent 50%),
-			radial-gradient(ellipse 60% 80% at 80% 70%, rgba(107, 127, 199, 0.12) 0%, transparent 50%),
-			radial-gradient(ellipse 100% 100% at 50% 100%, rgba(15, 30, 61, 0.03) 0%, transparent 70%),
-			linear-gradient(180deg, #ffffff 0%, #fafbfc 50%, #f5f7fa 100%);
-		animation: meshFloat 20s ease-in-out infinite alternate;
-	}
+        /* Mesh gradient animé */
+        .hero-mesh {
+                position: absolute;
+                inset: 0;
+                background: 
+                        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(238, 108, 26, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse 60% 80% at 80% 70%, rgba(107, 127, 199, 0.12) 0%, transparent 50%),
+                        radial-gradient(ellipse 100% 100% at 50% 100%, rgba(15, 30, 61, 0.03) 0%, transparent 70%),
+                        linear-gradient(180deg, #ffffff 0%, #fafbfc 50%, #f5f7fa 100%);
+                animation: meshFloat 20s ease-in-out infinite alternate;
+        }
 
-	@keyframes meshFloat {
-		0% { transform: scale(1) rotate(0deg); }
-		100% { transform: scale(1.05) rotate(0.5deg); }
-	}
+        @keyframes meshFloat {
+                0% { transform: scale(1) rotate(0deg); }
+                100% { transform: scale(1.05) rotate(0.5deg); }
+        }
 
-	/* Grid pattern subtil */
-	.hero-grid-pattern {
-		position: absolute;
-		inset: 0;
-		background-image: 
-			linear-gradient(rgba(15, 30, 61, 0.03) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(15, 30, 61, 0.03) 1px, transparent 1px);
-		background-size: 60px 60px;
-		mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 70%);
-	}
+        /* Grid pattern subtil */
+        .hero-grid-pattern {
+                position: absolute;
+                inset: 0;
+                background-image: 
+                        linear-gradient(rgba(15, 30, 61, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(15, 30, 61, 0.03) 1px, transparent 1px);
+                background-size: 60px 60px;
+                mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 70%);
+        }
 
-	/* Formes flottantes */
-	.hero-float {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(60px);
-		opacity: 0.5;
-		animation: float 15s ease-in-out infinite;
-	}
-	.hero-float-1 {
-		width: 300px;
-		height: 300px;
-		background: rgba(238, 108, 26, 0.1);
-		top: 10%;
-		right: 10%;
-		animation-delay: 0s;
-	}
-	.hero-float-2 {
-		width: 200px;
-		height: 200px;
-		background: rgba(107, 127, 199, 0.12);
-		bottom: 20%;
-		left: 5%;
-		animation-delay: -5s;
-	}
-	.hero-float-3 {
-		width: 150px;
-		height: 150px;
-		background: rgba(15, 30, 61, 0.08);
-		top: 50%;
-		right: 30%;
-		animation-delay: -10s;
-	}
+        /* Formes flottantes */
+        .hero-float {
+                position: absolute;
+                border-radius: 50%;
+                filter: blur(60px);
+                opacity: 0.5;
+                animation: float 15s ease-in-out infinite;
+        }
+        .hero-float-1 {
+                width: 300px;
+                height: 300px;
+                background: rgba(238, 108, 26, 0.1);
+                top: 10%;
+                right: 10%;
+                animation-delay: 0s;
+        }
+        .hero-float-2 {
+                width: 200px;
+                height: 200px;
+                background: rgba(107, 127, 199, 0.12);
+                bottom: 20%;
+                left: 5%;
+                animation-delay: -5s;
+        }
+        .hero-float-3 {
+                width: 150px;
+                height: 150px;
+                background: rgba(15, 30, 61, 0.08);
+                top: 50%;
+                right: 30%;
+                animation-delay: -10s;
+        }
 
-	@keyframes float {
-		0%, 100% { transform: translate(0, 0) scale(1); }
-		25% { transform: translate(20px, -20px) scale(1.05); }
-		50% { transform: translate(-10px, 15px) scale(0.95); }
-		75% { transform: translate(-20px, -10px) scale(1.02); }
-	}
+        @keyframes float {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                25% { transform: translate(20px, -20px) scale(1.05); }
+                50% { transform: translate(-10px, 15px) scale(0.95); }
+                75% { transform: translate(-20px, -10px) scale(1.02); }
+        }
 
-	/* Content */
-	.hero-content {
-		position: relative;
-		z-index: 1;
-		max-width: 720px;
-		padding: 0 1.5rem;
-	}
+        /* Content */
+        .hero-content {
+                position: relative;
+                z-index: 1;
+                max-width: 720px;
+                padding: 0 1.5rem;
+        }
 
-	/* Eyebrow */
-	.hero-eyebrow {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.625rem;
-		font-size: 0.75rem;
-		font-weight: 700;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-		color: var(--color-orange);
-		margin-bottom: 1.5rem;
-		padding: 0.5rem 1rem;
-		background: rgba(238, 108, 26, 0.08);
-		border-radius: var(--radius-pill);
-		border: 1px solid rgba(238, 108, 26, 0.15);
-	}
-	.hero-eyebrow-dot {
-		width: 6px;
-		height: 6px;
-		background: var(--color-orange);
-		border-radius: 50%;
-		animation: pulse 2s ease-in-out infinite;
-	}
-	@keyframes pulse {
-		0%, 100% { opacity: 1; transform: scale(1); }
-		50% { opacity: 0.5; transform: scale(1.2); }
-	}
+        /* Eyebrow */
+        .hero-eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.625rem;
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--color-orange);
+                margin-bottom: 1.5rem;
+                padding: 0.5rem 1rem;
+                background: rgba(238, 108, 26, 0.08);
+                border-radius: var(--radius-pill);
+                border: 1px solid rgba(238, 108, 26, 0.15);
+        }
+        .hero-eyebrow-dot {
+                width: 6px;
+                height: 6px;
+                background: var(--color-orange);
+                border-radius: 50%;
+                animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+                0%, 100% { opacity: 1; transform: scale(1); }
+                50% { opacity: 0.5; transform: scale(1.2); }
+        }
 
-	/* Titre */
-	.hero-title {
-		font-family: var(--font-display);
-		margin: 0 0 1.5rem;
-		line-height: 1.05;
-	}
-	.hero-title-line {
-		display: block;
-		font-weight: 800;
-		letter-spacing: -0.03em;
-		color: var(--color-navy);
-	}
-	.hero-title-line-1 {
-		font-size: clamp(2.25rem, 5vw, 3.5rem);
-	}
-	.hero-title-line-2 {
-		font-size: clamp(2.5rem, 6vw, 4.5rem);
-	}
-	.hero-title-accent {
-		background: linear-gradient(135deg, var(--color-orange) 0%, #d4520e 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
+        /* Titre */
+        .hero-title {
+                font-family: var(--font-display);
+                margin: 0 0 1.5rem;
+                line-height: 1.05;
+        }
+        .hero-title-line {
+                display: block;
+                font-weight: 800;
+                letter-spacing: -0.03em;
+                color: var(--color-navy);
+        }
+        .hero-title-line-1 {
+                font-size: clamp(2.25rem, 5vw, 3.5rem);
+        }
+        .hero-title-line-2 {
+                font-size: clamp(2.5rem, 6vw, 4.5rem);
+        }
+        .hero-title-accent {
+                background: linear-gradient(135deg, var(--color-orange) 0%, #d4520e 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+        }
 
-	/* Description */
-	.hero-description {
-		font-size: 1.125rem;
-		line-height: 1.65;
-		color: var(--color-gray-text);
-		max-width: 560px;
-		margin: 0 0 2.5rem;
-	}
+        /* Description */
+        .hero-description {
+                font-size: 1.125rem;
+                line-height: 1.65;
+                color: var(--color-gray-text);
+                max-width: 560px;
+                margin: 0 0 2.5rem;
+        }
 
-	/* Stats */
-	.hero-stats {
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-		flex-wrap: wrap;
-	}
-	.hero-stat {
-		display: flex;
-		flex-direction: column;
-		gap: 0.125rem;
-	}
-	.hero-stat-number {
-		font-family: var(--font-display);
-		font-size: 1.75rem;
-		font-weight: 800;
-		color: var(--color-navy);
-		line-height: 1;
-	}
-	.hero-stat-label {
-		font-size: 0.75rem;
-		font-weight: 500;
-		color: var(--color-gray-text);
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-	.hero-stat-divider {
-		width: 1px;
-		height: 36px;
-		background: linear-gradient(180deg, transparent, rgba(15, 30, 61, 0.15), transparent);
-	}
+        /* Stats */
+        .hero-stats {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+        }
+        .hero-stat {
+                display: flex;
+                flex-direction: column;
+                gap: 0.125rem;
+        }
+        .hero-stat-number {
+                font-family: var(--font-display);
+                font-size: 1.75rem;
+                font-weight: 800;
+                color: var(--color-navy);
+                line-height: 1;
+        }
+        .hero-stat-label {
+                font-size: 0.75rem;
+                font-weight: 500;
+                color: var(--color-gray-text);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+        }
+        .hero-stat-divider {
+                width: 1px;
+                height: 36px;
+                background: linear-gradient(180deg, transparent, rgba(15, 30, 61, 0.15), transparent);
+        }
 
-	/* Scroll indicator */
-	.hero-scroll-indicator {
-		margin-top: 3rem;
-	}
-	.scroll-line {
-		width: 24px;
-		height: 40px;
-		border: 2px solid rgba(15, 30, 61, 0.15);
-		border-radius: 12px;
-		position: relative;
-	}
-	.scroll-line::after {
-		content: '';
-		position: absolute;
-		top: 6px;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 4px;
-		height: 8px;
-		background: var(--color-orange);
-		border-radius: 2px;
-		animation: scrollBounce 2s ease-in-out infinite;
-	}
-	@keyframes scrollBounce {
-		0%, 100% { top: 6px; opacity: 1; }
-		50% { top: 18px; opacity: 0.4; }
-	}
+        /* Scroll indicator */
+        .hero-scroll-indicator {
+                margin-top: 3rem;
+        }
+        .scroll-line {
+                width: 24px;
+                height: 40px;
+                border: 2px solid rgba(15, 30, 61, 0.15);
+                border-radius: 12px;
+                position: relative;
+        }
+        .scroll-line::after {
+                content: '';
+                position: absolute;
+                top: 6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 4px;
+                height: 8px;
+                background: var(--color-orange);
+                border-radius: 2px;
+                animation: scrollBounce 2s ease-in-out infinite;
+        }
+        @keyframes scrollBounce {
+                0%, 100% { top: 6px; opacity: 1; }
+                50% { top: 18px; opacity: 0.4; }
+        }
 
-	@media (max-width: 768px) {
-		.blog-hero-premium {
-			min-height: auto;
-			padding: 3rem 0 2.5rem;
-		}
-		.hero-float { display: none; }
-		.hero-stat-divider { display: none; }
-		.hero-stats { gap: 1.5rem; }
-		.hero-scroll-indicator { display: none; }
-	}
+        @media (max-width: 768px) {
+                .blog-hero-premium {
+                        min-height: auto;
+                        padding: 3rem 0 2.5rem;
+                }
+                .hero-float { display: none; }
+                .hero-stat-divider { display: none; }
+                .hero-stats { gap: 1.5rem; }
+                .hero-scroll-indicator { display: none; }
+        }
 
-	/* ═══════════════════════════════════════════════════════════════════════════
-	   BODY PRÉMIUM
-	   ═══════════════════════════════════════════════════════════════════════════ */
-	.blog-body-premium {
-		background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);
-		padding: 0 0 5rem;
-	}
+        /* ═══════════════════════════════════════════════════════════════════════════
+           BODY PRÉMIUM
+           ═══════════════════════════════════════════════════════════════════════════ */
+        .blog-body-premium {
+                background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);
+                padding: 0 0 5rem;
+        }
 
-	/* Featured section */
-	.featured-section {
-		padding: 3rem 1.5rem 0;
-	}
-	.featured-header {
-		margin-bottom: 1.25rem;
-	}
-	.featured-badge-text {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.6875rem;
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: var(--color-orange);
-		padding: 0.375rem 0.875rem;
-		background: linear-gradient(135deg, rgba(238, 108, 26, 0.1) 0%, rgba(238, 108, 26, 0.05) 100%);
-		border: 1px solid rgba(238, 108, 26, 0.2);
-		border-radius: var(--radius-pill);
-	}
+        /* Featured section */
+        .featured-section {
+                padding: 3rem 1.5rem 0;
+        }
+        .featured-header {
+                margin-bottom: 1.25rem;
+        }
+        .featured-badge-text {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.6875rem;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--color-orange);
+                padding: 0.375rem 0.875rem;
+                background: linear-gradient(135deg, rgba(238, 108, 26, 0.1) 0%, rgba(238, 108, 26, 0.05) 100%);
+                border: 1px solid rgba(238, 108, 26, 0.2);
+                border-radius: var(--radius-pill);
+        }
 
-	/* Articles grid section */
-	.articles-grid-section {
-		padding: 2.5rem 1.5rem;
-	}
-	.articles-header {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		margin-bottom: 1.5rem;
-		gap: 1rem;
-	}
-	.articles-title {
-		font-family: var(--font-display);
-		font-weight: 800;
-		font-size: 1.5rem;
-		letter-spacing: -0.02em;
-		color: var(--color-navy);
-		margin: 0;
-	}
-	.articles-count {
-		font-size: 0.875rem;
-		color: var(--color-gray-text);
-		flex-shrink: 0;
-	}
-	.articles-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-		gap: 1.5rem;
-	}
-	@media (max-width: 640px) {
-		.articles-grid {
-			grid-template-columns: 1fr;
-		}
-	}
+        /* Articles grid section */
+        .articles-grid-section {
+                padding: 2.5rem 1.5rem;
+        }
+        .articles-header {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                margin-bottom: 1.5rem;
+                gap: 1rem;
+        }
+        .articles-title {
+                font-family: var(--font-display);
+                font-weight: 800;
+                font-size: 1.5rem;
+                letter-spacing: -0.02em;
+                color: var(--color-navy);
+                margin: 0;
+        }
+        .articles-count {
+                font-size: 0.875rem;
+                color: var(--color-gray-text);
+                flex-shrink: 0;
+        }
+        .articles-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+                gap: 1.5rem;
+        }
+        @media (max-width: 640px) {
+                .articles-grid {
+                        grid-template-columns: 1fr;
+                }
+        }
 
-	/* Empty state */
-	.blog-empty-premium {
-		text-align: center;
-		padding: 5rem 1.5rem;
-	}
-	.empty-icon {
-		width: 64px;
-		height: 64px;
-		margin: 0 auto 1.25rem;
-		color: var(--color-navy);
-		opacity: 0.2;
-	}
-	.empty-title {
-		font-family: var(--font-display);
-		font-size: 1.375rem;
-		font-weight: 700;
-		color: var(--color-navy);
-		margin: 0 0 0.5rem;
-	}
-	.empty-desc {
-		font-size: 1rem;
-		color: var(--color-gray-text);
-		margin: 0;
-	}
+        /* Empty state */
+        .blog-empty-premium {
+                text-align: center;
+                padding: 5rem 1.5rem;
+        }
+        .empty-icon {
+                width: 64px;
+                height: 64px;
+                margin: 0 auto 1.25rem;
+                color: var(--color-navy);
+                opacity: 0.2;
+        }
+        .empty-title {
+                font-family: var(--font-display);
+                font-size: 1.375rem;
+                font-weight: 700;
+                color: var(--color-navy);
+                margin: 0 0 0.5rem;
+        }
+        .empty-desc {
+                font-size: 1rem;
+                color: var(--color-gray-text);
+                margin: 0;
+        }
 
-	/* Categories showcase */
-	.categories-showcase {
-		padding: 3rem 1.5rem;
-	}
-	.categories-header {
-		margin-bottom: 1.75rem;
-	}
-	.categories-title {
-		font-family: var(--font-display);
-		font-weight: 800;
-		font-size: 1.5rem;
-		letter-spacing: -0.02em;
-		color: var(--color-navy);
-		margin: 0 0 0.375rem;
-	}
-	.categories-subtitle {
-		font-size: 0.9375rem;
-		color: var(--color-gray-text);
-		margin: 0;
-	}
-	.categories-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-		gap: 1rem;
-	}
+        /* Categories showcase */
+        .categories-showcase {
+                padding: 3rem 1.5rem;
+        }
+        .categories-header {
+                margin-bottom: 1.75rem;
+        }
+        .categories-title {
+                font-family: var(--font-display);
+                font-weight: 800;
+                font-size: 1.5rem;
+                letter-spacing: -0.02em;
+                color: var(--color-navy);
+                margin: 0 0 0.375rem;
+        }
+        .categories-subtitle {
+                font-size: 0.9375rem;
+                color: var(--color-gray-text);
+                margin: 0;
+        }
+        .categories-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1rem;
+        }
 
-	/* Category card premium */
-	.category-card {
-		position: relative;
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		padding: 1.25rem 1.5rem;
-		background: #fff;
-		border: 1px solid rgba(15, 30, 61, 0.06);
-		border-radius: calc(var(--radius-card) + 2px);
-		text-decoration: none;
-		color: var(--color-navy);
-		overflow: hidden;
-		transition: all 350ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	.category-card::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		background: linear-gradient(135deg, transparent 0%, rgba(238, 108, 26, 0.03) 100%);
-		opacity: 0;
-		transition: opacity 350ms ease;
-	}
-	.category-card:hover {
-		transform: translateY(-3px);
-		box-shadow: 
-			0 12px 32px rgba(15, 30, 61, 0.1),
-			0 0 0 1px rgba(238, 108, 26, 0.15);
-		border-color: transparent;
-	}
-	.category-card:hover::before {
-		opacity: 1;
-	}
-	.category-card-bg {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(135deg, var(--card-accent, rgba(238, 108, 26, 0.05)) 0%, transparent 100%);
-		opacity: 0;
-		transition: opacity 350ms ease;
-	}
-	.category-card:hover .category-card-bg {
-		opacity: 1;
-	}
-	.category-card[data-category="transformation-digitale"] { --card-accent: rgba(238, 108, 26, 0.08); }
-	.category-card[data-category="intelligence-artificielle"] { --card-accent: rgba(107, 127, 199, 0.1); }
-	.category-card[data-category="cloud-computing"] { --card-accent: rgba(15, 30, 61, 0.06); }
-	.category-card[data-category="cybersecurite"] { --card-accent: rgba(34, 197, 94, 0.08); }
-	.category-card[data-category="tech-innovation"] { --card-accent: rgba(238, 108, 26, 0.06); }
-	.category-card[data-category="actualites-ftci"] { --card-accent: rgba(15, 30, 61, 0.05); }
+        /* Category card premium */
+        .category-card {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.25rem 1.5rem;
+                background: #fff;
+                border: 1px solid rgba(15, 30, 61, 0.06);
+                border-radius: calc(var(--radius-card) + 2px);
+                text-decoration: none;
+                color: var(--color-navy);
+                overflow: hidden;
+                transition: all 350ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .category-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                background: linear-gradient(135deg, transparent 0%, rgba(238, 108, 26, 0.03) 100%);
+                opacity: 0;
+                transition: opacity 350ms ease;
+        }
+        .category-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 
+                        0 12px 32px rgba(15, 30, 61, 0.1),
+                        0 0 0 1px rgba(238, 108, 26, 0.15);
+                border-color: transparent;
+        }
+        .category-card:hover::before {
+                opacity: 1;
+        }
+        .category-card-bg {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, var(--card-accent, rgba(238, 108, 26, 0.05)) 0%, transparent 100%);
+                opacity: 0;
+                transition: opacity 350ms ease;
+        }
+        .category-card:hover .category-card-bg {
+                opacity: 1;
+        }
+        .category-card[data-category="transformation-digitale"] { --card-accent: rgba(238, 108, 26, 0.08); }
+        .category-card[data-category="intelligence-artificielle"] { --card-accent: rgba(107, 127, 199, 0.1); }
+        .category-card[data-category="cloud-computing"] { --card-accent: rgba(15, 30, 61, 0.06); }
+        .category-card[data-category="cybersecurite"] { --card-accent: rgba(34, 197, 94, 0.08); }
+        .category-card[data-category="tech-innovation"] { --card-accent: rgba(238, 108, 26, 0.06); }
+        .category-card[data-category="actualites-ftci"] { --card-accent: rgba(15, 30, 61, 0.05); }
 
-	.category-card-icon {
-		width: 44px;
-		height: 44px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 12px;
-		background: rgba(15, 30, 61, 0.04);
-		color: var(--color-navy);
-		flex-shrink: 0;
-		transition: all 350ms ease;
-	}
-	.category-card-icon svg {
-		width: 22px;
-		height: 22px;
-	}
-	.category-card:hover .category-card-icon {
-		background: var(--color-navy);
-		color: #fff;
-		transform: scale(1.05);
-	}
+        .category-card-icon {
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 12px;
+                background: rgba(15, 30, 61, 0.04);
+                color: var(--color-navy);
+                flex-shrink: 0;
+                transition: all 350ms ease;
+        }
+        .category-card-icon svg {
+                width: 22px;
+                height: 22px;
+        }
+        .category-card:hover .category-card-icon {
+                background: var(--color-navy);
+                color: #fff;
+                transform: scale(1.05);
+        }
 
-	.category-card-content {
-		flex: 1;
-		min-width: 0;
-	}
-	.category-card-name {
-		display: block;
-		font-weight: 600;
-		font-size: 0.9375rem;
-		color: var(--color-navy);
-		transition: color 200ms ease;
-	}
-	.category-card:hover .category-card-name {
-		color: var(--color-orange);
-	}
-	.category-card-meta {
-		font-size: 0.8125rem;
-		color: var(--color-gray-text);
-	}
+        .category-card-content {
+                flex: 1;
+                min-width: 0;
+        }
+        .category-card-name {
+                display: block;
+                font-weight: 600;
+                font-size: 0.9375rem;
+                color: var(--color-navy);
+                transition: color 200ms ease;
+        }
+        .category-card:hover .category-card-name {
+                color: var(--color-orange);
+        }
+        .category-card-meta {
+                font-size: 0.8125rem;
+                color: var(--color-gray-text);
+        }
 
-	.category-card-arrow {
-		width: 32px;
-		height: 32px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 50%;
-		background: transparent;
-		color: var(--color-navy);
-		opacity: 0;
-		transform: translateX(-8px);
-		transition: all 350ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	.category-card-arrow svg {
-		width: 16px;
-		height: 16px;
-	}
-	.category-card:hover .category-card-arrow {
-		opacity: 1;
-		transform: translateX(0);
-		background: rgba(238, 108, 26, 0.1);
-		color: var(--color-orange);
-	}
+        .category-card-arrow {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: transparent;
+                color: var(--color-navy);
+                opacity: 0;
+                transform: translateX(-8px);
+                transition: all 350ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .category-card-arrow svg {
+                width: 16px;
+                height: 16px;
+        }
+        .category-card:hover .category-card-arrow {
+                opacity: 1;
+                transform: translateX(0);
+                background: rgba(238, 108, 26, 0.1);
+                color: var(--color-orange);
+        }
 
-	@media (prefers-reduced-motion: reduce) {
-		.hero-mesh,
-		.hero-float,
-		.hero-eyebrow-dot,
-		.scroll-line::after {
-			animation: none;
-		}
-		.category-card,
-		.category-card-icon,
-		.category-card-arrow {
-			transition: none;
-		}
-		.category-card:hover {
-			transform: none;
-		}
-	}
+        @media (prefers-reduced-motion: reduce) {
+                .hero-mesh,
+                .hero-float,
+                .hero-eyebrow-dot,
+                .scroll-line::after {
+                        animation: none;
+                }
+                .category-card,
+                .category-card-icon,
+                .category-card-arrow {
+                        transition: none;
+                }
+                .category-card:hover {
+                        transform: none;
+                }
+        }
 
-	/* Newsletter CTA */
-	.newsletter-cta {
-		padding: 0 1.5rem;
-		margin-top: 2rem;
-	}
-	.newsletter-content {
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-		padding: 2rem 2.5rem;
-		background: linear-gradient(135deg, var(--color-navy) 0%, #1c2d54 100%);
-		border-radius: calc(var(--radius-card) + 4px);
-		color: #fff;
-		overflow: hidden;
-		position: relative;
-	}
-	.newsletter-content::before {
-		content: '';
-		position: absolute;
-		top: -50%;
-		right: -20%;
-		width: 300px;
-		height: 300px;
-		background: radial-gradient(circle, rgba(238, 108, 26, 0.2) 0%, transparent 70%);
-		pointer-events: none;
-	}
-	.newsletter-icon {
-		width: 52px;
-		height: 52px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 14px;
-		flex-shrink: 0;
-	}
-	.newsletter-icon svg {
-		width: 26px;
-		height: 26px;
-		color: var(--color-orange);
-	}
-	.newsletter-text {
-		flex: 1;
-	}
-	.newsletter-title {
-		font-family: var(--font-display);
-		font-size: 1.25rem;
-		font-weight: 700;
-		color: #fff;
-		margin: 0 0 0.25rem;
-	}
-	.newsletter-desc {
-		font-size: 0.875rem;
-		color: rgba(255, 255, 255, 0.7);
-		margin: 0;
-	}
-	.newsletter-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.875rem 1.75rem;
-		background: var(--color-orange);
-		color: #fff;
-		font-weight: 600;
-		font-size: 0.9375rem;
-		border-radius: var(--radius-pill);
-		text-decoration: none;
-		transition: all 250ms ease;
-		flex-shrink: 0;
-	}
-	.newsletter-btn:hover {
-		background: #d4520e;
-		transform: translateY(-2px);
-		box-shadow: 0 8px 20px rgba(238, 108, 26, 0.35);
-	}
-	.newsletter-btn svg {
-		transition: transform 250ms ease;
-	}
-	.newsletter-btn:hover svg {
-		transform: translateX(3px);
-	}
+        /* ═══════════════════════════════════════════════════════════════════════════
+           NEWSLETTER CTA WAOUH
+           ═══════════════════════════════════════════════════════════════════════════ */
+        .newsletter-waouh {
+                position: relative;
+                padding: 0 1.5rem;
+                margin-top: 2.5rem;
+                border-radius: 20px;
+                overflow: hidden;
+                animation: nlEnter 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                animation-delay: 0.3s;
+                opacity: 0;
+        }
 
-	@media (max-width: 768px) {
-		.newsletter-content {
-			flex-direction: column;
-			text-align: center;
-			padding: 1.75rem 1.5rem;
-		}
-		.newsletter-btn {
-			width: 100%;
-			justify-content: center;
-		}
-	}
+        @keyframes nlEnter {
+                from { opacity: 0; transform: translateY(25px); }
+                to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Background effects */
+        .nl-bg-effects {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                overflow: hidden;
+        }
+
+        .nl-mesh {
+                position: absolute;
+                inset: 0;
+                background:
+                        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(238, 108, 26, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(107, 127, 199, 0.12) 0%, transparent 50%),
+                        linear-gradient(145deg, #0f1e3d 0%, #162345 40%, #1e3152 70%, #0f1e3d 100%);
+                animation: nlMeshFloat 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes nlMeshFloat {
+                from { transform: scale(1); }
+                to { transform: scale(1.03); }
+        }
+
+        .nl-grid {
+                position: absolute;
+                inset: 0;
+                background-image:
+                        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+                background-size: 40px 40px;
+                mask-image: radial-gradient(ellipse 80% 70% at 30% 30%, black 20%, transparent 70%);
+        }
+
+        .nl-orb {
+                position: absolute;
+                border-radius: 50%;
+                filter: blur(70px);
+                opacity: 0.5;
+        }
+        .nl-orb-1 {
+                        width: 280px;
+                        height: 280px;
+                        background: radial-gradient(circle, rgba(238, 108, 26, 0.2) 0%, transparent 70%);
+                        top: -15%;
+                        right: -10%;
+                        animation: nlOrbFloat1 18s ease-in-out infinite;
+                }
+                .nl-orb-2 {
+                        width: 200px;
+                        height: 200px;
+                        background: radial-gradient(circle, rgba(107, 127, 199, 0.15) 0%, transparent 70%);
+                        bottom: -10%;
+                        left: -5%;
+                        animation: nlOrbFloat2 16s ease-in-out infinite;
+                }
+
+        @keyframes nlOrbFloat1 {
+                        0%, 100% { transform: translate(0, 0); }
+                        50% { transform: translate(-20px, 20px); }
+                }
+        @keyframes nlOrbFloat2 {
+                        0%, 100% { transform: translate(0, 0); }
+                        50% { transform: translate(15px, -15px); }
+                }
+
+        /* Shine effect */
+        .nl-shine {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                        105deg,
+                        transparent 35%,
+                        rgba(255, 255, 255, 0.08) 45%,
+                        rgba(255, 255, 255, 0.04) 50%,
+                        transparent 55%
+                );
+                transform: translateX(-100%);
+                transition: transform 1200ms ease;
+                pointer-events: none;
+        }
+        .newsletter-waouh:hover .nl-shine {
+                transform: translateX(100%);
+        }
+
+        /* Content */
+        .nl-content {
+                position: relative;
+                z-index: 2;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 1.5rem;
+                align-items: center;
+                padding: 2rem 2.25rem;
+                color: #fff;
+        }
+        @media (max-width: 768px) {
+                .nl-content {
+                        grid-template-columns: 1fr;
+                        text-align: center;
+                        padding: 1.75rem 1.5rem;
+                }
+        }
+
+        /* Badge */
+        .nl-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                padding: 0.4rem 0.85rem;
+                background: rgba(238, 108, 26, 0.15);
+                border: 1px solid rgba(238, 108, 26, 0.3);
+                border-radius: 100px;
+                font-size: 0.65rem;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--color-orange);
+                width: fit-content;
+                animation: nlBadgePulse 3s ease-in-out infinite;
+        }
+        @media (max-width: 768px) {
+                .nl-badge { justify-self: center; }
+        }
+
+        @keyframes nlBadgePulse {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(238, 108, 26, 0.2); }
+                50% { box-shadow: 0 0 15px 3px rgba(238, 108, 26, 0.1); }
+        }
+
+        .nl-badge svg {
+                width: 12px;
+                height: 12px;
+        }
+
+        /* Text group */
+        .nl-text-group {
+                min-width: 0;
+        }
+        .nl-title {
+                font-family: var(--font-display);
+                font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                color: #fff;
+                margin: 0 0 0.375rem;
+                line-height: 1.2;
+        }
+        .nl-title-accent {
+                background: linear-gradient(135deg, var(--color-orange) 0%, #ffb380 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+        }
+        .nl-desc {
+                font-size: 0.875rem;
+                line-height: 1.55;
+                color: rgba(255, 255, 255, 0.65);
+                margin: 0;
+                max-width: 420px;
+        }
+        @media (max-width: 768px) {
+                .nl-desc { max-width: none; }
+        }
+
+        /* Action area */
+        .nl-action {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.5rem;
+        }
+        @media (max-width: 768px) {
+                .nl-action { align-items: center; margin-top: 0.5rem; }
+        }
+
+        /* Button premium */
+        .nl-btn {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.625rem;
+                padding: 0.875rem 1.75rem;
+                background: linear-gradient(135deg, var(--color-orange) 0%, #d4520e 100%);
+                border: none;
+                border-radius: 100px;
+                color: #fff;
+                font-size: 0.9rem;
+                font-weight: 700;
+                text-decoration: none;
+                cursor: pointer;
+                overflow: hidden;
+                transition: all 400ms cubic-bezier(0.22, 1, 0.36, 1);
+                box-shadow:
+                        0 4px 20px rgba(238, 108, 26, 0.35),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .nl-btn:hover {
+                transform: translateY(-3px) scale(1.02);
+                box-shadow:
+                        0 8px 30px rgba(238, 108, 26, 0.5),
+                        0 0 50px rgba(238, 108, 26, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .nl-btn-text {
+                position: relative;
+                z-index: 1;
+        }
+
+        .nl-btn-icon {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                transition: transform 300ms ease;
+        }
+        .nl-btn-icon svg {
+                width: 16px;
+                height: 16px;
+                transition: transform 300ms ease;
+        }
+        .nl-btn:hover .nl-btn-icon svg {
+                transform: translateX(3px);
+        }
+
+        .nl-btn-glow {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+                opacity: 0;
+                transition: opacity 300ms ease;
+        }
+        .nl-btn:hover .nl-btn-glow {
+                opacity: 1;
+        }
+
+        /* Note sous bouton */
+        .nl-note {
+                font-size: 0.6875rem;
+                color: rgba(255, 255, 255, 0.4);
+                letter-spacing: 0.02em;
+        }
+
+        /* Décorations flottantes */
+        .nl-deco {
+                position: absolute;
+                width: 42px;
+                height: 42px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                color: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(8px);
+                z-index: 3;
+                animation: nlDecoFloat 7s ease-in-out infinite;
+        }
+        .nl-deco svg {
+                width: 20px;
+                height: 20px;
+        }
+        .nl-deco-1 {
+                top: 1.25rem;
+                right: 1.25rem;
+                animation-delay: -2s;
+        }
+        .nl-deco-2 {
+                bottom: 1.25rem;
+                left: 1.25rem;
+                animation-delay: -4s;
+        }
+
+        @keyframes nlDecoFloat {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                50% { transform: translateY(-6px) rotate(8deg); }
+        }
+
+        @media (max-width: 768px) {
+                .nl-deco { display: none; }
+        }
+
+        /* Coins décoratifs */
+        .nl-corner {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                z-index: 3;
+                pointer-events: none;
+                opacity: 0.3;
+        }
+        .nl-corner-tl {
+                top: 0;
+                left: 0;
+                border-top: 2px solid rgba(238, 108, 26, 0.5);
+                border-left: 2px solid rgba(238, 108, 26, 0.5);
+                border-radius: 20px 0 0 0;
+        }
+        .nl-corner-br {
+                bottom: 0;
+                right: 0;
+                border-bottom: 2px solid rgba(107, 127, 199, 0.5);
+                border-right: 2px solid rgba(107, 127, 199, 0.5);
+                border-radius: 0 0 20px 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+                .newsletter-waouh,
+                .nl-mesh,
+                .nl-orb,
+                .nl-badge,
+                .nl-deco {
+                        animation: none;
+                        opacity: 1;
+                }
+                .newsletter-waouh { opacity: 1; transform: none; }
+                .nl-shine { display: none; }
+                .nl-btn:hover { transform: none; }
+        }
 </style>
