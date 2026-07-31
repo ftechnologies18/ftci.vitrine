@@ -303,16 +303,18 @@ const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
         .article-cover-premium {
                 position: relative;
                 width: 100%;
-                max-width: 1400px;
-                margin: 0 auto;
-                aspect-ratio: 21 / 9;
+                height: 85vh;
+                height: 85svh;
+                max-width: none;
+                margin: 0;
                 overflow: hidden;
                 background: var(--color-navy);
         }
 
         @media (max-width: 768px) {
                 .article-cover-premium {
-                        aspect-ratio: 16 / 10;
+                        height: 75vh;
+                        height: 75svh;
                         border-radius: 0;
                 }
         }
