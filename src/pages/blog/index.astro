@@ -16,7 +16,7 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
 import FeaturedArticle from '../../components/blog/FeaturedArticle.astro';
 import BlogFilters from '../../components/blog/BlogFilters.astro';
 import ArticleCard from '../../components/blog/ArticleCard.astro';
-import NewsletterForm from '../../components/blog/NewsletterForm.astro';
+import NewsletterModal from '../../components/blog/NewsletterModal.astro';
 import { getAllArticles, getFeaturedArticles, getCategoriesWithCounts } from '../../lib/blog';
 
 const allArticles = await getAllArticles();
@@ -201,29 +201,18 @@ const totalCategories = categories.length;
                                 )
                         }
 
-                        <!-- ── NEWSLETTER CTA ULTRA COMPACT ══════════════════════════ -->
-                        <section class="newsletter-compact" data-newsletter-card>
-                                <div class="nc-inner">
-                                        <!-- Icon -->
-                                        <div class="nc-icon" aria-hidden="true">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
-                                                </svg>
-                                        </div>
-
-                                        <!-- Texte -->
-                                        <div class="nc-text">
-                                                <span class="nc-label">Newsletter</span>
-                                                <span class="nc-desc">Restez informé de nos derniers articles</span>
-                                        </div>
-
-                                        <!-- Formulaire inline -->
-                                        <NewsletterForm variant="compact" />
-                                </div>
-                        </section>
+                        <!-- ── NEWSLETTER ULTRA MINIMAL ══════════════════════════ -->
+                        <div class="nl-mini" data-newsletter-card>
+                                <span class="nl-mini__icon" aria-hidden="true">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                                </span>
+                                <span class="nl-mini__label">Newsletter</span>
+                                <button type="button" class="nl-mini__btn" data-open-modal aria-label="S'abonner">S'abonner</button>
+                        </div>
 
                 </div>
         </div>
+        <NewsletterModal />
 </BlogLayout>
 
 <style>
@@ -705,116 +694,68 @@ const totalCategories = categories.length;
         }
 
         /* ═══════════════════════════════════════════════════════════════════════════
-        /* ═══════════════════════════════════════════════════════════════════════════
-           NEWSLETTER CTA ULTRA COMPACT
+           NEWSLETTER ULTRA MINIMAL
            ═══════════════════════════════════════════════════════════════════════════ */
-        .newsletter-compact {
-                position: relative;
-                margin-top: 2.5rem;
-                border-radius: var(--radius-card);
-                overflow: hidden;
-                background: linear-gradient(135deg, var(--color-navy) 0%, #162345 100%);
-                border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .nc-inner {
-                display: flex;
+        .nl-mini {
+                display: inline-flex;
                 align-items: center;
-                gap: 1rem;
-                padding: 1rem 1.25rem;
+                gap: 0.5rem;
+                background: var(--color-navy, #0a1628);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 8px;
+                padding: 0.5rem 0.65rem;
+                color: #fff;
+                margin-top: 2rem;
+                transition: border-color 0.2s;
+        }
+        .nl-mini:hover {
+                border-color: rgba(238,108,26,0.3);
         }
 
-        /* Icon */
-        .nc-icon {
-                width: 40px;
-                height: 40px;
+        .nl-mini__icon {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: rgba(238, 108, 26, 0.15);
-                border-radius: 10px;
-                color: var(--color-orange);
-                flex-shrink: 0;
-        }
-
-        .nc-icon svg {
                 width: 20px;
                 height: 20px;
-        }
-
-        /* Text group */
-        .nc-text {
-                display: flex;
-                flex-direction: column;
-                gap: 0.125rem;
-                flex: 1;
-                min-width: 0;
-        }
-
-        .nc-label {
-                font-size: 0.6875rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.12em;
-                color: var(--color-orange);
-        }
-
-        .nc-desc {
-                font-size: 0.8125rem;
-                color: rgba(255, 255, 255, 0.7);
-                line-height: 1.4;
-        }
-
-        /* Formulaire inline */
-        .nc-inner :global(.newsletter-form--compact) {
+                background: rgba(238,108,26,0.12);
+                border-radius: 5px;
+                color: var(--color-orange, #ee6c1a);
                 flex-shrink: 0;
         }
-
-        .nc-inner :global(.newsletter-form-row) {
-                gap: 0.5rem;
+        .nl-mini__icon svg {
+                width: 11px;
+                height: 11px;
         }
 
-        .nc-inner :global(.newsletter-input) {
-                padding: 0.625rem 0.875rem 0.625rem 2.25rem;
-                font-size: 0.8125rem;
-                width: 180px;
-        }
-
-        .nc-inner :global(.newsletter-submit) {
-                padding: 0.625rem 1rem;
+        .nl-mini__label {
                 font-size: 0.75rem;
+                font-weight: 500;
+                color: rgba(255,255,255,0.8);
+                white-space: nowrap;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-                .nc-inner {
-                        flex-wrap: wrap;
-                        gap: 0.75rem;
-                        padding: 1rem;
-                }
-
-                .nc-text {
-                        width: 100%;
-                        flex-direction: row;
-                        align-items: center;
-                        justify-content: space-between;
-                }
-
-                .nc-desc {
-                        display: none;
-                }
-
-                .nc-inner :global(.newsletter-form--compact) {
-                        width: 100%;
-                }
-
-                .nc-inner :global(.newsletter-input) {
-                        flex: 1;
-                        width: auto;
-                }
-
-                .nc-inner :global(.newsletter-submit) {
-                        flex: 1;
-                }
+        .nl-mini__btn {
+                padding: 0.3rem 0.6rem;
+                background: var(--color-orange, #ee6c1a);
+                color: #fff;
+                font-size: 0.6875rem;
+                font-weight: 600;
+                font-family: inherit;
+                border: none;
+                border-radius: 9999px;
+                cursor: pointer;
+                white-space: nowrap;
+                transition: background 0.15s, transform 0.15s;
+        }
+        .nl-mini__btn:hover {
+                background: #d4520e;
+                transform: scale(1.03);
         }
 </style>
+
+<script>
+        document.querySelector('[data-newsletter-card]')?.querySelector('[data-open-modal]')?.addEventListener('click', () => {
+                document.dispatchEvent(new CustomEvent('open-newsletter-modal'));
+        });
+</script>
