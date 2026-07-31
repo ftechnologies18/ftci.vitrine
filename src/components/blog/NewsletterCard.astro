@@ -1,0 +1,176 @@
+---
+/**
+ * NewsletterCard.astro — Carte newsletter MINIMALISTE pour sidebar article.
+ *
+ * Design épuré :
+ *   - Icône email stylisée
+ *   - Texte court et percutant
+ *   - Bouton CTA "S'abonner" qui ouvre une modale
+ *   - Animation subtile au hover
+ *
+ * Usage : <NewsletterCard /> dans la sidebar des articles.
+ */
+---
+
+<div class="nl-card" data-newsletter-card>
+	<!-- Decorative elements -->
+	<div class="nl-card-glow" aria-hidden="true"></div>
+	
+	<!-- Content -->
+	<div class="nl-card-inner">
+		<div class="nl-card-icon" aria-hidden="true">
+			<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+			</svg>
+		</div>
+		
+		<div class="nl-card-content">
+			<span class="nl-card-label">Newsletter</span>
+			<p class="nl-card-text">Restez informé de nos derniers articles</p>
+		</div>
+		
+		<button 
+			type="button"
+			class="nl-card-btn"
+			data-open-modal
+			aria-label="Ouvrir le formulaire d'abonnement"
+		>
+			<span>S'abonner</span>
+			<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-6H6"/>
+			</svg>
+		</button>
+	</div>
+</div>
+
+<style>
+	.nl-card {
+		position: relative;
+		background: linear-gradient(145deg, var(--color-navy) 0%, #162345 100%);
+		border-radius: var(--radius-card);
+		padding: 1.25rem;
+		color: #fff;
+		overflow: hidden;
+		border: 1px solid rgba(255, 255, 255, 0.06);
+	}
+
+	/* Subtle glow effect */
+	.nl-card-glow {
+		position: absolute;
+		top: -50%;
+		right: -50%;
+		width: 100%;
+		height: 100%;
+		background: radial-gradient(circle, rgba(238, 108, 26, 0.08) 0%, transparent 70%);
+		pointer-events: none;
+		transition: opacity 400ms ease;
+	}
+
+	.nl-card:hover .nl-card-glow {
+		opacity: 0.6;
+	}
+
+	.nl-card-inner {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.875rem;
+		text-align: center;
+	}
+
+	/* Icon */
+	.nl-card-icon {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(238, 108, 26, 0.12);
+		border-radius: 10px;
+		color: var(--color-orange);
+		transition: all 300ms ease;
+	}
+
+	.nl-card-icon svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.nl-card:hover .nl-card-icon {
+		background: rgba(238, 108, 26, 0.2);
+		transform: scale(1.05);
+	}
+
+	/* Text content */
+	.nl-card-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.nl-card-label {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--color-orange);
+	}
+
+	.nl-card-text {
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		color: rgba(255, 255, 255, 0.75);
+		margin: 0;
+	}
+
+	/* Button */
+	.nl-card-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		width: 100%;
+		padding: 0.625rem 1rem;
+		background: var(--color-orange);
+		color: #fff;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		font-family: var(--font-sans);
+		border: none;
+		border-radius: var(--radius-pill);
+		cursor: pointer;
+		transition: all 250ms ease;
+	}
+
+	.nl-card-btn svg {
+		width: 14px;
+		height: 14px;
+		transition: transform 250ms ease;
+	}
+
+	.nl-card-btn:hover {
+		background: #d4520e;
+		transform: translateY(-1px);
+		box-shadow: 0 6px 20px rgba(238, 108, 26, 0.35);
+	}
+
+	.nl-card-btn:hover svg {
+		transform: translateX(3px);
+	}
+
+	.nl-card-btn:active {
+		transform: translateY(0);
+	}
+</style>
+
+<script>
+	// Ouvrir la modale newsletter au clic sur le bouton
+	const card = document.querySelector('[data-newsletter-card]');
+	const openBtn = card?.querySelector('[data-open-modal]');
+
+	openBtn?.addEventListener('click', () => {
+		// Dispatch custom event pour ouvrir la modale
+		document.dispatchEvent(new CustomEvent('open-newsletter-modal'));
+	});
+</script>

@@ -19,7 +19,8 @@ import ArticleSEO from '../../components/blog/ArticleSEO.astro';
 import CategoryBadge from '../../components/blog/CategoryBadge.astro';
 import ShareButtons from '../../components/blog/ShareButtons.astro';
 import RelatedArticles from '../../components/blog/RelatedArticles.astro';
-import NewsletterForm from '../../components/blog/NewsletterForm.astro';
+import NewsletterCard from '../../components/blog/NewsletterCard.astro';
+import NewsletterModal from '../../components/blog/NewsletterModal.astro';
 import { getAllArticles, getArticleUrl, getCategoryUrl, getReadingTime } from '../../lib/blog';
 
 export async function getStaticPaths() {
@@ -213,16 +214,8 @@ const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
                                                 </ol>
                                         </nav>
 
-                                        <!-- CTA Sidebar -->
-                                        <div class="sidebar-cta">
-                                                <div class="cta-icon" aria-hidden="true">
-                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                                        </svg>
-                                                </div>
-                                                <p class="cta-text">Recevez nos meilleurs articles directement dans votre boîte mail.</p>
-                                                <NewsletterForm variant="compact" />
-                                        </div>
+                                        <!-- CTA Sidebar - Carte newsletter minimaliste -->
+                                        <NewsletterCard />
                                 </div>
                         </aside>
                 </div>
@@ -240,6 +233,9 @@ const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
                         </a>
                 </div>
         </article>
+
+        <!-- Modale newsletter (globale pour la page) -->
+        <NewsletterModal />
 </BlogLayout>
 
 <script>
@@ -869,53 +865,6 @@ const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
         .toc-subitem a {
                 padding-left: 1.25rem;
                 font-size: 0.75rem;
-        }
-
-        /* CTA Sidebar */
-        .sidebar-cta {
-                background: linear-gradient(135deg, var(--color-navy) 0%, #1c2d54 100%);
-                border-radius: var(--radius-card);
-                padding: 1.5rem;
-                color: #fff;
-                text-align: center;
-        }
-        .cta-icon {
-                width: 48px;
-                height: 48px;
-                margin: 0 auto 1rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-        }
-        .cta-icon svg {
-                width: 24px;
-                height: 24px;
-                color: var(--color-orange);
-        }
-        .cta-text {
-                font-size: 0.875rem;
-                color: rgba(255, 255, 255, 0.8);
-                margin: 0 0 1rem;
-                line-height: 1.5;
-        }
-        .cta-btn {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0.625rem 1.25rem;
-                background: var(--color-orange);
-                color: #fff;
-                font-weight: 600;
-                font-size: 0.8125rem;
-                border-radius: var(--radius-pill);
-                text-decoration: none;
-                transition: all 250ms ease;
-        }
-        .cta-btn:hover {
-                background: #d4520e;
-                transform: translateY(-2px);
         }
 
         /* ═══════════════════════════════════════════════════════════════════════════
