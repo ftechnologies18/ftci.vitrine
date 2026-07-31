@@ -8,6 +8,7 @@
  */
 
 import { getCategoryLabel } from '../../lib/blog';
+import { safeJsonStringify } from '../../lib/sanitize';
 
 interface Props {
         title: string;
@@ -98,5 +99,5 @@ const blogPostingSchema = {
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={absoluteCover} />
 
-<!-- JSON-LD BlogPosting (rich snippets Google) -->
-<script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} is:inline />
+<!-- JSON-LD BlogPosting (rich snippets Google) — sanitized pour prévenir XSS via </script> -->
+<script type="application/ld+json" set:html={safeJsonStringify(blogPostingSchema)} is:inline />

@@ -8,9 +8,11 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), browsing-topics=()
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  X-XSS-Protection: 1; mode=block
+  # X-XSS-Protection: 0 (déprécié, peut introduire des vulnérabilités — OWASP recommande de le désactiver quand une CSP est en place)
+  X-XSS-Protection: 0
   # Content Security Policy (ajuster si besoin après test)
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  # connect-src inclut api.keystatic.cloud (requêtes UI Keystatic Cloud) et keystatic.cloud (auth)
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.keystatic.cloud https://keystatic.cloud; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 
 # Immutable cache for hashed Astro assets (_astro/*)
 /_astro/*

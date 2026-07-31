@@ -187,9 +187,7 @@
      - Le <span> intérieur gère :active scale(0.97) avec transition 160ms
      (Emil : scale(0.97) sur :active, transition transform 160ms ease-out,
       jamais scale(0), GPU-only) */
-  .btn-primary,
-  .btn-outline,
-  .btn-outline-light {
+  .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -204,38 +202,19 @@
     border: 2px solid transparent;
     will-change: transform;
     user-select: none;
-  }
-
-  .btn-primary {
     background: var(--color-orange);
     color: #ffffff;
     border-color: var(--color-orange);
   }
 
-  .btn-outline {
-    background: transparent;
-    color: var(--color-navy);
-    border-color: var(--color-navy);
-  }
-
-  .btn-outline-light {
-    background: rgba(255, 255, 255, 0.04);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.55);
-  }
-
   /* Inner wrapper — press scale (Emil :active scale 0.97, transition 160ms) */
-  .btn-primary > span,
-  .btn-outline > span,
-  .btn-outline-light > span {
+  .btn-primary > span {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     transition: transform 160ms var(--ease-out);
   }
-  .btn-primary:active > span,
-  .btn-outline:active > span,
-  .btn-outline-light:active > span {
+  .btn-primary:active > span {
     transform: scale(0.97);
   }
 
@@ -244,14 +223,6 @@
     .btn-primary:hover {
       background: var(--color-orange-600);
       border-color: var(--color-orange-600);
-    }
-    .btn-outline:hover {
-      background: var(--color-navy);
-      color: #ffffff;
-    }
-    .btn-outline-light:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: #ffffff;
     }
   }
 

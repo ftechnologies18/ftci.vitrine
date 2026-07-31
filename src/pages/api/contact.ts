@@ -99,7 +99,9 @@ interface StoredMessage {
 }
 
 const isString = (v: unknown): v is string => typeof v === 'string';
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Regex email raisonnable : local part + @ + domain avec TLD ≥ 2 chars.
+// N'accepte pas les emails sans point dans le domain (ex: admin@localhost).
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
  * Validates a parsed payload and returns a map of `fieldName → user-facing error`.
@@ -142,23 +144,61 @@ function validate(payload: ContactPayload): Record<string, string> {
         return errors;
 }
 
-const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_WINDOW_SECONDS = 60;
 const RATE_LIMIT_MAX = 3;
-// Per-isolate state. Workers may spin up fresh isolates, so this is a soft cap
-// rather than a distributed guarantee. For a low-volume contact form it is
-// sufficient; switch to KV or Durable Objects if a hard limit becomes necessary.
-const hits = new Map<string, { count: number; firstAt: number }>();
 
-/** Returns `true` when `ip` has exceeded {@linkcode RATE_LIMIT_MAX} submissions in the rolling window. */
-function rateLimited(ip: string): boolean {
-        const now = Date.now();
-        const entry = hits.get(ip);
-        if (!entry || now - entry.firstAt > RATE_LIMIT_WINDOW_MS) {
-                hits.set(ip, { count: 1, firstAt: now });
-                return false;
+/**
+ * Rate limit distribué basé sur Cloudflare KV (fallback in-memory en dev).
+ *
+ * Cloudflare Workers peut spinner de nouveaux isolates entre deux requêtes
+ * d'un même client, donc un Map en mémoire n'est pas fiable. On utilise le
+ * KV namespace `MESSAGE_STORE` (déjà bindé) avec une clé `ratelimit/<ip>` et
+ * un expirationTtl de 60s. Le compteur est incrémenté à chaque requête.
+ *
+ * En dev (sans platformProxy), on fallback sur le Map in-memory.
+ */
+const devHits = new Map<string, { count: number; firstAt: number }>();
+
+async function rateLimited(ip: string, kv: KVNamespace | null): Promise<boolean> {
+        // Dev fallback : Map in-memory (pas fiable en prod, OK pour dev local)
+        if (!kv) {
+                const now = Date.now();
+                const entry = devHits.get(ip);
+                if (!entry || now - entry.firstAt > RATE_LIMIT_WINDOW_SECONDS * 1000) {
+                        devHits.set(ip, { count: 1, firstAt: now });
+                        return false;
+                }
+                entry.count += 1;
+                return entry.count > RATE_LIMIT_MAX;
         }
-        entry.count += 1;
-        return entry.count > RATE_LIMIT_MAX;
+
+        // Prod : KV distribué (fiable entre isolates)
+        const key = `ratelimit/${ip}`;
+        const raw = await kv.get(key);
+        const count = raw ? parseInt(raw, 10) : 0;
+        if (count >= RATE_LIMIT_MAX) return true;
+        await kv.put(key, String(count + 1), { expirationTtl: RATE_LIMIT_WINDOW_SECONDS });
+        return false;
+}
+
+/**
+ * Vérifie l'origine de la requête pour prévenir les attaques CSRF cross-site.
+ * Accepte uniquement les requêtes venant de ftci.fr (ou du subdomain workers.dev
+ * pour les tests preview). En dev, accepte localhost.
+ */
+const ALLOWED_ORIGINS = [
+        'https://ftci.fr',
+        'https://www.ftci.fr',
+        'https://ftci-vitrine.freelancetechnologies-ci.workers.dev',
+];
+
+function isOriginAllowed(request: Request): boolean {
+        // En dev, on bypass la vérification (localhost)
+        if (import.meta.env.DEV) return true;
+
+        const origin = request.headers.get('origin') || request.headers.get('referer') || '';
+        if (!origin) return false;
+        return ALLOWED_ORIGINS.some((allowed) => origin.startsWith(allowed));
 }
 
 /**
@@ -316,7 +356,7 @@ async function sendVisitorEmail(msg: StoredMessage): Promise<boolean> {
                         console.error(`[contact] Resend visitor email failed (${res.status}):`, body);
                         return false;
                 }
-                console.log(`[contact] Confirmation email sent to ${msg.email}`);
+                console.log(`[contact] Confirmation email sent (id=${msg.id})`);
                 return true;
         } catch (err) {
                 console.error('[contact] Resend visitor email error:', err);
@@ -577,9 +617,17 @@ function renderVisitorEmailHtml(msg: StoredMessage): string {
  *   - `500` is left to the runtime for unhandled throws.
  */
 export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
-        const ip = clientAddress || request.headers.get('x-forwarded-for') || null;
+        // CSRF : vérifier l'origine de la requête
+        if (!isOriginAllowed(request)) {
+                return jsonResponse(403, { ok: false, error: 'Origine non autorisée.' });
+        }
 
-        if (ip && rateLimited(ip)) {
+        // IP : préférer cf-connecting-ip (fiable côté Workers) à clientAddress
+        const ip = request.headers.get('cf-connecting-ip') || clientAddress || null;
+
+        const kv = getMessageStore();
+
+        if (ip && await rateLimited(ip, kv)) {
                 return jsonResponse(429, {
                         ok: false,
                         error: 'Trop de tentatives. Veuillez réessayer dans une minute.',
@@ -610,10 +658,11 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
                 subject: payload.subject as Subject,
                 message: (payload.message as string).trim(),
                 ip,
-                userAgent: request.headers.get('user-agent'),
+                userAgent: (request.headers.get('user-agent') ?? '').slice(0, 256), // cap pour éviter DoS KV
         };
 
-        console.log(`[contact] New message from ${stored.email} (${stored.subject})`);
+        // Log pseudonymisé : on n'expose pas l'email (PII) dans les logs opérationnels
+        console.log(`[contact] New message received (id=${stored.id}, subject=${stored.subject})`);
 
         // 1. Persist to KV first — this is the source of truth and must succeed
         //    before we tell the visitor "message received".

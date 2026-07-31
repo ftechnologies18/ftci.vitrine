@@ -59,3 +59,16 @@ interface Env {
          */
         DISCORD_WEBHOOK_URL?: string;
 }
+
+// ── Virtual modules (résolus au runtime par Vite/Astro, pas par TS) ──────────
+
+/**
+ * Module virtuel injecté par @keystatic/astro via Vite plugin. Contient la
+ * config Keystatic (export default) résolue depuis `keystatic.config.ts`.
+ * La déclaration ici évite les erreurs TS "Cannot find module" au type-check.
+ */
+declare module 'virtual:keystatic-config' {
+        import type { Config } from '@keystatic/core';
+        const config: Config;
+        export default config;
+}

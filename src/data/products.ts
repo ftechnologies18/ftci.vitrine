@@ -376,37 +376,6 @@ export const products: Product[] = [
 ];
 
 /**
- * Lookup table from {@linkcode ProductSlug} to the full {@linkcode Product}.
- * Used by code that already holds a slug (e.g. solution pages) to skip the
- * linear search performed by {@linkcode getProduct}.
- */
-export const productMap: Record<ProductSlug, Product> = products.reduce(
-        (acc, p) => {
-                acc[p.slug] = p;
-                return acc;
-        },
-        {} as Record<ProductSlug, Product>,
-);
-
-/**
- * Returns the product registered under `slug`, or `undefined` when no product
- * matches. Callers that have already validated `slug` against
- * {@linkcode ProductSlug} can use {@linkcode productMap} directly to skip the
- * linear search.
- */
-export function getProduct(slug: string): Product | undefined {
-        return products.find((p) => p.slug === slug);
-}
-
-/** Canonical path (relative to the site root) for each product solution page. */
-export const productUrls: Record<ProductSlug, string> = {
-        sect: '/solutions/sect',
-        opuc: '/solutions/opuc',
-        cats: '/solutions/cats',
-        scolagest: '/solutions/scolagest',
-};
-
-/**
  * Tailwind class tokens for each product accent color, grouped by visual
  * role (text, background, border, shadow, gradient stops). Components select
  * a role by indexing with the product's `accentColor` so the palette stays

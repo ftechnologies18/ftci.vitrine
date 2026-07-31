@@ -261,6 +261,13 @@ const slides = [
               <div class="dispersion-container">
                 {slide.products!.map((product, idx) => {
                   const accent = accentColorClasses[product.accentColor];
+                  // Mapping accentColor → hex pour le glow (cohérent avec Products.astro)
+                  const haloHex: Record<string, string> = {
+                    orange: '#ee6c1a',
+                    green: '#1e9e4f',
+                    periwinkle: '#6b7fc7',
+                    navy: '#0f1e3d',
+                  };
                   const positions = [
                     { x: '-8%', y: '5%', delay: 0.35, rotation: -6 },
                     { x: '18%', y: '-5%', delay: 0.55, rotation: 4 },
@@ -295,7 +302,7 @@ const slides = [
                           </svg>
                         </div>
                       </div>
-                      <div class="dispersion-glow" style={`background: ${accent.text === 'text-orange-500' ? '#EE6C1A' : accent.text === 'text-emerald-500' ? '#1a8c42' : '#6b7fc7'}`}></div>
+                      <div class="dispersion-glow" style={`background: ${haloHex[product.accentColor] || '#6b7fc7'}`}></div>
                       <div class="dispersion-trail"></div>
                     </a>
                   );

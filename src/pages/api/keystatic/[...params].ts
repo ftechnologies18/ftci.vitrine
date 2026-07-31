@@ -18,10 +18,10 @@ import config from 'virtual:keystatic-config';
 
 export const prerender = false;
 
-async function getCfEnv(): Promise<Record<string, string> | undefined> {
+async function getCfEnv(): Promise<Record<string, string | undefined> | undefined> {
         try {
                 const mod = await import('cloudflare:workers');
-                return mod.env as Record<string, string>;
+                return mod.env as unknown as Record<string, string | undefined>;
         } catch {
                 return undefined;
         }
@@ -43,9 +43,6 @@ export const ALL: APIRoute = async (context) => {
                 });
 
                 const result = await handler(context.request);
-
-                console.log('[keystatic-api] URL:', context.url.pathname + context.url.search);
-                console.log('[keystatic-api] Status:', result.status);
 
                 // Extraction des Set-Cookie et autres headers
                 const responseHeaders = new Headers();
@@ -73,44 +70,48 @@ export const ALL: APIRoute = async (context) => {
                         }
                 }
 
-                console.log('[keystatic-api] setCookies:', setCookies.length);
-
                 // Pose les cookies via context.cookies.set() — l'adapter Cloudflare
                 // strip les Set-Cookie des Response custom, donc context.cookies.set()
                 // est la SEULE façon de poser un cookie qui arrive au navigateur.
+                const isProd = import.meta.env.PROD;
                 for (const cookieStr of setCookies) {
                         try {
-                                const { name, value, ...options } = parseString(cookieStr);
-                                console.log('[keystatic-api] context.cookies.set:', name, 'len:', value.length);
+                                const parsed = parseString(cookieStr);
+                                if (!parsed) continue;
+                                const { name, value, ...options } = parsed;
                                 const sameSite = options.sameSite?.toLowerCase();
+                                const resolvedSameSite =
+                                        sameSite === 'lax' || sameSite === 'strict' || sameSite === 'none'
+                                                ? (sameSite as 'lax' | 'strict' | 'none')
+                                                : 'lax';
                                 context.cookies.set(name, value, {
                                         domain: options.domain,
                                         expires: options.expires,
-                                        httpOnly: options.httpOnly,
+                                        httpOnly: options.httpOnly ?? true, // forcer httpOnly par défaut
                                         maxAge: options.maxAge,
                                         path: options.path || '/',
-                                        sameSite:
-                                                sameSite === 'lax' || sameSite === 'strict' || sameSite === 'none'
-                                                        ? (sameSite as 'lax' | 'strict' | 'none')
-                                                        : undefined,
-                                        secure: options.secure,
+                                        sameSite: resolvedSameSite,
+                                        secure: isProd ? true : options.secure, // forcer Secure en prod
                                 });
                         } catch (cookieErr) {
                                 console.error('[keystatic-api] Cookie parse error:', cookieErr);
                         }
                 }
 
-                return new Response(result.body, {
+                return new Response(result.body as BodyInit | null, {
                         status: result.status,
                         headers: responseHeaders,
                 });
         } catch (err) {
                 console.error('[keystatic-api] Error:', err);
+                // En production, ne pas exposer les détails internes au client
+                // (message d'erreur + stack trace = information disclosure).
+                const isProd = import.meta.env.PROD;
                 return new Response(
                         JSON.stringify({
                                 ok: false,
-                                error: err instanceof Error ? err.message : String(err),
-                                stack: err instanceof Error ? err.stack?.split('\n').slice(0, 5).join('\n') : undefined,
+                                error: isProd ? 'Erreur interne du serveur.' : (err instanceof Error ? err.message : String(err)),
+                                ...(isProd ? {} : { stack: err instanceof Error ? err.stack?.split('\n').slice(0, 5).join('\n') : undefined }),
                         }),
                         { status: 500, headers: { 'Content-Type': 'application/json' } },
                 );
