@@ -1075,6 +1075,38 @@ const slides = [
     margin-top: 0.35rem;
   }
 
+  /* Mobile : les 3 stat cards tiennent en une ligne (3 × 103px sur 390px)
+     mais le contenu était cramped. On compacte le padding, la taille de
+     l'icône et du label pour que tout respire mieux sans stacked layout
+     (garder les 3 en ligne garde l'effet "stats dashboard" du Hero). */
+  @media (max-width: 640px) {
+    .stats-grid {
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+    }
+    .stat-card {
+      padding: 0.625rem 0.25rem;
+    }
+    .stat-icon {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 0.25rem;
+    }
+    .stat-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .stat-value {
+      font-size: 1.3rem;
+    }
+    .stat-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+    }
+  }
+
   /* ═══════════════════════════════════════════════════════════════════════════
      LOGO SHOWCASE (Enterprise Slide) - VISIBLE & ENHANCED
      ═══════════════════════════════════════════════════════════════════════════ */

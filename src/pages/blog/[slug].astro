@@ -413,8 +413,12 @@ const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
 
 	@media (max-width: 768px) {
 		.article-cover-premium {
-			height: 75vh;
-			height: 75svh;
+			/* Avant : 75vh = ~633px sur un mobile de 844px, l'image monopolisait
+                           presque tout l'écran. 38vh (~320px) donne un ratio plus adapté au
+                           mobile (l'utilisateur voit le titre + breadcrumb + début du contenu
+                           sans avoir à scroller immédiatement). */
+			height: 38vh;
+			height: 38svh;
 			border-radius: 0;
 		}
 	}
