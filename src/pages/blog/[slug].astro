@@ -413,13 +413,19 @@ const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
 
 	@media (max-width: 768px) {
 		.article-cover-premium {
-			/* Avant : 75vh = ~633px sur un mobile de 844px, l'image monopolisait
-                           presque tout l'écran. 38vh (~320px) donne un ratio plus adapté au
-                           mobile (l'utilisateur voit le titre + breadcrumb + début du contenu
-                           sans avoir à scroller immédiatement). */
-			height: 38vh;
-			height: 38svh;
+			/* Hauteur adaptée au mobile : assez grande pour que l'image entière
+                           (ratio ~16:9 paysage) tienne en `contain` sans être minuscule, sans
+                           pour autant monopoliser l'écran. 45vh ≈ 380px sur un mobile 844px. */
+			height: 45vh;
+			height: 45svh;
 			border-radius: 0;
+		}
+		.article-cover-img {
+			/* `contain` affiche l'image ENTIERE (plus de rognage gauche/droite).
+                           Le container a un fond navy (--color-navy) qui fait que les bandes
+                           vides sur les côtés s'intègrent proprement au design. */
+			object-fit: contain;
+			object-position: center;
 		}
 	}
 
