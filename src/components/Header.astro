@@ -59,24 +59,33 @@ const navLinks = [
 		</nav>
 
 		<!-- ── CTA desktop ────────────────────────────────────────────────── -->
-		<a href="/#contact" data-magnetic="14" class="btn-primary magnetic hidden md:inline-flex">
-			<span>
-				Nous contacter
-				<svg
-					class="w-4 h-4"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					aria-hidden="true"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-				</svg>
-			</span>
-		</a>
+		<!-- Wrapper .cta-desktop-wrapper : nécessaire car .btn-primary définit
+                     `display: inline-flex` dans global.css, ce qui écrase la classe
+                     utilitaire `hidden` de Tailwind (display:none sans !important).
+                     Sans ce wrapper, le bouton restait visible sur mobile et chevauchait
+                     le logo. Le wrapper porte le `hidden md:block`, et comme il n'a pas
+                     de règle display conflictuelle, Tailwind s'applique correctement.
+                     Le bouton "Nous contacter" reste accessible sur mobile via le drawer. -->
+		<div class="cta-desktop-wrapper hidden md:block">
+			<a href="/#contact" data-magnetic="14" class="btn-primary magnetic">
+				<span>
+					Nous contacter
+					<svg
+						class="w-4 h-4"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+					</svg>
+				</span>
+			</a>
+		</div>
 
 		<!-- ── Bouton menu mobile ─────────────────────────────────────────── -->
 		<button
