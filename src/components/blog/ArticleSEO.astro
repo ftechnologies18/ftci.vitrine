@@ -3,11 +3,12 @@
  * ArticleSEO.astro — Meta tags SEO spécifiques à un article de blog.
  *
  * À utiliser dans <head> via le layout quand on est sur une page article.
- * Injecte : canonical, Open Graph (article), Twitter Card, et le JSON-LD
- * schema.org BlogPosting pour le référencement Google (rich snippets).
+ * Injecte : canonical, Open Graph (article), Twitter Card, et les JSON-LD
+ * schema.org BlogPosting (rich snippet article) + BreadcrumbList
+ * (fil d'Ariane dans les résultats Google) pour le référencement.
  */
 
-import { getCategoryLabel } from '../../lib/blog';
+import { getCategoryLabel, getCategoryUrl } from '../../lib/blog';
 import { safeJsonStringify } from '../../lib/sanitize';
 
 interface Props {
@@ -73,6 +74,43 @@ const blogPostingSchema = {
 	keywords: allKeywords.join(', '),
 	inLanguage: 'fr-FR',
 };
+
+// Schema.org BreadcrumbList — rich snippet "fil d'Ariane" dans les résultats Google.
+// Reflète la hiérarchie de navigation visible sur la page article :
+// Accueil > Blog > Catégorie > Article. Google peut afficher ce fil d'Ariane au
+// lieu de l'URL brute sous le titre du résultat, ce qui améliore le taux de clic
+// et la lisibilité de la provenance de la page.
+const categoryUrl = `${siteUrl}${getCategoryUrl(category)}`;
+const breadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{
+			'@type': 'ListItem',
+			position: 1,
+			name: 'Accueil',
+			item: `${siteUrl}/`,
+		},
+		{
+			'@type': 'ListItem',
+			position: 2,
+			name: 'Blog',
+			item: `${siteUrl}/blog`,
+		},
+		{
+			'@type': 'ListItem',
+			position: 3,
+			name: categoryLabel,
+			item: categoryUrl,
+		},
+		{
+			'@type': 'ListItem',
+			position: 4,
+			name: title,
+			item: absoluteUrl,
+		},
+	],
+};
 ---
 
 <!-- Canonical -->
@@ -103,3 +141,6 @@ const blogPostingSchema = {
 
 <!-- JSON-LD BlogPosting (rich snippets Google) — sanitized pour prévenir XSS via </script> -->
 <script type="application/ld+json" set:html={safeJsonStringify(blogPostingSchema)} is:inline />
+
+<!-- JSON-LD BreadcrumbList (fil d'Ariane dans les résultats Google) -->
+<script type="application/ld+json" set:html={safeJsonStringify(breadcrumbSchema)} is:inline />
