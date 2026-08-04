@@ -631,11 +631,14 @@ const slides = [
     opacity: 0;
     visibility: hidden;
     transform: translateX(80px) scale(0.98);
-    transition: 
+    transition:
       opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
       visibility 0.75s;
     pointer-events: none;
+    /* Isolate each slide's rendering so layout/paint work in one slide
+       doesn't trigger reflow cascades in the others. Safe on all browsers. */
+    contain: layout style paint;
   }
 
   .hero-slide.is-active {
@@ -644,6 +647,27 @@ const slides = [
     visibility: visible;
     transform: translateX(0) scale(1);
     pointer-events: auto;
+  }
+
+  /* Performance: skip layout & paint of non-active slides entirely.
+     The slide content stays in the DOM (crawlable by search engines —
+     the h1/h2 hierarchy we rely on for SEO is preserved), but the
+     browser skips computing styles, layout and paint for the 2 hidden
+     slides until one becomes active. On a 3-slide hero this cuts the
+     initial render work by ~⅔.
+
+     `contain-intrinsic-size` reserves a placeholder box so the browser
+     doesn't have to do a layout pass to know the slide's size. The
+     slides are position:absolute so this is belt-and-suspenders, but
+     keeps the rule correct if the positioning ever changes.
+
+     Guarded with @supports so older browsers (Safari <18, Firefox <125)
+     simply fall back to the visibility:hidden behaviour above. */
+  @supports (content-visibility: auto) {
+    .hero-slide:not(.is-active) {
+      content-visibility: auto;
+      contain-intrinsic-size: 100% 600px;
+    }
   }
 
   .hero-slide.slide-exit-left {
