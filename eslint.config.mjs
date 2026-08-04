@@ -70,6 +70,15 @@ export default tseslint.config(
 	// Scripts de build (Node.js, pas Astro)
 	{
 		files: ['scripts/**/*.{mjs,js}'],
+		// Node.js globals not provided by js.configs.recommended — without these,
+		// `no-undef` flags Buffer / console / process in build scripts.
+		languageOptions: {
+			globals: {
+				Buffer: 'readonly',
+				console: 'readonly',
+				process: 'readonly',
+			},
+		},
 		rules: {
 			'no-console': 'off',
 		},

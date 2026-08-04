@@ -80,6 +80,9 @@ importers:
       prettier-plugin-astro:
         specifier: ^0.14.1
         version: 0.14.1
+      sharp:
+        specifier: ^0.35.3
+        version: 0.35.3(@types/node@26.1.1)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -6622,7 +6625,6 @@ snapshots:
       '@img/sharp-win32-ia32': 0.35.3
       '@img/sharp-win32-x64': 0.35.3
       '@types/node': 26.1.1
-    optional: true
 
   shebang-command@2.0.0:
     dependencies:
