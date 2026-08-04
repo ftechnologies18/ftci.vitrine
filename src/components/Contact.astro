@@ -296,7 +296,12 @@ const subjectOptions = [
 						>
 							{
 								subjectOptions.map((opt) => (
-									<option value={opt.value} disabled={opt.value === ''}>
+									<option
+										value={opt.value}
+										disabled={opt.value === ''}
+										selected={opt.value === ''}
+										hidden={opt.value === ''}
+									>
 										{opt.label}
 									</option>
 								))
