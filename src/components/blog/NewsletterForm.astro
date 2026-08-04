@@ -14,307 +14,309 @@
  */
 
 interface Props {
-        variant?: 'full' | 'compact';
+	variant?: 'full' | 'compact';
 }
 
 const { variant = 'full' } = Astro.props;
 ---
 
-<form
-        id="newsletter-form"
-        class={`newsletter-form newsletter-form--${variant}`}
-        novalidate
->
-        <div class="newsletter-form-row">
-                <div class="newsletter-input-wrapper">
-                        <svg class="newsletter-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        <input
-                                type="email"
-                                id="newsletter-email"
-                                name="email"
-                                class="newsletter-input"
-                                placeholder="votre@email.com"
-                                required
-                                autocomplete="email"
-                                aria-label="Adresse email"
-                                aria-describedby="newsletter-status"
-                        />
-                </div>
-                <button
-                        type="submit"
-                        id="newsletter-submit"
-                        class="newsletter-submit"
-                        data-magnetic="10"
-                >
-                        <span class="newsletter-submit-label">
-                                S'abonner
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                        </span>
-                        <span class="newsletter-submit-loading hidden">
-                                <span class="spinner"></span>
-                        </span>
-                </button>
-        </div>
-        <div
-                id="newsletter-status"
-                class="newsletter-status hidden"
-                role="status"
-                aria-live="polite"
-        ></div>
+<form id="newsletter-form" class={`newsletter-form newsletter-form--${variant}`} novalidate>
+	<div class="newsletter-form-row">
+		<div class="newsletter-input-wrapper">
+			<svg
+				class="newsletter-input-icon"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				aria-hidden="true"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+				></path>
+			</svg>
+			<input
+				type="email"
+				id="newsletter-email"
+				name="email"
+				class="newsletter-input"
+				placeholder="votre@email.com"
+				required
+				autocomplete="email"
+				aria-label="Adresse email"
+				aria-describedby="newsletter-status"
+			/>
+		</div>
+		<button type="submit" id="newsletter-submit" class="newsletter-submit" data-magnetic="10">
+			<span class="newsletter-submit-label">
+				S'abonner
+				<svg
+					class="w-4 h-4"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+				</svg>
+			</span>
+			<span class="newsletter-submit-loading hidden">
+				<span class="spinner"></span>
+			</span>
+		</button>
+	</div>
+	<div id="newsletter-status" class="newsletter-status hidden" role="status" aria-live="polite">
+	</div>
 </form>
 
 <style>
-        .newsletter-form {
-                width: 100%;
-        }
+	.newsletter-form {
+		width: 100%;
+	}
 
-        .newsletter-form-row {
-                display: flex;
-                gap: 0.625rem;
-                align-items: stretch;
-        }
+	.newsletter-form-row {
+		display: flex;
+		gap: 0.625rem;
+		align-items: stretch;
+	}
 
-        .newsletter-input-wrapper {
-                flex: 1;
-                position: relative;
-                display: flex;
-                align-items: center;
-        }
+	.newsletter-input-wrapper {
+		flex: 1;
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
 
-        .newsletter-input-icon {
-                position: absolute;
-                left: 1rem;
-                width: 18px;
-                height: 18px;
-                color: rgba(255, 255, 255, 0.4);
-                pointer-events: none;
-                z-index: 1;
-        }
+	.newsletter-input-icon {
+		position: absolute;
+		left: 1rem;
+		width: 18px;
+		height: 18px;
+		color: rgba(255, 255, 255, 0.4);
+		pointer-events: none;
+		z-index: 1;
+	}
 
-        .newsletter-input {
-                width: 100%;
-                padding: 0.875rem 1rem 0.875rem 2.75rem;
-                background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                border-radius: var(--radius-pill);
-                color: #fff;
-                font-size: 0.9375rem;
-                font-family: var(--font-sans);
-                outline: none;
-                transition: all 200ms ease;
-        }
-        .newsletter-input::placeholder {
-                color: rgba(255, 255, 255, 0.4);
-        }
-        .newsletter-input:focus {
-                background: rgba(255, 255, 255, 0.12);
-                border-color: var(--color-orange);
-                box-shadow: 0 0 0 3px rgba(238, 108, 26, 0.2);
-        }
-        .newsletter-input:focus + .newsletter-input-icon,
-        .newsletter-input-wrapper:has(.newsletter-input:focus) .newsletter-input-icon {
-                color: var(--color-orange);
-        }
+	.newsletter-input {
+		width: 100%;
+		padding: 0.875rem 1rem 0.875rem 2.75rem;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		border-radius: var(--radius-pill);
+		color: #fff;
+		font-size: 0.9375rem;
+		font-family: var(--font-sans);
+		outline: none;
+		transition: all 200ms ease;
+	}
+	.newsletter-input::placeholder {
+		color: rgba(255, 255, 255, 0.4);
+	}
+	.newsletter-input:focus {
+		background: rgba(255, 255, 255, 0.12);
+		border-color: var(--color-orange);
+		box-shadow: 0 0 0 3px rgba(238, 108, 26, 0.2);
+	}
+	.newsletter-input:focus + .newsletter-input-icon,
+	.newsletter-input-wrapper:has(.newsletter-input:focus) .newsletter-input-icon {
+		color: var(--color-orange);
+	}
 
-        .newsletter-submit {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0.875rem 1.75rem;
-                background: var(--color-orange);
-                color: #fff;
-                font-weight: 600;
-                font-size: 0.9375rem;
-                font-family: var(--font-sans);
-                border: none;
-                border-radius: var(--radius-pill);
-                cursor: pointer;
-                flex-shrink: 0;
-                transition: all 250ms ease;
-        }
-        .newsletter-submit:hover:not(:disabled) {
-                background: #d4520e;
-                transform: translateY(-2px);
-                box-shadow: 0 8px 20px rgba(238, 108, 26, 0.35);
-        }
-        .newsletter-submit:active:not(:disabled) {
-                transform: translateY(0);
-        }
-        .newsletter-submit:disabled {
-                opacity: 0.6;
-                cursor: not-allowed;
-        }
+	.newsletter-submit {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.875rem 1.75rem;
+		background: var(--color-orange);
+		color: #fff;
+		font-weight: 600;
+		font-size: 0.9375rem;
+		font-family: var(--font-sans);
+		border: none;
+		border-radius: var(--radius-pill);
+		cursor: pointer;
+		flex-shrink: 0;
+		transition: all 250ms ease;
+	}
+	.newsletter-submit:hover:not(:disabled) {
+		background: #d4520e;
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(238, 108, 26, 0.35);
+	}
+	.newsletter-submit:active:not(:disabled) {
+		transform: translateY(0);
+	}
+	.newsletter-submit:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
 
-        .newsletter-submit-label {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-        }
-        .newsletter-submit-label svg {
-                transition: transform 250ms ease;
-        }
-        .newsletter-submit:hover:not(:disabled) .newsletter-submit-label svg {
-                transform: translateX(3px);
-        }
+	.newsletter-submit-label {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.newsletter-submit-label svg {
+		transition: transform 250ms ease;
+	}
+	.newsletter-submit:hover:not(:disabled) .newsletter-submit-label svg {
+		transform: translateX(3px);
+	}
 
-        .newsletter-submit-loading {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-        }
+	.newsletter-submit-loading {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-        .spinner {
-                width: 18px;
-                height: 18px;
-                border: 2px solid rgba(255, 255, 255, 0.3);
-                border-top-color: #fff;
-                border-radius: 50%;
-                animation: spin 0.6s linear infinite;
-        }
+	.spinner {
+		width: 18px;
+		height: 18px;
+		border: 2px solid rgba(255, 255, 255, 0.3);
+		border-top-color: #fff;
+		border-radius: 50%;
+		animation: spin 0.6s linear infinite;
+	}
 
-        @keyframes spin {
-                to {
-                        transform: rotate(360deg);
-                }
-        }
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
 
-        .hidden {
-                display: none;
-        }
+	.hidden {
+		display: none;
+	}
 
-        /* Status message */
-        .newsletter-status {
-                margin-top: 0.75rem;
-                padding: 0.625rem 1rem;
-                border-radius: 0.625rem;
-                font-size: 0.875rem;
-                font-weight: 500;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                animation: statusSlide 300ms ease-out;
-        }
+	/* Status message */
+	.newsletter-status {
+		margin-top: 0.75rem;
+		padding: 0.625rem 1rem;
+		border-radius: 0.625rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		animation: statusSlide 300ms ease-out;
+	}
 
-        @keyframes statusSlide {
-                from {
-                        opacity: 0;
-                        transform: translateY(-4px);
-                }
-                to {
-                        opacity: 1;
-                        transform: translateY(0);
-                }
-        }
+	@keyframes statusSlide {
+		from {
+			opacity: 0;
+			transform: translateY(-4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 
-        .newsletter-status--success {
-                background: rgba(30, 158, 79, 0.15);
-                color: #4ade80;
-                border: 1px solid rgba(30, 158, 79, 0.3);
-        }
+	.newsletter-status--success {
+		background: rgba(30, 158, 79, 0.15);
+		color: #4ade80;
+		border: 1px solid rgba(30, 158, 79, 0.3);
+	}
 
-        .newsletter-status--error {
-                background: rgba(238, 108, 26, 0.15);
-                color: #fb923c;
-                border: 1px solid rgba(238, 108, 26, 0.3);
-        }
+	.newsletter-status--error {
+		background: rgba(238, 108, 26, 0.15);
+		color: #fb923c;
+		border: 1px solid rgba(238, 108, 26, 0.3);
+	}
 
-        /* Mobile */
-        @media (max-width: 640px) {
-                .newsletter-form-row {
-                        flex-direction: column;
-                }
-                .newsletter-submit {
-                        width: 100%;
-                        justify-content: center;
-                }
-        }
+	/* Mobile */
+	@media (max-width: 640px) {
+		.newsletter-form-row {
+			flex-direction: column;
+		}
+		.newsletter-submit {
+			width: 100%;
+			justify-content: center;
+		}
+	}
 </style>
 
 <script>
-        // ── Formulaire newsletter : POST /api/newsletter/subscribe ─────────────
-        const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
-        const submitBtn = document.getElementById('newsletter-submit') as HTMLButtonElement | null;
-        const statusEl = document.getElementById('newsletter-status') as HTMLElement | null;
+	// ── Formulaire newsletter : POST /api/newsletter/subscribe ─────────────
+	const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+	const submitBtn = document.getElementById('newsletter-submit') as HTMLButtonElement | null;
+	const statusEl = document.getElementById('newsletter-status') as HTMLElement | null;
 
-        if (form && submitBtn && statusEl) {
-                const labelEl = submitBtn.querySelector('.newsletter-submit-label');
-                const loadingEl = submitBtn.querySelector('.newsletter-submit-loading');
+	if (form && submitBtn && statusEl) {
+		const labelEl = submitBtn.querySelector('.newsletter-submit-label');
+		const loadingEl = submitBtn.querySelector('.newsletter-submit-loading');
 
-                const setLoading = (loading: boolean) => {
-                        if (loading) {
-                                labelEl?.classList.add('hidden');
-                                loadingEl?.classList.remove('hidden');
-                                submitBtn.disabled = true;
-                        } else {
-                                labelEl?.classList.remove('hidden');
-                                loadingEl?.classList.add('hidden');
-                                submitBtn.disabled = false;
-                        }
-                };
+		const setLoading = (loading: boolean) => {
+			if (loading) {
+				labelEl?.classList.add('hidden');
+				loadingEl?.classList.remove('hidden');
+				submitBtn.disabled = true;
+			} else {
+				labelEl?.classList.remove('hidden');
+				loadingEl?.classList.add('hidden');
+				submitBtn.disabled = false;
+			}
+		};
 
-                const showStatus = (message: string, type: 'success' | 'error') => {
-                        statusEl.textContent = message;
-                        statusEl.className = `newsletter-status newsletter-status--${type}`;
-                        statusEl.classList.remove('hidden');
-                        // Auto-hide après 6s
-                        window.setTimeout(() => {
-                                statusEl.classList.add('hidden');
-                        }, 6000);
-                };
+		const showStatus = (message: string, type: 'success' | 'error') => {
+			statusEl.textContent = message;
+			statusEl.className = `newsletter-status newsletter-status--${type}`;
+			statusEl.classList.remove('hidden');
+			// Auto-hide après 6s
+			window.setTimeout(() => {
+				statusEl.classList.add('hidden');
+			}, 6000);
+		};
 
-                form.addEventListener('submit', async (e) => {
-                        e.preventDefault();
-                        statusEl.classList.add('hidden');
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			statusEl.classList.add('hidden');
 
-                        const emailInput = form.querySelector<HTMLInputElement>('#newsletter-email');
-                        const email = emailInput?.value.trim() ?? '';
+			const emailInput = form.querySelector<HTMLInputElement>('#newsletter-email');
+			const email = emailInput?.value.trim() ?? '';
 
-                        // Validation client
-                        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-                                showStatus('Adresse email invalide. Vérifiez votre saisie.', 'error');
-                                emailInput?.focus();
-                                return;
-                        }
+			// Validation client
+			if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+				showStatus('Adresse email invalide. Vérifiez votre saisie.', 'error');
+				emailInput?.focus();
+				return;
+			}
 
-                        setLoading(true);
+			setLoading(true);
 
-                        try {
-                                const res = await fetch('/api/newsletter/subscribe', {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ email }),
-                                });
+			try {
+				const res = await fetch('/api/newsletter/subscribe', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email }),
+				});
 
-                                const data = (await res.json().catch(() => ({}))) as {
-                                        ok?: boolean;
-                                        message?: string;
-                                        error?: string;
-                                };
+				const data = (await res.json().catch(() => ({}))) as {
+					ok?: boolean;
+					message?: string;
+					error?: string;
+				};
 
-                                if (res.ok) {
-                                        showStatus(
-                                                data.message || 'Abonnement réussi ! Vous recevrez nos prochains articles.',
-                                                'success',
-                                        );
-                                        form.reset();
-                                } else {
-                                        showStatus(
-                                                data.error || 'Une erreur est survenue. Veuillez réessayer.',
-                                                'error',
-                                        );
-                                }
-                        } catch {
-                                showStatus(
-                                        'Erreur réseau. Vérifiez votre connexion et réessayez.',
-                                        'error',
-                                );
-                        } finally {
-                                setLoading(false);
-                        }
-                });
-        }
+				if (res.ok) {
+					showStatus(
+						data.message || 'Abonnement réussi ! Vous recevrez nos prochains articles.',
+						'success',
+					);
+					form.reset();
+				} else {
+					showStatus(data.error || 'Une erreur est survenue. Veuillez réessayer.', 'error');
+				}
+			} catch {
+				showStatus('Erreur réseau. Vérifiez votre connexion et réessayez.', 'error');
+			} finally {
+				setLoading(false);
+			}
+		});
+	}
 </script>

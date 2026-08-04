@@ -71,7 +71,7 @@ const sizeClasses = size === 'sm' ? 'badge-sm' : 'badge-md';
 			class={`category-badge ${sizeClasses}`}
 			style={`--badge-bg: ${colors.bg}; --badge-text: ${colors.text}; --badge-border: ${colors.border}; --badge-dot: ${colors.dot};`}
 		>
-			<span class="badge-dot" aria-hidden="true"></span>
+			<span class="badge-dot" aria-hidden="true" />
 			<span class="badge-label">{label}</span>
 		</a>
 	) : (
@@ -79,7 +79,7 @@ const sizeClasses = size === 'sm' ? 'badge-sm' : 'badge-md';
 			class={`category-badge ${sizeClasses}`}
 			style={`--badge-bg: ${colors.bg}; --badge-text: ${colors.text}; --badge-border: ${colors.border}; --badge-dot: ${colors.dot};`}
 		>
-			<span class="badge-dot" aria-hidden="true"></span>
+			<span class="badge-dot" aria-hidden="true" />
 			<span class="badge-label">{label}</span>
 		</span>
 	)
@@ -114,8 +114,15 @@ const sizeClasses = size === 'sm' ? 'badge-sm' : 'badge-md';
 		animation: badgePulse 2s ease-in-out infinite;
 	}
 	@keyframes badgePulse {
-		0%, 100% { opacity: 1; transform: scale(1); }
-		50% { opacity: 0.6; transform: scale(1.15); }
+		0%,
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.6;
+			transform: scale(1.15);
+		}
 	}
 
 	.badge-label {

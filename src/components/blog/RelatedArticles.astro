@@ -27,7 +27,7 @@ const related = await getRelatedArticles(current, limit);
 			<div class="related-container">
 				<div class="related-header">
 					<div class="related-header-left">
-						<span class="related-accent" aria-hidden="true"></span>
+						<span class="related-accent" aria-hidden="true" />
 						<div>
 							<h2 class="related-title">Pour aller plus loin</h2>
 							<p class="related-subtitle">Continuez votre lecture avec ces articles connexes</p>
@@ -35,7 +35,14 @@ const related = await getRelatedArticles(current, limit);
 					</div>
 					<a href="/blog" class="related-view-all">
 						Voir tous
-						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M17 8l4 4m0 0l-4 4m4-4H3"
+							/>
+						</svg>
 					</a>
 				</div>
 
