@@ -27,15 +27,18 @@ const navLinks = [
 	<div class="container flex items-center justify-between h-[72px]">
 		<!-- ── Brand : logo réel + wordmark ──────────────────────────────── -->
 		<a href="/" class="flex items-center gap-2.5 group" aria-label="FTCI — Accueil">
-			<img
-				src="/brand/logo-ftci.png"
-				alt="Logo FTCI"
-				width="40"
-				height="41"
-				class="h-9 w-auto transition-transform duration-200 group-hover:scale-[1.04]"
-				loading="eager"
-				decoding="async"
-			/>
+			<picture>
+				<source srcset="/brand/logo-ftci.webp" type="image/webp" />
+				<img
+					src="/brand/logo-ftci.png"
+					alt="Logo FTCI"
+					width="40"
+					height="41"
+					class="h-9 w-auto transition-transform duration-200 group-hover:scale-[1.04]"
+					loading="eager"
+					decoding="async"
+				/>
+			</picture>
 			<span class="flex items-baseline gap-0.5 select-none">
 				<span class="font-display font-extrabold text-navy text-xl tracking-[-0.03em]"> FTCI </span>
 				<span class="font-display font-extrabold text-orange text-sm tracking-tight">

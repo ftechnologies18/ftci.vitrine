@@ -159,14 +159,17 @@ const year = new Date().getFullYear();
 			<!-- Brand + Social -->
 			<div class="ft-brand">
 				<a href="/" class="ft-logo" aria-label="FTCI — Accueil">
-					<img
-						src="/brand/logo-ftci.png"
-						alt="FTCI"
-						width="32"
-						height="33"
-						class="ft-logo-img"
-						loading="lazy"
-					/>
+					<picture>
+						<source srcset="/brand/logo-ftci.webp" type="image/webp" />
+						<img
+							src="/brand/logo-ftci.png"
+							alt="FTCI"
+							width="32"
+							height="33"
+							class="ft-logo-img"
+							loading="lazy"
+						/>
+					</picture>
 					<span class="ft-logo-text">FTCI<span class="ft-logo-accent">Technologies</span></span>
 				</a>
 				<p class="ft-tagline">Entreprise de Services du Numérique (ESN) — Abidjan, Côte d'Ivoire</p>
