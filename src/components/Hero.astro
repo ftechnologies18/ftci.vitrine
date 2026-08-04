@@ -388,7 +388,13 @@ const slides = [
                       </div>
                       
                       <div class="svc-content">
-                        <h3 class="svc-name">{service.name}</h3>
+                        {/* Teaser card inside the hero slider — the authoritative
+                            heading hierarchy (h2 "Nos Services" + one h3 per service)
+                            lives in src/components/Services.astro. Keeping these as
+                            plain divs avoids duplicating the 4 service titles as <h3>
+                            in the DOM, which diluted the SEO signal. The .svc-name
+                            class preserves the visual styling. */}
+                        <div class="svc-name">{service.name}</div>
                         <p class="svc-desc">{service.desc}</p>
                       </div>
                       
