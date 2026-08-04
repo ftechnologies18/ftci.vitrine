@@ -115,32 +115,80 @@ const navLinks = [
 			</svg>
 		</button>
 	</div>
+</header>
 
-	<!-- ── Drawer mobile ─────────────────────────────────────────────────── -->
+<!--
+        ── Drawer mobile ──────────────────────────────────────────────────
+        ATTENTION : ce drawer DOIT être un sibling du <header>, pas un enfant.
+        Le <header> utilise `backdrop-blur-xl` (backdrop-filter: blur) qui crée
+        un containing block pour les descendants `position: fixed` (comportement
+        documenté CSS). Si le drawer reste à l'intérieur du header, son
+        `fixed inset-0` est relatif au header (72px de haut) au lieu du viewport,
+        et le menu ne s'affiche jamais en plein écran. Sortir le drawer du
+        header restaure le comportement attendu : fixed relatif au viewport.
+-->
+<div
+	id="mobile-drawer"
+	class="md:hidden fixed inset-0 z-50 invisible opacity-0 transition-opacity duration-200 ease-out"
+	role="dialog"
+	aria-modal="true"
+	aria-label="Menu de navigation mobile"
+>
+	<!-- Backdrop -->
+	<div class="absolute inset-0 bg-navy/40 backdrop-blur-sm" data-drawer-close></div>
+
+	<!-- Panel -->
 	<div
-		id="mobile-drawer"
-		class="md:hidden fixed inset-0 z-40 invisible opacity-0 transition-opacity duration-200 ease-out"
-		role="dialog"
-		aria-modal="true"
-		aria-label="Menu de navigation mobile"
+		class="mobile-drawer-panel absolute right-0 top-0 h-full w-[min(82vw,360px)] bg-white shadow-2xl flex flex-col"
 	>
-		<!-- Backdrop -->
-		<div class="absolute inset-0 bg-navy/40 backdrop-blur-sm" data-drawer-close></div>
-
-		<!-- Panel -->
-		<div
-			class="mobile-drawer-panel absolute right-0 top-0 h-full w-[min(82vw,360px)] bg-white shadow-2xl flex flex-col"
-		>
-			<div class="flex items-center justify-between h-[72px] px-5 border-b border-navy/5 shrink-0">
-				<span class="font-display font-extrabold text-navy">Menu</span>
-				<button
-					type="button"
-					id="menu-close"
-					class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-navy hover:bg-navy/5 transition-colors"
-					aria-label="Fermer le menu"
+		<div class="flex items-center justify-between h-[72px] px-5 border-b border-navy/5 shrink-0">
+			<span class="font-display font-extrabold text-navy">Menu</span>
+			<button
+				type="button"
+				id="menu-close"
+				class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-navy hover:bg-navy/5 transition-colors"
+				aria-label="Fermer le menu"
+			>
+				<svg
+					class="w-5 h-5"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
 				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M6 18L18 6M6 6l12 12"></path>
+				</svg>
+			</button>
+		</div>
+
+		<nav class="flex-1 overflow-y-auto px-5 py-6" aria-label="Navigation mobile">
+			<ul class="space-y-1">
+				{
+					navLinks.map((link) => (
+						<li>
+							<a
+								href={link.href}
+								class="block px-4 py-3.5 text-lg font-medium text-navy hover:bg-light-bg hover:text-orange rounded-xl transition-colors duration-200"
+								data-drawer-link
+							>
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<div class="p-5 border-t border-navy/5 shrink-0">
+			<a href="/#contact" class="btn-primary w-full" data-drawer-link>
+				<span>
+					Nous contacter
 					<svg
-						class="w-5 h-5"
+						class="w-4 h-4"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -150,52 +198,13 @@ const navLinks = [
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"></path>
+							d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
 					</svg>
-				</button>
-			</div>
-
-			<nav class="flex-1 overflow-y-auto px-5 py-6" aria-label="Navigation mobile">
-				<ul class="space-y-1">
-					{
-						navLinks.map((link) => (
-							<li>
-								<a
-									href={link.href}
-									class="block px-4 py-3.5 text-lg font-medium text-navy hover:bg-light-bg hover:text-orange rounded-xl transition-colors duration-200"
-									data-drawer-link
-								>
-									{link.label}
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</nav>
-
-			<div class="p-5 border-t border-navy/5 shrink-0">
-				<a href="/#contact" class="btn-primary w-full" data-drawer-link>
-					<span>
-						Nous contacter
-						<svg
-							class="w-4 h-4"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-							aria-hidden="true"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-						</svg>
-					</span>
-				</a>
-			</div>
+				</span>
+			</a>
 		</div>
 	</div>
-</header>
+</div>
 
 <style>
 	/* Drawer : état ouvert */
