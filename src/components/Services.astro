@@ -86,7 +86,7 @@ const services = [
 ];
 ---
 
-<section id="services" class="relative py-20 md:py-32 bg-light-bg overflow-hidden">
+<section id="services" class="relative py-12 md:py-32 bg-light-bg overflow-hidden">
         <!-- ── Parallax background elements ────────────────────────────────────── -->
         <div class="parallax-bg services-parallax absolute inset-0 pointer-events-none" aria-hidden="true">
                 <!-- Mesh gradient blob -->
@@ -123,7 +123,7 @@ const services = [
                         {services.map((service, idx) => (
                                 <div
                                         id={`service-${service.slug}`}
-                                        class="relative pl-16 md:pl-24 pb-12 last:pb-0 observe-reveal service-card scroll-mt-24"
+                                        class="relative pl-16 md:pl-24 pb-8 last:pb-0 observe-reveal service-card scroll-mt-24"
                                         data-reveal-delay={idx}
                                 >
                                         <!-- Cercle numéroté gradient -->
@@ -135,7 +135,7 @@ const services = [
                                         </div>
 
                                         <!-- Contenu -->
-                                        <div class="bg-white rounded-card p-6 md:p-7 shadow-sm border border-navy/5 service-content">
+                                        <div class="bg-white rounded-card p-4 md:p-7 shadow-sm border border-navy/5 service-content">
                                                 <!-- Titre + icône stroke-draw-enhanced -->
                                                 <div class="flex items-start justify-between gap-4 mb-3">
                                                         <h3 class="text-xl md:text-2xl font-display font-extrabold text-navy">
