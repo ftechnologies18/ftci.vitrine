@@ -144,3 +144,21 @@ export function getArticleUrl(entry: BlogEntry): string {
 export function getCategoryUrl(slug: string): string {
 	return `/blog/categorie/${slug}`;
 }
+
+/**
+ * Returns the SEO-optimized <title> for an article page.
+ * Uses the explicit seoTitle frontmatter if set; otherwise truncates the
+ * article title to fit within 60 characters (leaving room for the
+ * " | Blog FTCI" suffix, total <= 70 characters).
+ * Truncation happens at the last space before the limit to avoid
+ * cutting mid-word.
+ */
+export function getSeoTitle(entry: BlogEntry): string {
+	if (entry.data.seoTitle) return entry.data.seoTitle;
+	const MAX_TITLE = 60;
+	const title = entry.data.title;
+	if (title.length <= MAX_TITLE) return title;
+	const truncated = title.slice(0, MAX_TITLE);
+	const lastSpace = truncated.lastIndexOf(' ');
+	return lastSpace > MAX_TITLE * 0.6 ? truncated.slice(0, lastSpace) : truncated;
+}

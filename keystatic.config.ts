@@ -149,6 +149,10 @@ export default config({
 					label: 'Brouillon (masqué en production, visible en preview)',
 					defaultValue: false,
 				}),
+				seoTitle: fields.text({
+				label: "Titre SEO (optionnel, max 70 chars pour la balise title)",
+				validation: { length: { max: 70 } },
+			}),
 				readingTime: fields.integer({
 					label: 'Temps de lecture (minutes, optionnel — auto si vide)',
 					defaultValue: 5,
