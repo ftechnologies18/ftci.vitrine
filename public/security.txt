@@ -1,0 +1,33 @@
+# Security Policy — FTCI (Freelance Technologies Côte d'Ivoire)
+# Contact: freelancetechnologies.ci@gmail.com
+# Domain: ftci.fr
+# Last updated: 2026-08-05
+#
+# Si vous découvrez une vulnérabilité de sécurité sur nos services
+# (ftci.fr, apps.ftci.fr, ou toute infrastructure associée),
+# merci de nous la signaler de manière responsable avant toute divulgation publique.
+#
+# Nous nous engageons à :
+#   - Accuser réception dans les 48 heures
+#   - Vous tenir informé de la progression de la correction
+#   - Corriger le problème dans un délai raisonnable (selon sévérité)
+#   - Vous créditer publiquement (sauf demande contraire)
+#
+# Merci de ne pas tester la résistance de nos systèmes (pas de DoS,
+# pas de modification de données utilisateurs, pas d'accès non autorisé).
+# Limitez vos tests au strict minimum nécessaire pour démontrer la faille.
+
+Contact: mailto:freelancetechnologies.ci@gmail.com
+Contact: mailto:security@ftci.fr
+
+# Préférence : signalez les vulnérabilités par e-mail.
+# Pour les failles critiques nécessitant une réponse urgente,
+# vous pouvez utiliser les deux adresses en parallèle.
+
+Preferred-Languages: fr, en
+
+# Politique de divulgation
+Policy: https://github.com/ftechnologies18/ftci.vitrine/blob/main/SECURITY.md
+
+# Signature du fichier (optionnel mais recommandé par le RFC 9116)
+# Canonical: https://ftci.fr/.well-known/security.txt

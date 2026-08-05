@@ -37,6 +37,14 @@
 /api/*
   Cache-Control: no-store
 
+# Security.txt — cache court car mis à jour avec les coordonnées de contact
+/.well-known/security.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
+/security.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
+
 # Never cache sitemap & robots (regénérés à chaque build, mais on veut la version fraîche)
 /sitemap.xml
   Cache-Control: public, max-age=3600

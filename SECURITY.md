@@ -1,78 +1,54 @@
-# Politique de sécurité — FTCI Vitrine
+# Politique de sécurité — FTCI
 
-## 🔒 Signaler une vulnérabilité
+## Signaler une vulnérabilité
 
-**Ne PAS ouvrir une issue publique** pour signaler une vulnérabilité de sécurité.
+Si vous découvrez une vulnérabilité de sécurité dans un projet ou service de **FTCI (Freelance Technologies Côte d'Ivoire)**, nous vous remercions de nous la signaler de manière responsable.
 
-À la place, envoyez un email à **freelancetechnologies.ci@gmail.com** avec :
+### Comment nous contacter
 
-- Une description du problème
-- Les étapes pour le reproduire
-- L'impact potentiel
-- Si possible, une suggestion de correctif
+- **E-mail** : [freelancetechnologies.ci@gmail.com](mailto:freelancetechnologies.ci@gmail.com)
+- **E-mail secondaire** : [security@ftci.fr](mailto:security@ftci.fr)
+- **Langues acceptées** : Français, Anglais
 
-Nous nous engageons à :
+### Ce que nous vous demandons
 
-- Accuser réception sous **48h ouvrées**
-- Vous tenir informé de l'avancement du fix
-- Créditer (si vous le souhaitez) dans le CHANGELOG une fois le fix déployé
+1. **Ne pas** modifier ou accéder aux données utilisateurs
+2. **Ne pas** effectuer d'attaques de déni de service (DoS/DDoS)
+3. **Limiter** vos tests au strict minimum nécessaire pour démontrer la vulnérabilité
+4. **Ne pas** divulguer la vulnérabilité publiquement avant qu'elle soit corrigée
 
-## 🛡️ Mesures de sécurité en place
+### Notre engagement
 
-Le projet applique les bonnes pratiques suivantes :
+| Action | Délai |
+|--------|-------|
+| Accusé de réception | 48 heures |
+| Mise à jour sur la progression | 72 heures |
+| Correction (critique) | 7 jours |
+| Correction (modérée) | 14 jours |
+| Correction (faible) | 30 jours |
+| Crédit public | Sur demande (sauf refus explicite) |
 
-### Headers de sécurité (Cloudflare Workers)
+### Périmètre
 
-- `Content-Security-Policy` : restrictif (self + Keystatic Cloud uniquement)
-- `Strict-Transport-Security` : HSTS 2 ans + preload + subdomains
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: SAMEORIGIN`
-- `Referrer-Policy: strict-origin-when-cross-origin`
-- `Permissions-Policy` : camera, microphone, geolocation désactivés
+Sont couverts par cette politique :
 
-### Validation & sanitization
+- **Site web** : [ftci.fr](https://ftci.fr)
+- **Applications SaaS** : SECT, OPUC, CATS, ScolaGest
+- **Infrastructure** : APIs, sous-domaines, services cloud
+- **Code source** : [github.com/ftechnologies18](https://github.com/ftechnologies18)
 
-- Tous les inputs utilisateur sont validés (form contact, content collections)
-- `safeJsonStringify()` pour prévenir le XSS via JSON-LD (`</script>` injection)
-- Échappement HTML systématique dans les templates Astro
-- Honeypot + rate limit (KV distribué) sur le formulaire de contact
+### Sévérité des vulnérabilités
 
-### Secrets
+| Sévérité | Exemples |
+|----------|----------|
+| **Critique** | RCE, injection SQL sans authentification, exposition de données sensibles |
+| **Modérée** | XSS stored, CSRF sur actions sensibles, élévation de privilèges |
+| **Faible** | XSS réfléchi, headers manquants, informations d'erreur verbose |
 
-- Aucun secret dans le code source (vérifié par ESLint + review manuelle)
-- Tous les secrets sont bindés via `wrangler secret put` (chiffrés côté Cloudflare)
-- `.gitignore` exclut `.env`, `.env.production`, `.wrangler/`
+Nous utilisons le standard [CVSS v3.1](https://www.first.org/cvss/v3.1/) pour évaluer la sévérité.
 
-### Cookies
+---
 
-- `HttpOnly: true` par défaut (anti-XSS theft)
-- `Secure: true` en production (HTTPS only)
-- `SameSite: 'lax'` par défaut (anti-CSRF)
-
-### CSRF
-
-- Vérification `Origin`/`Referer` contre allowlist sur `/api/contact`
-- Honeypot field sur le formulaire (anti-bot)
-
-### Rate limiting
-
-- `/api/contact` : 3 requêtes / minute / IP (KV distribué, fiable entre isolates)
-
-## 🔄 Dépendances
-
-- `pnpm audit` exécuté à chaque PR (workflow GitHub Actions)
-- Dependabot actif pour les mises à jour de sécurité (voir `.github/dependabot.yml`)
-- Override `minimatch@^10` pour éviter la CVE `brace-expansion` (voir `package.json` → `pnpm.overrides`)
-
-## 📋 Audit de sécurité
-
-Le dernier audit complet a été effectué en juillet 2026 (voir commit `b6c5a0f`).
-13 failles ont été identifiées et corrigées (4 HIGH, 5 MEDIUM, 4 LOW).
-
-Pour refaire un audit :
-
-```bash
-pnpm audit                    # vulnérabilités connues
-pnpm lint                     # code quality / mauvaises pratiques
-pnpm exec astro check         # type safety
-```
+*Notre fichier `security.txt` est accessible à :*
+- *https://ftci.fr/.well-known/security.txt (canonique)*
+- *https://ftci.fr/security.txt (miroir)*
