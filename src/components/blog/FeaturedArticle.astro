@@ -64,7 +64,7 @@ const hasCover = !!entry.data.coverImage;
 				hasCover ? (
 					<img
 						src={entry.data.coverImage}
-						alt=""
+						alt={`Illustration : ${entry.data.title}`}
 						loading="eager"
 						fetchpriority="high"
 						decoding="async"

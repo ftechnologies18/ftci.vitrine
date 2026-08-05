@@ -52,7 +52,7 @@ const coverSrc = hasCover ? entry.data.coverImage : '';
 						hasCover ? (
 							<img
 								src={coverSrc}
-								alt=""
+								alt={`Illustration : ${entry.data.title}`}
 								loading={priority ? 'eager' : 'lazy'}
 								decoding="async"
 								class="card-img"

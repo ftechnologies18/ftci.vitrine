@@ -83,7 +83,7 @@ const nextArticle = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
 				<div class="article-cover-premium">
 					<img
 						src={coverUrl}
-						alt=""
+						alt={`Illustration : ${entry.data.title}`}
 						loading="eager"
 						fetchpriority="high"
 						decoding="async"
