@@ -123,6 +123,8 @@ const {
 					Envoi en cours...
 				</span>
 			</button>
+			<!-- Turnstile bot protection -->
+			<div class="cf-turnstile" data-sitekey="0x4AAAAAAEHWNdQVFYD01Me2" data-action="turnstile-spin-v2"></div>
 		</form>
 
 		<!-- Status message -->
@@ -585,7 +587,10 @@ const {
 				const res = await fetch('/api/newsletter/subscribe', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ email }),
+					body: JSON.stringify({
+						email,
+						'cf-turnstile-response': window.turnstile?.getResponse?.() || '',
+					}),
 				});
 
 				const data = (await res.json().catch(() => ({}))) as {
@@ -600,6 +605,7 @@ const {
 						'success',
 					);
 					form.reset();
+					window.turnstile?.reset();
 				} else {
 					showStatus(data.error || 'Une erreur est survenue. Veuillez réessayer.', 'error');
 				}
