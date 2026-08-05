@@ -673,11 +673,12 @@ const subjectOptions = [
 
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault();
-			// Reset Turnstile widget on submit (tokens are single-use)
-			setTimeout(() => window.turnstile?.reset(), 0);
 			clearAllErrors();
 
 			const formData = new FormData(form);
+			// Capture le token Turnstile AVANT le reset (tokens single-use)
+			const turnstileToken = (formData.get('cf-turnstile-response') as string) || '';
+			window.turnstile?.reset();
 			const payload = {
 				name: formData.get('name'),
 				email: formData.get('email'),
@@ -685,7 +686,7 @@ const subjectOptions = [
 				message: formData.get('message'),
 				consent: formData.get('consent') === 'on',
 				website: formData.get('website'), // honeypot
-					'cf-turnstile-response': formData.get('cf-turnstile-response'),
+				'cf-turnstile-response': turnstileToken,
 			};
 
 			setLoading(true);

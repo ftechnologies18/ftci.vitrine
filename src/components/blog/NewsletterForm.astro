@@ -278,7 +278,6 @@ const { variant = 'full' } = Astro.props;
 
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault();
-			setTimeout(() => window.turnstile?.reset(), 0);
 			statusEl.classList.add('hidden');
 
 			const emailInput = form.querySelector<HTMLInputElement>('#newsletter-email');
@@ -291,6 +290,10 @@ const { variant = 'full' } = Astro.props;
 				return;
 			}
 
+			// Capture le token Turnstile AVANT le reset (tokens single-use)
+			const turnstileToken = window.turnstile?.getResponse?.() || '';
+			window.turnstile?.reset();
+
 			setLoading(true);
 
 			try {
@@ -299,7 +302,7 @@ const { variant = 'full' } = Astro.props;
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({
 						email,
-						'cf-turnstile-response': window.turnstile?.getResponse?.() || '',
+						'cf-turnstile-response': turnstileToken,
 					}),
 				});
 
