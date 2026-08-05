@@ -52,6 +52,36 @@ function jsonResponse(status: number, body: unknown): Response {
 	});
 }
 
+/**
+ * Verifies a Cloudflare Turnstile token via the canonical siteverify endpoint.
+ * Returns true if the token is valid, false otherwise.
+ */
+async function verifyTurnstile(token: string, clientIp: string | null): Promise<boolean> {
+	const secret = env.TURNSTILE_SECRET;
+	// Soft fail: if no secret is configured, skip Turnstile verification (dev mode)
+	if (!secret) {
+		console.warn('[turnstile] TURNSTILE_SECRET not set — skipping verification');
+		return true;
+	}
+	try {
+		const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: new URLSearchParams({
+				secret,
+				response: token,
+				remoteip: clientIp ?? '',
+			}),
+		});
+		if (!res.ok) return false;
+		const data = (await res.json()) as { success: boolean };
+		return data.success === true;
+	} catch (err) {
+		console.error('[turnstile] siteverify error:', err);
+		return false;
+	}
+}
+
 export const POST: APIRoute = async ({ request, clientAddress }) => {
 	// 1. CSRF : vérifier l'origine
 	if (!isOriginAllowed(request)) {
@@ -81,14 +111,24 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 		}
 	}
 
-	// 3. Parse + valider l'email
-	let email: string;
+	// 3. Parse body + Turnstile verification
+	let body: { email?: unknown; 'cf-turnstile-response'?: unknown };
 	try {
-		const body = (await request.json()) as { email?: unknown };
-		email = typeof body.email === 'string' ? body.email.trim() : '';
+		body = (await request.json()) as { email?: unknown; 'cf-turnstile-response'?: unknown };
 	} catch {
 		return jsonResponse(400, { ok: false, error: 'Format de requête invalide.' });
 	}
+
+	const turnstileToken = typeof body['cf-turnstile-response'] === 'string'
+		? (body['cf-turnstile-response'] as string)
+		: undefined;
+
+	if (!turnstileToken || !(await verifyTurnstile(turnstileToken, ip))) {
+		return jsonResponse(403, { ok: false, error: 'Vérification de sécurité échouée. Veuillez réessayer.' });
+	}
+
+	// 4. Valider l'email
+	const email = typeof body.email === 'string' ? body.email.trim() : '';
 
 	if (!email) {
 		return jsonResponse(422, { ok: false, error: "L'adresse email est obligatoire." });

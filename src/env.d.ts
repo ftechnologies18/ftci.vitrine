@@ -33,6 +33,8 @@ declare namespace Cloudflare {
 		DISCORD_WEBHOOK_URL?: string;
 		/** Resend Audience ID for newsletter subscriptions. Create at https://resend.com/audiences. */
 		RESEND_AUDIENCE_ID?: string;
+		/** Cloudflare Turnstile secret key. Set via `wrangler secret put TURNSTILE_SECRET`. */
+		TURNSTILE_SECRET?: string;
 	}
 }
 

@@ -619,6 +619,36 @@ function renderVisitorEmailHtml(msg: StoredMessage): string {
 }
 
 /**
+ * Verifies a Cloudflare Turnstile token via the canonical siteverify endpoint.
+ * Returns true if the token is valid, false otherwise.
+ */
+async function verifyTurnstile(token: string, clientIp: string | null): Promise<boolean> {
+	const secret = env.TURNSTILE_SECRET;
+	// Soft fail: if no secret is configured, skip Turnstile verification (dev mode)
+	if (!secret) {
+		console.warn('[turnstile] TURNSTILE_SECRET not set — skipping verification');
+		return true;
+	}
+	try {
+		const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: new URLSearchParams({
+				secret,
+				response: token,
+				remoteip: clientIp ?? '',
+			}),
+		});
+		if (!res.ok) return false;
+		const data = (await res.json()) as { success: boolean };
+		return data.success === true;
+	} catch (err) {
+		console.error('[turnstile] siteverify error:', err);
+		return false;
+	}
+}
+
+/**
  * Contact form submission handler.
  *
  * @returns
@@ -647,12 +677,27 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
 		});
 	}
 
-	let payload: ContactPayload;
+	// –– Turnstile bot verification ––––––––––––––––––––––––––
+	// Parse the body early to extract the cf-turnstile-response token,
+	// verify it against Cloudflare's siteverify endpoint, then proceed
+	// with field validation only if the token is valid.
+	let earlyBody: Record<string, unknown>;
 	try {
-		payload = (await request.json()) as ContactPayload;
+		earlyBody = (await request.json()) as Record<string, unknown>;
 	} catch {
 		return jsonResponse(400, { ok: false, error: 'Format de requête invalide (JSON attendu).' });
 	}
+
+	const turnstileToken = typeof earlyBody['cf-turnstile-response'] === 'string'
+		? (earlyBody['cf-turnstile-response'] as string)
+		: undefined;
+
+	if (!turnstileToken || !(await verifyTurnstile(turnstileToken, ip))) {
+		return jsonResponse(403, { ok: false, error: 'Vérification de sécurité échouée. Veuillez réessayer.' });
+	}
+
+	// Reuse the already-parsed body instead of parsing again
+	const payload = earlyBody as ContactPayload;
 
 	const errors = validate(payload);
 	if (Object.keys(errors).length > 0) {

@@ -355,6 +355,9 @@ const subjectOptions = [
 						<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
 					</div>
 
+					<!-- Turnstile bot protection (invisible widget) -->
+					<div class="cf-turnstile" data-sitekey="0x4AAAAAAAHVfV-ijDU4NeOs" data-action="turnstile-spin-v2" ></div>
+
 					<!-- Bouton submit -->
 					<div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
 						<button
@@ -670,6 +673,8 @@ const subjectOptions = [
 
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault();
+			// Reset Turnstile widget on submit (tokens are single-use)
+			setTimeout(() => window.turnstile?.reset(), 0);
 			clearAllErrors();
 
 			const formData = new FormData(form);
@@ -680,6 +685,7 @@ const subjectOptions = [
 				message: formData.get('message'),
 				consent: formData.get('consent') === 'on',
 				website: formData.get('website'), // honeypot
+					'cf-turnstile-response': formData.get('cf-turnstile-response'),
 			};
 
 			setLoading(true);

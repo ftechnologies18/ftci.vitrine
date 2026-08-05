@@ -111,6 +111,9 @@ const websiteSchema = {
 		     @font-face déclarés dans global.css — preload des 2 fonts critiques pour LCP. -->
 		<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href="/fonts/poppins-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+	<!-- Cloudflare Turnstile bot protection -->
+	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 	</head>
 
 	<body class="min-h-screen flex flex-col bg-light-bg text-navy antialiased">
