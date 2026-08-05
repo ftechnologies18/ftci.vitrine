@@ -71,12 +71,14 @@ export default tseslint.config(
 	{
 		files: ['scripts/**/*.{mjs,js}'],
 		// Node.js globals not provided by js.configs.recommended — without these,
-		// `no-undef` flags Buffer / console / process in build scripts.
+		// `no-undef` flags Buffer / console / process / fetch in build scripts.
+		// `fetch` is built into Node 18+ (used by indexnow-submit.mjs).
 		languageOptions: {
 			globals: {
 				Buffer: 'readonly',
 				console: 'readonly',
 				process: 'readonly',
+				fetch: 'readonly',
 			},
 		},
 		rules: {
