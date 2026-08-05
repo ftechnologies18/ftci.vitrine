@@ -12,11 +12,16 @@
   X-XSS-Protection: 0
   # Content Security Policy (ajuster si besoin après test)
   # connect-src inclut api.keystatic.cloud (requêtes UI Keystatic Cloud) et keystatic.cloud (auth)
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.keystatic.cloud https://keystatic.cloud; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.keystatic.cloud https://keystatic.cloud; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 
 # Immutable cache for hashed Astro assets (_astro/*)
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Immutable cache for self-hosted fonts (woff2)
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
 
 # Cache static images
 /brand/*

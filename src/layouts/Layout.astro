@@ -5,7 +5,7 @@
  * - Import global.css + SEO.astro
  * - Props : title, description, canonical, ogImage, noindex, keywords
  * - Schema.org Organization + WebSite JSON-LD (toujours présents)
- * - Head : meta, fonts Google (Poppins 700/800 + Inter 400/500/600), favicon
+ * - Head : meta, fonts self-hébergées (Poppins 700/800 + Inter 400-600, preload LCP), favicon
  * - Body : min-h-screen flex flex-col (sticky footer via mt-auto sur Footer)
  * - Script global : scroll reveal, magnetic, parallax, curseur trail
  *   (tous reduced-motion aware, passive listeners, rAF throttled)
@@ -106,13 +106,11 @@ const websiteSchema = {
 		<!-- RSS blog auto-discovery -->
 		<link rel="alternate" type="application/rss+xml" title="Blog FTCI — Flux RSS" href="/rss.xml" />
 
-		<!-- Fonts Google : Poppins (display) + Inter (corps) — preconnect + display=swap -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800&display=swap"
-			rel="stylesheet"
-		/>
+		<!-- Fonts self-hostés : Inter (corps, variable 400-600) + Poppins (display, 700/800).
+		     Sous-ensembles latin + latin-ext pour le français.
+		     @font-face déclarés dans global.css — preload des 2 fonts critiques pour LCP. -->
+		<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/fonts/poppins-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 	</head>
 
 	<body class="min-h-screen flex flex-col bg-light-bg text-navy antialiased">

@@ -50,5 +50,13 @@ export default defineConfig({
 
 	vite: {
 		plugins: [tailwindcss()],
+		build: {
+			/* cssCodeSplit: false fusionne tous les CSS (global + scoped) en un
+			   seul fichier au build. Réduit le nombre de requêtes render-blocking :
+			   Footer.css + Layout.css + index.css → 1 fichier unique.
+			   Le CSS total (∼25 KiB compressé) est suffisamment petit pour
+			   être parsé rapidement sans impact perceptible sur le TTFB. */
+			cssCodeSplit: false,
+		},
 	},
 });
