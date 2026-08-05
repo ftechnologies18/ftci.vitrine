@@ -246,10 +246,6 @@ const hasCover = !!entry.data.coverImage;
 		position: relative;
 		text-decoration: none;
 		color: inherit;
-		/* Garantit que le lien a une hauteur même si le contenu absolu
-		   (.featured-bg) ne participe pas au flux. Sans ça, .featured-bg
-		   (absolute inset:0) se référait à un parent de hauteur 0. */
-		min-height: 380px;
 	}
 
 	/* ═══════════════════════════════════════════════════════════════════════════
@@ -258,8 +254,6 @@ const hasCover = !!entry.data.coverImage;
 	.featured-bg {
 		position: absolute;
 		inset: 0;
-		width: 100%;
-		height: 100%;
 		z-index: 0;
 		overflow: hidden;
 	}
@@ -460,17 +454,14 @@ const hasCover = !!entry.data.coverImage;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		/* z-index: 1 pour placer l'image AU-DESSUS du bg-mesh (gradient
-		   opaque) qui sinon la masque complètement. L'overlay (.bg-overlay,
-		   aussi z-index: 1 mais rendu APRÈS dans le DOM) reste au-dessus
-		   de l'image pour la lisibilité du texte. */
-		z-index: 1;
-		opacity: 1;
+		mix-blend-mode: overlay;
+		opacity: 0.4;
 		transition: all 1000ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 	.featured-waouh:hover .featured-img-bg {
-		opacity: 0.7;
+		opacity: 0.5;
 		transform: scale(1.03);
+		mix-blend-mode: normal;
 	}
 
 	/* Fallback */
@@ -502,16 +493,13 @@ const hasCover = !!entry.data.coverImage;
 	.bg-overlay {
 		position: absolute;
 		inset: 0;
-		/* Avant : gradient allant jusqu'à opacity 1 (100% navy) en bas,
-		   ce qui masquait totalement l'image de couverture. Réduit pour
-		   que l'image mise en avant reste visible tout en gardant le
-		   texte lisible (le contenu est en z-index 4, au-dessus). */
 		background: linear-gradient(
 			to bottom,
-			rgba(15, 30, 61, 0.25) 0%,
-			rgba(15, 30, 61, 0.4) 40%,
-			rgba(15, 30, 61, 0.6) 80%,
-			rgba(15, 30, 61, 0.75) 100%
+			rgba(15, 30, 61, 0.5) 0%,
+			rgba(15, 30, 61, 0.7) 25%,
+			rgba(15, 30, 61, 0.88) 55%,
+			rgba(15, 30, 61, 0.96) 80%,
+			rgba(15, 30, 61, 1) 100%
 		);
 		z-index: 1;
 	}
