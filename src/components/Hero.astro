@@ -124,7 +124,7 @@ const slides = [
                 <span class="eyebrow-text">{slide.eyebrow}</span>
               </div>
 
-              <h1 class="title-block">
+              <h1 class="title-block" aria-label={slide.title.join(' ')}>
                 {slide.title.map((line, i) => (
                   <span class={`title-line ${slide.titleHighlight[i] ? 'highlight' : ''}`} data-line-index={i}>
                     <span class="line-text">{line}</span>
@@ -854,8 +854,10 @@ const slides = [
     line-height: 1.05;
     letter-spacing: -0.03em;
     color: white;
+    /* opacity intentionally kept at 1 — SEO fix: crawlers (Bingbot, Google)
+       must read the <h1> text. Visual hiding is handled by
+       overflow:hidden on .title-line + translateY(110%). */
     transform: translateY(110%);
-    opacity: 0;
   }
 
   .hero-slide.is-active .line-text {
@@ -884,7 +886,7 @@ const slides = [
   }
 
   @keyframes lineReveal {
-    to { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(0); }
   }
 
   @keyframes lineBgReveal {
