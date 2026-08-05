@@ -3,7 +3,7 @@
  * ArticleSEO.astro — Meta tags SEO spécifiques à un article de blog.
  *
  * À utiliser dans <head> via le layout quand on est sur une page article.
- * Injecte : canonical, Open Graph (article), Twitter Card, et les JSON-LD
+ * Injecte : Open Graph (article), Twitter Card, et les JSON-LD
  * schema.org BlogPosting (rich snippet article) + BreadcrumbList
  * (fil d'Ariane dans les résultats Google) pour le référencement.
  */
@@ -112,9 +112,6 @@ const breadcrumbSchema = {
 	],
 };
 ---
-
-<!-- Canonical -->
-<link rel="canonical" href={absoluteUrl} />
 
 <!-- Meta keywords (SEO) -->
 <meta name="keywords" content={allKeywords.join(', ')} />
