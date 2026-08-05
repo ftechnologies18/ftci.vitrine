@@ -1,0 +1,40 @@
+{
+	"name": "FTCI — Freelance Technologies Côte d'Ivoire",
+	"short_name": "FTCI",
+	"description": "Entreprise de Services du Numérique (ESN) basée à Abidjan. Conseil, développement, infrastructure IT, formation + solutions SaaS pour le marché africain.",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#0F1E3D",
+	"theme_color": "#0F1E3D",
+	"lang": "fr",
+	"icons": [
+		{
+			"src": "/favicon.ico",
+			"sizes": "16x16 32x32 48x48",
+			"type": "image/x-icon"
+		},
+		{
+			"src": "/favicon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any"
+		},
+		{
+			"src": "/brand/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/brand/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/brand/apple-touch-icon.png",
+			"sizes": "180x180",
+			"type": "image/png"
+		}
+	]
+}

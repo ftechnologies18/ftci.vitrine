@@ -90,11 +90,18 @@ const websiteSchema = {
 		<!-- Favicon (triskel pixelisé bleu/vert/orange sur fond navy) -->
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<!-- rel="shortcut icon" : syntaxe legacy utilisée par Yandex et les anciens bots.
+                     Sans cette balise, Yandex Webmaster peut signaler "robot could not load the favicon"
+                     même si /favicon.ico est accessible (HTTP 200). -->
+		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" sizes="180x180" />
 		<link rel="mask-icon" href="/favicon.svg" color="#0F1E3D" />
 		<!-- PWA / Android Chrome -->
 		<link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png" />
 		<link rel="icon" type="image/png" sizes="512x512" href="/brand/icon-512.png" />
+		<!-- Web App Manifest : utilisé par Google/Yandex pour la découverte des icônes
+                     (favicon, icône d'app PWA). Référence les mêmes icônes que les <link> ci-dessus. -->
+		<link rel="manifest" href="/site.webmanifest" />
 
 		<!-- RSS blog auto-discovery -->
 		<link rel="alternate" type="application/rss+xml" title="Blog FTCI — Flux RSS" href="/rss.xml" />
