@@ -7,7 +7,6 @@ Si vous découvrez une vulnérabilité de sécurité dans un projet ou service d
 ### Comment nous contacter
 
 - **E-mail** : [freelancetechnologies.ci@gmail.com](mailto:freelancetechnologies.ci@gmail.com)
-- **E-mail secondaire** : [security@ftci.fr](mailto:security@ftci.fr)
 - **Langues acceptées** : Français, Anglais
 
 ### Ce que nous vous demandons

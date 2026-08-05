@@ -18,11 +18,8 @@
 # Limitez vos tests au strict minimum nécessaire pour démontrer la faille.
 
 Contact: mailto:freelancetechnologies.ci@gmail.com
-Contact: mailto:security@ftci.fr
 
-# Préférence : signalez les vulnérabilités par e-mail.
-# Pour les failles critiques nécessitant une réponse urgente,
-# vous pouvez utiliser les deux adresses en parallèle.
+# Préférence : signalez les vulnérabilités par e-mail à l'adresse ci-dessus.
 
 Preferred-Languages: fr, en
 
