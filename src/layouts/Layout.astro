@@ -107,13 +107,26 @@ const websiteSchema = {
 		<link rel="alternate" type="application/rss+xml" title="Blog FTCI — Flux RSS" href="/rss.xml" />
 
 		<!-- Fonts self-hostés : Inter (corps, variable 400-600) + Poppins (display, 700/800).
-		     Sous-ensembles latin + latin-ext pour le français.
-		     @font-face déclarés dans global.css — preload des 2 fonts critiques pour LCP. -->
+                     Sous-ensemble latin uniquement (latin-ext retiré — voir global.css).
+                     @font-face déclarés dans global.css — preload des 2 fonts critiques pour LCP. -->
 		<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preload" href="/fonts/poppins-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link
+			rel="preload"
+			href="/fonts/poppins-700-latin.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
 
-	<!-- Cloudflare Turnstile bot protection -->
-	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+		<!-- Preconnect vers Cloudflare Turnstile : le script api.js est en async defer,
+                     mais sans preconnect le navigateur doit faire DNS + TCP + TLS handshake
+                     avant de pouvoir le télécharger. Le preconnect anticipe ces round-trips
+                     et économise ~100-200ms sur le chargement du widget anti-bot. -->
+		<link rel="preconnect" href="https://challenges.cloudflare.com" crossorigin />
+		<link rel="dns-prefetch" href="https://challenges.cloudflare.com" />
+
+		<!-- Cloudflare Turnstile bot protection -->
+		<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 	</head>
 
 	<body class="min-h-screen flex flex-col bg-light-bg text-navy antialiased">
