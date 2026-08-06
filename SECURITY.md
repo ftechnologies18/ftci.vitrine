@@ -18,14 +18,14 @@ Si vous découvrez une vulnérabilité de sécurité dans un projet ou service d
 
 ### Notre engagement
 
-| Action | Délai |
-|--------|-------|
-| Accusé de réception | 48 heures |
-| Mise à jour sur la progression | 72 heures |
-| Correction (critique) | 7 jours |
-| Correction (modérée) | 14 jours |
-| Correction (faible) | 30 jours |
-| Crédit public | Sur demande (sauf refus explicite) |
+| Action                         | Délai                              |
+| ------------------------------ | ---------------------------------- |
+| Accusé de réception            | 48 heures                          |
+| Mise à jour sur la progression | 72 heures                          |
+| Correction (critique)          | 7 jours                            |
+| Correction (modérée)           | 14 jours                           |
+| Correction (faible)            | 30 jours                           |
+| Crédit public                  | Sur demande (sauf refus explicite) |
 
 ### Périmètre
 
@@ -38,16 +38,17 @@ Sont couverts par cette politique :
 
 ### Sévérité des vulnérabilités
 
-| Sévérité | Exemples |
-|----------|----------|
+| Sévérité     | Exemples                                                                  |
+| ------------ | ------------------------------------------------------------------------- |
 | **Critique** | RCE, injection SQL sans authentification, exposition de données sensibles |
-| **Modérée** | XSS stored, CSRF sur actions sensibles, élévation de privilèges |
-| **Faible** | XSS réfléchi, headers manquants, informations d'erreur verbose |
+| **Modérée**  | XSS stored, CSRF sur actions sensibles, élévation de privilèges           |
+| **Faible**   | XSS réfléchi, headers manquants, informations d'erreur verbose            |
 
 Nous utilisons le standard [CVSS v3.1](https://www.first.org/cvss/v3.1/) pour évaluer la sévérité.
 
 ---
 
-*Notre fichier `security.txt` est accessible à :*
+_Notre fichier `security.txt` est accessible à :_
+
 - *https://ftci.fr/.well-known/security.txt (canonique)*
 - *https://ftci.fr/security.txt (miroir)*

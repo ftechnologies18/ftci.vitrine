@@ -119,12 +119,16 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 		return jsonResponse(400, { ok: false, error: 'Format de requête invalide.' });
 	}
 
-	const turnstileToken = typeof body['cf-turnstile-response'] === 'string'
-		? (body['cf-turnstile-response'] as string)
-		: undefined;
+	const turnstileToken =
+		typeof body['cf-turnstile-response'] === 'string'
+			? (body['cf-turnstile-response'] as string)
+			: undefined;
 
 	if (!turnstileToken || !(await verifyTurnstile(turnstileToken, ip))) {
-		return jsonResponse(403, { ok: false, error: 'Vérification de sécurité échouée. Veuillez réessayer.' });
+		return jsonResponse(403, {
+			ok: false,
+			error: 'Vérification de sécurité échouée. Veuillez réessayer.',
+		});
 	}
 
 	// 4. Valider l'email
