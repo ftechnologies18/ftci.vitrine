@@ -23,9 +23,12 @@
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
 
-# Cache static images
+# Cache static brand images (logos, favicons) — immuables car versionnés par
+# hash de contenu dans les noms de fichiers _astro/* ou servis tels quels depuis
+# /brand/*. Un cache long terme évite les re-téléchargements inutiles lors des
+# visites répétées et améliore le LCP sur navigateur chaud.
 /brand/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=31536000, immutable
 
 # Cache favicon
 /favicon.svg
