@@ -688,12 +688,16 @@ export const POST: APIRoute = async ({ request, clientAddress, locals }) => {
 		return jsonResponse(400, { ok: false, error: 'Format de requête invalide (JSON attendu).' });
 	}
 
-	const turnstileToken = typeof earlyBody['cf-turnstile-response'] === 'string'
-		? (earlyBody['cf-turnstile-response'] as string)
-		: undefined;
+	const turnstileToken =
+		typeof earlyBody['cf-turnstile-response'] === 'string'
+			? (earlyBody['cf-turnstile-response'] as string)
+			: undefined;
 
 	if (!turnstileToken || !(await verifyTurnstile(turnstileToken, ip))) {
-		return jsonResponse(403, { ok: false, error: 'Vérification de sécurité échouée. Veuillez réessayer.' });
+		return jsonResponse(403, {
+			ok: false,
+			error: 'Vérification de sécurité échouée. Veuillez réessayer.',
+		});
 	}
 
 	// Reuse the already-parsed body instead of parsing again

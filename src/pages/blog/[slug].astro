@@ -21,7 +21,13 @@ import ShareButtons from '../../components/blog/ShareButtons.astro';
 import RelatedArticles from '../../components/blog/RelatedArticles.astro';
 import NewsletterCard from '../../components/blog/NewsletterCard.astro';
 import NewsletterModal from '../../components/blog/NewsletterModal.astro';
-import { getAllArticles, getArticleUrl, getCategoryUrl, getReadingTime, getSeoTitle } from '../../lib/blog';
+import {
+	getAllArticles,
+	getArticleUrl,
+	getCategoryUrl,
+	getReadingTime,
+	getSeoTitle,
+} from '../../lib/blog';
 
 export async function getStaticPaths() {
 	const all = await getAllArticles();

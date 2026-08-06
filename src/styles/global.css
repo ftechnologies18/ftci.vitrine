@@ -24,17 +24,26 @@
 /* ═════════════════════════════════════════════════════════════════════════════════════════════════
    SELF-HOSTED FONTS
    ═════════════════════════════════════════════════════════════════════════════════════════════════
-   Fonts Inter + Poppins self-hébergées (sous-ensembles latin + latin-ext).
+   Fonts Inter + Poppins self-hébergées (sous-ensemble latin uniquement).
    Remplace Google Fonts pour éliminer 4 requêtes externes dans le
    critical path (1 CSS Google Fonts + 3 woff2 fonts.gstatic.com).
 
-   Les fichiers woff2 sont dans public/fonts/ et servis par Cloudflare Pages
+   Les fichiers woff2 sont dans public/fonts/ et servis par Cloudflare
    avec un cache long (immutable).
 
    Seuls les 2 fonts les plus critiques sont preloadées dans Layout.astro :
      - Poppins 700 latin  (titre hero = LCP)
      - Inter latin        (corps de texte)
-   Les variantes latin-ext sont chargées à la demande par unicode-range.
+
+   Les variantes latin-ext ont été retirées : un scan exhaustif du contenu
+   (HTML live + articles du blog *.mdoc + composants *.astro/*.ts) montre
+   qu'AUCUN caractère ne relève de la plage latin-ext (0100-02BA, 1E00-1E9F,
+   20A0-20AB, etc.). Tous les caractères non-ASCII présents (© · À É à ç è é
+   ê ô œ — …) sont couverts par le sous-ensemble latin (Basic Latin + Latin-1
+   Supplement + General Punctuation). Chrome pré-téléchargeant les variantes
+   @font-face même sans caractère correspondant, leur suppression économise
+   ~93.8 KB (83 KB Inter-ext + 5.4 KB Poppins-700-ext + 5.4 KB Poppins-800-ext)
+   sur le cold-load mobile, soit ~34% du payload total.
    */
 
 /* Inter — Variable font (weights 400-600 dans un seul fichier) */
@@ -44,16 +53,9 @@
 	font-weight: 400 600;
 	font-display: swap;
 	src: url('/fonts/inter-latin.woff2') format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 400 600;
-	font-display: swap;
-	src: url('/fonts/inter-latin-ext.woff2') format('woff2');
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+		U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* Poppins 700 — Display font pour titres */
@@ -63,16 +65,9 @@
 	font-weight: 700;
 	font-display: swap;
 	src: url('/fonts/poppins-700-latin.woff2') format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-	font-family: 'Poppins';
-	font-style: normal;
-	font-weight: 700;
-	font-display: swap;
-	src: url('/fonts/poppins-700-latin-ext.woff2') format('woff2');
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+		U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* Poppins 800 — Display font pour titres accentués */
@@ -82,16 +77,9 @@
 	font-weight: 800;
 	font-display: swap;
 	src: url('/fonts/poppins-800-latin.woff2') format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-	font-family: 'Poppins';
-	font-style: normal;
-	font-weight: 800;
-	font-display: swap;
-	src: url('/fonts/poppins-800-latin-ext.woff2') format('woff2');
-	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+		U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

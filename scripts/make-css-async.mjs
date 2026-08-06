@@ -15,9 +15,8 @@
  * Run after: npx astro build (processes dist/client/*.html)
  */
 
-import { readdir, readFile, writeFile, stat } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join, extname } from 'node:path';
-import { execSync } from 'node:child_process';
 
 const DIST_DIR = 'dist/client';
 
@@ -76,10 +75,14 @@ async function main() {
 		}
 	}
 
-	console.log(`\n🎉 Done! ${totalTransformed} stylesheet(s) made non-blocking across ${htmlFiles.length} HTML files.`);
+	console.log(
+		`\n🎉 Done! ${totalTransformed} stylesheet(s) made non-blocking across ${htmlFiles.length} HTML files.`,
+	);
 
 	if (totalTransformed === 0) {
-		console.log('ℹ️  No <link rel="stylesheet"> found — CSS may already be inlined or handled differently.');
+		console.log(
+			'ℹ️  No <link rel="stylesheet"> found — CSS may already be inlined or handled differently.',
+		);
 	}
 }
 

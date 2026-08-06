@@ -54,3 +54,4 @@ storage/
 coverage/
 *.lcov
 
+.psitest/
