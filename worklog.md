@@ -672,3 +672,135 @@ L'utilisateur doit vérifier ces points sur https://www.bing.com/webmasters/ :
    plus simple que DNS)
 4. Déclencher un nouveau déploiement GitHub pour forcer la soumission
    IndexNow via CI/CD avec la bonne clé
+
+---
+
+## Lot 13 — Test OAuth2 Azure AD (credentials fournis)
+
+**Date** : 11 août 2026 (suite)
+**Credentials testés** :
+
+- Client ID: `35e6dc87176c47c9b8a77862b4fed8a1`
+- Client Secret: (fourni séparément, non écrit dans le dépôt)
+
+### Tests effectués
+
+#### 1. OAuth2 v2 endpoint (login.microsoftonline.com)
+
+| Tenant                                 | Scope                                  | Résultat                                              |
+| -------------------------------------- | -------------------------------------- | ----------------------------------------------------- |
+| `consumers`                            | `https://api.bing.com/.default`        | ❌ unauthorized_client (app non trouvée)              |
+| `common`                               | `https://api.bing.com/.default`        | ❌ unauthorized_client (app non trouvée dans MSA)     |
+| `organizations`                        | `https://api.bing.com/.default`        | ❌ unauthorized_client (app non trouvée)              |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `https://api.bing.com/.default`        | ❌ unauthorized_client (pas de permissions pour bing) |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `https://graph.microsoft.com/.default` | ❌ AADSTS53003 Conditional Access                     |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `https://ads.microsoft.com/.default`   | ❌ AADSTS53003 Conditional Access                     |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `.default`                             | ❌ AADSTS53003 Conditional Access                     |
+
+#### 2. OAuth2 v1 endpoint (resource param)
+
+| Tenant                                 | Resource                      | Résultat               |
+| -------------------------------------- | ----------------------------- | ---------------------- |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `https://api.bing.com`        | ❌ unauthorized_client |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `https://ssl.bing.com`        | ❌ unauthorized_client |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `https://graph.microsoft.com` | ❌ AADSTS53003         |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | `https://ads.microsoft.com`   | ❌ AADSTS53003         |
+
+#### 3. Microsoft Account (MSA) endpoint
+
+| Endpoint                                                    | Résultat                        |
+| ----------------------------------------------------------- | ------------------------------- |
+| `login.live.com/oauth20_token.srf` (scope `bing.webmaster`) | ❌ invalid_client (app non MSA) |
+
+### Analyse
+
+#### Découvertes clés
+
+1. **Tenant de résolution** : L'endpoint `common` a résolu vers
+   `72f988bf-86f1-41af-91ab-2d7cd011db47` (tenant corporate Microsoft).
+   Ce comportement se produit quand :
+   - L'app est multi-tenant ET enregistrée dans le tenant Microsoft corporate
+   - OU l'app est enregistrée dans un tenant spécifique (le vôtre)
+
+2. **App reconnue mais bloquée** :
+   - Pour `api.bing.com` / `ssl.bing.com` → "unauthorized_client"
+     (l'app n'a PAS les permissions API pour Bing Webmaster)
+   - Pour `graph.microsoft.com` / `ads.microsoft.com` → "AADSTS53003"
+     (l'app EXISTE et a les permissions, MAIS Conditional Access bloque)
+
+3. **Conditional Access (AADSTS53003)** :
+   Cette politique d'accès conditionnel est configurable dans Azure AD et
+   exige typiquement :
+   - MFA (multi-factor authentication)
+   - Plage IP spécifique (ex: réseau corporate)
+   - Device compliant (Intune)
+   - Emplacement géographique autorisé
+
+   Le `client_credentials` flow (daemon apps) ne peut pas satisfaire ces
+   conditions → tous les tokens sont refusés.
+
+#### Diagnostic final
+
+L'app OAuth2 fournie a un problème de configuration côté Azure AD :
+
+- L'app existe dans un tenant (probablement Microsoft corporate)
+- L'app n'a PAS les permissions pour `api.bing.com` ou `ssl.bing.com`
+- L'app a les permissions pour Graph et Ads MAIS Conditional Access bloque
+
+Ce n'est PAS une app correctement configurée pour Bing Webmaster API.
+
+### Actions requises de votre côté
+
+#### Option A : Configurer correctement l'app Azure AD existante
+
+1. Se connecter au portail Azure (https://portal.azure.com) avec le compte
+   qui a créé l'app
+2. Rechercher "App registrations" → trouver l'app avec Client ID
+   `35e6dc87176c47c9b8a77862b4fed8a1`
+3. Dans **API permissions** :
+   - Ajouter "Bing Webmaster API" (ou API pertinente)
+   - Accorder les permissions applicatives (Application permissions)
+   - Cliquer "Grant admin consent for [tenant]"
+4. Dans **Authentication** :
+   - Vérifier que "Allow public client flows" = No
+   - Vérifier les "Application (client) ID" et "Directory (tenant) ID"
+5. Dans **Certificates & secrets** :
+   - Vérifier que le client secret n'a pas expiré
+6. Récupérer le **Tenant ID** (Directory tenant ID) et le partager
+   pour que je puisse authentifier avec le bon tenant
+
+#### Option B : Vérification manuelle dans Bing Webmaster Tools (plus simple)
+
+1. Aller sur https://www.bing.com/webmasters/
+2. Se connecter avec le compte FTCI
+3. Cliquer sur ftci.fr dans la liste des sites
+4. Vérifier le statut "Verified" (✓ vert)
+5. Si non vérifié : suivre les étapes de vérification (HTML file est le plus simple)
+6. Une fois vérifié, Bing commencera à crawler le site
+
+#### Option C : Forcer l'indexation via sitemap (le plus fiable)
+
+Bing va finir par crawler le site via le sitemap.xml même sans IndexNow.
+Pour accélérer :
+
+1. Dans Bing Webmaster Tools → ftci.fr → "Submit Sitemap"
+2. Soumettre : `https://ftci.fr/sitemap.xml`
+3. Patienter 7-14 jours pour le crawl complet
+
+### Vérifications techniques du site (déjà OK)
+
+- ✅ `https://ftci.fr/sitemap.xml` accessible (HTTP 200, application/xml)
+- ✅ `https://ftci.fr/robots.txt` autorise Bingbot
+- ✅ `https://ftci.fr/<key>.txt` (IndexNow) déployé
+- ✅ Pas de `noindex` sur les pages publiques
+- ✅ Cloudflare Bot Management `enable_js: false` (ne bloque pas Bingbot)
+- ✅ Aucune règle firewall bloquante
+
+### Sécurité — credentials à révoquer
+
+Les credentials OAuth2 fournis (Client ID + Client Secret) ont été testés
+mais ne permettent pas d'accéder à l'API Bing Webmaster en l'état actuel
+de configuration Azure AD. Ils doivent être révoqués après la session :
+
+1. Azure Portal → App registrations → sélectionner l'app → Certificates & secrets
+2. Supprimer le client secret (ou faire un "Roll")
