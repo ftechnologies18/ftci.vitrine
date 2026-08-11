@@ -75,9 +75,12 @@ const keyPoints = [
                                         class={`gmb-col ${colIndex % 4 === 0 ? 'gmb-col--reverse' : ''}`}
                                         style={`--gmb-speed: ${20 + (colIndex % 6) * 3}s; --gmb-delay: ${colIndex * -1.5}s;`}
                                 >
-                                        {/* Contenu triplé pour animation fluide et couverture complète */}
+                                        {/* Contenu triplé pour animation fluide et couverture complète.
+                                            50 chars × 3 répétitions = 150 chars/colonne ≈ 2700px à 18px/char,
+                                            assez pour couvrir toute la hauteur de la section À Propos (~1900-2500px).
+                                            (~1900-2500px avec paddings et stats). Cohérent avec section Solutions. */}
                                         {[...Array(3)].map(() =>
-                                                Array.from({ length: 20 }).map(() => (
+                                                Array.from({ length: 50 }).map(() => (
                                                         <span class="gmb-char">
                                                                 {Math.random() > 0.5 ? '01' : '10'} {Math.random() > 0.5 ? '00' : '11'}{' '}
                                                                 {Math.random() > 0.5 ? '10' : '01'} {Math.random() > 0.5 ? '11' : '00'}
