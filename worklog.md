@@ -470,3 +470,99 @@ Le pattern Filament Group (CSS non-bloquant via preload+onload) est
 3. Le CLS est critique pour le score Performance
 
 Le gain de FCP (~100-200ms) ne compense pas la perte de CLS (0 → 1.0).
+
+---
+
+## Lot 12 (post-session) — Fix Bing IndexNow verification
+
+**Date** : 11 août 2026 (suite)
+**Commit** : `5873e29`
+
+### Problème
+
+Bing Webmaster Tools n'arrivait pas à indexer ftci.fr malgré plus d'une
+semaine d'attente. L'API IndexNow retournait systématiquement :
+
+```json
+{
+	"errorCode": "UserForbiddedToAccessSite",
+	"message": "User is unauthorized to access the site. Please verify the site using the key and try again"
+}
+```
+
+### Investigation
+
+1. Token fourni par l'utilisateur : `ad02c6de813d4dd28ff6f48e0ddee9de`
+2. Test de l'endpoint direct `https://ssl.bing.com/webmaster/api.svc/json/sites?apikey=...`
+   → "Endpoint not found" (l'API Bing Webmaster a changé)
+3. Test comme clé IndexNow :
+   - Soumission à `api.indexnow.org/indexnow` → HTTP 202 (Accepted)
+   - Mais Bing direct → HTTP 403 avec "UserForbiddedToAccessSite"
+4. Diagnostic IndexNow : le protocole vérifie la propriété du site en
+   fetchant `https://ftci.fr/<key>.txt`
+
+### Cause racine
+
+Le token `ad02c6de813d4dd28ff6f48e0ddee9de` est une nouvelle clé IndexNow
+générée dans Bing Webmaster Tools, mais le fichier de vérification
+correspondant n'existait pas sur le site :
+
+- `https://ftci.fr/ad02c6de813d4dd28ff6f48e0ddee9de.txt` → 404
+
+Sans ce fichier, Bing ne pouvait pas vérifier la propriété du site et
+ignorait toutes les soumissions IndexNow. Pendant ce temps, le script
+CI/CD `indexnow-submit.mjs` (ajouté au Lot 3) continuait d'envoyer les
+URLs avec l'ancienne clé `21ff3ba039d64479911acb0f905d271d` qui n'était
+plus enregistrée côté Bing → toutes les soumissions étaient silencieusement
+rejetées depuis le début.
+
+### Solution appliquée
+
+**Commit `5873e29`** :
+
+- Création `public/ad02c6de813d4dd28ff6f48e0ddee9de.txt` contenant
+  exactement la clé (32 chars, pas de newline)
+- Mise à jour `scripts/indexnow-submit.mjs` : `KEY` constante mise à la
+  nouvelle clé
+- Conservation de l'ancien `public/21ff3ba039d64479911acb0f905d271d.txt`
+  pour compatibilité (Yandex/autres moteurs peuvent encore l'utiliser)
+
+### Vérifications post-déploiement
+
+| Test                                      | Résultat                          |
+| ----------------------------------------- | --------------------------------- |
+| Fichier `https://ftci.fr/<key>.txt` (GET) | ✅ HTTP 200, 32 bytes, text/plain |
+| Fichier avec UA Bingbot                   | ✅ HTTP 200, 32 bytes             |
+| Fichier avec UA IndexNowBot               | ✅ HTTP 200, 32 bytes             |
+| Soumission IndexNow Yandex                | ✅ HTTP 202 (Accepted)            |
+| Soumission IndexNow Bing                  | ❌ HTTP 403 (cache négatif Bing)  |
+
+### Note sur le cache négatif Bing
+
+Bing retourne toujours 403 immédiatement après la création du fichier de
+clé car il a mis en cache l'échec de vérification initial. IndexNow
+précise que la vérification peut prendre jusqu'à 24h pour se propager.
+
+Le CI/CD (`deploy.yml`) soumettra automatiquement les URLs à IndexNow
+après chaque prochain déploiement, avec la bonne clé. Bing devrait
+finalement accepter et indexer les URLs dans les 24-48h.
+
+### Recommandation
+
+1. Patienter 24-48h pour que Bing purge son cache négatif
+2. Sur Bing Webmaster Tools, vérifier le statut d'indexation :
+   - https://www.bing.com/webmasters/url-submission
+   - Les URLs devraient apparaître comme "Submitted" puis "Indexed"
+3. Si toujours pas indexé après 48h, déclencher un nouveau déploiement
+   mineur (ex: modifier un commentaire dans un fichier) pour forcer
+   la soumission IndexNow via CI/CD
+4. Vérifier aussi dans Google Search Console que l'indexation progresse
+   de son côté (Google n'utilise pas IndexNow mais crawl le sitemap)
+
+### Fichiers IndexNow de vérification sur le site
+
+```
+public/
+├── 21ff3ba039d64479911acb0f905d271d.txt  (ancienne clé, conservée)
+└── ad02c6de813d4dd28ff6f48e0ddee9de.txt   (nouvelle clé Bing — active)
+```
