@@ -61,6 +61,14 @@ jobs:
           # le KV namespace MESSAGE_STORE et la compatibility_date.
           # Pas besoin de préciser --name ici.
 
+      - name: 🔔 IndexNow — soumission des URLs aux moteurs
+        # Soumet toutes les URLs publiques à IndexNow (Bing, Yandex, etc.)
+        # pour accélérer le recrawl post-déploiement. Ne s'exécute que si le
+        # déploiement Cloudflare a réussi. La clé IndexNow est publique (servie
+        # via /21ff3ba039d64479911acb0f905d271d.txt), aucun secret requis.
+        if: success()
+        run: node scripts/indexnow-submit.mjs --all
+
       - name: 📢 Notification d'échec
         if: failure()
         run: |

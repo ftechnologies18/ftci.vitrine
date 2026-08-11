@@ -77,12 +77,14 @@ const slides = [
 <section class="hero-slider relative overflow-hidden" id="contenu" data-hero-slider>
 
   <!-- CSS des slides 2 (Solutions/dispersion) et 3 (Services/wow-cards).
-       Préchargé avec haute priorité (as=style) puis appliqué via onload swap.
-       Contrairement à media="print" (basse priorité, peut causer du FOUC si
-       l'utilisateur clique "next" trop tôt), le pattern preload+onload télécharge
-       le CSS avec la priorité d'une feuille de style normale, donc il est
-       disponible dès que possible. Fallback <noscript> pour accessibility. -->
-  <link rel="preload" href="/css/hero-slides.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+       Préchargé avec priorité BASSE (fetchpriority="low") puis appliqué via
+       onload swap. Seul le slide 1 est visible au load initial — les slides 2/3
+       ne s'affichent qu'au clic "next". Le pattern preload+onload garde le CSS
+       disponible dès que possible (pas de FOUC si clic rapide), mais
+       fetchpriority="low" indique au navigateur de ne PAS compétitionner avec
+       les ressources critiques du LCP (fonts Poppins/Inter, hero image).
+       Fallback <noscript> pour accessibility. -->
+  <link rel="preload" href="/css/hero-slides.css" as="style" fetchpriority="low" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="/css/hero-slides.css" /></noscript>
   
   <!-- ═══════════════════════════════════════════════════════════════════════

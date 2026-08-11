@@ -26,9 +26,6 @@ Disallow: /storage/
 # Liens vers les sitemaps
 Sitemap: ${SITE_URL}/sitemap.xml
 
-# Crawl-delay (politique de politesse)
-Crawl-delay: 1
-
 # Bots IA / scraping — autorisés sur le contenu public
 # (FTCI autorise l'indexation par les moteurs de recherche et assistants IA
 # à des fins de référence, conformément aux lois applicables)
