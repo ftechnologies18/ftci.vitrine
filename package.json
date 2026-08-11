@@ -21,6 +21,7 @@
 		"format:check": "prettier --check .",
 		"typecheck": "astro check",
 		"audit": "pnpm audit",
+		"optimize-images": "node scripts/optimize-images.mjs",
 		"prepare": "husky"
 	},
 	"dependencies": {
