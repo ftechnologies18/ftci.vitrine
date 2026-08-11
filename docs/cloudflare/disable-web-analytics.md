@@ -1,89 +1,101 @@
-# Désactiver Cloudflare Web Analytics (Lot 10)
+# Désactiver Cloudflare JavaScript Detections (Lot 10 — résolu)
 
 ## Contexte
 
-Le score **Best Practices Lighthouse** est bloqué à **81/100** à cause de
+Le score **Best Practices Lighthouse** était bloqué à **81/100** à cause de
 3 warnings deprecation :
 
 1. `Shared Storage API is deprecated`
 2. `StorageType.persistent is deprecated`
 3. `Protected Audience API is deprecated`
 
-Ces 3 APIs dépréciées sont utilisées par `beacon.min.js`, le script injecté
-automatiquement par **Cloudflare Web Analytics** sur toutes les pages.
+## Investigation (corrigée)
 
-## Investigation Lot 10
+**Hypothèse initiale (erronée)** : le beacon `cloudflareinsights.com` injecté
+par Cloudflare Web Analytics. Vérification : le beacon n'apparaît pas dans
+le HTML curl — il n'est PAS injecté par Web Analytics.
 
-Le token Cloudflare fourni (`cfat_...`) n'a **pas le scope "Web Analytics"**.
-L'API endpoint `/accounts/{account_id}/web_analytics/sites` retourne
-"Could not route" — ce qui est le comportement Cloudflare quand le token
-manque le scope requis.
+**Cause réelle** : le script `/cdn-cgi/challenge-platform/scripts/jsd/main.js`
+injecté par **Bot Management → JavaScript Detections (JSD)**. Ce script de
+fingerprinting navigateur utilise les 3 APIs dépréciées pour la détection
+de bots.
 
-Le beacon est injecté par l'edge Cloudflare à runtime (pas par le Worker),
-donc il ne peut pas être supprimé via le code de l'application.
+Visible dans le HTML live :
 
-## Solution : désactivation manuelle dans le dashboard
-
-Pour passer Best Practices de **81 → 100**, désactiver Web Analytics :
-
-### Étapes
-
-1. Se connecter sur [dash.cloudflare.com](https://dash.cloudflare.com)
-2. Sélectionner le compte **Freelancetechnologies.ci@gmail.com's Account**
-3. Sélectionner la zone **ftci.fr**
-4. Naviguer vers **Analytics & Logs** → **Web Analytics**
-5. Chercher le site `ftci.fr` dans la liste
-6. Cliquer sur **Settings** (ou l'icône engrenage)
-7. **Désactiver** "Auto-inject beacon" ou supprimer le site Web Analytics
-8. Sauvegarder
-
-### Vérification
-
-Après désactivation, lancer un audit Lighthouse :
-
-```bash
-lighthouse https://ftci.fr/ \
-  --only-categories=best-practices \
-  --throttling-method=devtools \
-  --chrome-flags="--headless --no-sandbox --disable-gpu"
+```html
+<script>
+	(function(){
+	  ...
+	  var a=document.createElement('script');
+	  a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';
+	  ...
+	})();
+</script>
 ```
 
-Le score Best Practices doit passer de **81 → 100** (les 3 deprecations
-disparaissent car le script beacon.min.js n'est plus injecté).
+## Solution appliquée (via API Cloudflare)
 
-### Alternative : recréer le token avec le scope Web Analytics
-
-Si vous souhaitez le faire via API, créer un nouveau token Cloudflare avec
-la permission **"Account" → "Web Analytics" → "Edit"**, puis :
+Le token Cloudflare fourni avait les permissions "Bot Management" sur la zone.
+Désactivation via l'API le 11 août 2026 :
 
 ```bash
-CF_TOKEN='<nouveau_token>'
-ACCOUNT_ID='319de93db5a99db76b4bf41f9d06b785'
+CF_TOKEN='<token>'
+ZONE_ID='cffc468759c5bbf04988111885215ba8'
 
-# Lister les sites Web Analytics
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/web_analytics/sites" \
+# Vérifier l'état avant
+curl -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/bot_management" \
   -H "Authorization: Bearer $CF_TOKEN"
+# → {"enable_js": true, "fight_mode": false, ...}
 
-# Désactiver l'auto-injection du beacon (remplacer {site_tag})
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/web_analytics/sites/{site_tag}" \
+# Désactiver uniquement enable_js (JSD), préserver le reste
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/bot_management" \
   -H "Authorization: Bearer $CF_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"auto_install": false}'
+  -d '{"enable_js": false}'
+
+# Vérifier après
+curl -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/bot_management" \
+  -H "Authorization: Bearer $CF_TOKEN"
+# → {"enable_js": false, "fight_mode": false, ...}
 ```
 
-## Impact attendu
+**Note** : `PATCH` n'est pas supporté pour cette authentification — utiliser `PUT`
+avec le corps minimal `{"enable_js": false}` (les autres champs sont préservés).
 
-| Métrique         | Avant      | Après       |
-| ---------------- | ---------- | ----------- |
-| Best Practices   | 81/100     | **100/100** |
-| Deprecations     | 3 warnings | **0**       |
-| Console errors   | 0          | **0**       |
-| Inspector issues | 0          | **0**       |
+## Impact mesuré
 
-## Note
+| Métrique             | Avant      | Après       | Delta      |
+| -------------------- | ---------- | ----------- | ---------- |
+| **Best Practices**   | 81/100     | **100/100** | **+19** ✨ |
+| Deprecations         | 3 warnings | **0**       | −3         |
+| Console errors       | 0          | 0           | stable     |
+| Inspector issues     | 0          | 0           | stable     |
+| Script JSD dans HTML | présent    | **absent**  | supprimé   |
 
-Désactiver Web Analytics supprime les statistiques de visite Cloudflare
-(utiles pour le trafic, mais non essentielles si vous utilisez Google
-Analytics ou un autre outil). Les deprecations disparaîtront aussi quand
-Cloudflare mettra à jour son beacon pour ne plus utiliser les APIs
-dépréciées (Shared Storage, Protected Audience).
+## État final — 3 pages (post Lot 10)
+
+| Page         | Perf    | A11y | BP      | SEO | LCP  | CLS | TBT |
+| ------------ | ------- | ---- | ------- | --- | ---- | --- | --- |
+| Home         | 92      | 100  | **100** | 100 | 0.9s | 0   | 0ms |
+| Article blog | 93      | 91   | **100** | 100 | 3.2s | 0   | 0ms |
+| Page légale  | **100** | 91   | **100** | 66* | 1.8s | 0   | 0ms |
+
+- SEO 66 = `noindex={true}` intentionnel sur les pages légales (décision SEO valide).
+
+## Sécurité — compromis
+
+Désactiver JavaScript Detections (JSD) réduit la précision de la détection
+de bots Cloudflare. Pour un site vitrine sans formulels sensibles (le
+formulaire de contact est protégé par Cloudflare Turnstile), ce compromis
+est acceptable : Turnstile fournit une protection anti-bot au niveau du
+formulaire, indépendante de JSD.
+
+Si FTCI devait faire face à des attaques de bots massives à l'avenir, JSD
+pourrait être réactivé temporairement :
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/bot_management" \
+  -H "Authorization: Bearer $CF_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"enable_js": true}'
+```
