@@ -2,7 +2,7 @@
 /**
  * Contact.astro — Section "Nous Contacter" (Dark Theme + Glassmorphism).
  * ────────────────────────────────────────────────────────────────────────────
- * - Section id="contact" py-20 md:py-32 bg-navy (dark theme like Hero)
+ * - Section id="contact" py-16 md:py-24 lg:py-32 bg-navy (dark theme like Hero)
  * - Circuit grid pattern overlay for tech signature
  * - Left side: heading + description + contact info cards (glassmorphism)
  * - Right side: Form card with glassmorphism effect (bg-white/10 backdrop-blur)
@@ -13,529 +13,529 @@
  */
 
 const contactInfo = [
-	{
-		label: 'Localisation',
-		value: "Dabou · Abidjan, Côte d'Ivoire",
-		href: null,
-		color: 'orange',
-		textClass: 'text-orange',
-		bgClass: 'bg-orange/15',
-		iconPath:
-			'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z',
-	},
-	{
-		label: 'Email',
-		value: 'contact@ftci.fr',
-		href: 'mailto:contact@ftci.fr',
-		color: 'green',
-		textClass: 'text-green',
-		bgClass: 'bg-green/15',
-		iconPath:
-			'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-	},
+        {
+                label: 'Localisation',
+                value: "Dabou · Abidjan, Côte d'Ivoire",
+                href: null,
+                color: 'orange',
+                textClass: 'text-orange',
+                bgClass: 'bg-orange/15',
+                iconPath:
+                        'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z',
+        },
+        {
+                label: 'Email',
+                value: 'contact@ftci.fr',
+                href: 'mailto:contact@ftci.fr',
+                color: 'green',
+                textClass: 'text-green',
+                bgClass: 'bg-green/15',
+                iconPath:
+                        'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+        },
 ];
 
 const subjectOptions = [
-	{ value: '', label: 'Choisissez un sujet…' },
-	{ value: 'devis', label: 'Demande de devis' },
-	{ value: 'consultation', label: 'Consultation / Conseil' },
-	{ value: 'demo', label: 'Demande de démo' },
-	{ value: 'support', label: 'Support technique' },
-	{ value: 'partnership', label: 'Partenariat' },
-	{ value: 'formation', label: 'Formation' },
-	{ value: 'infrastructure', label: 'Infrastructure & Cloud' },
-	{ value: 'development', label: 'Développement sur-mesure' },
-	{ value: 'other', label: 'Autre' },
+        { value: '', label: 'Choisissez un sujet…' },
+        { value: 'devis', label: 'Demande de devis' },
+        { value: 'consultation', label: 'Consultation / Conseil' },
+        { value: 'demo', label: 'Demande de démo' },
+        { value: 'support', label: 'Support technique' },
+        { value: 'partnership', label: 'Partenariat' },
+        { value: 'formation', label: 'Formation' },
+        { value: 'infrastructure', label: 'Infrastructure & Cloud' },
+        { value: 'development', label: 'Développement sur-mesure' },
+        { value: 'other', label: 'Autre' },
 ];
 ---
 
 <section
-	id="contact"
-	class="relative py-12 md:py-32 bg-navy overflow-hidden contact-dark circuit-grid"
+        id="contact"
+        class="relative py-16 md:py-24 lg:py-32 bg-navy overflow-hidden contact-dark circuit-grid"
 >
-	<!-- ── Background mesh gradient (subtle) ──────────────────────────────── -->
-	<div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-		<div
-			class="absolute inset-0 opacity-40"
-			style="background:
+        <!-- ── Background mesh gradient (subtle) ──────────────────────────────── -->
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+                <div
+                        class="absolute inset-0 opacity-40"
+                        style="background:
                                 radial-gradient(ellipse 60% 50% at 20% 30%, rgba(107, 127, 199, 0.25), transparent 60%),
                                 radial-gradient(ellipse 50% 45% at 80% 70%, rgba(238, 108, 26, 0.12), transparent 55%),
                                 radial-gradient(ellipse 55% 50% at 60% 90%, rgba(30, 158, 79, 0.10), transparent 50%)"
-		>
-		</div>
-	</div>
+                >
+                </div>
+        </div>
 
-	<div class="container relative z-10">
-		<!-- ── Section header ─────────────────────────────────────────────── -->
-		<div class="section-header observe mb-16 md:mb-20">
-			<span class="eyebrow">
-				<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
-					<polygon points="4,0 8,4 4,8 0,4"></polygon>
-				</svg>
-				CONTACT
-			</span>
-			<h2 class="text-white">Une question, un projet ?<br class="hidden sm:block" />Parlons-en.</h2>
-			<p class="max-w-xl mx-auto">
-				Nous sommes à votre écoute pour transformer vos idées en solutions concrètes. Décrivez votre
-				projet et notre équipe vous répond sous 48 heures ouvrées.
-			</p>
-		</div>
+        <div class="container relative z-10">
+                <!-- ── Section header ─────────────────────────────────────────────── -->
+                <div class="section-header observe mb-16 md:mb-20">
+                        <span class="eyebrow">
+                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+                                        <polygon points="4,0 8,4 4,8 0,4"></polygon>
+                                </svg>
+                                CONTACT
+                        </span>
+                        <h2 class="text-white">Une question, un projet ?<br class="hidden sm:block" />Parlons-en.</h2>
+                        <p class="max-w-xl mx-auto">
+                                Nous sommes à votre écoute pour transformer vos idées en solutions concrètes. Décrivez votre
+                                projet et notre équipe vous répond sous 48 heures ouvrées.
+                        </p>
+                </div>
 
-		<!-- ── Main content grid (info left / form right) ─────────────────── -->
-		<div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10 lg:gap-14 items-start">
-			<!-- LEFT SIDE: Info cards ─────────────────────────────────────── -->
-			<div class="md:col-span-1 lg:col-span-2 space-y-6 observe" style="--d: 0.08s">
-				<p class="text-white/75 text-sm leading-relaxed mb-8">
-					Prêt à lancer votre projet digital ? Contactez-nous pour une première échange gratuite.
-				</p>
+                <!-- ── Main content grid (info left / form right) ─────────────────── -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10 lg:gap-14 items-start">
+                        <!-- LEFT SIDE: Info cards ─────────────────────────────────────── -->
+                        <div class="md:col-span-1 lg:col-span-2 space-y-6 observe" style="--d: 0.08s">
+                                <p class="text-white/75 text-sm leading-relaxed mb-8">
+                                        Prêt à lancer votre projet digital ? Contactez-nous pour une première échange gratuite.
+                                </p>
 
-				<!-- Contact info cards (glassmorphism) -->
-				<div class="space-y-4">
-					{
-						contactInfo.map((item) => (
-							<div class={`contact-info-card flex items-center gap-4 rounded-2xl p-5`}>
-								<div
-									class={`w-12 h-12 rounded-xl ${item.bgClass} flex items-center justify-center flex-shrink-0`}
-								>
-									<svg
-										class={`w-5 h-5 ${item.textClass}`}
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d={item.iconPath}
-										/>
-									</svg>
-								</div>
-								<div class="min-w-0">
-									<p class="text-xs text-white/50 font-medium uppercase tracking-wider">
-										{item.label}
-									</p>
-									{item.href ? (
-										<a
-											href={item.href}
-											class={`text-base font-semibold ${item.textClass} hover:underline truncate block transition-colors duration-200`}
-										>
-											{item.value}
-										</a>
-									) : (
-										<p class="text-base font-semibold text-white/90 truncate">{item.value}</p>
-									)}
-								</div>
-							</div>
-						))
-					}
-				</div>
+                                <!-- Contact info cards (glassmorphism) -->
+                                <div class="space-y-4">
+                                        {
+                                                contactInfo.map((item) => (
+                                                        <div class={`contact-info-card flex items-center gap-4 rounded-2xl p-5`}>
+                                                                <div
+                                                                        class={`w-12 h-12 rounded-xl ${item.bgClass} flex items-center justify-center flex-shrink-0`}
+                                                                >
+                                                                        <svg
+                                                                                class={`w-5 h-5 ${item.textClass}`}
+                                                                                fill="none"
+                                                                                stroke="currentColor"
+                                                                                viewBox="0 0 24 24"
+                                                                                aria-hidden="true"
+                                                                        >
+                                                                                <path
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"
+                                                                                        d={item.iconPath}
+                                                                                />
+                                                                        </svg>
+                                                                </div>
+                                                                <div class="min-w-0">
+                                                                        <p class="text-xs text-white/50 font-medium uppercase tracking-wider">
+                                                                                {item.label}
+                                                                        </p>
+                                                                        {item.href ? (
+                                                                                <a
+                                                                                        href={item.href}
+                                                                                        class={`text-base font-semibold ${item.textClass} hover:underline truncate block transition-colors duration-200`}
+                                                                                >
+                                                                                        {item.value}
+                                                                                </a>
+                                                                        ) : (
+                                                                                <p class="text-base font-semibold text-white/90 truncate">{item.value}</p>
+                                                                        )}
+                                                                </div>
+                                                        </div>
+                                                ))
+                                        }
+                                </div>
 
-				<!-- Additional info : téléphone avec double action (appel / WhatsApp) -->
-				<div class="pt-6 border-t border-white/10 space-y-3 text-sm text-white/60">
-					<div class="phone-action-wrapper relative inline-block">
-						<button
-							type="button"
-							id="phone-trigger"
-							class="phone-trigger inline-flex items-center gap-2 hover:text-orange transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange/40 focus-visible:ring-offset-2 focus-visible:ring-offset-navy rounded-lg px-1 -mx-1 py-0.5"
-							aria-haspopup="menu"
-							aria-expanded="false"
-							aria-controls="phone-menu"
-						>
-							<svg
-								class="w-4 h-4"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								aria-hidden="true"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-								></path>
-							</svg>
-							+225 05 6618 4040
-							<svg
-								class="w-3 h-3 phone-chevron transition-transform duration-200"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								aria-hidden="true"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2.5"
-									d="M19 9l-7 7-7-7"></path>
-							</svg>
-						</button>
+                                <!-- Additional info : téléphone avec double action (appel / WhatsApp) -->
+                                <div class="pt-6 border-t border-white/10 space-y-3 text-sm text-white/60">
+                                        <div class="phone-action-wrapper relative inline-block">
+                                                <button
+                                                        type="button"
+                                                        id="phone-trigger"
+                                                        class="phone-trigger inline-flex items-center gap-2 hover:text-orange transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange/40 focus-visible:ring-offset-2 focus-visible:ring-offset-navy rounded-lg px-1 -mx-1 py-0.5"
+                                                        aria-haspopup="menu"
+                                                        aria-expanded="false"
+                                                        aria-controls="phone-menu"
+                                                >
+                                                        <svg
+                                                                class="w-4 h-4"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                aria-hidden="true"
+                                                        >
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                                                ></path>
+                                                        </svg>
+                                                        +225 05 6618 4040
+                                                        <svg
+                                                                class="w-3 h-3 phone-chevron transition-transform duration-200"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                aria-hidden="true"
+                                                        >
+                                                                <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        stroke-width="2.5"
+                                                                        d="M19 9l-7 7-7-7"></path>
+                                                        </svg>
+                                                </button>
 
-						<!-- Menu déroulant (appel / WhatsApp) -->
-						<div
-							id="phone-menu"
-							class="phone-menu hidden"
-							role="menu"
-							aria-labelledby="phone-trigger"
-						>
-							<a href="tel:+2250566184040" role="menuitem" class="phone-menu-item group">
-								<span class="phone-menu-icon phone-menu-icon-call">
-									<svg
-										class="w-4 h-4"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-										aria-hidden="true"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-										></path>
-									</svg>
-								</span>
-								<span class="phone-menu-content">
-									<span class="phone-menu-title">Appeler</span>
-									<span class="phone-menu-sub">+225 05 6618 4040</span>
-								</span>
-							</a>
-							<a
-								href="https://wa.me/2250566184040?text=Bonjour%20FTCI%2C%20je%20vous%20contacte%20depuis%20votre%20site%20vitriere.%20J%27aimerais%20avoir%20des%20informations."
-								target="_blank"
-								rel="noopener noreferrer"
-								role="menuitem"
-								class="phone-menu-item group"
-							>
-								<span class="phone-menu-icon phone-menu-icon-whatsapp">
-									<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-										<path
-											d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-										></path>
-									</svg>
-								</span>
-								<span class="phone-menu-content">
-									<span class="phone-menu-title">WhatsApp</span>
-									<span class="phone-menu-sub">Discuter maintenant</span>
-								</span>
-								<svg
-									class="w-3.5 h-3.5 phone-menu-external"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									aria-hidden="true"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-									></path>
-								</svg>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
+                                                <!-- Menu déroulant (appel / WhatsApp) -->
+                                                <div
+                                                        id="phone-menu"
+                                                        class="phone-menu hidden"
+                                                        role="menu"
+                                                        aria-labelledby="phone-trigger"
+                                                >
+                                                        <a href="tel:+2250566184040" role="menuitem" class="phone-menu-item group">
+                                                                <span class="phone-menu-icon phone-menu-icon-call">
+                                                                        <svg
+                                                                                class="w-4 h-4"
+                                                                                fill="none"
+                                                                                stroke="currentColor"
+                                                                                viewBox="0 0 24 24"
+                                                                                aria-hidden="true"
+                                                                        >
+                                                                                <path
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"
+                                                                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                                                                ></path>
+                                                                        </svg>
+                                                                </span>
+                                                                <span class="phone-menu-content">
+                                                                        <span class="phone-menu-title">Appeler</span>
+                                                                        <span class="phone-menu-sub">+225 05 6618 4040</span>
+                                                                </span>
+                                                        </a>
+                                                        <a
+                                                                href="https://wa.me/2250566184040?text=Bonjour%20FTCI%2C%20je%20vous%20contacte%20depuis%20votre%20site%20vitriere.%20J%27aimerais%20avoir%20des%20informations."
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                role="menuitem"
+                                                                class="phone-menu-item group"
+                                                        >
+                                                                <span class="phone-menu-icon phone-menu-icon-whatsapp">
+                                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                                <path
+                                                                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                                                                                ></path>
+                                                                        </svg>
+                                                                </span>
+                                                                <span class="phone-menu-content">
+                                                                        <span class="phone-menu-title">WhatsApp</span>
+                                                                        <span class="phone-menu-sub">Discuter maintenant</span>
+                                                                </span>
+                                                                <svg
+                                                                        class="w-3.5 h-3.5 phone-menu-external"
+                                                                        fill="none"
+                                                                        stroke="currentColor"
+                                                                        viewBox="0 0 24 24"
+                                                                        aria-hidden="true"
+                                                                >
+                                                                        <path
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                stroke-width="2"
+                                                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                                                        ></path>
+                                                                </svg>
+                                                        </a>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
 
-			<!-- RIGHT SIDE: Form card (glassmorphism) ──────────────────────── -->
-			<div class="md:col-span-1 lg:col-span-3 observe" style="--d: 0.15s">
-				<form id="contact-form" class="glass-card rounded-2xl p-8 md:p-10" novalidate>
-					<!-- Nom + Email (grid 2 colonnes) -->
-					<div class="grid sm:grid-cols-2 gap-5 mb-5">
-						<div>
-							<label for="name" class="block text-sm font-semibold text-white/90 mb-1.5">
-								Nom complet <span class="text-orange" aria-hidden="true">*</span>
-							</label>
-							<input
-								type="text"
-								id="name"
-								name="name"
-								autocomplete="name"
-								required
-								aria-required="true"
-								aria-describedby="error-name"
-								class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
-								placeholder="Jean Kouassi"
-							/>
-							<p id="error-name" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-						</div>
-						<div>
-							<label for="email" class="block text-sm font-semibold text-white/90 mb-1.5">
-								Email <span class="text-orange" aria-hidden="true">*</span>
-							</label>
-							<input
-								type="email"
-								id="email"
-								name="email"
-								autocomplete="email"
-								required
-								aria-required="true"
-								aria-describedby="error-email"
-								class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
-								placeholder="jean@exemple.ci"
-							/>
-							<p id="error-email" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-						</div>
-					</div>
+                        <!-- RIGHT SIDE: Form card (glassmorphism) ──────────────────────── -->
+                        <div class="md:col-span-1 lg:col-span-3 observe" style="--d: 0.15s">
+                                <form id="contact-form" class="glass-card rounded-2xl p-8 md:p-10" novalidate>
+                                        <!-- Nom + Email (grid 2 colonnes) -->
+                                        <div class="grid sm:grid-cols-2 gap-5 mb-5">
+                                                <div>
+                                                        <label for="name" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                                Nom complet <span class="text-orange" aria-hidden="true">*</span>
+                                                        </label>
+                                                        <input
+                                                                type="text"
+                                                                id="name"
+                                                                name="name"
+                                                                autocomplete="name"
+                                                                required
+                                                                aria-required="true"
+                                                                aria-describedby="error-name"
+                                                                class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
+                                                                placeholder="Jean Kouassi"
+                                                        />
+                                                        <p id="error-name" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                                </div>
+                                                <div>
+                                                        <label for="email" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                                Email <span class="text-orange" aria-hidden="true">*</span>
+                                                        </label>
+                                                        <input
+                                                                type="email"
+                                                                id="email"
+                                                                name="email"
+                                                                autocomplete="email"
+                                                                required
+                                                                aria-required="true"
+                                                                aria-describedby="error-email"
+                                                                class="dark-input w-full px-4 py-3 rounded-xl placeholder:text-white/40"
+                                                                placeholder="jean@exemple.ci"
+                                                        />
+                                                        <p id="error-email" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                                </div>
+                                        </div>
 
-					<!-- Sujet (select) -->
-					<div class="mb-5">
-						<label for="subject" class="block text-sm font-semibold text-white/90 mb-1.5">
-							Sujet <span class="text-orange" aria-hidden="true">*</span>
-						</label>
-						<select
-							id="subject"
-							name="subject"
-							required
-							aria-required="true"
-							aria-describedby="error-subject"
-							class="dark-select w-full px-4 py-3 rounded-xl"
-						>
-							{
-								subjectOptions.map((opt) => (
-									<option
-										value={opt.value}
-										disabled={opt.value === ''}
-										selected={opt.value === ''}
-										hidden={opt.value === ''}
-									>
-										{opt.label}
-									</option>
-								))
-							}
-						</select>
-						<p id="error-subject" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-					</div>
+                                        <!-- Sujet (select) -->
+                                        <div class="mb-5">
+                                                <label for="subject" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                        Sujet <span class="text-orange" aria-hidden="true">*</span>
+                                                </label>
+                                                <select
+                                                        id="subject"
+                                                        name="subject"
+                                                        required
+                                                        aria-required="true"
+                                                        aria-describedby="error-subject"
+                                                        class="dark-select w-full px-4 py-3 rounded-xl"
+                                                >
+                                                        {
+                                                                subjectOptions.map((opt) => (
+                                                                        <option
+                                                                                value={opt.value}
+                                                                                disabled={opt.value === ''}
+                                                                                selected={opt.value === ''}
+                                                                                hidden={opt.value === ''}
+                                                                        >
+                                                                                {opt.label}
+                                                                        </option>
+                                                                ))
+                                                        }
+                                                </select>
+                                                <p id="error-subject" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                        </div>
 
-					<!-- Message (textarea) -->
-					<div class="mb-5">
-						<label for="message" class="block text-sm font-semibold text-white/90 mb-1.5">
-							Message <span class="text-orange" aria-hidden="true">*</span>
-						</label>
-						<textarea
-							id="message"
-							name="message"
-							rows="5"
-							required
-							aria-required="true"
-							aria-describedby="error-message"
-							class="dark-input w-full px-4 py-3 rounded-xl resize-y placeholder:text-white/40"
-							placeholder="Décrivez votre projet ou votre demande…"></textarea>
-						<p id="error-message" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-					</div>
+                                        <!-- Message (textarea) -->
+                                        <div class="mb-5">
+                                                <label for="message" class="block text-sm font-semibold text-white/90 mb-1.5">
+                                                        Message <span class="text-orange" aria-hidden="true">*</span>
+                                                </label>
+                                                <textarea
+                                                        id="message"
+                                                        name="message"
+                                                        rows="5"
+                                                        required
+                                                        aria-required="true"
+                                                        aria-describedby="error-message"
+                                                        class="dark-input w-full px-4 py-3 rounded-xl resize-y placeholder:text-white/40"
+                                                        placeholder="Décrivez votre projet ou votre demande…"></textarea>
+                                                <p id="error-message" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                        </div>
 
-					<!-- Consentement (checkbox) -->
-					<div class="mb-6">
-						<label for="consent" class="flex items-start gap-3 cursor-pointer group">
-							<input
-								type="checkbox"
-								id="consent"
-								name="consent"
-								required
-								aria-required="true"
-								aria-describedby="error-consent"
-								class="mt-1 w-5 h-5 rounded border-white/20 text-orange focus:ring-orange/30 cursor-pointer accent-orange bg-transparent"
-							/>
-							<span
-								class="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-200"
-							>
-								J'accepte que FTCI utilise mes informations pour me recontacter. Vos données ne sont
-								jamais partagées avec des tiers.
-							</span>
-						</label>
-						<p id="error-consent" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
-					</div>
+                                        <!-- Consentement (checkbox) -->
+                                        <div class="mb-6">
+                                                <label for="consent" class="flex items-start gap-3 cursor-pointer group">
+                                                        <input
+                                                                type="checkbox"
+                                                                id="consent"
+                                                                name="consent"
+                                                                required
+                                                                aria-required="true"
+                                                                aria-describedby="error-consent"
+                                                                class="mt-1 w-5 h-5 rounded border-white/20 text-orange focus:ring-orange/30 cursor-pointer accent-orange bg-transparent"
+                                                        />
+                                                        <span
+                                                                class="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors duration-200"
+                                                        >
+                                                                J'accepte que FTCI utilise mes informations pour me recontacter. Vos données ne sont
+                                                                jamais partagées avec des tiers.
+                                                        </span>
+                                                </label>
+                                                <p id="error-consent" class="hidden text-sm text-orange mt-1.5" role="alert"></p>
+                                        </div>
 
-					<!-- Honeypot (caché — les bots le remplissent, pas les humains) -->
-					<div class="hidden" aria-hidden="true">
-						<label for="website">Ne pas remplir</label>
-						<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
-					</div>
+                                        <!-- Honeypot (caché — les bots le remplissent, pas les humains) -->
+                                        <div class="hidden" aria-hidden="true">
+                                                <label for="website">Ne pas remplir</label>
+                                                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+                                        </div>
 
-					<!-- Turnstile bot protection (invisible widget) -->
-					<div class="cf-turnstile" data-sitekey="0x4AAAAAAEHWNdQVFYD01Me2" data-action="turnstile-spin-v2" ></div>
+                                        <!-- Turnstile bot protection (invisible widget) -->
+                                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAEHWNdQVFYD01Me2" data-action="turnstile-spin-v2" ></div>
 
-					<!-- Bouton submit -->
-					<div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-						<button
-							type="submit"
-							id="contact-submit"
-							data-magnetic="14"
-							class="btn-primary magnetic btn-glow"
-						>
-							<span class="btn-label">
-								Envoyer le message
-								<svg
-									class="w-5 h-5"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-									aria-hidden="true"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-								</svg>
-							</span>
-							<span class="btn-loading hidden">
-								<span class="spinner"></span>
-								<span>Envoi…</span>
-							</span>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+                                        <!-- Bouton submit -->
+                                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                                                <button
+                                                        type="submit"
+                                                        id="contact-submit"
+                                                        data-magnetic="14"
+                                                        class="btn-primary magnetic btn-glow"
+                                                >
+                                                        <span class="btn-label">
+                                                                Envoyer le message
+                                                                <svg
+                                                                        class="w-5 h-5"
+                                                                        fill="none"
+                                                                        stroke="currentColor"
+                                                                        viewBox="0 0 24 24"
+                                                                        aria-hidden="true"
+                                                                >
+                                                                        <path
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                stroke-width="2"
+                                                                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                                                </svg>
+                                                        </span>
+                                                        <span class="btn-loading hidden">
+                                                                <span class="spinner"></span>
+                                                                <span>Envoi…</span>
+                                                        </span>
+                                                </button>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+        </div>
 
-	<!-- ── Conteneur de notifications toast (fixed, hors flow) ─────────────── -->
-	<div
-		id="toast-container"
-		class="toast-container"
-		role="region"
-		aria-live="polite"
-		aria-atomic="false"
-		aria-label="Notifications"
-	>
-	</div>
+        <!-- ── Conteneur de notifications toast (fixed, hors flow) ─────────────── -->
+        <div
+                id="toast-container"
+                class="toast-container"
+                role="region"
+                aria-live="polite"
+                aria-atomic="false"
+                aria-label="Notifications"
+        >
+        </div>
 </section>
 
 <script>
-	// ── Menu téléphone (appel / WhatsApp) ────────────────────────────────────
-	// Bouton qui ouvre un menu déroulant avec 2 options :
-	// 1. Appeler (tel:)
-	// 2. WhatsApp (wa.me/ avec message pré-rempli)
-	// Fermeture : clic à l'extérieur, clic sur une option, Escape.
-	(function setupPhoneMenu() {
-		const trigger = document.getElementById('phone-trigger');
-		const menu = document.getElementById('phone-menu');
-		if (!trigger || !menu) return;
+        // ── Menu téléphone (appel / WhatsApp) ────────────────────────────────────
+        // Bouton qui ouvre un menu déroulant avec 2 options :
+        // 1. Appeler (tel:)
+        // 2. WhatsApp (wa.me/ avec message pré-rempli)
+        // Fermeture : clic à l'extérieur, clic sur une option, Escape.
+        (function setupPhoneMenu() {
+                const trigger = document.getElementById('phone-trigger');
+                const menu = document.getElementById('phone-menu');
+                if (!trigger || !menu) return;
 
-		const chevron = trigger.querySelector('.phone-chevron');
+                const chevron = trigger.querySelector('.phone-chevron');
 
-		const openMenu = () => {
-			menu.classList.remove('hidden');
-			trigger.setAttribute('aria-expanded', 'true');
-			chevron?.classList.add('phone-chevron-open');
-			// Focus le premier item pour navigation clavier
-			const firstItem = menu.querySelector<HTMLElement>('[role="menuitem"]');
-			requestAnimationFrame(() => {
-				menu.classList.add('phone-menu-open');
-				firstItem?.focus();
-			});
-		};
+                const openMenu = () => {
+                        menu.classList.remove('hidden');
+                        trigger.setAttribute('aria-expanded', 'true');
+                        chevron?.classList.add('phone-chevron-open');
+                        // Focus le premier item pour navigation clavier
+                        const firstItem = menu.querySelector<HTMLElement>('[role="menuitem"]');
+                        requestAnimationFrame(() => {
+                                menu.classList.add('phone-menu-open');
+                                firstItem?.focus();
+                        });
+                };
 
-		const closeMenu = () => {
-			menu.classList.remove('phone-menu-open');
-			trigger.setAttribute('aria-expanded', 'false');
-			chevron?.classList.remove('phone-chevron-open');
-			// Cache après la transition (200ms)
-			window.setTimeout(() => menu.classList.add('hidden'), 200);
-		};
+                const closeMenu = () => {
+                        menu.classList.remove('phone-menu-open');
+                        trigger.setAttribute('aria-expanded', 'false');
+                        chevron?.classList.remove('phone-chevron-open');
+                        // Cache après la transition (200ms)
+                        window.setTimeout(() => menu.classList.add('hidden'), 200);
+                };
 
-		const toggleMenu = () => {
-			const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-			if (isExpanded) closeMenu();
-			else openMenu();
-		};
+                const toggleMenu = () => {
+                        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+                        if (isExpanded) closeMenu();
+                        else openMenu();
+                };
 
-		trigger.addEventListener('click', (e) => {
-			e.stopPropagation();
-			toggleMenu();
-		});
+                trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleMenu();
+                });
 
-		// Ferme au clic sur un item (laisse la navigation se faire)
-		menu.querySelectorAll('[role="menuitem"]').forEach((item) => {
-			item.addEventListener('click', () => closeMenu());
-		});
+                // Ferme au clic sur un item (laisse la navigation se faire)
+                menu.querySelectorAll('[role="menuitem"]').forEach((item) => {
+                        item.addEventListener('click', () => closeMenu());
+                });
 
-		// Ferme au clic à l'extérieur
-		document.addEventListener('click', (e) => {
-			if (trigger.getAttribute('aria-expanded') !== 'true') return;
-			const wrapper = trigger.closest('.phone-action-wrapper');
-			if (wrapper && !wrapper.contains(e.target as Node)) {
-				closeMenu();
-			}
-		});
+                // Ferme au clic à l'extérieur
+                document.addEventListener('click', (e) => {
+                        if (trigger.getAttribute('aria-expanded') !== 'true') return;
+                        const wrapper = trigger.closest('.phone-action-wrapper');
+                        if (wrapper && !wrapper.contains(e.target as Node)) {
+                                closeMenu();
+                        }
+                });
 
-		// Ferme avec Escape + navigation clavier
-		document.addEventListener('keydown', (e) => {
-			if (trigger.getAttribute('aria-expanded') !== 'true') return;
-			if (e.key === 'Escape') {
-				closeMenu();
-				trigger.focus();
-				return;
-			}
-			// Flèche haut/bas pour naviguer entre les items
-			if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-				e.preventDefault();
-				const items = Array.from(menu.querySelectorAll<HTMLElement>('[role="menuitem"]'));
-				const currentIndex = items.indexOf(document.activeElement as HTMLElement);
-				const nextIndex =
-					e.key === 'ArrowDown'
-						? (currentIndex + 1) % items.length
-						: (currentIndex - 1 + items.length) % items.length;
-				items[nextIndex]?.focus();
-			}
-		});
-	})();
+                // Ferme avec Escape + navigation clavier
+                document.addEventListener('keydown', (e) => {
+                        if (trigger.getAttribute('aria-expanded') !== 'true') return;
+                        if (e.key === 'Escape') {
+                                closeMenu();
+                                trigger.focus();
+                                return;
+                        }
+                        // Flèche haut/bas pour naviguer entre les items
+                        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                                e.preventDefault();
+                                const items = Array.from(menu.querySelectorAll<HTMLElement>('[role="menuitem"]'));
+                                const currentIndex = items.indexOf(document.activeElement as HTMLElement);
+                                const nextIndex =
+                                        e.key === 'ArrowDown'
+                                                ? (currentIndex + 1) % items.length
+                                                : (currentIndex - 1 + items.length) % items.length;
+                                items[nextIndex]?.focus();
+                        }
+                });
+        })();
 
-	// ── Formulaire contact : fetch POST /api/contact ────────────────────────
-	// Gestion : erreurs par champ (422) restent inline (mieux pour la
-	// correction), mais succès / rate-limit / erreur réseau / autre erreur
-	// sont affichés via un toast flottant (non-bloquant, auto-dismiss).
-	const form = document.getElementById('contact-form') as HTMLFormElement | null;
-	const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
-	const toastContainer = document.getElementById('toast-container') as HTMLElement | null;
+        // ── Formulaire contact : fetch POST /api/contact ────────────────────────
+        // Gestion : erreurs par champ (422) restent inline (mieux pour la
+        // correction), mais succès / rate-limit / erreur réseau / autre erreur
+        // sont affichés via un toast flottant (non-bloquant, auto-dismiss).
+        const form = document.getElementById('contact-form') as HTMLFormElement | null;
+        const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+        const toastContainer = document.getElementById('toast-container') as HTMLElement | null;
 
-	// ── Système de toast ───────────────────────────────────────────────────
-	// Conteneur fixed en haut à droite (desktop) / haut centré (mobile).
-	// Chaque toast : icône + titre + message + bouton fermer + barre de
-	// progression. Auto-dismiss après 6s (succès) ou 8s (erreur). Respecte
-	// prefers-reduced-motion (géré globalement dans global.css).
-	type ToastType = 'success' | 'error';
+        // ── Système de toast ───────────────────────────────────────────────────
+        // Conteneur fixed en haut à droite (desktop) / haut centré (mobile).
+        // Chaque toast : icône + titre + message + bouton fermer + barre de
+        // progression. Auto-dismiss après 6s (succès) ou 8s (erreur). Respecte
+        // prefers-reduced-motion (géré globalement dans global.css).
+        type ToastType = 'success' | 'error';
 
-	interface ToastConfig {
-		title: string;
-		message: string;
-		type: ToastType;
-		duration?: number;
-	}
+        interface ToastConfig {
+                title: string;
+                message: string;
+                type: ToastType;
+                duration?: number;
+        }
 
-	const TOAST_DURATION: Record<ToastType, number> = {
-		success: 6_000,
-		error: 8_000,
-	};
+        const TOAST_DURATION: Record<ToastType, number> = {
+                success: 6_000,
+                error: 8_000,
+        };
 
-	const TOAST_ICONS: Record<ToastType, string> = {
-		// Checkmark dans un cercle (succès)
-		success:
-			'<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
-		// Triangle warning (erreur)
-		error:
-			'<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>',
-	};
+        const TOAST_ICONS: Record<ToastType, string> = {
+                // Checkmark dans un cercle (succès)
+                success:
+                        '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+                // Triangle warning (erreur)
+                error:
+                        '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>',
+        };
 
-	const TOAST_TITLES: Record<ToastType, string> = {
-		success: 'Message envoyé !',
-		error: 'Oups, une erreur est survenue',
-	};
+        const TOAST_TITLES: Record<ToastType, string> = {
+                success: 'Message envoyé !',
+                error: 'Oups, une erreur est survenue',
+        };
 
-	function showToast(config: ToastConfig): void {
-		if (!toastContainer) return;
+        function showToast(config: ToastConfig): void {
+                if (!toastContainer) return;
 
-		const { title, message, type, duration = TOAST_DURATION[type] } = config;
+                const { title, message, type, duration = TOAST_DURATION[type] } = config;
 
-		// Élément toast
-		const toast = document.createElement('div');
-		toast.className = `toast toast-${type}`;
-		toast.setAttribute('role', 'status');
-		toast.innerHTML = `
+                // Élément toast
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.setAttribute('role', 'status');
+                toast.innerHTML = `
                         <div class="toast-icon" aria-hidden="true">${TOAST_ICONS[type]}</div>
                         <div class="toast-content">
                                 <p class="toast-title">${escapeHtml(title)}</p>
@@ -549,531 +549,531 @@ const subjectOptions = [
                         <div class="toast-progress" aria-hidden="true"></div>
                 `;
 
-		toastContainer.appendChild(toast);
+                toastContainer.appendChild(toast);
 
-		// Anime l'entrée (force reflow pour que la transition joue)
-		requestAnimationFrame(() => {
-			toast.classList.add('toast-visible');
-		});
+                // Anime l'entrée (force reflow pour que la transition joue)
+                requestAnimationFrame(() => {
+                        toast.classList.add('toast-visible');
+                });
 
-		// Barre de progression
-		const progress = toast.querySelector<HTMLElement>('.toast-progress');
-		if (progress) {
-			// Force un reflow pour que la transition joue depuis 100%
-			progress.style.width = '100%';
-			requestAnimationFrame(() => {
-				progress.style.transition = `width ${duration}ms linear`;
-				progress.style.width = '0%';
-			});
-		}
+                // Barre de progression
+                const progress = toast.querySelector<HTMLElement>('.toast-progress');
+                if (progress) {
+                        // Force un reflow pour que la transition joue depuis 100%
+                        progress.style.width = '100%';
+                        requestAnimationFrame(() => {
+                                progress.style.transition = `width ${duration}ms linear`;
+                                progress.style.width = '0%';
+                        });
+                }
 
-		// Auto-dismiss
-		let dismissTimer: number | undefined;
-		let isDismissed = false;
+                // Auto-dismiss
+                let dismissTimer: number | undefined;
+                let isDismissed = false;
 
-		const dismiss = () => {
-			if (isDismissed) return;
-			isDismissed = true;
-			if (dismissTimer) window.clearTimeout(dismissTimer);
-			toast.classList.remove('toast-visible');
-			toast.classList.add('toast-leaving');
-			// Supprime du DOM après la transition de sortie (300ms)
-			window.setTimeout(() => {
-				toast.remove();
-			}, 300);
-		};
+                const dismiss = () => {
+                        if (isDismissed) return;
+                        isDismissed = true;
+                        if (dismissTimer) window.clearTimeout(dismissTimer);
+                        toast.classList.remove('toast-visible');
+                        toast.classList.add('toast-leaving');
+                        // Supprime du DOM après la transition de sortie (300ms)
+                        window.setTimeout(() => {
+                                toast.remove();
+                        }, 300);
+                };
 
-		dismissTimer = window.setTimeout(dismiss, duration);
+                dismissTimer = window.setTimeout(dismiss, duration);
 
-		// Bouton fermer
-		toast.querySelector('.toast-close')?.addEventListener('click', dismiss);
+                // Bouton fermer
+                toast.querySelector('.toast-close')?.addEventListener('click', dismiss);
 
-		// Pause au survol (lisibilité si le visiteur lit lentement)
-		toast.addEventListener('mouseenter', () => {
-			if (dismissTimer) window.clearTimeout(dismissTimer);
-			// Figer la barre de progression à sa position actuelle
-			if (progress) {
-				const computed = getComputedStyle(progress).width;
-				progress.style.transition = 'none';
-				progress.style.width = computed;
-			}
-		});
-		toast.addEventListener('mouseleave', () => {
-			if (!isDismissed) {
-				// Repartir pour 2s supplémentaires (barre recalculée)
-				if (progress) {
-					const computed = parseFloat(getComputedStyle(progress).width);
-					const parentWidth = progress.parentElement?.clientWidth ?? 1;
-					const remainingPct = (computed / parentWidth) * 100;
-					if (remainingPct > 0) {
-						const remainingMs = (remainingPct / 100) * duration;
-						progress.style.transition = `width ${remainingMs}ms linear`;
-						progress.style.width = '0%';
-						dismissTimer = window.setTimeout(dismiss, remainingMs);
-						return;
-					}
-				}
-				dismissTimer = window.setTimeout(dismiss, 2000);
-			}
-		});
-	}
+                // Pause au survol (lisibilité si le visiteur lit lentement)
+                toast.addEventListener('mouseenter', () => {
+                        if (dismissTimer) window.clearTimeout(dismissTimer);
+                        // Figer la barre de progression à sa position actuelle
+                        if (progress) {
+                                const computed = getComputedStyle(progress).width;
+                                progress.style.transition = 'none';
+                                progress.style.width = computed;
+                        }
+                });
+                toast.addEventListener('mouseleave', () => {
+                        if (!isDismissed) {
+                                // Repartir pour 2s supplémentaires (barre recalculée)
+                                if (progress) {
+                                        const computed = parseFloat(getComputedStyle(progress).width);
+                                        const parentWidth = progress.parentElement?.clientWidth ?? 1;
+                                        const remainingPct = (computed / parentWidth) * 100;
+                                        if (remainingPct > 0) {
+                                                const remainingMs = (remainingPct / 100) * duration;
+                                                progress.style.transition = `width ${remainingMs}ms linear`;
+                                                progress.style.width = '0%';
+                                                dismissTimer = window.setTimeout(dismiss, remainingMs);
+                                                return;
+                                        }
+                                }
+                                dismissTimer = window.setTimeout(dismiss, 2000);
+                        }
+                });
+        }
 
-	function escapeHtml(s: string): string {
-		return s
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
-			.replace(/"/g, '&quot;')
-			.replace(/'/g, '&#39;');
-	}
+        function escapeHtml(s: string): string {
+                return s
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;');
+        }
 
-	// ── Logique formulaire ─────────────────────────────────────────────────
-	if (form && submitBtn) {
-		const labelEl = submitBtn.querySelector('.btn-label');
-		const loadingEl = submitBtn.querySelector('.btn-loading');
+        // ── Logique formulaire ─────────────────────────────────────────────────
+        if (form && submitBtn) {
+                const labelEl = submitBtn.querySelector('.btn-label');
+                const loadingEl = submitBtn.querySelector('.btn-loading');
 
-		const setFieldError = (field: string, message: string) => {
-			const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
-			const errorEl = document.getElementById(`error-${field}`);
-			if (input) {
-				if (message) {
-					input.setAttribute('aria-invalid', 'true');
-					input.classList.add('border-orange', 'ring-2', 'ring-orange/40');
-				} else {
-					input.removeAttribute('aria-invalid');
-					input.classList.remove('border-orange', 'ring-2', 'ring-orange/40');
-				}
-			}
-			if (errorEl) {
-				if (message) {
-					errorEl.textContent = message;
-					errorEl.classList.remove('hidden');
-				} else {
-					errorEl.classList.add('hidden');
-					errorEl.textContent = '';
-				}
-			}
-		};
+                const setFieldError = (field: string, message: string) => {
+                        const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
+                        const errorEl = document.getElementById(`error-${field}`);
+                        if (input) {
+                                if (message) {
+                                        input.setAttribute('aria-invalid', 'true');
+                                        input.classList.add('border-orange', 'ring-2', 'ring-orange/40');
+                                } else {
+                                        input.removeAttribute('aria-invalid');
+                                        input.classList.remove('border-orange', 'ring-2', 'ring-orange/40');
+                                }
+                        }
+                        if (errorEl) {
+                                if (message) {
+                                        errorEl.textContent = message;
+                                        errorEl.classList.remove('hidden');
+                                } else {
+                                        errorEl.classList.add('hidden');
+                                        errorEl.textContent = '';
+                                }
+                        }
+                };
 
-		const clearAllErrors = () => {
-			['name', 'email', 'subject', 'message', 'consent'].forEach((f) => setFieldError(f, ''));
-		};
+                const clearAllErrors = () => {
+                        ['name', 'email', 'subject', 'message', 'consent'].forEach((f) => setFieldError(f, ''));
+                };
 
-		const setLoading = (loading: boolean) => {
-			if (loading) {
-				labelEl?.classList.add('hidden');
-				loadingEl?.classList.remove('hidden');
-				submitBtn.disabled = true;
-			} else {
-				labelEl?.classList.remove('hidden');
-				loadingEl?.classList.add('hidden');
-				submitBtn.disabled = false;
-			}
-		};
+                const setLoading = (loading: boolean) => {
+                        if (loading) {
+                                labelEl?.classList.add('hidden');
+                                loadingEl?.classList.remove('hidden');
+                                submitBtn.disabled = true;
+                        } else {
+                                labelEl?.classList.remove('hidden');
+                                loadingEl?.classList.add('hidden');
+                                submitBtn.disabled = false;
+                        }
+                };
 
-		form.addEventListener('submit', async (e) => {
-			e.preventDefault();
-			clearAllErrors();
+                form.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        clearAllErrors();
 
-			const formData = new FormData(form);
-			// Capture le token Turnstile AVANT le reset (tokens single-use)
-			const turnstileToken = (formData.get('cf-turnstile-response') as string) || '';
-			window.turnstile?.reset();
-			const payload = {
-				name: formData.get('name'),
-				email: formData.get('email'),
-				subject: formData.get('subject'),
-				message: formData.get('message'),
-				consent: formData.get('consent') === 'on',
-				website: formData.get('website'), // honeypot
-				'cf-turnstile-response': turnstileToken,
-			};
+                        const formData = new FormData(form);
+                        // Capture le token Turnstile AVANT le reset (tokens single-use)
+                        const turnstileToken = (formData.get('cf-turnstile-response') as string) || '';
+                        window.turnstile?.reset();
+                        const payload = {
+                                name: formData.get('name'),
+                                email: formData.get('email'),
+                                subject: formData.get('subject'),
+                                message: formData.get('message'),
+                                consent: formData.get('consent') === 'on',
+                                website: formData.get('website'), // honeypot
+                                'cf-turnstile-response': turnstileToken,
+                        };
 
-			setLoading(true);
+                        setLoading(true);
 
-			try {
-				const res = await fetch('/api/contact', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(payload),
-				});
+                        try {
+                                const res = await fetch('/api/contact', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(payload),
+                                });
 
-				const data = (await res.json().catch(() => ({}))) as {
-					ok?: boolean;
-					message?: string;
-					error?: string;
-					errors?: Record<string, string>;
-				};
+                                const data = (await res.json().catch(() => ({}))) as {
+                                        ok?: boolean;
+                                        message?: string;
+                                        error?: string;
+                                        errors?: Record<string, string>;
+                                };
 
-				if (res.ok) {
-					// ✅ Succès : toast vert + reset du formulaire
-					showToast({
-						title: TOAST_TITLES.success,
-						message: data.message || 'Nous vous recontacterons bientôt.',
-						type: 'success',
-					});
-					form.reset();
-				} else if (res.status === 422 && data.errors) {
-					// ⚠️ Erreurs de validation : inline par champ (mieux pour corriger)
-					Object.entries(data.errors).forEach(([field, msg]) => {
-						if (field !== '_honeypot') {
-							setFieldError(field, msg as string);
-						}
-					});
-					const firstError = form.querySelector<HTMLElement>('[aria-invalid="true"]');
-					firstError?.focus();
-					// Toast discret pour signaler qu'il y a des erreurs à corriger
-					showToast({
-						title: 'Veuillez corriger les champs en erreur',
-						message: 'Les champs signalés en orange nécessitent votre attention.',
-						type: 'error',
-					});
-				} else if (res.status === 429) {
-					showToast({
-						title: TOAST_TITLES.error,
-						message: data.error || 'Trop de tentatives. Veuillez réessayer dans une minute.',
-						type: 'error',
-					});
-				} else {
-					showToast({
-						title: TOAST_TITLES.error,
-						message: data.error || 'Une erreur est survenue. Veuillez réessayer.',
-						type: 'error',
-					});
-				}
-			} catch (_err) {
-				showToast({
-					title: TOAST_TITLES.error,
-					message: 'Erreur réseau. Vérifiez votre connexion et réessayez.',
-					type: 'error',
-				});
-			} finally {
-				setLoading(false);
-			}
-		});
-	}
+                                if (res.ok) {
+                                        // ✅ Succès : toast vert + reset du formulaire
+                                        showToast({
+                                                title: TOAST_TITLES.success,
+                                                message: data.message || 'Nous vous recontacterons bientôt.',
+                                                type: 'success',
+                                        });
+                                        form.reset();
+                                } else if (res.status === 422 && data.errors) {
+                                        // ⚠️ Erreurs de validation : inline par champ (mieux pour corriger)
+                                        Object.entries(data.errors).forEach(([field, msg]) => {
+                                                if (field !== '_honeypot') {
+                                                        setFieldError(field, msg as string);
+                                                }
+                                        });
+                                        const firstError = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+                                        firstError?.focus();
+                                        // Toast discret pour signaler qu'il y a des erreurs à corriger
+                                        showToast({
+                                                title: 'Veuillez corriger les champs en erreur',
+                                                message: 'Les champs signalés en orange nécessitent votre attention.',
+                                                type: 'error',
+                                        });
+                                } else if (res.status === 429) {
+                                        showToast({
+                                                title: TOAST_TITLES.error,
+                                                message: data.error || 'Trop de tentatives. Veuillez réessayer dans une minute.',
+                                                type: 'error',
+                                        });
+                                } else {
+                                        showToast({
+                                                title: TOAST_TITLES.error,
+                                                message: data.error || 'Une erreur est survenue. Veuillez réessayer.',
+                                                type: 'error',
+                                        });
+                                }
+                        } catch (_err) {
+                                showToast({
+                                        title: TOAST_TITLES.error,
+                                        message: 'Erreur réseau. Vérifiez votre connexion et réessayez.',
+                                        type: 'error',
+                                });
+                        } finally {
+                                setLoading(false);
+                        }
+                });
+        }
 </script>
 
 <style>
-	/* ── Toast notifications ────────────────────────────────────────────────
+        /* ── Toast notifications ────────────────────────────────────────────────
            Conteneur fixed en haut à droite (desktop) / haut centré (mobile).
            Glassmorphism cohérent avec le formulaire (bg-white/10 backdrop-blur).
            Animations GPU-only (transform + opacity), respectent prefers-reduced-motion
            (kill-switch global dans global.css). */
 
-	.toast-container {
-		position: fixed;
-		top: 1.5rem;
-		right: 1.5rem;
-		z-index: 100;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		width: calc(100vw - 3rem);
-		max-width: 26rem;
-		pointer-events: none;
-	}
+        .toast-container {
+                position: fixed;
+                top: 1.5rem;
+                right: 1.5rem;
+                z-index: 100;
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                width: calc(100vw - 3rem);
+                max-width: 26rem;
+                pointer-events: none;
+        }
 
-	@media (max-width: 640px) {
-		.toast-container {
-			top: 1rem;
-			right: 50%;
-			transform: translateX(50%);
-			width: calc(100vw - 2rem);
-			max-width: none;
-		}
-	}
+        @media (max-width: 640px) {
+                .toast-container {
+                        top: 1rem;
+                        right: 50%;
+                        transform: translateX(50%);
+                        width: calc(100vw - 2rem);
+                        max-width: none;
+                }
+        }
 
-	.toast {
-		position: relative;
-		display: flex;
-		align-items: flex-start;
-		gap: 0.875rem;
-		padding: 1rem 1.125rem 1.125rem;
-		border-radius: 1rem;
-		background: rgba(15, 30, 61, 0.85);
-		backdrop-filter: blur(16px);
-		-webkit-backdrop-filter: blur(16px);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		box-shadow:
-			0 10px 30px rgba(0, 0, 0, 0.3),
-			0 0 0 1px rgba(0, 0, 0, 0.05);
-		color: #fff;
-		pointer-events: auto;
-		overflow: hidden;
-		/* Entrée : translateY(-16px) + opacity 0 → position finale */
-		opacity: 0;
-		transform: translateY(-16px) scale(0.97);
-		transition:
-			opacity 400ms var(--ease-spring, cubic-bezier(0.22, 0.9, 0.3, 1)),
-			transform 400ms var(--ease-spring, cubic-bezier(0.22, 0.9, 0.3, 1));
-		will-change: transform, opacity;
-	}
+        .toast {
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.875rem;
+                padding: 1rem 1.125rem 1.125rem;
+                border-radius: 1rem;
+                background: rgba(15, 30, 61, 0.85);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow:
+                        0 10px 30px rgba(0, 0, 0, 0.3),
+                        0 0 0 1px rgba(0, 0, 0, 0.05);
+                color: #fff;
+                pointer-events: auto;
+                overflow: hidden;
+                /* Entrée : translateY(-16px) + opacity 0 → position finale */
+                opacity: 0;
+                transform: translateY(-16px) scale(0.97);
+                transition:
+                        opacity 400ms var(--ease-spring, cubic-bezier(0.22, 0.9, 0.3, 1)),
+                        transform 400ms var(--ease-spring, cubic-bezier(0.22, 0.9, 0.3, 1));
+                will-change: transform, opacity;
+        }
 
-	.toast.toast-visible {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-	}
+        .toast.toast-visible {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+        }
 
-	.toast.toast-leaving {
-		opacity: 0;
-		transform: translateY(-10px) scale(0.98);
-		transition:
-			opacity 250ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
-			transform 250ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
-	}
+        .toast.toast-leaving {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.98);
+                transition:
+                        opacity 250ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+                        transform 250ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+        }
 
-	/* Accent gauche coloré selon le type */
-	.toast::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 4px;
-	}
+        /* Accent gauche coloré selon le type */
+        .toast::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+        }
 
-	.toast-success::before {
-		background: #1e9e4f;
-	}
+        .toast-success::before {
+                background: #1e9e4f;
+        }
 
-	.toast-error::before {
-		background: #ee6c1a;
-	}
+        .toast-error::before {
+                background: #ee6c1a;
+        }
 
-	/* Icône */
-	.toast-icon {
-		flex-shrink: 0;
-		width: 2.5rem;
-		height: 2.5rem;
-		border-radius: 0.75rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-top: 0.125rem;
-	}
+        /* Icône */
+        .toast-icon {
+                flex-shrink: 0;
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 0.125rem;
+        }
 
-	.toast-success .toast-icon {
-		background: rgba(30, 158, 79, 0.18);
-		color: #4ade80;
-	}
+        .toast-success .toast-icon {
+                background: rgba(30, 158, 79, 0.18);
+                color: #4ade80;
+        }
 
-	.toast-error .toast-icon {
-		background: rgba(238, 108, 26, 0.18);
-		color: #fb923c;
-	}
+        .toast-error .toast-icon {
+                background: rgba(238, 108, 26, 0.18);
+                color: #fb923c;
+        }
 
-	/* Contenu */
-	.toast-content {
-		flex: 1;
-		min-width: 0;
-	}
+        /* Contenu */
+        .toast-content {
+                flex: 1;
+                min-width: 0;
+        }
 
-	.toast-title {
-		margin: 0 0 0.25rem;
-		font-family: 'Poppins', system-ui, sans-serif;
-		font-size: 0.95rem;
-		font-weight: 600;
-		line-height: 1.3;
-		color: #fff;
-	}
+        .toast-title {
+                margin: 0 0 0.25rem;
+                font-family: 'Poppins', system-ui, sans-serif;
+                font-size: 0.95rem;
+                font-weight: 600;
+                line-height: 1.3;
+                color: #fff;
+        }
 
-	.toast-message {
-		margin: 0;
-		font-size: 0.875rem;
-		line-height: 1.5;
-		color: rgba(255, 255, 255, 0.75);
-		word-wrap: break-word;
-	}
+        .toast-message {
+                margin: 0;
+                font-size: 0.875rem;
+                line-height: 1.5;
+                color: rgba(255, 255, 255, 0.75);
+                word-wrap: break-word;
+        }
 
-	/* Bouton fermer */
-	.toast-close {
-		flex-shrink: 0;
-		width: 1.75rem;
-		height: 1.75rem;
-		border-radius: 0.5rem;
-		background: transparent;
-		border: none;
-		color: rgba(255, 255, 255, 0.5);
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition:
-			background 150ms var(--ease-out, ease-out),
-			color 150ms var(--ease-out, ease-out);
-	}
+        /* Bouton fermer */
+        .toast-close {
+                flex-shrink: 0;
+                width: 1.75rem;
+                height: 1.75rem;
+                border-radius: 0.5rem;
+                background: transparent;
+                border: none;
+                color: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition:
+                        background 150ms var(--ease-out, ease-out),
+                        color 150ms var(--ease-out, ease-out);
+        }
 
-	.toast-close:hover {
-		background: rgba(255, 255, 255, 0.1);
-		color: #fff;
-	}
+        .toast-close:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+        }
 
-	.toast-close:focus-visible {
-		outline: 2px solid #ee6c1a;
-		outline-offset: 2px;
-	}
+        .toast-close:focus-visible {
+                outline: 2px solid #ee6c1a;
+                outline-offset: 2px;
+        }
 
-	/* Barre de progression en bas */
-	.toast-progress {
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		height: 3px;
-		width: 100%;
-	}
+        /* Barre de progression en bas */
+        .toast-progress {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 3px;
+                width: 100%;
+        }
 
-	.toast-success .toast-progress {
-		background: #1e9e4f;
-	}
+        .toast-success .toast-progress {
+                background: #1e9e4f;
+        }
 
-	.toast-error .toast-progress {
-		background: #ee6c1a;
-	}
+        .toast-error .toast-progress {
+                background: #ee6c1a;
+        }
 
-	/* ── Menu téléphone (appel / WhatsApp) ───────────────────────────────────
+        /* ── Menu téléphone (appel / WhatsApp) ───────────────────────────────────
            Menu déroulant glassmorphism cohérent avec le formulaire.
            Animation entrée : translateY(-6px) + opacity 0 → position finale. */
 
-	.phone-menu {
-		position: absolute;
-		top: calc(100% + 0.5rem);
-		left: 0;
-		z-index: 50;
-		min-width: 15rem;
-		padding: 0.375rem;
-		border-radius: 0.875rem;
-		background: rgba(15, 30, 61, 0.92);
-		backdrop-filter: blur(16px);
-		-webkit-backdrop-filter: blur(16px);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		box-shadow:
-			0 10px 30px rgba(0, 0, 0, 0.35),
-			0 0 0 1px rgba(0, 0, 0, 0.05);
-		opacity: 0;
-		transform: translateY(-6px) scale(0.97);
-		transform-origin: top left;
-		transition:
-			opacity 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
-			transform 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
-		pointer-events: none;
-	}
+        .phone-menu {
+                position: absolute;
+                top: calc(100% + 0.5rem);
+                left: 0;
+                z-index: 50;
+                min-width: 15rem;
+                padding: 0.375rem;
+                border-radius: 0.875rem;
+                background: rgba(15, 30, 61, 0.92);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                box-shadow:
+                        0 10px 30px rgba(0, 0, 0, 0.35),
+                        0 0 0 1px rgba(0, 0, 0, 0.05);
+                opacity: 0;
+                transform: translateY(-6px) scale(0.97);
+                transform-origin: top left;
+                transition:
+                        opacity 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+                        transform 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+                pointer-events: none;
+        }
 
-	.phone-menu.phone-menu-open {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-		pointer-events: auto;
-	}
+        .phone-menu.phone-menu-open {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                pointer-events: auto;
+        }
 
-	/* Chevron qui se retourne quand le menu est ouvert */
-	.phone-chevron-open {
-		transform: rotate(180deg);
-	}
+        /* Chevron qui se retourne quand le menu est ouvert */
+        .phone-chevron-open {
+                transform: rotate(180deg);
+        }
 
-	/* Item du menu */
-	.phone-menu-item {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		padding: 0.625rem 0.75rem;
-		border-radius: 0.625rem;
-		color: rgba(255, 255, 255, 0.85);
-		text-decoration: none;
-		transition:
-			background 150ms var(--ease-out, ease-out),
-			color 150ms var(--ease-out, ease-out);
-		cursor: pointer;
-	}
+        /* Item du menu */
+        .phone-menu-item {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.625rem 0.75rem;
+                border-radius: 0.625rem;
+                color: rgba(255, 255, 255, 0.85);
+                text-decoration: none;
+                transition:
+                        background 150ms var(--ease-out, ease-out),
+                        color 150ms var(--ease-out, ease-out);
+                cursor: pointer;
+        }
 
-	.phone-menu-item:hover,
-	.phone-menu-item:focus-visible {
-		background: rgba(255, 255, 255, 0.08);
-		color: #fff;
-		outline: none;
-	}
+        .phone-menu-item:hover,
+        .phone-menu-item:focus-visible {
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                outline: none;
+        }
 
-	.phone-menu-item:focus-visible {
-		outline: 2px solid #ee6c1a;
-		outline-offset: -2px;
-	}
+        .phone-menu-item:focus-visible {
+                outline: 2px solid #ee6c1a;
+                outline-offset: -2px;
+        }
 
-	/* Icône dans un cercle coloré */
-	.phone-menu-icon {
-		flex-shrink: 0;
-		width: 2rem;
-		height: 2rem;
-		border-radius: 0.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+        /* Icône dans un cercle coloré */
+        .phone-menu-icon {
+                flex-shrink: 0;
+                width: 2rem;
+                height: 2rem;
+                border-radius: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        }
 
-	.phone-menu-icon-call {
-		background: rgba(238, 108, 26, 0.18);
-		color: #fb923c;
-	}
+        .phone-menu-icon-call {
+                background: rgba(238, 108, 26, 0.18);
+                color: #fb923c;
+        }
 
-	.phone-menu-icon-whatsapp {
-		background: rgba(30, 158, 79, 0.18);
-		color: #4ade80;
-	}
+        .phone-menu-icon-whatsapp {
+                background: rgba(30, 158, 79, 0.18);
+                color: #4ade80;
+        }
 
-	/* Contenu (titre + sous-titre) */
-	.phone-menu-content {
-		flex: 1;
-		min-width: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.125rem;
-	}
+        /* Contenu (titre + sous-titre) */
+        .phone-menu-content {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.125rem;
+        }
 
-	.phone-menu-title {
-		font-size: 0.875rem;
-		font-weight: 600;
-		line-height: 1.2;
-		color: inherit;
-	}
+        .phone-menu-title {
+                font-size: 0.875rem;
+                font-weight: 600;
+                line-height: 1.2;
+                color: inherit;
+        }
 
-	.phone-menu-sub {
-		font-size: 0.75rem;
-		line-height: 1.3;
-		color: rgba(255, 255, 255, 0.55);
-	}
+        .phone-menu-sub {
+                font-size: 0.75rem;
+                line-height: 1.3;
+                color: rgba(255, 255, 255, 0.55);
+        }
 
-	/* Icône "ouvre dans un nouvel onglet" (WhatsApp) */
-	.phone-menu-external {
-		flex-shrink: 0;
-		color: rgba(255, 255, 255, 0.4);
-		opacity: 0;
-		transition: opacity 150ms var(--ease-out, ease-out);
-	}
+        /* Icône "ouvre dans un nouvel onglet" (WhatsApp) */
+        .phone-menu-external {
+                flex-shrink: 0;
+                color: rgba(255, 255, 255, 0.4);
+                opacity: 0;
+                transition: opacity 150ms var(--ease-out, ease-out);
+        }
 
-	.phone-menu-item:hover .phone-menu-external {
-		opacity: 1;
-	}
+        .phone-menu-item:hover .phone-menu-external {
+                opacity: 1;
+        }
 
-	/* Reduced motion : pas d'animation, affichage direct */
-	@media (prefers-reduced-motion: reduce) {
-		.phone-menu,
-		.phone-menu-item,
-		.phone-chevron {
-			transition: none !important;
-		}
-		.phone-menu {
-			opacity: 1;
-			transform: none;
-		}
-		.toast {
-			opacity: 1;
-			transform: none;
-			transition: none;
-		}
-		.toast.toast-leaving {
-			opacity: 0;
-			transition: opacity 100ms linear;
-		}
-		.toast-progress {
-			transition: none !important;
-		}
-	}
+        /* Reduced motion : pas d'animation, affichage direct */
+        @media (prefers-reduced-motion: reduce) {
+                .phone-menu,
+                .phone-menu-item,
+                .phone-chevron {
+                        transition: none !important;
+                }
+                .phone-menu {
+                        opacity: 1;
+                        transform: none;
+                }
+                .toast {
+                        opacity: 1;
+                        transform: none;
+                        transition: none;
+                }
+                .toast.toast-leaving {
+                        opacity: 0;
+                        transition: opacity 100ms linear;
+                }
+                .toast-progress {
+                        transition: none !important;
+                }
+        }
 </style>

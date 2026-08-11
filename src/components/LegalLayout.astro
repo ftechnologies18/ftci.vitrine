@@ -25,7 +25,7 @@ const { title, description, canonical, updatedAt, sections } = Astro.props;
 
 <Layout title={`${title} | FTCI`} description={description} canonical={canonical} noindex={true}>
 	<!-- Header -->
-	<section class="bg-navy text-white py-16 md:py-20">
+	<section class="bg-navy text-white py-16 md:py-24 lg:py-32">
 		<div class="container">
 			<nav class="mb-4 text-sm text-white/60" aria-label="Fil d'Ariane">
 				<ol class="flex items-center gap-2">
@@ -40,7 +40,7 @@ const { title, description, canonical, updatedAt, sections } = Astro.props;
 	</section>
 
 	<!-- Content with table of contents -->
-	<section class="py-16 md:py-20 bg-light-bg flex-1">
+	<section class="py-16 md:py-24 lg:py-32 bg-light-bg flex-1">
 		<div class="container">
 			<div class="grid lg:grid-cols-[280px_1fr] gap-10">
 				<!-- Table of contents -->
