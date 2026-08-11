@@ -56,5 +56,5 @@ coverage/
 
 .psitest/
 
-# Rapports Lighthouse bruts (trop volatiles pour git — voir docs/lighthouse/*.md)
-docs/lighthouse/*.json
+# Documentation interne (worklog.md reste versionné, voir à la racine)
+docs/
