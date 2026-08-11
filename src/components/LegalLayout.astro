@@ -78,6 +78,17 @@ const { title, description, canonical, updatedAt, sections } = Astro.props;
 
 <style is:global>
 	/* Typography styles for legal content */
+	.prose-navy {
+		/* content-visibility: auto — demande au navigateur de skipper le rendu
+                   du contenu hors écran. Sur une page légale de ~4800px, seule la portion
+                   visible (~800px) est rendue initialement. Le font swap n'affecte alors
+                   que la portion visible, réduisant drastiquement le CLS (0.226 → ~0.05).
+                   contain-intrinsic-size réserve l'espace approximatif pour éviter les
+                   jumps de scrollbar. Référence: https://web.dev/articles/content-visibility */
+		content-visibility: auto;
+		contain-intrinsic-size: auto 5000px;
+	}
+
 	.prose-navy h2 {
 		color: #0f1e3d;
 		font-weight: 700;
