@@ -215,26 +215,6 @@
 		text-rendering: optimizeLegibility;
 	}
 
-	/* ── content-visibility sur sections below-the-fold (anti-CLS simulate) ────
-           En mode Lighthouse 'simulate' (utilisé par PageSpeed Insights), le font
-           swap provoque un reflow global du <body> car toutes les sections sont
-           rendues d'un coup. En appliquant content-visibility: auto sur les sections
-           qui ne sont pas visibles au load initial (#products, #services, #about,
-           #faq), le navigateur ne les rend que lorsqu'elles approchent du viewport.
-           Le font swap n'affecte alors que le Hero (hauteur fixe 85vh), éliminant
-           le CLS critique en mode simulate (1.0 → ~0.05).
-
-           Le Hero (#contenu) est EXCLU car il doit être rendu immédiatement (LCP).
-           La section Contact est EXCLUE car elle contient le widget Turnstile qui
-           doit être mesuré pour le lazy-load (IntersectionObserver). */
-	#solutions,
-	#services,
-	#about,
-	#faq {
-		content-visibility: auto;
-		contain-intrinsic-size: auto 1200px;
-	}
-
 	/* Titres — Poppins ExtraBold, tracking size-specific (Vignelli) */
 	h1,
 	h2,
