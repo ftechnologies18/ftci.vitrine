@@ -55,3 +55,6 @@ coverage/
 *.lcov
 
 .psitest/
+
+# Rapports Lighthouse bruts (trop volatiles pour git — voir docs/lighthouse/*.md)
+docs/lighthouse/*.json
