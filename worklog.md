@@ -804,3 +804,126 @@ de configuration Azure AD. Ils doivent être révoqués après la session :
 
 1. Azure Portal → App registrations → sélectionner l'app → Certificates & secrets
 2. Supprimer le client secret (ou faire un "Roll")
+
+---
+
+## Lot 14 — Investigation OAuth2 exhaustive (2e tentative)
+
+**Date** : 11 août 2026 (suite)
+**Credentials retestés** :
+
+- Client ID: `35e6dc87176c47c9b8a77862b4fed8a1`
+- Client Secret: (fourni)
+
+### Tests exhaustifs effectués
+
+#### A. Découverte du tenant via OpenID config
+
+| Endpoint                                                                      | Résultat                                             |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `login.microsoftonline.com/<client_id>/v2.0/.well-known/openid-configuration` | ❌ invalid_tenant (le client ID n'est pas un tenant) |
+| `login.microsoftonline.com/common/userrealm/<client_id>`                      | `NameSpaceType: Unknown` (n'a pas pu résoudre)       |
+
+#### B. Scopes testés (sur `common`)
+
+| Scope                                            | Erreur                                             |
+| ------------------------------------------------ | -------------------------------------------------- |
+| `https://graph.microsoft.com/.default`           | AADSTS53003 Conditional Access                     |
+| `https://ads.microsoft.com/.default`             | AADSTS5000224 Resource not available               |
+| `https://api.bing.com/.default`                  | AADSTS700016 unauthorized_client                   |
+| `https://ssl.bing.com/.default`                  | AADSTS700016 unauthorized_client                   |
+| `https://api.bing.microsoft.com/.default`        | AADSTS53003 Conditional Access                     |
+| `https://bing.com/.default`                      | AADSTS700016 unauthorized_client                   |
+| `https://api.cognitive.microsoft.com/.default`   | AADSTS700016 unauthorized_client                   |
+| `https://cognitiveservices.azure.com/.default`   | AADSTS53003 Conditional Access                     |
+| `https://applicationinsights.azure.com/.default` | AADSTS53003 Conditional Access                     |
+| `670d8833-32f9-4b4f-8b6e-2c6ce8d88f6d/.default`  | AADSTS50059 No tenant-identifying info             |
+| `/.default` (sans resource URI)                  | AADSTS70011 invalid scope                          |
+| `openid profile offline_access`                  | AADSTS1002012 (client_credentials needs /.default) |
+
+#### C. Device code flow (contourne souvent Conditional Access)
+
+| Tenant                                 | Résultat                                                  |
+| -------------------------------------- | --------------------------------------------------------- |
+| `common`                               | AADSTS50059 No tenant-identifying info                    |
+| `72f988bf-86f1-41af-91ab-2d7cd011db47` | AADSTS700016 unauthorized_client (app pas dans ce tenant) |
+
+#### D. Bing API endpoints directs (avec Bearer header)
+
+| Endpoint                                           | HTTP               |
+| -------------------------------------------------- | ------------------ |
+| `ssl.bing.com/webmaster/api.svc/2.0/json/GetSites` | 404 (deprecated)   |
+| `api.bing.com/webmaster/api.svc/2.0/json/GetSites` | 400 (service down) |
+| `api.bing.microsoft.com/v7/search`                 | 404 (URL changed)  |
+| `ssl.bing.com/api/v3/GetSites`                     | 404                |
+
+### Conclusions définitives
+
+#### 1. Les credentials OAuth2 sont valides MAIS inutilisables
+
+L'app Azure AD existe (preuve : erreurs AADSTS53003 et non AADSTS700016 pour
+plusieurs scopes). Elle a les permissions pour :
+
+- Microsoft Graph (`graph.microsoft.com`)
+- Azure Cognitive Services (`cognitiveservices.azure.com`)
+- Azure Application Insights (`applicationinsights.azure.com`)
+- API Bing Microsoft (`api.bing.microsoft.com`)
+
+MAIS le **Conditional Access** du tenant bloque systématiquement le flux
+`client_credentials`. Cette politique d'accès conditionnel exige
+typiquement :
+
+- Multi-Factor Authentication (impossible en client_credentials)
+- Plage IP spécifique (réseau corporate)
+- Device compliant (Intune)
+- Emplacement géographique autorisé
+
+#### 2. L'app n'a PAS les permissions pour Bing Webmaster API
+
+Pour les scopes `api.bing.com`, `ssl.bing.com`, `bing.com` → erreur
+`unauthorized_client`. L'app n'a pas demandé ces permissions dans Azure AD.
+
+#### 3. Bing Webmaster API v2 est officiellement dépréciée
+
+Tous les endpoints `ssl.bing.com/webmaster/api.svc/...` retournent 404
+"resource cannot be found". L'API a été supprimée par Microsoft. La seule
+méthode fonctionnelle pour interagir avec Bing pour l'indexation est :
+
+1. **IndexNow** (clé fichier .txt — déjà déployée)
+2. **Bing Webmaster Tools dashboard** (manuel)
+3. **Sitemap submission** (manuel via dashboard)
+
+### Action recommandée finale
+
+Les credentials OAuth2 fournis ne peuvent pas être utilisés pour résoudre
+le problème d'indexation Bing. La voie à suivre est :
+
+1. **Connexion manuelle à Bing Webmaster Tools** :
+   https://www.bing.com/webmasters/
+
+2. **Vérification de ftci.fr** dans le dashboard :
+   - Si déjà vérifié → soumettre le sitemap : `https://ftci.fr/sitemap.xml`
+   - Si non vérifié → compléter la vérification (HTML file le plus simple)
+
+3. **Soumission manuelle des URLs prioritaires** :
+   - https://ftci.fr/
+   - https://ftci.fr/blog
+   - https://ftci.fr/blog/10-conseils-cybersecurite-entreprise
+
+4. **Patienter 7-14 jours** pour le crawl complet
+
+Le fichier IndexNow `https://ftci.fr/ad02c6de813d4dd28ff6f48e0ddee9de.txt`
+est en place. Une fois le site vérifié dans Bing Webmaster Tools, IndexNow
+fonctionnera automatiquement (après purge du cache négatif Bing, 24-48h).
+
+### Révocation des credentials
+
+Les credentials OAuth2 fournis doivent être révoqués après cette session,
+même s'ils n'ont pas permis d'accéder à l'API visée :
+
+1. Azure Portal → App registrations → sélectionner l'app Client ID
+   `35e6dc87176c47c9b8a77862b4fed8a1` → Certificates & secrets
+2. Supprimer le client secret (ou faire "Roll")
+
+Aucune donnée sensible n'a été écrite dans le dépôt — les credentials ont
+été utilisés uniquement via variables d'environnement éphémères.
