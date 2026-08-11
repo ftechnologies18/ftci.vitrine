@@ -26,9 +26,11 @@
  * Yandex IndexNow endpoint: https://yandex.com/indexnow
  */
 
-const KEY = '21ff3ba039d64479911acb0f905d271d';
+const KEY = 'ad02c6de813d4dd28ff6f48e0ddee9de';
 const HOST = 'ftci.fr';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
+// Bing-specific endpoint (the generic api.indexnow.org works too, but Bing's
+// own endpoint verifies the site faster — see https://www.bing.com/indexnow).
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
 
 // The 6 blog categories (must match keystatic.config.ts BLOG_CATEGORIES).
