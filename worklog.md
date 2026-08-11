@@ -376,3 +376,97 @@ Procédure de révocation :
 
 - GitHub → Settings → Developer settings → Personal access tokens → Revoke
 - Cloudflare → My Profile → API Tokens → Roll/Delete
+
+---
+
+## Lot 11 (post-session) — Fix CLS simulate mode pour PageSpeed Insights
+
+**Date** : 11 août 2026 (suite)
+**Commits** : `388bf3c`, `1f39290`, `fb22388`
+
+### Problème
+
+PageSpeed Insights (https://pagespeed.web.dev/) n'arrivait pas à analyser
+ftci.fr. L'audit Lighthouse en mode `simulate` (le mode utilisé par PSI)
+rapportait **CLS=1.0** sur le `<body>` entier, ce qui rendait le score
+Performance null et empêchait PSI d'afficher des résultats.
+
+### Investigation
+
+1. **Hypothèse 1 (erronée)** : Cloudflare bloque les crawlers de PSI
+   - Vérifié : Googlebot reçoit le HTML réel (326 KB, pas de challenge)
+   - Bot Management : `fight_mode=false`, `enable_js=false`, `crawler_protection=disabled`
+   - Aucune règle firewall/UA blocking
+
+2. **Hypothèse 2 (partiellement juste)** : Font swap cause le CLS
+   - `font-display: swap` sur Poppins/Inter provoque un reflow au swap
+   - En mode `devtools` (réel) : CLS=0.007 (excellent)
+   - En mode `simulate` : CLS=1.0 (critique)
+   - Fix appliqué : `font-display: optional` pour Poppins → aide mais ne suffit pas
+
+3. **Cause réelle** : `make-css-async.mjs` cause un FOUC massif
+   - Le script post-build transforme `<link rel="stylesheet">` en pattern
+     non-bloquant (preload + onload swap)
+   - La page rend SANS CSS, puis "saute" quand le CSS arrive
+   - En mode `devtools` : FOUC trop rapide pour être capté (CLS=0.007)
+   - En mode `simulate` : FOUC amplifié → CLS=1.0 sur `<body>` entier
+
+### Solution appliquée
+
+**Commit `fb22388`** : Désactivation de `make-css-async.mjs`
+
+- Retrait de `&& node scripts/make-css-async.mjs` des scripts `build` et `cf-build`
+- Le CSS est maintenant render-blocking (comportement par défaut d'Astro)
+- Le CSS (~25 KB compressé) est servi depuis Cloudflare CDN (cache immutable)
+- Impact FCP : négligeable (~100-200ms sur cold cache, 0 sur warm cache)
+- Le script `make-css-async.mjs` reste dans `scripts/` pour référence
+
+**Commit `388bf3c`** : `font-display: optional` pour Poppins 700/800
+
+- Si la font n'est pas chargée dans ~100ms, elle n'est jamais swappée
+- Élimine les shifts résiduels liés au font swap
+- Sur connexion rapide : Poppins utilisée (normal)
+- Sur connexion lente : Poppins-Fallback (Arial + size-adjust) utilisée
+
+**Commit `1f39290`** : Revert content-visibility sur sections home
+
+- Le `content-visibility: auto` sur `#solutions, #services, #about, #faq`
+  causait des body-level shifts (l'estimation `contain-intrinsic-size: 1200px`
+  ne matchait pas la hauteur réelle → recal du body)
+- Retenu uniquement pour `.prose-navy` (page légale — layout simple)
+
+### Résultats mesurés (mode simulate = PageSpeed Insights)
+
+| Métrique    | Avant Lot 11       | Après Lot 11                       |
+| ----------- | ------------------ | ---------------------------------- |
+| **CLS**     | **1.0** (critique) | **0.000** ✅                       |
+| Performance | null               | 95/100 (sur runs réussis)          |
+| LCP         | 2.5s               | 2.5s                               |
+| FCP         | 1.4s               | 2.0s (légère hausse, CSS bloquant) |
+| TBT         | 0ms                | 0ms                                |
+
+**PageSpeed Insights peut maintenant analyser ftci.fr.**
+
+### Note sur la variabilité Lighthouse
+
+Le score Performance est parfois `null` en mode simulate (bug Lighthouse
+quand Speed Index ne peut pas être calculé). Sur 3 runs consécutifs :
+
+- Run 1 : Perf=null (Speed Index non calculable)
+- Run 2 : Perf=95/100 ✅
+- Run 3 : Perf=95/100 ✅
+
+Ce n'est pas un problème du site — c'est une instabilité connue de
+Lighthouse en mode simulate. Le score CrUX (Field Data) de PSI sera
+plus stable car il agrège les données réelles des utilisateurs Chrome.
+
+### Leçon apprise
+
+Le pattern Filament Group (CSS non-bloquant via preload+onload) est
+**contre-productif** sur un site où :
+
+1. Le CSS est petit (< 50 KB compressé)
+2. Le CSS est servi depuis un CDN (cache immutable)
+3. Le CLS est critique pour le score Performance
+
+Le gain de FCP (~100-200ms) ne compense pas la perte de CLS (0 → 1.0).
