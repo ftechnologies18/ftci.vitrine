@@ -566,3 +566,109 @@ public/
 ├── 21ff3ba039d64479911acb0f905d271d.txt  (ancienne clé, conservée)
 └── ad02c6de813d4dd28ff6f48e0ddee9de.txt   (nouvelle clé Bing — active)
 ```
+
+---
+
+## Lot 12 (complément) — Investigation Bing Webmaster API avec token
+
+**Date** : 11 août 2026 (suite)
+**Token testé** : `ad02c6de813d4dd28ff6f48e0ddee9de` (clé API Bing Webmaster)
+
+### Tests effectués avec le token comme clé API Webmaster
+
+Le message utilisateur indique : "Pour utiliser cette clé API, transmettez-la
+avec le paramètre apikey=YOUR-API-KEY lors de la formulation d'une demande d'API."
+
+#### Endpoints testés (tous en échec)
+
+| Endpoint                                                                   | HTTP | Résultat                                  |
+| -------------------------------------------------------------------------- | ---- | ----------------------------------------- |
+| `ssl.bing.com/webmaster/api.svc/2.0/json/GetSites?apikey=...`              | 404  | "The resource cannot be found"            |
+| `ssl.bing.com/webmaster/api.svc/2.0/json/GetUrlInfo?apikey=...`            | 404  | "The resource cannot be found"            |
+| `ssl.bing.com/webmaster/api.svc/2.0/json/SubmitUrlBatch?apikey=...`        | 404  | "The resource cannot be found"            |
+| `ssl.bing.com/webmaster/api.svc/2.0/json/GetCrawlStats?apikey=...`         | 404  | "The resource cannot be found"            |
+| `ssl.bing.com/webmaster/api.svc/2.0/json/GetUrlSubmissionQuota?apikey=...` | 404  | "The resource cannot be found"            |
+| `api.bing.com/webmaster/api.svc/2.0/json/GetSites?apikey=...`              | 400  | "Our services aren't available right now" |
+| `www.bing.com/webmaster/api.svc/2.0/json/GetSites?apikey=...`              | 404  | "The resource cannot be found"            |
+| `www.bing.com/ping?sitemap=https://ftci.fr/sitemap.xml`                    | 410  | Gone (service supprimé)                   |
+
+#### Tests comparatifs
+
+- Clé invalide `00000000000000000000000000000000` sur api.bing.com → HTTP 400
+  (même réponse que clé valide → le service est down/déprécié, pas un problème de clé)
+- Clé fournie sur api.bing.com → HTTP 400 (réponse identique)
+- Spell API Bing (api.bing.com/osjson.aspx) avec clé → HTTP 200
+  (donc le token EST reconnu par les services Bing génériques)
+
+### Conclusion : APIs Bing dépréciées
+
+1. **API Bing Webmaster Tools v2** (`ssl.bing.com/webmaster/api.svc/...`)
+   → **404 "resource cannot be found"** — l'API a été dépréciée/migrée
+2. **API via api.bing.com** → **400 "services aren't available"**
+   — service backend down ou déprécié (même réponse pour clé valide/invalide)
+3. **Ping sitemap Bing** (`www.bing.com/ping?sitemap=...`)
+   → **410 Gone** — service officiellement supprimé par Bing
+4. **IndexNow** (seule méthode fonctionnelle pour Bing aujourd'hui)
+   → **403 "UserForbiddedToAccessSite"**
+
+### Cause racine du 403 IndexNow
+
+Bien que le fichier `https://ftci.fr/<key>.txt` soit techniquement parfait :
+
+- ✅ HTTP 200
+- ✅ 32 bytes exactement (pas de BOM, pas de newline)
+- ✅ Content-Type: text/plain
+- ✅ Contenu exact : `ad02c6de813d4dd28ff6f48e0ddee9de`
+- ✅ Accessible avec User-Agent Bingbot
+
+Bing retourne quand même 403. L'erreur "UserForbiddedToAccessSite" signifie
+que **le site ftci.fr n'est pas vérifié dans le compte Bing Webmaster Tools
+qui a généré cette clé IndexNow**.
+
+IndexNow vérifie :
+
+1. Que `<key>.txt` existe et contient la clé ✅ (déployé)
+2. Que la clé est autorisée pour le host ✗ (côté Bing Webmaster Tools)
+
+### Actions requises (manuelles, côté dashboard Bing)
+
+L'utilisateur doit vérifier ces points sur https://www.bing.com/webmasters/ :
+
+1. **Site vérifié** :
+   - Aller dans "Sites" → vérifier que `https://ftci.fr` est listé
+   - Statut doit être "Verified" (✓ vert), pas "Not verified"
+   - Si non vérifié : suivre les étapes de vérification (HTML file, meta tag, ou DNS)
+
+2. **Clé IndexNow liée au bon site** :
+   - Cliquer sur ftci.fr dans la liste des sites
+   - Aller dans "API" ou "IndexNow API"
+   - Vérifier que la clé affichée est bien `ad02c6de813d4dd28ff6f48e0ddee9de`
+   - Si différent : utiliser la clé affichée dans le dashboard (et mettre à jour
+     `scripts/indexnow-submit.mjs` + `public/<key>.txt`)
+
+3. **Soumission manuelle initiale** (pour déclencher l'indexation) :
+   - Dans Bing Webmaster Tools → ftci.fr → "Submit URLs"
+   - Soumettre manuellement : `https://ftci.fr/`, `https://ftci.fr/blog`, etc.
+   - Cela contourne IndexNow et force Bing à crawler immédiatement
+
+4. **Vérifier les erreurs de crawl** dans Bing Webmaster Tools :
+   - "Crawl Information" → "Crawl Errors"
+   - Vérifier qu'il n'y a pas de 5xx, 403, ou robots.txt bloquant
+
+### Vérifications techniques côté site (déjà OK)
+
+- ✅ `robots.txt` autorise tous les bots légitimes (Googlebot, Bingbot, GPTBot, ClaudeBot)
+- ✅ `sitemap.xml` accessible (HTTP 200, application/xml)
+- ✅ `X-Robots-Tag: noindex` seulement sur `/sitemap.xml` et `/robots.txt` (pas sur les pages)
+- ✅ Pas de `noindex` meta tag sur les pages publiques
+- ✅ Cloudflare Bot Management `enable_js: false` (ne bloque pas Bingbot)
+- ✅ Aucune règle firewall/UA blocking sur le zone Cloudflare
+
+### Prochaines étapes
+
+1. Utilisateur : vérifier le statut de vérification du site dans Bing Webmaster Tools
+2. Si site vérifié : patienter 24-48h pour purge du cache négatif IndexNow
+3. Si site non vérifié : compléter la vérification (HTML file recommandé,
+   plus simple que DNS)
+4. Déclencher un nouveau déploiement GitHub pour forcer la soumission
+   IndexNow via CI/CD avec la bonne clé
