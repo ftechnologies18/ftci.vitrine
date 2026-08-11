@@ -5,7 +5,9 @@
  * - Sticky top-0 z-50, bg-white/80 backdrop-blur-xl (Apple Design : materials)
  * - Logo réel /brand/logo-ftci.png + wordmark "FTCI" (Poppins ExtraBold navy)
  *   + "Technologies" (orange)
- * - Nav desktop : Nos solutions, Nos services, À propos, Contact
+ * - Nav desktop : Nos solutions, Nos services, À propos, Blog
+ *   (le lien "Contact" a été retiré de la nav pour éviter la redondance
+ *   avec le bouton CTA "Nous contacter" qui pointe vers la même section)
  * - CTA "Nous contacter" (btn-primary magnetic)
  * - Drawer mobile accessible (aria-expanded, aria-controls, role=dialog,
  *   Escape, scroll lock, focus management)
@@ -16,7 +18,6 @@ const navLinks = [
 	{ href: '/#services', label: 'Nos services' },
 	{ href: '/#about', label: 'À propos' },
 	{ href: '/blog', label: 'Blog' },
-	{ href: '/#contact', label: 'Contact' },
 ];
 ---
 
