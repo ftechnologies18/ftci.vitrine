@@ -1,0 +1,166 @@
+---
+/**
+ * FAQ.astro — Section "Questions fréquentes" (accordéon natif accessible).
+ * ────────────────────────────────────────────────────────────────────────────
+ * Affiche les 7 questions/réponses structurées dans `src/data/faq.ts`. Ces
+ * Q/R sont également injectées en JSON-LD `FAQPage` via Layout.astro →
+ * index.astro, ce qui rend le site éligible aux rich snippets FAQ de Google.
+ *
+ * IMPORTANT (signal spam Google) : le JSON-LD `FAQPage` ne doit être émis QUE
+ * si les questions et réponses sont également visibles sur la page (pas en
+ * JSON-LD seul). Ce composant rend donc les Q/R visibles en HTML.
+ *
+ * Implémentation :
+ *   - Accordéon natif `<details>` / `<summary>` — pas de JS, accessible
+ *     (clavier + screen reader), SEO-friendly (Google indexe le contenu).
+ *   - Animations CSS only (rotate du chevron, ouverture smooth).
+ *   - Scroll-reveal via `.observe-reveal` (géré par Layout.astro script global).
+ *   - Layout responsive : 1 colonne mobile, max-w-3xl centré sur desktop.
+ */
+
+import { faq } from '../data/faq';
+---
+
+<section id="faq" class="relative py-12 md:py-32 bg-light-bg overflow-hidden scroll-mt-24">
+	<!-- ── Parallax background elements (cohérent avec Services.astro) ─── -->
+	<div class="parallax-bg absolute inset-0 pointer-events-none" aria-hidden="true">
+		<div
+			class="absolute -top-24 -left-24 w-[500px] h-[500px] rounded-full opacity-20 blur-[80px]"
+			style="background: radial-gradient(circle, var(--color-orange) 0%, transparent 70%);"
+		>
+		</div>
+		<div class="absolute inset-0 opacity-[0.03] circuit-bg"></div>
+	</div>
+
+	<div class="container relative z-10">
+		<!-- ── Section header ─────────────────────────────────────────────── -->
+		<div class="section-header observe-reveal" data-reveal-delay="0">
+			<span class="eyebrow">
+				<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 8 8" aria-hidden="true">
+					<polygon points="4,0 8,4 4,8 0,4"></polygon>
+				</svg>
+				Besoin d'informations ?
+			</span>
+			<h2>Questions fréquentes</h2>
+			<p>
+				Les réponses aux questions que l'on nous pose le plus souvent sur FTCI, nos services et nos
+				solutions SaaS.
+			</p>
+		</div>
+
+		<!-- ── Accordéon FAQ ──────────────────────────────────────────────── -->
+		<div class="max-w-3xl mx-auto">
+			{
+				faq.map((item, idx) => (
+					<details
+						class="faq-item observe-reveal group bg-white rounded-card border border-navy/5 shadow-sm overflow-hidden transition-all hover:shadow-md hover:border-navy/10"
+						data-reveal-delay={idx}
+						name="faq"
+					>
+						<summary class="faq-summary flex items-start gap-4 p-5 md:p-6 cursor-pointer list-none select-none">
+							<span
+								class="faq-icon flex-shrink-0 mt-0.5 w-8 h-8 rounded-full bg-navy/5 flex items-center justify-center text-navy transition-all group-hover:bg-orange/10 group-hover:text-orange"
+								aria-hidden="true"
+							>
+								<svg
+									class="w-4 h-4 faq-chevron transition-transform duration-300"
+									viewBox="0 0 16 16"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<path d="M4 6l4 4 4-4" />
+								</svg>
+							</span>
+							<span class="flex-1 font-display font-bold text-base md:text-lg text-navy leading-snug">
+								{item.question}
+							</span>
+						</summary>
+						<div class="faq-answer px-5 pb-5 md:px-6 md:pb-6 pl-[3.25rem] md:pl-[4.5rem] -mt-1">
+							<p class="text-navy/70 leading-relaxed text-sm md:text-base">{item.answer}</p>
+						</div>
+					</details>
+				))
+			}
+		</div>
+
+		<!-- ── CTA fallback vers Contact ─────────────────────────────────── -->
+		<div class="text-center mt-10 md:mt-12 observe-reveal" data-reveal-delay={faq.length}>
+			<p class="text-navy/60 text-sm md:text-base mb-4">Votre question n'est pas listée ?</p>
+			<a
+				href="#contact"
+				class="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-button font-semibold text-sm md:text-base hover:bg-navy-700 transition-colors shadow-sm"
+			>
+				Contactez-nous
+				<svg
+					class="w-4 h-4"
+					viewBox="0 0 16 16"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<path d="M5 12l4-4-4-4"></path>
+				</svg>
+			</a>
+		</div>
+	</div>
+
+	<style>
+		/* ── Style de l'accordéon natif ─────────────────────────────────── */
+		/* Masquer le marqueur par défaut des <summary> (c'est le chevron custom qui prend le relais) */
+		.faq-summary::-webkit-details-marker {
+			display: none;
+		}
+		.faq-summary::marker {
+			content: '';
+		}
+
+		/* Animation du chevron à l'ouverture */
+		.faq-item[open] .faq-chevron {
+			transform: rotate(180deg);
+		}
+
+		/* Animation de l'ouverture (smooth, pas de layout shift) */
+		.faq-answer {
+			animation: faq-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		@keyframes faq-slide-in {
+			from {
+				opacity: 0;
+				transform: translateY(-4px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* Respecter les préférences reduced-motion */
+		@media (prefers-reduced-motion: reduce) {
+			.faq-answer {
+				animation: none;
+			}
+			.faq-chevron {
+				transition: none;
+			}
+		}
+
+		/* Focus visible pour l'accessibilité clavier */
+		.faq-summary:focus-visible {
+			outline: 2px solid var(--color-orange);
+			outline-offset: -2px;
+			border-radius: var(--radius-card, 0.75rem);
+		}
+
+		/* Gap entre les items */
+		.faq-item + .faq-item {
+			margin-top: 0.75rem;
+		}
+	</style>
+</section>
