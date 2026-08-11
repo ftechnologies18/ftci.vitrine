@@ -52,6 +52,7 @@ const ALL_URLS = [
 	`https://${HOST}/blog/ia-cas-usage-entreprises-africaines`,
 	`https://${HOST}/blog/pourquoi-les-pme-africaines-doivent-elles-se-digitaliser-en-2026`,
 	`https://${HOST}/blog/sect-nouvelle-version-20`,
+	`https://${HOST}/blog/guerre-algorithmique-afrique-4eme-composante-militaire`,
 	`https://${HOST}/legal/mentions-legales`,
 	`https://${HOST}/legal/confidentialite`,
 	`https://${HOST}/legal/cgu`,
