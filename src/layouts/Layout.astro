@@ -21,13 +21,24 @@ export interface Props {
 	ogImage?: string;
 	noindex?: boolean;
 	keywords?: string[];
+	/** JSON-LD schemas additionnels à injecter sur la page (ex: SoftwareApplication, FAQPage). */
+	schema?: Record<string, unknown>[];
 }
 
-const { title, description, canonical, ogImage, noindex = false, keywords = [] } = Astro.props;
+const {
+	title,
+	description,
+	canonical,
+	ogImage,
+	noindex = false,
+	keywords = [],
+	schema = [],
+} = Astro.props;
 
 const siteUrl = 'https://ftci.fr';
 
-// Schema.org Organization — toujours présent
+// Schema.org Organization — toujours présent (enrichi avec ContactPoint pour
+// le Knowledge Panel Google : téléphone, email, zones desservies).
 const orgSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'Organization',
@@ -57,6 +68,17 @@ const orgSchema = {
 		'Gestion BTP',
 		'Gestion scolaire',
 	],
+	contactPoint: [
+		{
+			'@type': 'ContactPoint',
+			contactType: 'customer support',
+			telephone: '+2250566184040',
+			email: 'contact@ftci.fr',
+			url: `${siteUrl}/#contact`,
+			areaServed: ["Côte d'Ivoire", "Afrique de l'Ouest", 'Afrique'],
+			availableLanguage: ['French'],
+		},
+	],
 };
 
 // Schema.org WebSite — toujours présent
@@ -84,7 +106,7 @@ const websiteSchema = {
 			ogImage={ogImage}
 			noindex={noindex}
 			keywords={keywords}
-			schema={[orgSchema, websiteSchema]}
+			schema={[orgSchema, websiteSchema, ...schema]}
 		/>
 
 		<!-- Favicon (triskel pixelisé bleu/vert/orange sur fond navy) -->

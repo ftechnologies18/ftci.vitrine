@@ -30,60 +30,7 @@
  *    - rAF throttled single scroll listener
  */
 
-const services = [
-        {
-                num: '01',
-                slug: 'transformation-digitale',
-                title: 'Transformation Digitale',
-                color: 'orange',
-                gradient: 'from-orange to-orange-600',
-                text: 'text-orange',
-                description:
-                        "Nous accompagnons les organisations dans leur migration vers le numérique — de l'audit initial à la conduite du changement.",
-                items: ['Audit & diagnostic', 'Roadmap stratégique', 'Gestion du changement'],
-                iconPath:
-                        'M13 10V3L4 14h7v7l9-11h-7z',
-        },
-        {
-                num: '02',
-                slug: 'developpement-web',
-                title: 'Développement Web sur Mesure',
-                color: 'periwinkle',
-                gradient: 'from-periwinkle to-periwinkle-600',
-                text: 'text-periwinkle',
-                description:
-                        'Applications web et mobiles, API et PWA conçues sur mesure pour vos processus métiers et vos contraintes locales.',
-                items: ['PWA & applications', 'API & intégrations', 'Support & maintenance'],
-                iconPath:
-                        'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
-        },
-        {
-                num: '03',
-                slug: 'infrastructure-it',
-                title: 'Infrastructure IT',
-                color: 'green',
-                gradient: 'from-green to-green-600',
-                text: 'text-green',
-                description:
-                        "Conception, déploiement et sécurisation de votre infrastructure cloud et on-premise, avec continuité d'activité garantie.",
-                items: ['Cloud & hybridation', 'Sécurité & conformité', 'Disaster recovery'],
-                iconPath:
-                        'M5 12H3l8-8 8 8h-2M5 12v7a1 1 0 001 1h3v-5h4v5h3a1 1 0 001-1v-7',
-        },
-        {
-                num: '04',
-                slug: 'tech-assistance-formation',
-                title: 'Tech Assistance & Formation',
-                color: 'orange',
-                gradient: 'from-orange to-orange-600',
-                text: 'text-orange',
-                description:
-                        "L'assistance technique vous aide à résoudre les problèmes liés au matériel informatique, aux logiciels et aux réseaux. Formations pratiques : systèmes d'exploitation, bureautique, sécurité informatique, travail collaboratif, Intelligence Artificielle et développement.",
-                items: ['Assistance technique hardware & software', 'Formations IT & IA', 'Support réseau & sécurité'],
-                iconPath:
-                        'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
-        },
-];
+import { services } from '../data/services';
 ---
 
 <section id="services" class="relative py-12 md:py-32 bg-light-bg overflow-hidden">

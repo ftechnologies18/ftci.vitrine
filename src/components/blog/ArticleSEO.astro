@@ -16,6 +16,8 @@ interface Props {
 	description: string;
 	url: string;
 	publishedAt: Date;
+	/** Date de dernière révision. Si absente, fallback sur publishedAt. */
+	updatedAt?: Date;
 	author: string;
 	coverImage?: string;
 	category: string;
@@ -27,6 +29,7 @@ const {
 	description,
 	url,
 	publishedAt,
+	updatedAt,
 	author,
 	coverImage,
 	category,
@@ -52,7 +55,7 @@ const blogPostingSchema = {
 	description,
 	image: absoluteCover,
 	datePublished: publishedAt.toISOString(),
-	dateModified: publishedAt.toISOString(),
+	dateModified: (updatedAt ?? publishedAt).toISOString(),
 	author: {
 		'@type': 'Organization',
 		name: author,

@@ -7,12 +7,32 @@ import Services from '../components/Services.astro';
 import About from '../components/About.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import { products } from '../data/products';
+import { services } from '../data/services';
+import { faq } from '../data/faq';
+import {
+	buildSoftwareApplicationSchema,
+	buildServiceSchema,
+	buildFaqSchema,
+} from '../lib/structured-data';
+
+// JSON-LD schemas additionnels pour la home :
+//   - 4× SoftwareApplication (un par SaaS : SECT, OPUC, CATS, ScolaGest)
+//   - 4× Service (un par pôle de services)
+//   - 1× FAQPage (rich snippets questions/réponses dans Google)
+// Organization + WebSite sont déjà injectés par Layout.astro.
+const pageSchemas = [
+	...products.map(buildSoftwareApplicationSchema),
+	...services.map(buildServiceSchema),
+	buildFaqSchema(faq),
+];
 ---
 
 <Layout
 	title="Freelance Technologies Côte d'Ivoire (FTCI) — ESN & solutions SaaS à Abidjan"
 	description="Freelance Technologies Côte d'Ivoire (FTCI) est une Entreprise de Services du Numérique (ESN) basée à Abidjan. 4 pôles de services (conseil, développement, infrastructure IT, formation) + 4 solutions SaaS (SECT, OPUC, CATS, ScolaGest) pour le marché africain."
 	canonical="/"
+	schema={pageSchemas}
 >
 	<Header />
 	<main class="flex-1">
